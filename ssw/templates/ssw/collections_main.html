@@ -1,0 +1,66 @@
+{% extends "ssw/main.html" %}
+{% load static from staticfiles %}
+{% load thumbnail %}
+
+{% block title %}
+Collections
+{% endblock %}
+
+{% block content %}
+
+<section class="bg--secondary space--sm">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="boxed boxed--lg boxed--border">
+                                <h4>Collections</h4>
+                                <hr>
+                                {% if user.type == "contributor" and user.is_verified %}
+                                    <a class="btn btn--primary btn--icon pull-right" href="{% url 'collections_new' %}">
+                                        <span class="btn__text">
+                                        <i class="fa fa-plus"></i> New Collection</span>
+                                    </a>
+                                {% endif %}
+                                {% if collections %}
+
+                                    <div class="custom-scroll table-responsive">
+                                        <table id="approvedProductsTable" class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Title</th>
+                                                    <th>Products</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for collection in collections %}
+                                                    <tr>
+                                                        <td>{{ collection.title }}</td>
+                                                        <td>
+                                                            {% for product in collection.products.all%}
+                                                                <a href="{{ product.image.url }}" data-lightbox="Gallery {{collection.pk}}">
+                                                                    <img alt="Image" src="{{ product.image|thumbnail_url:'thumbnail' }}" style="max-width:50%;max-height:50%">
+                                                                </a>
+                                                            {% endfor %}
+                                                        </td>
+                                                        <td>
+                                                            <a href="{% url 'collections_edit' collection.pk %}" class="color--primary"><i class="fa fa-edit"></i></a>
+                                                            <a href="{% url 'collections_delete' collection.pk %}" class="color--error"><i class="fa fa-trash"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                {% else %}
+                                    You don't have any collections
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!--end of row-->
+                </div>
+                <!--end of container-->
+            </section>
+
+{% endblock %}

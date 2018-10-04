@@ -1,0 +1,137 @@
+{% extends "ssw/main.html" %}
+{% load static from staticfiles %}
+{% load thumbnail %}
+
+{% block title %}
+Requests
+{% endblock %}
+
+{% block content %}
+
+    <section class="bg--secondary space--sm">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="boxed boxed--lg boxed--border">
+                        <div id="products" class="account-tab">
+                            <h4>
+                                Requests
+                            </h4>
+                            <div class="tabs-container" data-content-align="left">
+                                <ul class="tabs">
+                                    <li class="active">
+                                        <div class="tab__title">
+                                            <span class="h5">Pending Approval</span>
+                                        </div>
+                                        <div class="tab__content">
+                                            {% if pending %}
+                                                <div class="custom-scroll table-responsive">
+                                                  <table id="pendingRequestsTable" class="table table-bordered table-hover">
+                                                      <thead>
+                                                      <tr>
+                                                          <th>User</th>
+                                                          <th>Status</th>
+                                                          <th>Photo Id</th>
+                                                          <th></th>
+                                                      </tr>
+                                                      </thead>
+                                                      <tbody>
+                                                      {% for r in pending %}
+                                                        <tr>
+                                                            <td><a href="#">{{ r.owner }}</a></td>
+                                                            <td>{{ r.get_status_display }}</td>
+                                                            <td><a href="{{ r.body }}">click here</a></td>
+                                                            <td>
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <a href="{% url 'requests_approve' r.pk %}"><i class="fas fa-check-square fa-2x color--success"></i></a>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <a href="{% url 'requests_reject' r.pk %}"><i class="fas fa-trash-alt fa-2x color--error"></i></a>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                      {% endfor %}
+                                                      </tbody>
+                                                  </table>
+                                                </div>
+                                            {% else %}
+                                                There are no requests
+                                            {% endif %}
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="tab__title">
+                                            <span class="h5">Approved</span>
+                                        </div>
+                                        <div class="tab__content">
+                                            {% if approved %}
+                                                <div class="custom-scroll table-responsive">
+                                                  <table id="approvedRequestsTable" class="table table-bordered table-hover">
+                                                      <thead>
+                                                      <tr>
+                                                          <th>User</th>
+                                                          <th>Status</th>
+                                                          <th>Photo Id</th>
+                                                      </tr>
+                                                      </thead>
+                                                      <tbody>
+                                                      {% for r in approved %}
+                                                        <tr>
+                                                            <td><a href="#">{{ r.owner }}</a></td>
+                                                            <td>{{ r.get_status_display }}</td>
+                                                            <td><a href="{{ r.body }}">click here</a></td>
+                                                        </tr>
+                                                      {% endfor %}
+                                                      </tbody>
+                                                  </table>
+                                                </div>
+                                            {% else %}
+                                                There are no requests
+                                            {% endif %}
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="tab__title">
+                                            <span class="h5">Rejected</span>
+                                        </div>
+                                        <div class="tab__content">
+                                            {% if rejected %}
+                                                <div class="custom-scroll table-responsive">
+                                                  <table id="rejectedRequestsTable" class="table table-bordered table-hover">
+                                                      <thead>
+                                                      <tr>
+                                                          <th>User</th>
+                                                          <th>Status</th>
+                                                          <th>Photo Id</th>
+                                                      </tr>
+                                                      </thead>
+                                                      <tbody>
+                                                      {% for r in rejected %}
+                                                        <tr>
+                                                            <td><a href="#">{{ r.owner }}</a></td>
+                                                            <td>{{ r.get_status_display }}</td>
+                                                            <td><a href="{{ r.body }}">click here</a></td>
+                                                        </tr>
+                                                      {% endfor %}
+                                                      </tbody>
+                                                  </table>
+                                                </div>
+                                            {% else %}
+                                                There are no requests
+                                            {% endif %}
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div><!--end of tabs container-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end of row-->
+        </div>
+        <!--end of container-->
+    </section>
+
+{% endblock %}

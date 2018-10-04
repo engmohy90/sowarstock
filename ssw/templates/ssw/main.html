@@ -1,0 +1,450 @@
+{% load static from staticfiles %}
+{% load notifications_tags %}
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>{% block title %}{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Site Description Here">
+        <link href="{% static 'ssw/css/bootstrap.css' %}" rel="stylesheet" type="text/css" media="all" />
+        <link href="{% static 'ssw/css/stack-interface.css' %}" rel="stylesheet" type="text/css" media="all" />
+        <link href="{% static 'ssw/css/socicon.css' %}" rel="stylesheet" type="text/css" media="all" />
+        <link href="{% static 'ssw/css/lightbox.min.css' %}" rel="stylesheet" type="text/css" media="all" />
+        <link href="{% static 'ssw/css/flickity.css' %}" rel="stylesheet" type="text/css" media="all" />
+        <link href="{% static 'ssw/css/iconsmind.css' %}" rel="stylesheet" type="text/css" media="all" />
+        <link href="{% static 'ssw/css/jquery.steps.css' %}" rel="stylesheet" type="text/css" media="all" />
+        <link href="{% static 'ssw/css/theme.css' %}" rel="stylesheet" type="text/css" media="all" />
+        <link href="{% static 'ssw/css/custom.css' %}" rel="stylesheet" type="text/css" media="all" />
+        <link href="{% static 'ssw/css/font-rubiklato.css' %}" rel="stylesheet" type="text/css" media="all" />
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:200,300,400,400i,500,600,700%7CMerriweather:300,300i" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Lato:400,400i,700%7CRubik:300,400,500" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+        <link href="{% static 'ssw/css/main.css' %}" rel="stylesheet" type="text/css" media="all" />
+        {% block head %}{% endblock %}
+    </head>
+    <body class=" ">
+        <section class="bar bar-3 bar--sm bg--secondary">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                    </div>
+                    <div class="col-lg-6 text-right text-left-xs text-left-sm">
+                        <div class="bar__module">
+                            <ul class="menu-horizontal">
+                                {% if user.is_authenticated %}
+                                <li class="dropdown">
+                                    <span class="dropdown__trigger">Hello, {{ user }}</span>
+                                    <div class="dropdown__container" style="left: -438.844px;">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="dropdown__content col-lg-2 col-md-4" style="left: 438.844px;">
+                                                    <ul class="menu-vertical">
+                                                        <li>
+                                                            <a href="/profile">Profile</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="/logout">Logout</a>
+                                                            <!--end dropdown container-->
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <!--end dropdown content-->
+                                            </div>
+                                            <!--end row-->
+                                        </div>
+                                    </div>
+                                    <!--end dropdown container-->
+                                </li>
+                                {% else %}
+                                <li>
+                                    <div class="modal-instance">
+                                        <a href="/login">Login</a>
+
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="modal-instance">
+                                        <a href="/signup">Create Account</a>
+
+                                    </div>
+                                </li>
+                                {% endif %}
+
+                                <li>
+                                    <a href="#" data-notification-link="search-box">
+                                        <i class="stack-search"></i>
+                                    </a>
+                                </li>
+                                {% if user.type == "client" %}
+                                    <li>
+                                        <a href="{%url 'shopping_cart_main' %}">
+                                            <span class="fa-stack has-badge" id="shopping_cart_icon">
+                                              <i class="fa fa-circle fa-stack-2x"></i>
+                                              <i class="fas fa-shopping-cart fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                <li class="dropdown dropdown--absolute">
+                                    <span class="dropdown__trigger">
+                                        <img alt="Image" class="flag" src="{% static 'ssw/img/flag-1.png' %}">
+                                    </span>
+                                    <div class="dropdown__container" style="left: -1056.19px;">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-lg-1 dropdown__content" style="left: 1056.19px;">
+                                                    <ul class="menu-vertical text-left">
+                                                        <li>
+                                                            <a href="#">ENG</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#">GER</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#" data-notification-link="side-menu">
+                                        <i class="stack-dot-3"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--end of row-->
+            </div>
+            <!--end of container-->
+        </section>
+        <!-- search form -->
+        <div class="notification pos-top pos-right search-box bg--white border--bottom notification--reveal notification--dismissed" data-animation="from-top" data-notification-link="search-box">
+            <form method="post" action="/search/">
+                {% csrf_token %}
+                <div class="row justify-content-center">
+                    <div class="col-lg-6 col-md-8">
+                        <input type="search" name="search" id="search" placeholder="Find visual that work for you">
+                    </div>
+                    <div class="col-lg-1">
+                        <button type="submit" class="btn sowar_stock_color"><li class="fa fa-search"></li></button>
+                    </div>
+                </div>
+                <!--end of row-->
+            </form>
+            <div class="notification-close-cross notification-close"></div>
+        </div>
+        <!-- end search form -->
+        <div class="nav-container ">
+            <div class="bar bar--sm visible-xs">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-3 col-md-2">
+                            <a href="/">
+                                <img class="logo logo-dark" alt="logo" src="{% static 'ssw/img/sowar_stock_logo_black_trans.png' %}">
+                                <img class="logo logo-light" alt="logo" src="{% static 'ssw/img/sowar_stock_logo_black_trans.png' %}">
+                            </a>
+                        </div>
+                        <div class="col-9 col-md-10 text-right">
+                            <a href="#" class="hamburger-toggle" data-toggle-class="#menu1;hidden-xs">
+                                <i class="icon icon--sm stack-interface stack-menu"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!--end of row-->
+                </div>
+                <!--end of container-->
+            </div>
+            <!--end bar-->
+            <nav id="menu1" class="bar bar--sm bar-1 hidden-xs ">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-1 col-md-2 hidden-xs">
+                            <div class="bar__module">
+                                <a href="/">
+                                    <img class="logo logo-dark" style="max-height: 10em" alt="logo" src="{% static 'ssw/img/sowar_stock_logo_black_trans.png' %}">
+                                    <img class="logo logo-light" alt="logo" src="{% static 'ssw/img/sowar_stock_logo_black_trans.png' %}">
+                                </a>
+                            </div>
+                            <!--end module-->
+                        </div>
+                        <div class="col-lg-11 col-md-12 text-right text-left-xs text-left-sm">
+                            <div class="bar__module">
+                                <ul class="menu-horizontal text-left">
+                                    <li>
+                                        <a href="/" {% if activeDashboardMenu == "home" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>HOME</a>
+                                    </li>
+                                    <li class="dropdown">
+                                        <span
+                                            {% if activeDashboardMenu == "photos" or activeDashboardMenu == "vectors" or activeDashboardMenu == "calligraphy" %} class="dropdown__trigger sowar_stock_color_font sowar_stock_color_underline"{% else %} class="dropdown__trigger"{% endif %}
+                                        >
+                                            Marketplace
+                                        </span>
+                                        <div class="dropdown__container" style="left: -431.016px;">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="dropdown__content col-lg-2 col-md-4" style="left: 431.016px;">
+                                                        <ul class="menu-vertical">
+                                                            <li>
+                                                                <a href="{% url 'photos_main' %}" {% if activeDashboardMenu == "photos" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>Photos</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="{% url 'vectors_main' %}" {% if activeDashboardMenu == "vectors" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>Vectors & Paintings</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="{% url 'calligraphy_main' %}" {% if activeDashboardMenu == "calligraphy" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>Calligraphy</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <!--end dropdown content-->
+                                                </div>
+                                                <!--end row-->
+                                            </div>
+                                        </div>
+                                        <!--end dropdown container-->
+                                    </li>
+                                    <li class="dropdown">
+                                        <span
+                                            {% if activeDashboardMenu == "legal_contributor" or activeDashboardMenu == "legal_license" or activeDashboardMenu == "legal_privacy" or activeDashboardMenu == "legal_terms" %} class="dropdown__trigger sowar_stock_color_font sowar_stock_color_underline"{% else %} class="dropdown__trigger"{% endif %}
+                                        >
+                                            Legal
+                                        </span>
+                                        <div class="dropdown__container" style="left: -431.016px;">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="dropdown__content col-lg-2 col-md-4" style="left: 431.016px;">
+                                                        <ul class="menu-vertical">
+                                                            <li>
+                                                                <a href="{% url 'legal_contributor' %}" {% if activeDashboardMenu == "legal_contributor" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>Contributor Agreement</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="{% url 'legal_license' %}" {% if activeDashboardMenu == "legal_license" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>License Agreement</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="{% url 'legal_privacy' %}" {% if activeDashboardMenu == "legal_privacy" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>Privacy Policy</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="{% url 'legal_terms' %}" {% if activeDashboardMenu == "legal_terms" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>Terms & Conditions</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <!--end dropdown content-->
+                                                </div>
+                                                <!--end row-->
+                                            </div>
+                                        </div>
+                                        <!--end dropdown container-->
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'about' %}" {% if activeDashboardMenu == "about" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>ABOUT</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'contact' %}" {% if activeDashboardMenu == "contact" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>CONTACT</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!--end module-->
+                            <div class="bar__module">
+                            </div>
+                            <!--end module-->
+                        </div>
+                    </div>
+                    <!--end of row-->
+                </div>
+                <!--end of container-->
+            </nav>
+            <!--end bar-->
+        </div>
+
+        {% if user.type == "contributor" and showcontributormenu %}
+        <!-- contributor menu  -->
+        {% include "ssw/menu/contributor_menu.html" %}
+        <!-- end contributor menu  -->
+        {% endif %}
+
+        {% if user.type == "admin" and showadminmenu %}
+        <!-- admin menu  -->
+        {% include "ssw/menu/admin_menu.html" %}
+        <!-- end admin menu  -->
+        {% endif %}
+
+        {% if user.type == "image_reviewer" and showreviewermenu %}
+        <!-- image reviewer menu  -->
+        {% include "ssw/menu/image_reviewer_menu.html" %}
+        <!-- end image reviewer menu  -->
+        {% endif %}
+
+        <div class="main-container">
+
+            <div class="row bg--secondary">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    {% for message in messages %}
+                        <div class="alert bg--{{message.tags}}">
+                            <div class="alert__body">
+                                <span>{{message}}</span>
+                            </div>
+                            <div class="alert__close">×</div>
+                        </div>
+                    {% endfor %}
+                    {% if user.type == "contributor" and not user.is_verified %}
+                        <div class="alert bg--error">
+                            <div class="alert__body">
+                                <span>Please complete your profile from account settings</span>
+                            </div>
+                            <div class="alert__close">×</div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            {% block content %}{% endblock %}
+            <footer class="text-center-xs space--xs bg--dark ">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <ul class="list-inline">
+                                <li>
+                                    <a href="#">
+                                        <span class="h6 type--uppercase">About</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="h6 type--uppercase">Careers</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="h6 type--uppercase">Support</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-5 text-right text-center-xs">
+                            <ul class="social-list list-inline list--hover">
+                                <li>
+                                    <a href="#">
+                                        <i class="socicon socicon-google icon icon--xs"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="socicon socicon-twitter icon icon--xs"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="socicon socicon-facebook icon icon--xs"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="socicon socicon-instagram icon icon--xs"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--end of row-->
+                    <div class="row">
+                        <div class="col-md-7">
+                            <span class="type--fine-print">&copy;
+                                <span class="update-year"></span> Stack Inc.</span>
+                            <a class="type--fine-print" href="#">Privacy Policy</a>
+                            <a class="type--fine-print" href="#">Legal</a>
+                        </div>
+                        <div class="col-md-5 text-right text-center-xs">
+                            <a class="type--fine-print" href="#">support@stack.io</a>
+                        </div>
+                    </div>
+                    <!--end of row-->
+                </div>
+                <!--end of container-->
+            </footer>
+        </div>
+        <!--<div class="loader"></div>-->
+        <a class="back-to-top inner-link" href="#start" data-scroll-class="100vh:active">
+            <i class="stack-interface stack-up-open-big"></i>
+        </a>
+        <script src="{% static 'ssw/js/jquery-3.1.1.min.js' %}"></script>
+        <script src="{% static 'ssw/js/flickity.min.js' %}"></script>
+        <script src="{% static 'ssw/js/easypiechart.min.js' %}"></script>
+        <script src="{% static 'ssw/js/parallax.js' %}"></script>
+        <script src="{% static 'ssw/js/typed.min.js' %}"></script>
+        <script src="{% static 'ssw/js/datepicker.js' %}"></script>
+        <script src="{% static 'ssw/js/isotope.min.js' %}"></script>
+        <script src="{% static 'ssw/js/ytplayer.min.js' %}"></script>
+        <script src="{% static 'ssw/js/lightbox.min.js' %}"></script>
+        <script src="{% static 'ssw/js/granim.min.js' %}"></script>
+        <script src="{% static 'ssw/js/jquery.steps.min.js' %}"></script>
+        <script src="{% static 'ssw/js/countdown.min.js' %}"></script>
+        <script src="{% static 'ssw/js/twitterfetcher.min.js' %}"></script>
+        <script src="{% static 'ssw/js/spectragram.min.js' %}"></script>
+        <script src="{% static 'ssw/js/smooth-scroll.min.js' %}"></script>
+        <script src="{% static 'ssw/js/scripts.js' %}"></script>
+        <script src="{% static 'ssw/js/main.js' %}"></script>
+        <script>
+            {% if user.type == "admin" %}
+                $.get( "/ajax/pending_products_count/", function( data ) {
+                    var result = data.result
+                    if(result == "success"){
+                        var count = data.count
+                        if(count > 0){
+                            $("#products_count").after('<span class="label label-danger" style="min-width:10px">'+count+'</span>')
+                        }
+                    }
+                });
+
+                $.get( "/ajax/pending_requests_count/", function( data ) {
+                    var result = data.result
+                    if(result == "success"){
+                        var count = data.count
+                        if(count > 0){
+                            $("#requests_count").after('<span class="label label-danger" style="min-width:10px">'+count+'</span>')
+                        }
+                    }
+                });
+
+                $.get( "/ajax/pending_faqs_count/", function( data ) {
+                    var result = data.result
+                    if(result == "success"){
+                        var count = data.count
+                        if(count > 0){
+                            $("#faqs_count").after('<span class="label label-danger" style="min-width:10px">'+count+'</span>')
+                        }
+                    }
+                });
+            {% endif %}
+
+            {% if user.type == "image_reviewer" %}
+                $.get( "/ajax/pending_products_count/", function( data ) {
+                    var result = data.result
+                    if(result == "success"){
+                        var count = data.count
+                        if(count > 0){
+                            $("#products_count").after('<span class="label label-danger" style="min-width:10px">'+count+'</span>')
+                        }
+                    }
+                });
+            {% endif %}
+
+            {% if user.type == "client" %}
+                $.get( "/ajax/cart_items_count/", function( data ) {
+                    var result = data.result
+                    if(result == "success"){
+                        var count = data.count
+                        if(count > 0){
+                            $("#shopping_cart_icon").attr('data-count',count)
+                        }
+                    }
+                });
+            {% endif %}
+        </script>
+        {% block js %}{% endblock%}
+    </body>
+</html>

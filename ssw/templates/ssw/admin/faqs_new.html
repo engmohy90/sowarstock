@@ -1,0 +1,42 @@
+{% extends "ssw/main.html" %}
+{% load static from staticfiles %}
+{% load thumbnail %}
+
+{% block title %}
+FAQs
+{% endblock %}
+
+{% block content %}
+
+<section class="bg--secondary space--sm">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="boxed boxed--lg boxed--border">
+                                <h4>
+                                    FAQs
+                                </h4>
+                                <br>
+                                <hr>
+                                <form method="post" action="">
+                                    {% csrf_token %}
+                                    {{ form.as_p }}
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4">
+                                            <button type="submit" class="btn btn--primary type--uppercase">Save</button>
+                                        </div>
+                                        <div class="col-lg-3 col-md-4">
+                                            <a href="/admin/faqs" class="btn btn--default type--uppercase">Cancel</a>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--end of row-->
+                </div>
+                <!--end of container-->
+            </section>
+
+{% endblock %}

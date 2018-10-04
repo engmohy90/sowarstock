@@ -1,0 +1,82 @@
+{% extends "ssw/main.html" %}
+{% load static from staticfiles %}
+{% load watermark %}
+{% block title %}
+Search Results
+{% endblock %}
+
+{% block content %}
+
+<section class="text-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <h2>Showing results for “{{keywords}}”</h2>
+                <p class="lead">
+                    <span>{{products|length}}</span> results found
+                </p>
+            </div>
+        </div>
+        <!--end of row-->
+    </div>
+    <!--end of container-->
+</section>
+{% if products %}
+<section>
+    <div class="container">
+        <div class="row">
+            {% for product in products %}
+                <div class="col-md-4">
+                    <a href="{% url 'product_public' product.public_id %}" class="block">
+                        <div class="feature feature-1 boxed boxed--border">
+                            <h6 class="type--uppercase color--primary">{{product.category}}</h6>
+                            <img src="{{product.image.url|watermark:'watermark white, position=C, opacity=100'}}">
+                            <p>
+                                {{product.title}}
+                            </p>
+                        </div>
+                        <!--end feature-->
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+        <!--end of row-->
+    </div>
+    <!--end of container-->
+</section>
+{% endif %}
+<section class="text-center bg--secondary">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8 col-lg-6">
+                            <div class="cta">
+                                <h2>Didn't find what you were after?</h2>
+                                <a class="btn btn--primary type--uppercase" href="#" data-notification-link="search-box">
+                                    <span class="btn__text">
+                                        Try Another Search
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end of row-->
+                </div>
+                <!--end of container-->
+            </section>
+{% endblock %}
+
+{% block js %}
+<script>
+    $(document).ready(function(){
+        var count = $('.new_notification').length
+        if(count > 0){
+             $.get( "/ajax/notifications_undread_to_read/", function( data ) {
+                    var result = data.result
+                    if(result=="success"){
+                        $("#notifications_count").remove()
+                    }
+             });
+        }
+    })
+</script>
+{% endblock %}

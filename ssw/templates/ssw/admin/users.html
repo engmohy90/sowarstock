@@ -1,0 +1,49 @@
+{% extends "ssw/main.html" %}
+{% load static from staticfiles %}
+{% load thumbnail %}
+
+{% block title %}
+Users
+{% endblock %}
+
+{% block content %}
+
+<section class="bg--secondary space--sm">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="boxed boxed--lg boxed--border">
+                                <h4>Users</h4>
+                                <hr>
+                                {% if users %}
+                                    <div class="custom-scroll table-responsive">
+                                      <table id="usersTable" class="table table-bordered table-hover">
+                                          <thead>
+                                          <tr>
+                                              <th>Username</th>
+                                              <th>Status</th>
+                                          </tr>
+                                          </thead>
+                                          <tbody>
+                                          {% for user in users %}
+                                            <tr>
+                                                <td>{{ user.username }}</td>
+                                                <td>{{ user.status }}</td>
+                                            </tr>
+                                          {% endfor %}
+                                          </tbody>
+                                      </table>
+                                    </div>
+                                {% else %}
+                                    There are no users
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--end of row-->
+                </div>
+                <!--end of container-->
+            </section>
+
+{% endblock %}

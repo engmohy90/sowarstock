@@ -1,0 +1,91 @@
+{% extends "ssw/main.html" %}
+{% load static from staticfiles %}
+{% load watermark %}
+{% load my_tags %}
+{% block title %}
+Profile
+{% endblock %}
+
+{% block content %}
+
+<section class="bg--secondary space--sm">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="boxed boxed--lg boxed--border">
+                    <div class="text-block text-center">
+                        {% if other_profile.profile_image %}
+                            <img alt="avatar" src="{{other_profile.profile_image.url}}" class="image--md img-circle">
+                        {% else %}
+                            <img alt="avatar" src="{% static 'ssw/img/default-avatar.png' %}" class="image--md img-circle">
+                        {% endif %}
+                        <span class="h5">{{other_profile.first_name}} {{other_profile.last_name}}</span>
+                        <span>{{other_profile.job_title}}</span>
+                        <span class="label">{{other_profile.type}}</span>
+                    </div>
+                    <div class="text-block clearfix text-center">
+                        <ul class="row row--list">
+                            <li class="col-md-4">
+                                <span class="type--fine-print block">Location:</span>
+                                <span>{{other_profile.address.city}}, {{other_profile.address.state}}&nbsp;</span>
+                                <img alt="Image" class="flag" src="{% static 'ssw/img/flag-1.png' %}">
+                            </li>
+                            <li class="col-md-4">
+                                <span class="type--fine-print block">Member Since:</span>
+                                <span>{{other_profile.date_joined|date:'F Y'}}</span>
+                            </li>
+                            <li class="col-md-4">
+                                <span class="type--fine-print block">Contact:</span>
+                                <a href="#">{{other_profile.email}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="boxed boxed--border">
+                    <h4>About Me</h4>
+                    <p>{{ other_profile.description_about_artist|default:"" }}</p>
+                </div>
+                {% if other_profile.type == "contributor" %}
+                <div class="boxed boxed--border">
+                    <h4>
+                        Products
+                        {% if other_profile.product_set.all.count > 3 %}
+                            <span class="pull-right h5"><a href="#">view all</a></span>
+                        {% endif %}
+                    </h4>
+
+                    <div class="masonry__container row">
+                        {% for product in other_profile.product_set.all %}
+                            {% if forloop.counter == other_profile.product_set.all.count|sub:1 or forloop.counter == other_profile.product_set.all.count|sub:2 or forloop.last %}
+                                <div class="col-md-4 masonry__item">
+                                    <a href="{% url 'product_public' product.public_id %}" class="block">
+                                        <div class="feature feature-1 boxed boxed--border">
+                                            <h6 class="type--uppercase color--primary">{{product.category}}</h6>
+                                            <img src="{{product.image.url|watermark:'watermark white, position=C, opacity=100'}}">
+                                            <p>
+                                                {{product.title}}
+                                            </p>
+                                        </div>
+                                        <!--end feature-->
+                                    </a>
+                                </div>
+                            {% endif %}
+                        {% empty %}
+                            <p>This contributor has no products yet.</p>
+                        {% endfor %}
+                    </div>
+                    <!--end of row-->
+                </div>
+                <div class="boxed boxed--border">
+                    <h4>Portfolio URL</h4>
+                    <p>{{ other_profile.portfolio_url|default:"" }}</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <!--end of row-->
+    </div>
+    <!--end of container-->
+</section>
+
+{% endblock %}

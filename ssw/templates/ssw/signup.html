@@ -1,0 +1,63 @@
+{% extends "ssw/main.html" %}
+{% load static from staticfiles %}
+
+{% block title %}
+Sign Up
+{% endblock %}
+
+{% block content %}
+<section class="imageblock switchable feature-large height-100">
+                <div class="imageblock__content col-lg-6 col-md-4 pos-right">
+                    <div class="background-image-holder" style="background: url(&quot;img/inner-7.jpg&quot;); opacity: 1;">
+                        <img alt="image" src="{% static 'ssw/img/inner-7.jpg' %}">
+                    </div>
+                </div>
+                <div class="container pos-vertical-center">
+                    <div class="row">
+                        <div class="col-lg-5 col-md-7">
+                            <h2>Create a Sowar Stock account</h2>
+                            <p class="lead">Become a member of our community, either as a contributor or a client</p>
+                                <form method="post" action="/signup/">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <input type="text" name="username" placeholder="Username" />
+                                        </div>
+                                        <div class="col-12">
+                                            <input type="email" name="email" placeholder="Email Address" />
+                                        </div>
+                                        <div class="col-12">
+                                            <input type="password" name="password" placeholder="Password" />
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="input-radio input-radio--innerlabel">
+                                                <input id="type_contributor" type="radio" name="user_type" value="contributor" />
+                                                <label for="type_contributor">I'm a Contributor</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="input-radio input-radio--innerlabel">
+                                                <input id="type_client" type="radio" name="user_type" value="client" />
+                                                <label for="type_client">I'm a Client</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="input-checkbox input-checkbox--switch">
+                                                <input id="checkbox-switch" type="checkbox" name="agree" />
+                                                <label for="checkbox-switch"></label>
+                                            </div>
+                                            <span>I have read and agree to the <a href="#">terms and conditions</a></span>
+                                        </div>
+                                        <div class="col-12">
+                                            <button type="submit" class="btn sowar_stock_color type--uppercase">Create Account</button>
+                                        </div>
+                                    </div>
+                                    <!--end row-->
+                                </form>
+                        </div>
+                    </div>
+                    <!--end of row-->
+                </div>
+                <!--end of container-->
+            </section>
+{% endblock %}

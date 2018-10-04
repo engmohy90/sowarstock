@@ -1,0 +1,53 @@
+{% extends "ssw/main.html" %}
+{% load static from staticfiles %}
+
+{% block title %}
+Legal
+{% endblock %}
+
+{% block content %}
+
+    <section class="bg--secondary space--sm">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="boxed boxed--lg boxed--border">
+                        <div id="products" class="account-tab">
+                            <h4>
+                                Legal
+                            </h4>
+                            <hr>
+                            <div class="tab__content">
+                                <div class="custom-scroll table-responsive">
+                                    <table id="licenseTable" class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Current file</th>
+                                                <th>Last Updated</th>
+                                                <th></th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for document in documents %}
+                                            <tr>
+                                                <td><a href="{{document.document.url}}">{{document}}</a></td>
+                                                <td>{{document.updated_at|date:"F d, Y"}}</td>
+                                                <td>
+                                                    <a href="{% url 'admin_legal_edit' document.pk %}" class="color--primary"><i class="fa fa-edit"></i></a>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end of row-->
+        </div>
+        <!--end of container-->
+    </section>
+
+{% endblock %}

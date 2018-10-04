@@ -1,0 +1,100 @@
+{% extends "ssw/main.html" %}
+{% load static from staticfiles %}
+{% load thumbnail %}
+
+{% block title %}
+Categories
+{% endblock %}
+
+{% block content %}
+
+    <section class="bg--secondary space--sm">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="boxed boxed--lg boxed--border">
+                        <div id="products" class="account-tab">
+                            <h4>
+                                Categories
+                            </h4>
+                            <div class="tabs-container" data-content-align="left">
+                                <ul class="tabs">
+                                    <li class="active">
+                                        <div class="tab__title">
+                                            <span class="h5">Main Categories</span>
+                                        </div>
+                                        <div class="tab__content">
+                                            <a class="btn btn--primary btn--icon pull-right" href="{% url 'categories_new' %}">
+                                                <span class="btn__text">
+                                                <i class="fa fa-plus"></i> New Category</span>
+                                            </a>
+                                            <div class="custom-scroll table-responsive">
+                                                <table id="categoriesTable" class="table table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Category</th>
+                                                            <th></th>
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for category in categories %}
+                                                            <tr>
+                                                                <td>{{category}}</td>
+                                                                <td>
+                                                                    <a href="{% url 'categories_edit' category.pk %}" class="color--primary"><i class="fa fa-edit"></i></a>
+                                                                    <a href="{% url 'categories_delete' category.pk %}" class="color--error"><i class="fa fa-trash"></i></a>
+                                                                </td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="tab__title">
+                                            <span class="h5">Subcategories</span>
+                                        </div>
+                                        <div class="tab__content">
+                                            <a class="btn btn--primary btn--icon pull-right" href="{% url 'subcategories_new' %}">
+                                                <span class="btn__text">
+                                                <i class="fa fa-plus"></i> New Subcategory</span>
+                                            </a>
+                                            <br>
+                                            <div class="custom-scroll table-responsive">
+                                                <table id="subcategoriesTable" class="table table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Subcategory</th>
+                                                            <th>Main Category</th>
+                                                            <th></th>
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for subcategory in subcategories %}
+                                                            <tr>
+                                                                <td>{{subcategory}}</td>
+                                                                <td>{{ subcategory.main_category.all|join:", " }}</td>
+                                                                <td>
+                                                                    <a href="{% url 'subcategories_edit' subcategory.pk %}" class="color--primary"><i class="fa fa-edit"></i></a>
+                                                                    <a href="{% url 'subcategories_delete' subcategory.pk %}" class="color--error"><i class="fa fa-trash"></i></a>
+                                                                </td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div><!--end of tabs container-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end of row-->
+        </div>
+        <!--end of container-->
+    </section>
+
+{% endblock %}

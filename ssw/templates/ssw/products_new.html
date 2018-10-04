@@ -1,0 +1,57 @@
+{% extends "ssw/main.html" %}
+{% load static from staticfiles %}
+
+{% block title %}
+New Product
+{% endblock %}
+
+{% block content %}
+
+<section class="bg--secondary space--sm">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="boxed boxed--lg boxed--border">
+                    <div id="account-profile" class="account-tab">
+                        <h4>Profile</h4>
+                        <form method="post" action="" enctype="multipart/form-data">
+                            {{ form.as_p }}
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4">
+                                    <button type="submit" class="btn btn--primary type--uppercase">Save</button>
+                                </div>
+                                <div class="col-lg-3 col-md-4">
+                                    <a href="/products" class="btn btn--default type--uppercase">Cancel</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end of row-->
+    </div>
+    <!--end of container-->
+</section>
+{% endblock %}
+
+{% block js %}
+<script>
+    $( document ).ready(function() {
+        $("#id_category").change(function(){
+            var categoryId = $(this).val()
+
+            $.ajax({
+                url: "/ajax/load_subcategories",
+                data: {
+                    'category' : categoryId
+                },
+                success: function(data){
+                    $("#id_subcategory").html(data)
+                }
+            })
+        })
+    });
+</script>
+{% endblock %}

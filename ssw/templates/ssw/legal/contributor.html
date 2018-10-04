@@ -1,0 +1,44 @@
+{% extends "ssw/main.html" %}
+{% load static from staticfiles %}
+{% block title %}
+Contributor Agreement
+{% endblock %}
+
+{% block content %}
+
+<section class="text-center imagebg" data-overlay="4">
+    <div class="background-image-holder" style="background: url(&quot;img/hero-1.jpg&quot;); opacity: 1;">
+        <img alt="background" src="{% static 'ssw/img/hero-1.jpg' %}">
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-lg-8">
+                <h1>Contributor Agreement</h1>
+            </div>
+        </div>
+        <!--end of row-->
+    </div>
+    <!--end of container-->
+</section>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <br><br>
+                <center>
+                    <h4>Last Updated: {{document.updated_at|date:"d F Y"}}</h4>
+                    <h4><a href="{{document.document.url}}" class="sowar_stock_color_font">Download >></a></h4>
+                </center>
+            </div>
+            <div class="col-md-6">
+                <h4>Please download and read these Terms and Conditions carefully before accessing or using this website, software, apps, and/or plug-ins made available by Sowarstock or its affiliates (individually and collectively, the “Site”).</h4>
+                <h4>This Site is operated by Sowarstock LLC. Throughout the Site, the terms “we”, “us” and “our” refer to Sowarstock. Sowarstock offers this Site, including all information, tools and Services available from this Site to you, the user, conditioned upon your acceptance of all terms, conditions, policies and notices stated here.</h4>
+                <h4>By visiting our Site and/ or purchasing, subscribing, using or testing something from us, you engage in our “Services” and agree to be bound by the following terms and conditions of use (“Terms and Conditions”), including those additional terms and conditions and policies referenced herein and/or available by hyperlink. These Terms and Conditions apply to all users of the Site, including without limitation users who are browsers, vendors, customers, merchants, and/ or contributors of content.</h4>
+            </div>
+        </div>
+        <!--end of row-->
+    </div>
+    <!--end of container-->
+</section>
+
+{% endblock %}

@@ -1,0 +1,132 @@
+{% extends "ssw/main.html" %}
+{% load static from staticfiles %}
+{% load thumbnail %}
+
+{% block title %}
+FAQs
+{% endblock %}
+
+{% block content %}
+
+<section class="bg--secondary space--sm">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="boxed boxed--lg boxed--border">
+                                <h4>
+                                    FAQs
+                                </h4>
+                                <hr>
+                                <div class="tabs-container" data-content-align="left">
+                                    <ul class="tabs">
+                                        <li class="active">
+                                            <div class="tab__title">
+                                                <span class="h5">General FAQs</span>
+                                            </div>
+                                            <div class="tab__content">
+                                                <a class="btn btn--primary btn--icon pull-right" href="/admin/faqs/new">
+                                                    <span class="btn__text">
+                                                        <i class="icon-Add-File"></i> New FAQ</span>
+                                                </a>
+                                                {% if faqs %}
+                                                    <div class="custom-scroll table-responsive">
+                                                      <table id="faqsTable" class="table table-bordered table-hover">
+                                                          <thead>
+                                                          <tr>
+                                                              <th>Question</th>
+                                                              <th>Answer</th>
+                                                              <th></th>
+                                                          </tr>
+                                                          </thead>
+                                                          <tbody>
+                                                          {% for faq in faqs %}
+                                                            <tr>
+                                                                <td>{{ faq.question }}</td>
+                                                                <td>{{ faq.answer }}</td>
+                                                                <td>
+                                                                    <a href="{% url 'faqs_edit' faq.pk %}"><i class="fas fa-edit color--primary"></i></a>
+                                                                    <a href="{% url 'faqs_delete' faq.pk %}"><i class="fas fa-trash-alt color--error"></i></a>
+                                                                </td>
+                                                            </tr>
+                                                          {% endfor %}
+                                                          </tbody>
+                                                      </table>
+                                                    </div>
+                                                {% else %}
+                                                    There are no faqs
+                                                {% endif %}
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="tab__title">
+                                                <span class="h5">Personal FAQs</span>
+                                            </div>
+                                            <div class="tab__content">
+                                                {% if personal_faqs %}
+                                                    <div class="custom-scroll table-responsive">
+                                                      <table id="personalFaqsTable" class="table table-bordered table-hover">
+                                                          <thead>
+                                                          <tr>
+                                                              <th>Question</th>
+                                                              <th>User</th>
+                                                              <th>Answer</th>
+                                                          </tr>
+                                                          </thead>
+                                                          <tbody>
+                                                          {% for faq in personal_faqs %}
+                                                            <tr>
+                                                                <td>{{ faq.question }}</td>
+                                                                <td>{{ faq.owner }}</td>
+                                                                <td id="td_answer_{{faq.pk}}">
+                                                                    {% if faq.answer %}
+                                                                        <span>{{ faq.answer }}</span> <a style="cursor: pointer" class="edit_faq_answer"><i class="fa fa-edit color--primary"></i></a>
+                                                                    {% else %}
+                                                                        <form method="post" action="{% url 'personal_faqs_reply' faq.pk %}">
+                                                                            {% csrf_token %}
+                                                                            <label for="answer_{{faq.pk}}">Answer</label>
+                                                                            <textarea name="answer" id="answer_{{faq.pk}}"></textarea>
+                                                                            <br>
+                                                                            <div class="row">
+                                                                                <div class="col-lg-6">
+                                                                                    <button type="submit" class="btn sowar_stock_color type--uppercase">Answer</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+                                                                    {% endif %}
+                                                                </td>
+                                                            </tr>
+                                                          {% endfor %}
+                                                          </tbody>
+                                                      </table>
+                                                    </div>
+                                                {% else %}
+                                                    There are no faqs
+                                                {% endif %}
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div><!--end of tabs container-->
+                            </div>
+                        </div>
+                    </div>
+                    <!--end of row-->
+                </div>
+                <!--end of container-->
+            </section>
+
+{% endblock %}
+
+{% block js %}
+<script>
+    $(".edit_faq_answer").click(function(){
+        var td = $(this).parent()
+        var td_html = td.html()
+        var answer = $(this).prev().html()
+        var td_id = td.attr('id')
+        var faq_id = td_id.split("_")[2]
+        var form_html = '<form method="post" action="/admin/pfaqs/'+faq_id+'/reply/">{% csrf_token %}<label for="answer_'+faq_id+'">Answer</label><textarea name="answer" id="answer_{{faq.pk}}">'+answer+'</textarea><br>'
+        form_html += '<div class="row"><div class="col-lg-6"><button type="submit" class="btn sowar_stock_color type--uppercase">Answer</button></div></div></form>'
+        td.html(form_html)
+    })
+</script>
+{% endblock %}

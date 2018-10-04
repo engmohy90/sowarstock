@@ -1,0 +1,37 @@
+{% extends "ssw/main.html" %}
+{% load static from staticfiles %}
+{% load thumbnail %}
+
+{% block title %}
+Notifications
+{% endblock %}
+
+{% block content %}
+
+<section class="bg--secondary space--sm">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="boxed boxed--lg boxed--border">
+                                <h4>Notifications</h4>
+                                <hr>
+                                <p>Use this form to send custom notfications to users</p>
+                                <form method="post" action="">
+                                    {% csrf_token %}
+                                    {{ form.as_p }}
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4">
+                                            <button type="submit" class="btn btn--primary type--uppercase">Send</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--end of row-->
+                </div>
+                <!--end of container-->
+            </section>
+
+{% endblock %}

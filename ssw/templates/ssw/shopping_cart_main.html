@@ -1,0 +1,114 @@
+{% extends "ssw/main.html" %}
+{% load static from staticfiles %}
+{% load watermark %}
+{% block title %}
+Shopping Cart
+{% endblock %}
+
+{% block content %}
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Cart Overview</h1>
+                <hr>
+            </div>
+        </div>
+        <!--end of row-->
+    </div>
+    <!--end of container-->
+</section>
+
+<section>
+    <div class="container">
+        {% if items %}
+            <form class="cart-form" method="post" action="{% url 'update_cart' %}">
+                {% csrf_token%}
+                <input type="hidden" value="{{cart.pk}}" name="cart">
+                <div class="row">
+                    {% for item in items %}
+                        <div class="col-md-4">
+                            <div class="product-{{ forloop.counter }}">
+                                <div class="product__controls row align-items-center">
+                                    <div class="col-3">
+                                        <label>License:</label>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="input-select">
+                                            <select name="license_{{item.pk}}" id="license_{{item.pk}}">
+                                                <option value="standard" {% if item.license_type == "standard" %}selected{% endif %}>Standard</option>
+                                                <option value="extended" {% if item.license_type == "extended" %}selected{% endif %}>Extended</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-3 text-right">
+                                        <a href="{% url 'remove_from_cart' item.pk %}" class="checkmark checkmark--cross bg--error"></a>
+                                    </div>
+                                </div>
+                                <br>
+                                <img alt="Image" src="{{item.product.image.url}}">
+                                <div>
+                                    <h5>{{item.product.title}}</h5>
+                                </div>
+                                <div>
+                                    <span class="h4 inline-block">${{item.price}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end item-->
+                    {% endfor %}
+                </div>
+                <!--end of row-->
+                <div class="row jusify-content-center">
+                    <div class="col-lg-2 text-right text-center-xs">
+                        <button type="submit" class="btn">Update Cart</button>
+                    </div>
+                </div>
+                <!--end of row-->
+            </form>
+            <!--end cart form-->
+            <div class="row mt--2">
+                <div class="col-md-12">
+                    <div class="boxed boxed--border cart-total">
+                        <div class="row">
+                            <div class="col-6">
+                                <span class="h5">Cart Subtotal:</span>
+                            </div>
+                            <div class="col-6 text-right">
+                                <span>${{cart.total}}</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <span class="h5">Fees:</span>
+                            </div>
+                            <div class="col-6 text-right">
+                                <span>$0</span>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-6">
+                                <span class="h5">Total:</span>
+                            </div>
+                            <div class="col-6 text-right">
+                                <span class="h5">${{cart.total}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end of row-->
+            <div class="row justify-content-end">
+                <div class="col-lg-2 text-right text-center-xs">
+                    <a href="{% url 'checkout' %}" class="btn btn--primary color--white">Proceed »</a>
+                </div>
+            </div>
+            <!--end of row-->
+        {% else %}
+            <p class="h4">There are no items in your cart.</p>
+        {% endif %}
+    </div>
+    <!--end of container-->
+</section>
+{% endblock %}

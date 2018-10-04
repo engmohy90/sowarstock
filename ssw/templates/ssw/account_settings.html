@@ -1,0 +1,166 @@
+{% extends "ssw/main.html" %}
+{% load static from staticfiles %}
+
+{% block title %}
+Account Settings
+{% endblock %}
+
+{% block content %}
+
+<section class="bg--secondary space--sm">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="boxed boxed--lg boxed--border">
+                                <div class="text-block text-center">
+                                    {% if user.profile_image %}
+                                        <img src="{{ user.profile_image.url }}" class="image--sm img-circle" alt="User Image">
+                                    {% else %}
+                                        <img src="{% static 'ssw/img/default-avatar.png' %}" class="image--sm img-circle" alt="User Image">
+                                    {% endif %}
+                                    <span class="h5">{{user.first_name}} {{user.last_name}}</span>
+                                    <span>{{user.type|title}}</span>
+                                    {% if user.is_verified %}
+                                        <span class="label label-success">Verified</span>
+                                    {% else %}
+                                        <span class="label label-danger">Unverified</span>
+                                    {% endif %}
+                                </div>
+                                <hr>
+                                <div class="text-block">
+                                    <ul class="menu-vertical">
+                                        <li>
+                                            <a href="#" data-toggle-class=".account-tab:not(.hidden);hidden|#account-personal;hidden">Personal Information</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-toggle-class=".account-tab:not(.hidden);hidden|#account-address;hidden">Address</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-toggle-class=".account-tab:not(.hidden);hidden|#account-id;hidden">Photo ID</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-toggle-class=".account-tab:not(.hidden);hidden|#account-public;hidden">Public Information</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-toggle-class=".account-tab:not(.hidden);hidden|#account-password;hidden">Password</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-toggle-class=".account-tab:not(.hidden);hidden|#account-billing;hidden">Billing Details</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="boxed boxed--lg boxed--border">
+                                <div id="account-personal" class="account-tab">
+                                    <h4>Personal Information</h4>
+                                    <form method="post" action="/update_personal_info/" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                            {{ personal_info_form.as_p }}
+                                            <div class="col-lg-3 col-md-4">
+                                                <button type="submit" class="btn btn--primary type--uppercase">Save Profile</button>
+                                            </div>
+                                    </form>
+                                </div>
+                                <div id="account-address" class="hidden account-tab">
+                                    <h4>Address</h4>
+                                    <form method="post" action="/update_address/" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                            {{ address_form.as_p }}
+                                            <div class="col-lg-3 col-md-4">
+                                                <button type="submit" class="btn btn--primary type--uppercase">Save Address</button>
+                                            </div>
+                                    </form>
+                                </div>
+                                <div id="account-id" class="hidden account-tab">
+                                    <h4>Photo ID</h4>
+                                    {% if user.photo_id %}
+                                        <p>Photo ID: <a href="{{user.photo_id.url}}">{{user.photo_id}}</a></p>
+                                        <p>
+                                            <b>Status:  </b>
+                                            {% if user.photo_id_verified %}
+                                                    <span class="label label-success" style="top:auto;right:auto; margin-left:1em">
+                                            {% else %}
+                                                    <span class="label label-danger" style="top:auto;right:auto; margin-left:1em">
+                                            {% endif %}
+                                                {{user.photo_id_verified|yesno:"Verified,Under Process"}}
+                                                </span>
+
+                                        </p>
+                                    {% else %}
+                                        <form method="post" action="/update_photo_id/" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                                {{ photo_id_form.as_p }}
+                                                <div class="col-lg-3 col-md-4">
+                                                    <button type="submit" class="btn btn--primary type--uppercase">Save Photo ID</button>
+                                                </div>
+                                        </form>
+                                    {% endif %}
+                                </div>
+                                <div id="account-public" class="hidden account-tab">
+                                    <h4>Public Information</h4>
+                                    <form Method="post" action="/update_public_info/">
+                                        {% csrf_token %}
+                                        {{ public_info_form.as_p }}
+                                        <div class="col-lg-3 col-md-4">
+                                            <button type="submit" class="btn btn--primary type--uppercase">Save</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div id="account-password" class="hidden account-tab">
+                                    <h4>Password</h4>
+                                    <form Method="post" action="/update_password/">
+                                        {% csrf_token %}
+                                        {{ password_form.as_p }}
+                                        <div class="col-lg-3 col-md-4">
+                                            <button type="submit" class="btn btn--primary type--uppercase">Save Password</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div id="account-billing" class="hidden account-tab">
+                                    <h4>Billing Details</h4>
+                                    <div class="boxed boxed--border bg--secondary">
+                                        <h5>Payment Methods</h5>
+                                        <hr>
+                                        <form>
+                                            <ul>
+                                                <li class="row">
+                                                    <div class="col-md-6">
+                                                        <p>
+                                                            <i class="material-icons">credit_card</i>
+                                                            <span> Mastercard ending in
+                                                                <strong>4722</strong>
+                                                            </span>
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-md-3 text-right text-left-xs">
+                                                        <button type="submit" class="btn bg--error">Remove</button>
+                                                    </div>
+                                                    <div class="col-md-3 text-right text-left-xs">
+                                                        <button type="submit" class="btn">Edit</button>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <hr>
+                                            <button type="submit" class="btn">Add New Method</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end of row-->
+                </div>
+                <!--end of container-->
+            </section>
+
+{% endblock %}
+
+{% block js %}
+<script>
+    $(document).ready(function(){
+        wrapCheckbox("profile_image-clear_id", "clear_checkbox_wrapper", "Delete")
+    })
+</script>
+{% endblock %}
