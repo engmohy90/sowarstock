@@ -1,13 +1,15 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import PasswordChangeForm
-from django.db.models import Q
+from django.contrib.auth.forms import PasswordChangeForm, SetPasswordForm
+from django.core.mail import send_mail
 from itertools import chain
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, JsonResponse
+from django.template import loader
 from notifications.models import Notification
 import random
+import uuid
 
 from . import models
 from . import forms
@@ -51,9 +53,12 @@ def signup(request):
         email = request.POST['email']
         password = request.POST['password']
         if user_type == "contributor":
-            models.Contributor.objects.create_user(username,email,password, type=user_type, status="unverified")
+            user = models.Contributor.objects.create_user(username,email,password, type=user_type, status="unverified")
         elif user_type == "client":
-            models.Client.objects.create_user(username, email, password, type=user_type)
+            user = models.Client.objects.create_user(username, email, password, type=user_type)
+        email_body = loader.render_to_string("ssw/email_verify_email.html", {"user": user})
+        send_mail("شكرا لإنضمامكم", "", "Sowar Stock", [user.email], False,
+                  None, None, None, email_body)
         return HttpResponseRedirect("/")
     return render(request, "ssw/signup.html",{"user":getSowarStockUser(request.user)})
 
@@ -72,6 +77,55 @@ def signin(request):
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect("/")
+
+def verfiy_email(request, uuid):
+    print("in verify email")
+    try:
+        user = models.SowarStockUser.objects.get(email_verification_code=uuid, email_verified=False)
+        user.email_verified = True
+        user.save()
+        return render(request, "ssw/email_verification_success.html", {"user":getSowarStockUser(request.user)})
+    except:
+        messages.error(request, "The link you followed is invalid")
+        return HttpResponseRedirect("/")
+
+def recover_account(request):
+    if request.method == "POST":
+        email = request.POST['email']
+        try:
+            user = models.SowarStockUser.objects.get(email=email)
+            user.forgot_password_verification = uuid.uuid4()
+            user.forgot_password_status = "not_used"
+            user.save()
+            email_body = loader.render_to_string("ssw/email_recover_account.html", {"user": user})
+            send_mail("إعادة كلمة المرور", "", "Sowar Stock", [user.email], False,
+                     None, None, None, email_body)
+            messages.success(request, "An email address has been sent to you")
+        except:
+            messages.error(request, "This email address does not exist")
+        return HttpResponseRedirect("/recover")
+    return render(request, "ssw/recover_account.html", {"user": getSowarStockUser(request.user)})
+
+def reset_password(request, uuid):
+    if request.method == "POST":
+        user = models.SowarStockUser.objects.get(forgot_password_verification=uuid, forgot_password_status="not_used")
+        form = SetPasswordForm(user, request.POST)
+        if form.is_valid():
+            #user.set_password(password)
+            #user.forgot_password_status = "used"
+            #user.save()
+            messages.success(request, "Your password has been reset")
+            return HttpResponseRedirect("/")
+        else:
+            messages.error(request, "Oops! an error has occurred. Please try again !")
+            return HttpResponseRedirect("/reset-password/{}".format(user.forgot_password_verification))
+    try:
+        user = models.SowarStockUser.objects.get(forgot_password_verification=uuid, forgot_password_status="not_used")
+        form = SetPasswordForm(user)
+        return render(request, "ssw/reset_password.html", {"user": getSowarStockUser(request.user), "form": form})
+    except:
+        messages.error(request, "The link you followed is invalid")
+        return HttpResponseRedirect("/")
 
 def search(request):
     if request.method == "POST":
@@ -186,6 +240,10 @@ def other_profile(request, username):
 
 @login_required
 def profile(request):
+    user = getSowarStockUser(request.user)
+    email_body = loader.render_to_string("ssw/email_verify_email.html", {"user": user})
+    send_mail("Test Email Subject", "", "Sowar Stock", [user.email], False,
+              None, None, None, email_body)
     return render(request, "ssw/profile.html", showCorrectMenu(request.user))
 
 @login_required

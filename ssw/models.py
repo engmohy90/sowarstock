@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+import uuid
 from easy_thumbnails.fields import ThumbnailerImageField
 
 # Create your models here.
@@ -19,11 +20,15 @@ class SowarStockUser(User):
                   ("admin", "Admin"),("image_reviewer", "Image Reviewer"),
                   ("financial_admin", "Financial Admin"))
     LANGUAGES = (("en", "English"),("ar", "Arabic"))
+    FORGOT_PASSWORD_STATUSES = (("none", "None"),("not_used", "Not Used"), ("used", "Used"))
     type = models.CharField(max_length=255, choices=USER_TYPES)
     country_code = models.CharField(max_length=5, null=True, blank=True)
     phone = models.CharField(max_length=10, null=True, blank=True)
     preferred_language = models.CharField(max_length=2, choices=LANGUAGES, null=True, blank=True)
+    email_verification_code = models.UUIDField(default=uuid.uuid4)
     email_verified = models.BooleanField(default=False)
+    forgot_password_verification = models.UUIDField(null=True, blank=True, unique=True)
+    forgot_password_status = models.CharField(max_length=255, default="none", choices=FORGOT_PASSWORD_STATUSES)
     address = models.OneToOneField(Address, on_delete=models.PROTECT, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     profile_image = models.ImageField(upload_to='profile_images/', null=True, blank=True)
@@ -71,7 +76,7 @@ class SubCategory(models.Model):
 
 class Product(models.Model):
     ADMIN_STATUS_OPTIONS = (("pending_approval", "Pending Approval"),("pending_admin_approval", "Pending Admin Approval"),("approved", "Approved"), ("rejected", "Rejected"))
-    public_id = models.IntegerField()
+    public_id = models.IntegerField(unique=True)
     title = models.CharField(max_length=255, null=False, blank=False)
     description = models.TextField(blank=True, null=True)
     image = ThumbnailerImageField(upload_to='products/', null=False)
@@ -172,7 +177,7 @@ class ShoppingCartItem(models.Model):
             return 149
 
 class Order(models.Model):
-    order_no = models.IntegerField()
+    order_no = models.IntegerField(unique=True)
     total = models.IntegerField()
     owner = models.ForeignKey(Client, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
