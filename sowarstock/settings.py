@@ -61,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'sowarstock.urls'
@@ -164,3 +165,4 @@ MEDIA_ROOT = '/media/'
 MEDIA_URL = "https://s3.amazonaws.com/%s/" % S3_BUCKET
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto.S3BotoStorage"
 THUMBNAIL_DEFAULT_STORAGE = DEFAULT_FILE_STORAGE
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
