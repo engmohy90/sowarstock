@@ -244,9 +244,6 @@ def other_profile(request, username):
 @login_required
 def profile(request):
     user = getSowarStockUser(request.user)
-    email_body = loader.render_to_string("ssw/email_verify_email.html", {"user": user})
-    send_mail("Test Email Subject", "", "Sowar Stock", [user.email], False,
-              None, None, None, email_body)
     return render(request, "ssw/profile.html", showCorrectMenu(request.user))
 
 @login_required
