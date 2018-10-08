@@ -35,7 +35,7 @@ SECRET_KEY = 'i0nzo5ymkdtzz7bjkj3dpsx7a@5h*1(dj76j(rx5gdhe=$vb8n'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -149,6 +149,18 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
-MEDIA_URL = '/media/'
+#MEDIA_URL = '/media/'
+
+# AMAZON AWS S3 FOR STORING MEDIA FILES
+
+AWS_QUERYSTRING_AUTH = False
+AWS_ACCESS_KEY_ID = 'AKIAJV3HJ7JFSOKVR5WA'
+AWS_SECRET_ACCESS_KEY = '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'
+S3_BUCKET = 'sowarstock'
+AWS_STORAGE_BUCKET_NAME = S3_BUCKET
+MEDIA_ROOT = '/media/'
+MEDIA_URL = "https://s3.amazonaws.com/%s/" % S3_BUCKET
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto.S3BotoStorage"
+THUMBNAIL_DEFAULT_STORAGE = DEFAULT_FILE_STORAGE
