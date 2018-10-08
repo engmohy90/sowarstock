@@ -4,8 +4,7 @@
   src: url('../fonts/stack-interface.eot?33839631#iefix') format('embedded-opentype'),
        url('../fonts/stack-interface.woff2?33839631') format('woff2'),
        url('../fonts/stack-interface.woff?33839631') format('woff'),
-       url('../fonts/stack-interface.ttf?33839631') format('truetype'),
-       url('../fonts/stack-interface.svg?33839631#stack-interface') format('svg');
+       url('../fonts/stack-interface.ttf?33839631') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
