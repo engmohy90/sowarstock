@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^signup/$', views.signup),
     url(r'^login/$', views.signin),
     url(r'^logout/$', views.logout_view),
+    url(r'^thanks-for-joining/$', views.thanks_for_joining, name="thanks_for_joining"),
     url(r'^email/verify/(?P<uuid>[\w\-]+)/$', views.verfiy_email, name="verify_email"),
     url(r'^recover/$', views.recover_account, name="recover_account"),
     url(r'^reset-password/(?P<uuid>[\w\-]+)/$', views.reset_password, name="reset_password"),

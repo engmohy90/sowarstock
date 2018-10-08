@@ -59,7 +59,7 @@ def signup(request):
         email_body = loader.render_to_string("ssw/email_verify_email.html", {"user": user})
         send_mail("شكرا لإنضمامكم", "", "Sowar Stock", [user.email], False,
                   None, None, None, email_body)
-        return HttpResponseRedirect("/")
+        return HttpResponseRedirect("/thanks-for-joining")
     return render(request, "ssw/signup.html",{"user":getSowarStockUser(request.user)})
 
 def signin(request):
@@ -77,6 +77,9 @@ def signin(request):
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect("/")
+
+def thanks_for_joining(request):
+    return render(request, "ssw/thanks_for_joining.html",{"user":getSowarStockUser(request.user)})
 
 def verfiy_email(request, uuid):
     print("in verify email")
