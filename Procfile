@@ -1,1 +1,1 @@
-web: gunicorn sobol.deploy --timeout 90 --log-file -
+web: gunicorn sowarstock.deploy --timeout 90 --log-file -
