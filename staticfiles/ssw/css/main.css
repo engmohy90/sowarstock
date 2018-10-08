@@ -1,0 +1,134 @@
+.sowar_stock_color, .input-radio--innerlabel input:checked + label {
+    background: #ed424e;
+    border-color: #ed424e;
+    color: #fff;
+}
+
+.sowar_stock_color_font{
+    color:  #ed424e !important;
+}
+
+.sowar_stock_color_underline{
+    text-decoration: underline !important;
+    text-decoration-color: #ed424e !important;
+}
+
+.bar-1 .menu-horizontal > li > .dropdown__trigger, .bar-1 .menu-horizontal > li > a{
+    font-size: 1.2em;
+}
+
+.menu-horizontal > li:not(:hover) > a{
+    opacity: 1
+}
+
+.input-radio--innerlabel:hover, .input-radio label:hover, .input-checkbox label:hover,
+ .input-checkbox.input-checkbox--switch label:hover:before{
+    border-color: #ed424e;
+}
+
+.input-checkbox input:checked + label {
+    border-color: #ed424e;
+    background: #ed424e;
+}
+
+.input-checkbox.input-checkbox--switch input:checked + label:before {
+    animation: none !important;
+    background: #ed424e;
+    border-color: #ed424e;
+    transform: translateX(1.85714286em);
+}
+
+.bar .logo {
+  max-height: 10em;
+  max-width: none;
+}
+
+.xx-large-font{
+    font-size: xx-large;
+}
+
+.full-width{
+    max-width: 100%;
+}
+
+a {
+color:#666666;
+}
+
+a:hover {
+    color: #ed424e;
+    text-decoration: none;
+}
+
+.dashboard-menu-active{
+    border-bottom: 2px solid #ed424e !important;
+}
+
+.pull-right {
+    float: right;
+}
+
+.pull-left {
+    float: left;
+}
+
+.label-success{
+    background: green !important;
+}
+
+.label-danger{
+    background: red !important;
+}
+
+.img-circle {
+  border-radius: 50%;
+}
+
+.product-profile-image{
+    height: 3em;
+    width: 3em;
+}
+
+.errorlist {
+    color:red;
+}
+
+.color--warn {
+    color: #f0ad4e
+}
+
+.table-borderless{
+    border-collapse: collapse;
+}
+
+.center-cell-content{
+    text-align: center;
+}
+
+.center-cell-content td{
+    vertical-align: middle;
+}
+
+.fa-stack[data-count]:after{
+  position:absolute;
+  right:-20%;
+  top:-20%;
+  content: attr(data-count);
+  font-size:30%;
+  padding:.6em;
+  border-radius:999px;
+  line-height:.75em;
+  color: white;
+  background:rgba(255,0,0,.85);
+  text-align:center;
+  min-width:2em;
+  font-weight:bold;
+}
+
+.dropdown__trigger{
+    opacity:1 !important;
+}
+
+.menu-vertical li:not(:hover):not(.dropdown--active) {
+    opacity: 1;
+}
