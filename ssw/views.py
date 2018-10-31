@@ -60,7 +60,7 @@ def getSowarStockUser(user):
 
 def create_watermarked_image(product):
     base_image = Image.open(product.image)
-    watermark = Image.open(settings.MEDIA_ROOT+"watermarks/Single_Logo_White_60.png")
+    watermark = Image.open(settings.MEDIA_URL+"watermarks/Single_Logo_White_60.png")
     wwidth, wheight = watermark.size
     width, height = base_image.size
     offset = ((width - wwidth) // 2, (height - wheight) // 2)
@@ -69,7 +69,7 @@ def create_watermarked_image(product):
     transparent.paste(base_image, (0,0))
     transparent.paste(watermark, offset, mask=watermark)
     watermarked_name = uuid.uuid4()
-    transparent.save("{}products/watermarked/{}.png".format(settings.MEDIA_ROOT, watermarked_name))
+    transparent.save("{}products/watermarked/{}.png".format(settings.MEDIA_URL, watermarked_name))
     product.watermark = "products/watermarked/{}.png".format(watermarked_name)
     product.save()
     #transparent.show()
