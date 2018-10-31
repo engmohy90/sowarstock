@@ -1,0 +1,1803 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-10-25 05:06+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: sowarstock/settings.py:130
+msgid "English"
+msgstr "إنجليزي"
+
+#: sowarstock/settings.py:131
+msgid "Arabic"
+msgstr "عربي"
+
+#: ssw/forms.py:51
+msgid "Standard Price ($)"
+msgstr ""
+
+#: ssw/forms.py:52
+msgid "Extended Price ($)"
+msgstr ""
+
+#: ssw/forms.py:86
+msgid "Have a Question ?"
+msgstr ""
+
+#: ssw/forms.py:97
+msgid "Message"
+msgstr ""
+
+#: ssw/forms.py:98
+msgid "Type"
+msgstr ""
+
+#: ssw/templates/ssw/about.html:5 ssw/templates/ssw/main.html:335
+msgid "About"
+msgstr "من نحن"
+
+#: ssw/templates/ssw/about.html:16
+msgid "Hi, We're Sowar Stock"
+msgstr "مرحبا، نحن صور ستوك"
+
+#: ssw/templates/ssw/about.html:18
+msgid ""
+"A community of creative people with a common goal, to find the beauty that's "
+"hidden in the sand"
+msgstr "مجتمع من الأشخاص المبدعين بهدف مشترك وهو إيجاد الجمال المخفي في الرمال"
+
+#: ssw/templates/ssw/about.html:30
+msgid "Our Mission"
+msgstr "هدفنا"
+
+#: ssw/templates/ssw/calligraphy_main.html:6
+#: ssw/templates/ssw/calligraphy_main.html:19 ssw/templates/ssw/main.html:215
+msgid "Calligraphy"
+msgstr "الخطوط"
+
+#: ssw/templates/ssw/calligraphy_main.html:34
+#: ssw/templates/ssw/calligraphy_main.html:44
+#: ssw/templates/ssw/photos_main.html:34 ssw/templates/ssw/photos_main.html:44
+#: ssw/templates/ssw/vectors_main.html:35
+#: ssw/templates/ssw/vectors_main.html:45
+msgid "All Categories"
+msgstr "جميع الفئات"
+
+#: ssw/templates/ssw/calligraphy_main.html:38
+#: ssw/templates/ssw/calligraphy_main.html:40
+#: ssw/templates/ssw/photos_main.html:38 ssw/templates/ssw/photos_main.html:40
+#: ssw/templates/ssw/vectors_main.html:39
+#: ssw/templates/ssw/vectors_main.html:41
+msgid "Category:"
+msgstr "الفئة الرئيسية"
+
+#: ssw/templates/ssw/calligraphy_main.html:72
+msgid "There are no calligraphy."
+msgstr "ليس هناك أي خطوط"
+
+#: ssw/templates/ssw/contact.html:5
+msgid "Contact"
+msgstr "تواصل معنا"
+
+#: ssw/templates/ssw/contact.html:22
+msgid "Contact Us"
+msgstr "تواصل معنا"
+
+#: ssw/templates/ssw/contact.html:24
+msgid ""
+"Visit us in Tarout or make contact via the form below to talk more about "
+"your project or idea."
+msgstr "بإمكانك زيارتنا في مقرنا في تاروت أو قم بتعبئة النموذج للتواصل معنا"
+
+#: ssw/templates/ssw/contact.html:59
+msgid ""
+"To enroll or for any general information, please contact us on "
+"support@sowarstock.com"
+msgstr "بإمكانك مراسلتنا على البريد الإلكتروني support@sowarstock.com  "
+
+#: ssw/templates/ssw/contact.html:60
+msgid "or use the form below."
+msgstr "أو القيام بتعبئة النموذج"
+
+#: ssw/templates/ssw/contact.html:67
+msgid "Your Name:"
+msgstr "الإسم"
+
+#: ssw/templates/ssw/contact.html:71
+msgid "Email Address:"
+msgstr "البريد الإلكتروني"
+
+#: ssw/templates/ssw/contact.html:75
+msgid "Message:"
+msgstr "الرسالة"
+
+#: ssw/templates/ssw/contact.html:79
+msgid "Send Enquiry"
+msgstr "ارسل إستفسارك"
+
+#: ssw/templates/ssw/landing.html:5
+msgid "Sowar Stock"
+msgstr "صور ستوك"
+
+#: ssw/templates/ssw/landing.html:43
+msgid "Exclusive Collections"
+msgstr "مجموعات حصرية"
+
+#: ssw/templates/ssw/landing.html:45
+msgid "Wide range of unique images"
+msgstr "نطاق واسع لصور فريدة"
+
+#: ssw/templates/ssw/landing.html:52
+msgid "Flexible Licensing"
+msgstr "ترخيص مرن"
+
+#: ssw/templates/ssw/landing.html:54
+msgid "Plans suit any budget"
+msgstr "خطط تناسب أي ميزانية"
+
+#: ssw/templates/ssw/landing.html:61
+msgid "Middle East Images"
+msgstr "صور الشرق الأوسط"
+
+#: ssw/templates/ssw/landing.html:63
+msgid "Middle Eastern-themed stock"
+msgstr "صور بطابع الشرق الأوسط"
+
+#: ssw/templates/ssw/landing.html:156
+msgid "New Arrivals"
+msgstr "وصل حديثا"
+
+#: ssw/templates/ssw/landing.html:164 ssw/templates/ssw/landing.html:179
+#: ssw/templates/ssw/landing.html:193 ssw/templates/ssw/landing.html:207
+#: ssw/templates/ssw/landing.html:302 ssw/templates/ssw/landing.html:317
+#: ssw/templates/ssw/landing.html:331 ssw/templates/ssw/landing.html:345
+msgid "Catergory"
+msgstr "الفئة الرئيسية"
+
+#: ssw/templates/ssw/landing.html:168 ssw/templates/ssw/landing.html:183
+#: ssw/templates/ssw/landing.html:197 ssw/templates/ssw/landing.html:211
+#: ssw/templates/ssw/landing.html:306 ssw/templates/ssw/landing.html:321
+#: ssw/templates/ssw/landing.html:335 ssw/templates/ssw/landing.html:349
+msgid "Name"
+msgstr "الإسم"
+
+#: ssw/templates/ssw/landing.html:226
+msgid "Our Contributors"
+msgstr "فنانينا"
+
+#: ssw/templates/ssw/landing.html:238 ssw/templates/ssw/landing.html:252
+#: ssw/templates/ssw/landing.html:266 ssw/templates/ssw/landing.html:280
+msgid "Photographer"
+msgstr "مصور"
+
+#: ssw/templates/ssw/landing.html:294
+msgid "Featured Products"
+msgstr "منتجاتنا المتميزة"
+
+#: ssw/templates/ssw/legal/contributor.html:17 ssw/templates/ssw/main.html:238
+msgid "Contributor Agreement"
+msgstr "إتفاقية الفنان"
+
+#: ssw/templates/ssw/legal/contributor.html:30
+#: ssw/templates/ssw/legal/license.html:30
+msgid "Last Updated"
+msgstr "آخر تحديث"
+
+#: ssw/templates/ssw/legal/contributor.html:31
+#: ssw/templates/ssw/legal/license.html:31
+msgid "Download"
+msgstr "التحميل"
+
+#: ssw/templates/ssw/legal/contributor.html:36
+msgid ""
+"Please download and read these Terms and Conditions carefully before "
+"accessing or using this website, software, apps, and/or plug-ins made "
+"available by Sowarstock or its affiliates (individually and collectively, "
+"the “Site”)."
+msgstr ""
+"الرجاء القيام بتحميل والإطلاع على وثيقة شروط الإستخدام قبل استعمال موقع صور "
+"ستوك"
+
+#: ssw/templates/ssw/legal/contributor.html:37
+msgid ""
+"This Site is operated by Sowarstock LLC. Throughout the Site, the terms "
+"“we”, “us” and “our” refer to Sowarstock. Sowarstock offers this Site, "
+"including all information, tools and Services available from this Site to "
+"you, the user, conditioned upon your acceptance of all terms, conditions, "
+"policies and notices stated here."
+msgstr ""
+"يتم تشغيل هذا الموقع من قبل شركة صور ستوك. في جميع أنحاء الموقع، كلمة 'نحن' "
+"تشير الى صور ستوك. صور ستوك تقدم هذا الموقع ، متضمنا جميع المعلومات والخدمات "
+"والأدوات اليك انت المستخدم مشروط قبولك لجميع الشروط و الأحكام المذكورة هنا "
+
+#: ssw/templates/ssw/legal/contributor.html:38
+msgid ""
+"By visiting our Site and/ or purchasing, subscribing, using or testing "
+"something from us, you engage in our “Services” and agree to be bound by the "
+"following terms and conditions of use (“Terms and Conditions”), including "
+"those additional terms and conditions and policies referenced herein and/or "
+"available by hyperlink. These Terms and Conditions apply to all users of the "
+"Site, including without limitation users who are browsers, vendors, "
+"customers, merchants, and/ or contributors of content."
+msgstr ""
+"بزيارتك لموقعنا أو قيامك بالشراء أو الإشتراك أو إستخدام أو تجربة شيء من "
+"عندنا، فإنك تشترك في خدماتنا، وتوافق على الإلتزام بالشروط و الأحكام المشار "
+"إليها هنا. هذه الشروط والأحكام تنطبق على جميع مستخدمي الموقع، بما في ذلك على "
+"سبيل المثال لا الحصر المتصفحين ، والبائعين ، والعملاء ، والتجار ، و "
+"المساهمين في المحتوى "
+
+#: ssw/templates/ssw/legal/license.html:5
+#: ssw/templates/ssw/legal/license.html:17 ssw/templates/ssw/main.html:241
+msgid "License Agreement"
+msgstr "إتفاقية الترخيص"
+
+#: ssw/templates/ssw/legal/license.html:35
+msgid "Dear Sowarstock Customer,"
+msgstr "عزيزي زبون صور ستوك"
+
+#: ssw/templates/ssw/legal/license.html:36
+msgid ""
+"Please download this document and read it carefully before accessing or "
+"using the Sowarstock website."
+msgstr "الرجاء القيام بتحميل هذه الوثيقة وقرائتها بتمعن قبل استعمال موقع صور ستوك "
+
+#: ssw/templates/ssw/legal/license.html:37
+msgid ""
+"This Content License Agreement is entered between you (either an individual "
+"or an entity) and Sowarstock,\n"
+"                    a company incorporated under the laws of Wyoming, United "
+"States of America with its filing ID 2017-000774677 (the “Sowarstock”)\n"
+"                    for the use of the services provided by Sowarstock "
+"located at Sowarstock.com. Your use of the Sowarstock Services and Content "
+"is\n"
+"                    subject to this Agreement. By accessing or using the "
+"Services provided by Sowarstock you acknowledge that you have read this "
+"Agreement,\n"
+"                    understand it, and you represent and warrant that you "
+"have the right, authority and capacity to enter into this Agreement and "
+"agree to\n"
+"                    be bound by its provisions. If you do not agree with all "
+"of the provisions of this Agreement, do not access and/or use the Services."
+msgstr ""
+"هذه وثيقة الترخيص بينك وبين صور ستوك، شركة قائمة تحت قوانين ولاية وايومنغ من الولايات المتحدة الأمريكية "
+"عن إستعمال الخدمات المقدمة من صور ستوك. بإستخدامك لخدمات ومحتوى صور ستوك تقر على إطلاعك و موافقتك على هذه الإتفاقية. "
+"إذا لا توافق على جميع محتوى هذه الإتفاقية، فلا يحق لك الإطلاع وإستعمال الخدمات "
+
+#: ssw/templates/ssw/login.html:5
+msgid "Sign In"
+msgstr "تسجيل الدخول"
+
+#: ssw/templates/ssw/login.html:16
+msgid "Login to continue"
+msgstr "تسجيل الدخول"
+
+#: ssw/templates/ssw/login.html:18
+msgid "Welcome back, sign in with your existing Stack account credentials"
+msgstr "أهلا بك من جديد. الرجاء تسجيل الدخول بمعلومات حسابك"
+
+#: ssw/templates/ssw/login.html:24 ssw/templates/ssw/signup.html:24
+msgid "Username"
+msgstr "إسم المستخدم"
+
+#: ssw/templates/ssw/login.html:27 ssw/templates/ssw/signup.html:30
+msgid "Password"
+msgstr "كلمة المرور"
+
+#: ssw/templates/ssw/login.html:30 ssw/templates/ssw/main.html:67
+msgid "Login"
+msgstr "تسجيل دخول"
+
+#: ssw/templates/ssw/login.html:35 ssw/templates/ssw/recover_account.html:22
+#: ssw/templates/ssw/reset_password.html:19
+msgid "Dont have an account yet?"
+msgstr "ليس لديك حساب ؟"
+
+#: ssw/templates/ssw/login.html:36 ssw/templates/ssw/recover_account.html:23
+#: ssw/templates/ssw/reset_password.html:20
+msgid "Create account"
+msgstr "إنشاء حساب"
+
+#: ssw/templates/ssw/login.html:38
+msgid "Forgot your username or password?"
+msgstr "هل نسيت إسم المستخدم أو كلمة المرور ؟"
+
+#: ssw/templates/ssw/login.html:39
+msgid "Recover account"
+msgstr "إستعادة الحساب"
+
+#: ssw/templates/ssw/main.html:42
+msgid "Hello"
+msgstr "مرحبا"
+
+#: ssw/templates/ssw/main.html:49
+msgid "Profile"
+msgstr "الملف الشخصي"
+
+#: ssw/templates/ssw/main.html:52
+msgid "Logout"
+msgstr "تسجيل خروج"
+
+#: ssw/templates/ssw/main.html:73 ssw/templates/ssw/signup.html:52
+msgid "Create Account"
+msgstr "إنشاء حساب"
+
+#: ssw/templates/ssw/main.html:147
+msgid "Find visual that work for you"
+msgstr "ابحث"
+
+#: ssw/templates/ssw/main.html:195
+msgid "Home"
+msgstr "الصفحة الرئيسية"
+
+#: ssw/templates/ssw/main.html:201
+msgid "Marketplace"
+msgstr "السوق"
+
+#: ssw/templates/ssw/main.html:209 ssw/templates/ssw/photos_main.html:6
+#: ssw/templates/ssw/photos_main.html:19
+msgid "Photos"
+msgstr "الصور"
+
+#: ssw/templates/ssw/main.html:212
+msgid "Vectors & Paintings"
+msgstr "اللوحات"
+
+#: ssw/templates/ssw/main.html:230
+msgid "legal"
+msgstr "الوثائق القانونية"
+
+#: ssw/templates/ssw/main.html:244
+msgid "Privacy Policy"
+msgstr "سياسة الخصوصية"
+
+#: ssw/templates/ssw/main.html:247
+msgid "Terms & Conditions"
+msgstr "الشروط والأحكام"
+
+#: ssw/templates/ssw/main.html:259
+msgid "about"
+msgstr "من نحن"
+
+#: ssw/templates/ssw/main.html:262
+msgid "contact"
+msgstr "تواصل معنا"
+
+#: ssw/templates/ssw/main.html:340
+msgid "Support"
+msgstr "الدعم"
+
+#: ssw/templates/ssw/photos_main.html:56
+#, fuzzy, python-format
+#| msgid "%(photo.subcategory)s"
+#| msgid_plural ""
+msgid "%(photo.subcategory)s"
+msgstr "المناظر الطبيعية"
+
+#: ssw/templates/ssw/photos_main.html:72
+msgid "There are no photos."
+msgstr "ليس هناك أي صور"
+
+#: ssw/templates/ssw/recover_account.html:5
+#: ssw/templates/ssw/recover_account.html:20
+msgid "Recover Account"
+msgstr "إستعادة الحساب"
+
+#: ssw/templates/ssw/recover_account.html:13
+msgid "Recover your account"
+msgstr "إستعادة حسابك"
+
+#: ssw/templates/ssw/recover_account.html:15
+msgid "Enter your email address to send you a recovery email."
+msgstr "فضلا قم بإدخال بريدك الإلكتروني حتى يتم إرسال لك طريقة استرجاع حسابك"
+
+#: ssw/templates/ssw/recover_account.html:19 ssw/templates/ssw/signup.html:27
+msgid "Email Address"
+msgstr "البريد الإلكتروني"
+
+#: ssw/templates/ssw/reset_password.html:5
+#: ssw/templates/ssw/reset_password.html:17
+msgid "Reset Password"
+msgstr "إعادة كلمة المرور"
+
+#: ssw/templates/ssw/reset_password.html:13
+msgid "Reset your password"
+msgstr "استعيد كلمة المرور الخاصة بك"
+
+#: ssw/templates/ssw/search_results.html:6
+msgid "Search Results"
+msgstr "نتائج البحث"
+
+#: ssw/templates/ssw/search_results.html:15
+msgid "Showing results for "
+msgstr " نتائج البحث عن "
+
+#: ssw/templates/ssw/search_results.html:17
+msgid "results found"
+msgstr "  عدد النتائج "
+
+#: ssw/templates/ssw/search_results.html:54
+msgid "Didn't find what you were after?"
+msgstr "لم تجد ماكنت تبحث عنه ؟"
+
+#: ssw/templates/ssw/search_results.html:57
+msgid "Try Another Search"
+msgstr "جرب البحث مرة أخرى"
+
+#: ssw/templates/ssw/signup.html:5
+msgid "Sign Up"
+msgstr "إنشاء حساب"
+
+#: ssw/templates/ssw/signup.html:18
+msgid "Create a Sowar Stock account"
+msgstr "إنشاء حساب صور ستوك"
+
+#: ssw/templates/ssw/signup.html:19
+msgid "Become a member of our community, either as a contributor or a client"
+msgstr "أصبح عضوا في مجتمعنا، سواء كفنان أو زبون"
+
+#: ssw/templates/ssw/signup.html:35
+msgid "I'm a Contributor"
+msgstr "أنا فنان"
+
+#: ssw/templates/ssw/signup.html:41
+msgid "I'm a Client"
+msgstr "أنا زبون"
+
+#: ssw/templates/ssw/signup.html:49
+msgid "I have read and agree to the"
+msgstr "لقد قرأت"
+
+#: ssw/templates/ssw/signup.html:49
+msgid "terms and conditions"
+msgstr "الشروط والأحكام"
+
+#: ssw/templates/ssw/thanks_for_joining.html:5
+msgid "Thanks for Joining"
+msgstr "شكرا لإنضمامكم"
+
+#: ssw/templates/ssw/thanks_for_joining.html:13
+msgid ""
+"Thanks for joining SowarStock's website. Please complete the registration by "
+"verifying your email."
+msgstr ""
+"شكرا لإنضمامكم لموقع صور ستوك. الرجاء إكمال عملية التسجيل عن طريق تأكيد "
+"البريد الإلكتروني"
+
+#: ssw/templates/ssw/vectors_main.html:6 ssw/templates/ssw/vectors_main.html:19
+msgid "Vectors and Paintings"
+msgstr "اللوحات"
+
+#: ssw/templates/ssw/vectors_main.html:74
+msgid "There are no vectors."
+msgstr "ليس هناك أي لوحات"
+
+#: ssw/views.py:86
+msgid "username and/or password is incorrect"
+msgstr "إسم المستخدم أو البريد الإلكتروني غير صحيح"
+
+#: ssw/views.py:106 ssw/views.py:146
+msgid "The link you followed is invalid"
+msgstr "عفوا ولكن هذا الرابط غير صحيح"
+
+#: ssw/views.py:121
+msgid "An email address has been sent to you"
+msgstr "لقد تم إرسال لك بريد إلكتروني يحتوي على طريقة استرجاع حسابك"
+
+#: ssw/views.py:123
+msgid "This email address does not exist"
+msgstr "هذا البريد الإلكتروني غير مسجل به"
+
+#: ssw/views.py:136
+msgid "Your password has been reset"
+msgstr "لقد تم إعادة كلمة المرور الخاصة بك"
+
+#: ssw/views.py:139
+msgid ""
+"The Password you've entered is not valid. One or more of the Password rules "
+"has not been met. Please try again."
+msgstr ""
+"كلمة المرورة التي أدخلتها لا تتطابق مع الشروط المذكورة. الرجاء المحاولة مرة "
+"أخرى"
+
+#: ssw/views.py:193
+msgid "Thanks for your enquiry, we'll be in touch shortly."
+msgstr "شكرا لك على استفسارك. سوف نتواصل معك قريبا"
+
+#: venv/lib/python3.6/site-packages/django/contrib/messages/apps.py:7
+msgid "Messages"
+msgstr "الرسائل"
+
+#: venv/lib/python3.6/site-packages/django/contrib/sitemaps/apps.py:7
+msgid "Site Maps"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/contrib/staticfiles/apps.py:9
+msgid "Static Files"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/contrib/syndication/apps.py:7
+msgid "Syndication"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/core/paginator.py:42
+msgid "That page number is not an integer"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/core/paginator.py:44
+msgid "That page number is less than 1"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/core/paginator.py:49
+msgid "That page contains no results"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/core/validators.py:31
+msgid "Enter a valid value."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/core/validators.py:102
+#: venv/lib/python3.6/site-packages/django/forms/fields.py:659
+msgid "Enter a valid URL."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/core/validators.py:154
+msgid "Enter a valid integer."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/core/validators.py:165
+msgid "Enter a valid email address."
+msgstr ""
+
+#. Translators: "letters" means latin letters: a-z and A-Z.
+#: venv/lib/python3.6/site-packages/django/core/validators.py:239
+msgid ""
+"Enter a valid 'slug' consisting of letters, numbers, underscores or hyphens."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/core/validators.py:246
+msgid ""
+"Enter a valid 'slug' consisting of Unicode letters, numbers, underscores, or "
+"hyphens."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/core/validators.py:255
+#: venv/lib/python3.6/site-packages/django/core/validators.py:275
+msgid "Enter a valid IPv4 address."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/core/validators.py:260
+#: venv/lib/python3.6/site-packages/django/core/validators.py:276
+msgid "Enter a valid IPv6 address."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/core/validators.py:270
+#: venv/lib/python3.6/site-packages/django/core/validators.py:274
+msgid "Enter a valid IPv4 or IPv6 address."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/core/validators.py:304
+msgid "Enter only digits separated by commas."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/core/validators.py:310
+#, python-format
+msgid "Ensure this value is %(limit_value)s (it is %(show_value)s)."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/core/validators.py:341
+#, python-format
+msgid "Ensure this value is less than or equal to %(limit_value)s."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/core/validators.py:350
+#, python-format
+msgid "Ensure this value is greater than or equal to %(limit_value)s."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/core/validators.py:360
+#, python-format
+msgid ""
+"Ensure this value has at least %(limit_value)d character (it has "
+"%(show_value)d)."
+msgid_plural ""
+"Ensure this value has at least %(limit_value)d characters (it has "
+"%(show_value)d)."
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.6/site-packages/django/core/validators.py:375
+#, python-format
+msgid ""
+"Ensure this value has at most %(limit_value)d character (it has "
+"%(show_value)d)."
+msgid_plural ""
+"Ensure this value has at most %(limit_value)d characters (it has "
+"%(show_value)d)."
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.6/site-packages/django/core/validators.py:394
+#: venv/lib/python3.6/site-packages/django/forms/fields.py:289
+#: venv/lib/python3.6/site-packages/django/forms/fields.py:324
+msgid "Enter a number."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/core/validators.py:396
+#, python-format
+msgid "Ensure that there are no more than %(max)s digit in total."
+msgid_plural "Ensure that there are no more than %(max)s digits in total."
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.6/site-packages/django/core/validators.py:401
+#, python-format
+msgid "Ensure that there are no more than %(max)s decimal place."
+msgid_plural "Ensure that there are no more than %(max)s decimal places."
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.6/site-packages/django/core/validators.py:406
+#, python-format
+msgid ""
+"Ensure that there are no more than %(max)s digit before the decimal point."
+msgid_plural ""
+"Ensure that there are no more than %(max)s digits before the decimal point."
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.6/site-packages/django/core/validators.py:468
+#, python-format
+msgid ""
+"File extension '%(extension)s' is not allowed. Allowed extensions are: "
+"'%(allowed_extensions)s'."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/core/validators.py:520
+msgid "Null characters are not allowed."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/base.py:1110
+#: venv/lib/python3.6/site-packages/django/forms/models.py:752
+msgid "and"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/base.py:1112
+#, python-format
+msgid "%(model_name)s with this %(field_labels)s already exists."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:105
+#, python-format
+msgid "Value %(value)r is not a valid choice."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:106
+msgid "This field cannot be null."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:107
+msgid "This field cannot be blank."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:108
+#, python-format
+msgid "%(model_name)s with this %(field_label)s already exists."
+msgstr ""
+
+#. Translators: The 'lookup_type' is one of 'date', 'year' or 'month'.
+#. Eg: "Title must be unique for pub_date year"
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:112
+#, python-format
+msgid ""
+"%(field_label)s must be unique for %(date_field_label)s %(lookup_type)s."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:129
+#, python-format
+msgid "Field of type: %(field_type)s"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:898
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1766
+msgid "Integer"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:902
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1764
+#, python-format
+msgid "'%(value)s' value must be an integer."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:977
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1833
+msgid "Big (8 byte) integer"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:989
+#, python-format
+msgid "'%(value)s' value must be either True or False."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:990
+#, python-format
+msgid "'%(value)s' value must be either True, False, or None."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:992
+msgid "Boolean (Either True or False)"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1034
+#, python-format
+msgid "String (up to %(max_length)s)"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1098
+msgid "Comma-separated integers"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1147
+#, python-format
+msgid ""
+"'%(value)s' value has an invalid date format. It must be in YYYY-MM-DD "
+"format."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1149
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1292
+#, python-format
+msgid ""
+"'%(value)s' value has the correct format (YYYY-MM-DD) but it is an invalid "
+"date."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1152
+msgid "Date (without time)"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1290
+#, python-format
+msgid ""
+"'%(value)s' value has an invalid format. It must be in YYYY-MM-DD HH:MM[:ss[."
+"uuuuuu]][TZ] format."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1294
+#, python-format
+msgid ""
+"'%(value)s' value has the correct format (YYYY-MM-DD HH:MM[:ss[.uuuuuu]]"
+"[TZ]) but it is an invalid date/time."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1298
+msgid "Date (with time)"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1446
+#, python-format
+msgid "'%(value)s' value must be a decimal number."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1448
+msgid "Decimal number"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1587
+#, python-format
+msgid ""
+"'%(value)s' value has an invalid format. It must be in [DD] [HH:[MM:]]ss[."
+"uuuuuu] format."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1590
+msgid "Duration"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1640
+msgid "Email address"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1663
+msgid "File path"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1729
+#, python-format
+msgid "'%(value)s' value must be a float."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1731
+msgid "Floating point number"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1849
+msgid "IPv4 address"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1880
+msgid "IP address"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1960
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1961
+#, python-format
+msgid "'%(value)s' value must be either None, True or False."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1963
+msgid "Boolean (Either True, False or None)"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1998
+msgid "Positive integer"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:2011
+msgid "Positive small integer"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:2025
+#, python-format
+msgid "Slug (up to %(max_length)s)"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:2057
+msgid "Small integer"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:2064
+msgid "Text"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:2092
+#, python-format
+msgid ""
+"'%(value)s' value has an invalid format. It must be in HH:MM[:ss[.uuuuuu]] "
+"format."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:2094
+#, python-format
+msgid ""
+"'%(value)s' value has the correct format (HH:MM[:ss[.uuuuuu]]) but it is an "
+"invalid time."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:2097
+msgid "Time"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:2223
+msgid "URL"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:2245
+msgid "Raw binary data"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:2295
+#, python-format
+msgid "'%(value)s' is not a valid UUID."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/files.py:221
+msgid "File"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/files.py:360
+msgid "Image"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/related.py:778
+#, python-format
+msgid "%(model)s instance with %(field)s %(value)r does not exist."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/related.py:780
+msgid "Foreign Key (type determined by related field)"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/related.py:1001
+msgid "One-to-one relationship"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/related.py:1051
+#, python-format
+msgid "%(from)s-%(to)s relationship"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/related.py:1052
+#, python-format
+msgid "%(from)s-%(to)s relationships"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/db/models/fields/related.py:1094
+msgid "Many-to-many relationship"
+msgstr ""
+
+#. Translators: If found as last label character, these punctuation
+#. characters will prevent the default label_suffix to be appended to the label
+#: venv/lib/python3.6/site-packages/django/forms/boundfield.py:146
+msgid ":?.!"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/forms/fields.py:52
+msgid "This field is required."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/forms/fields.py:244
+msgid "Enter a whole number."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/forms/fields.py:395
+#: venv/lib/python3.6/site-packages/django/forms/fields.py:1128
+msgid "Enter a valid date."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/forms/fields.py:419
+#: venv/lib/python3.6/site-packages/django/forms/fields.py:1129
+msgid "Enter a valid time."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/forms/fields.py:441
+msgid "Enter a valid date/time."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/forms/fields.py:470
+msgid "Enter a valid duration."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/forms/fields.py:472
+#, python-brace-format
+msgid "The number of days must be between {min_days} and {max_days}."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/forms/fields.py:533
+msgid "No file was submitted. Check the encoding type on the form."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/forms/fields.py:534
+msgid "No file was submitted."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/forms/fields.py:535
+msgid "The submitted file is empty."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/forms/fields.py:537
+#, python-format
+msgid "Ensure this filename has at most %(max)d character (it has %(length)d)."
+msgid_plural ""
+"Ensure this filename has at most %(max)d characters (it has %(length)d)."
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.6/site-packages/django/forms/fields.py:540
+msgid "Please either submit a file or check the clear checkbox, not both."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/forms/fields.py:601
+msgid ""
+"Upload a valid image. The file you uploaded was either not an image or a "
+"corrupted image."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/forms/fields.py:763
+#: venv/lib/python3.6/site-packages/django/forms/fields.py:853
+#: venv/lib/python3.6/site-packages/django/forms/models.py:1272
+#, python-format
+msgid "Select a valid choice. %(value)s is not one of the available choices."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/forms/fields.py:854
+#: venv/lib/python3.6/site-packages/django/forms/fields.py:969
+#: venv/lib/python3.6/site-packages/django/forms/models.py:1271
+msgid "Enter a list of values."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/forms/fields.py:970
+msgid "Enter a complete value."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/forms/fields.py:1187
+msgid "Enter a valid UUID."
+msgstr ""
+
+#. Translators: This is the default suffix added to form field labels
+#: venv/lib/python3.6/site-packages/django/forms/forms.py:86
+msgid ":"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/forms/forms.py:212
+#, python-format
+msgid "(Hidden field %(name)s) %(error)s"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/forms/formsets.py:91
+msgid "ManagementForm data is missing or has been tampered with"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/forms/formsets.py:338
+#, python-format
+msgid "Please submit %d or fewer forms."
+msgid_plural "Please submit %d or fewer forms."
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.6/site-packages/django/forms/formsets.py:345
+#, python-format
+msgid "Please submit %d or more forms."
+msgid_plural "Please submit %d or more forms."
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.6/site-packages/django/forms/formsets.py:371
+#: venv/lib/python3.6/site-packages/django/forms/formsets.py:373
+msgid "Order"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/forms/formsets.py:375
+msgid "Delete"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/forms/models.py:747
+#, python-format
+msgid "Please correct the duplicate data for %(field)s."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/forms/models.py:751
+#, python-format
+msgid "Please correct the duplicate data for %(field)s, which must be unique."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/forms/models.py:757
+#, python-format
+msgid ""
+"Please correct the duplicate data for %(field_name)s which must be unique "
+"for the %(lookup)s in %(date_field)s."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/forms/models.py:766
+msgid "Please correct the duplicate values below."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/forms/models.py:1093
+msgid "The inline value did not match the parent instance."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/forms/models.py:1160
+msgid "Select a valid choice. That choice is not one of the available choices."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/forms/models.py:1274
+#, python-format
+msgid "\"%(pk)s\" is not a valid value."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/forms/utils.py:162
+#, python-format
+msgid ""
+"%(datetime)s couldn't be interpreted in time zone %(current_timezone)s; it "
+"may be ambiguous or it may not exist."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/forms/widgets.py:383
+msgid "Clear"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/forms/widgets.py:384
+msgid "Currently"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/forms/widgets.py:385
+msgid "Change"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/forms/widgets.py:699
+msgid "Unknown"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/forms/widgets.py:700
+msgid "Yes"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/forms/widgets.py:701
+msgid "No"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/template/defaultfilters.py:788
+msgid "yes,no,maybe"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/template/defaultfilters.py:817
+#: venv/lib/python3.6/site-packages/django/template/defaultfilters.py:834
+#, python-format
+msgid "%(size)d byte"
+msgid_plural "%(size)d bytes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.6/site-packages/django/template/defaultfilters.py:836
+#, python-format
+msgid "%s KB"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/template/defaultfilters.py:838
+#, python-format
+msgid "%s MB"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/template/defaultfilters.py:840
+#, python-format
+msgid "%s GB"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/template/defaultfilters.py:842
+#, python-format
+msgid "%s TB"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/template/defaultfilters.py:844
+#, python-format
+msgid "%s PB"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dateformat.py:62
+msgid "p.m."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dateformat.py:63
+msgid "a.m."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dateformat.py:68
+msgid "PM"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dateformat.py:69
+msgid "AM"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dateformat.py:150
+msgid "midnight"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dateformat.py:152
+msgid "noon"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:6
+msgid "Monday"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:6
+msgid "Tuesday"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:6
+msgid "Wednesday"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:6
+msgid "Thursday"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:6
+msgid "Friday"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:7
+msgid "Saturday"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:7
+msgid "Sunday"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:10
+msgid "Mon"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:10
+msgid "Tue"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:10
+msgid "Wed"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:10
+msgid "Thu"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:10
+msgid "Fri"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:11
+msgid "Sat"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:11
+msgid "Sun"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:14
+msgid "January"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:14
+msgid "February"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:14
+msgid "March"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:14
+msgid "April"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:14
+msgid "May"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:14
+msgid "June"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:15
+msgid "July"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:15
+msgid "August"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:15
+msgid "September"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:15
+msgid "October"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:15
+msgid "November"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:16
+msgid "December"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:19
+msgid "jan"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:19
+msgid "feb"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:19
+msgid "mar"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:19
+msgid "apr"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:19
+msgid "may"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:19
+msgid "jun"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:20
+msgid "jul"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:20
+msgid "aug"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:20
+msgid "sep"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:20
+msgid "oct"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:20
+msgid "nov"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:20
+msgid "dec"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:23
+msgctxt "abbrev. month"
+msgid "Jan."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:24
+msgctxt "abbrev. month"
+msgid "Feb."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:25
+msgctxt "abbrev. month"
+msgid "March"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:26
+msgctxt "abbrev. month"
+msgid "April"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:27
+msgctxt "abbrev. month"
+msgid "May"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:28
+msgctxt "abbrev. month"
+msgid "June"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:29
+msgctxt "abbrev. month"
+msgid "July"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:30
+msgctxt "abbrev. month"
+msgid "Aug."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:31
+msgctxt "abbrev. month"
+msgid "Sept."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:32
+msgctxt "abbrev. month"
+msgid "Oct."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:33
+msgctxt "abbrev. month"
+msgid "Nov."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:34
+msgctxt "abbrev. month"
+msgid "Dec."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:37
+msgctxt "alt. month"
+msgid "January"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:38
+msgctxt "alt. month"
+msgid "February"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:39
+msgctxt "alt. month"
+msgid "March"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:40
+msgctxt "alt. month"
+msgid "April"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:41
+msgctxt "alt. month"
+msgid "May"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:42
+msgctxt "alt. month"
+msgid "June"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:43
+msgctxt "alt. month"
+msgid "July"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:44
+msgctxt "alt. month"
+msgid "August"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:45
+msgctxt "alt. month"
+msgid "September"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:46
+msgctxt "alt. month"
+msgid "October"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:47
+msgctxt "alt. month"
+msgid "November"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/dates.py:48
+msgctxt "alt. month"
+msgid "December"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/ipv6.py:8
+msgid "This is not a valid IPv6 address."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/text.py:70
+#, python-format
+msgctxt "String to return when truncating text"
+msgid "%(truncated_text)s..."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/text.py:237
+msgid "or"
+msgstr ""
+
+#. Translators: This string is used as a separator between list elements
+#: venv/lib/python3.6/site-packages/django/utils/text.py:256
+#: venv/lib/python3.6/site-packages/django/utils/timesince.py:83
+msgid ", "
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/utils/timesince.py:9
+#, python-format
+msgid "%d year"
+msgid_plural "%d years"
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.6/site-packages/django/utils/timesince.py:10
+#, python-format
+msgid "%d month"
+msgid_plural "%d months"
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.6/site-packages/django/utils/timesince.py:11
+#, python-format
+msgid "%d week"
+msgid_plural "%d weeks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.6/site-packages/django/utils/timesince.py:12
+#, python-format
+msgid "%d day"
+msgid_plural "%d days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.6/site-packages/django/utils/timesince.py:13
+#, python-format
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.6/site-packages/django/utils/timesince.py:14
+#, python-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.6/site-packages/django/utils/timesince.py:72
+msgid "0 minutes"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/views/csrf.py:110
+msgid "Forbidden"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/views/csrf.py:111
+msgid "CSRF verification failed. Request aborted."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/views/csrf.py:115
+msgid ""
+"You are seeing this message because this HTTPS site requires a 'Referer "
+"header' to be sent by your Web browser, but none was sent. This header is "
+"required for security reasons, to ensure that your browser is not being "
+"hijacked by third parties."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/views/csrf.py:120
+msgid ""
+"If you have configured your browser to disable 'Referer' headers, please re-"
+"enable them, at least for this site, or for HTTPS connections, or for 'same-"
+"origin' requests."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/views/csrf.py:124
+msgid ""
+"If you are using the <meta name=\"referrer\" content=\"no-referrer\"> tag or "
+"including the 'Referrer-Policy: no-referrer' header, please remove them. The "
+"CSRF protection requires the 'Referer' header to do strict referer checking. "
+"If you're concerned about privacy, use alternatives like <a rel=\"noreferrer"
+"\" ...> for links to third-party sites."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/views/csrf.py:132
+msgid ""
+"You are seeing this message because this site requires a CSRF cookie when "
+"submitting forms. This cookie is required for security reasons, to ensure "
+"that your browser is not being hijacked by third parties."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/views/csrf.py:137
+msgid ""
+"If you have configured your browser to disable cookies, please re-enable "
+"them, at least for this site, or for 'same-origin' requests."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/views/csrf.py:142
+msgid "More information is available with DEBUG=True."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/views/generic/dates.py:41
+msgid "No year specified"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/views/generic/dates.py:61
+#: venv/lib/python3.6/site-packages/django/views/generic/dates.py:111
+#: venv/lib/python3.6/site-packages/django/views/generic/dates.py:208
+msgid "Date out of range"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/views/generic/dates.py:90
+msgid "No month specified"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/views/generic/dates.py:142
+msgid "No day specified"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/views/generic/dates.py:188
+msgid "No week specified"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/views/generic/dates.py:338
+#: venv/lib/python3.6/site-packages/django/views/generic/dates.py:367
+#, python-format
+msgid "No %(verbose_name_plural)s available"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/views/generic/dates.py:585
+#, python-format
+msgid ""
+"Future %(verbose_name_plural)s not available because %(class_name)s."
+"allow_future is False."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/views/generic/dates.py:619
+#, python-format
+msgid "Invalid date string '%(datestr)s' given format '%(format)s'"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/views/generic/detail.py:54
+#, python-format
+msgid "No %(verbose_name)s found matching the query"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/views/generic/list.py:67
+msgid "Page is not 'last', nor can it be converted to an int."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/views/generic/list.py:72
+#, python-format
+msgid "Invalid page (%(page_number)s): %(message)s"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/views/generic/list.py:154
+#, python-format
+msgid "Empty list and '%(class_name)s.allow_empty' is False."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/views/static.py:40
+msgid "Directory indexes are not allowed here."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/views/static.py:42
+#, python-format
+msgid "\"%(path)s\" does not exist"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/views/static.py:80
+#, python-format
+msgid "Index of %(directory)s"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/views/templates/default_urlconf.html:6
+msgid "Django: the Web framework for perfectionists with deadlines."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/views/templates/default_urlconf.html:345
+#, python-format
+msgid ""
+"View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
+"target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/views/templates/default_urlconf.html:367
+msgid "The install worked successfully! Congratulations!"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/views/templates/default_urlconf.html:368
+#, python-format
+msgid ""
+"You are seeing this page because <a href=\"https://docs.djangoproject.com/en/"
+"%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener"
+"\">DEBUG=True</a> is in your settings file and you have not configured any "
+"URLs."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/views/templates/default_urlconf.html:383
+msgid "Django Documentation"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/views/templates/default_urlconf.html:384
+msgid "Topics, references, &amp; how-to's"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/views/templates/default_urlconf.html:395
+msgid "Tutorial: A Polling App"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/views/templates/default_urlconf.html:396
+msgid "Get started with Django"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/views/templates/default_urlconf.html:407
+msgid "Django Community"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django/views/templates/default_urlconf.html:408
+msgid "Connect, get help, or contribute"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django_mysql/apps.py:14
+msgid "MySQL extensions"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django_mysql/forms.py:25
+#, python-format
+msgid "Item %(nth)s in the list did not validate: "
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django_mysql/forms.py:26
+#: venv/lib/python3.6/site-packages/django_mysql/forms.py:131
+msgid "No leading, trailing, or double commas."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django_mysql/forms.py:129
+#, python-format
+msgid "Item \"%(item)s\" in the set did not validate: "
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django_mysql/forms.py:130
+#, python-format
+msgid "Item %(nth)s in the set did not validate: "
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django_mysql/forms.py:132
+#, python-format
+msgid "Duplicates are not supported. '%(item)s' appears twice or more."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django_mysql/forms.py:249
+#, python-format
+msgid "'%(value)s' value must be valid JSON."
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django_mysql/models/fields/dynamic.py:31
+msgid "Mapping"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django_mysql/models/fields/enum.py:13
+msgid "Enumeration"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django_mysql/models/fields/lists.py:68
+#, python-format
+msgid "List of %(base_description)s"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django_mysql/models/fields/sets.py:67
+#, python-format
+msgid "Set of %(base_description)s"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django_mysql/models/query.py:299
+#, python-format
+msgid "Approximately %(number)s"
+msgstr ""
+
+#: venv/lib/python3.6/site-packages/django_mysql/validators.py:12
+#, python-format
+msgid ""
+"List contains %(show_value)d item, it should contain no more than "
+"%(limit_value)d."
+msgid_plural ""
+"List contains %(show_value)d items, it should contain no more than "
+"%(limit_value)d."
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.6/site-packages/django_mysql/validators.py:24
+#, python-format
+msgid ""
+"List contains %(show_value)d item, it should contain no fewer than "
+"%(limit_value)d."
+msgid_plural ""
+"List contains %(show_value)d items, it should contain no fewer than "
+"%(limit_value)d."
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.6/site-packages/django_mysql/validators.py:36
+#, python-format
+msgid ""
+"Set contains %(show_value)d item, it should contain no more than "
+"%(limit_value)d."
+msgid_plural ""
+"Set contains %(show_value)d items, it should contain no more than "
+"%(limit_value)d."
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.6/site-packages/django_mysql/validators.py:48
+#, python-format
+msgid ""
+"Set contains %(show_value)d item, it should contain no fewer than "
+"%(limit_value)d."
+msgid_plural ""
+"Set contains %(show_value)d items, it should contain no fewer than "
+"%(limit_value)d."
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.6/site-packages/jsonfield/fields.py:34
+#: venv/lib/python3.6/site-packages/jsonfield/fields.py:46
+#: venv/lib/python3.6/site-packages/jsonfield/fields.py:85
+msgid "Enter valid JSON"
+msgstr ""
+
+#~ msgid "Nature/Landscapes"
+#~ msgstr "المناظر الطبيعية"
+
+#~ msgid "Architecture/Buildings"
+#~ msgstr "المباني"
