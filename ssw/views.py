@@ -355,12 +355,21 @@ def profile(request):
         pending = models.Product.objects.filter(status="pending_approval") | models.Product.objects.filter(owner_id=request.user.id, status="pending_admin_approval")
         approved = models.Product.objects.filter(status="approved")
         rejected = models.Product.objects.filter(status="rejected")
-        sales = models.Order.objects.aggregate(Sum('total'))
-        sales_amount = round(sales['total__sum'], 2)
-        earnings = models.Earning.objects.filter(type="sowarstock").aggregate(Sum('amount'))
-        earnings_amount = round(earnings['amount__sum'], 2)
-        owed = models.Earning.objects.filter(type="contributor", payment=None).aggregate(Sum('amount'))
-        owed_amount = round(owed['amount__sum'],2)
+        try:
+            sales = models.Order.objects.aggregate(Sum('total'))
+            sales_amount = round(sales['total__sum'], 2)
+        except:
+            sales_amount = 0
+        try:
+            earnings = models.Earning.objects.filter(type="sowarstock").aggregate(Sum('amount'))
+            earnings_amount = round(earnings['amount__sum'], 2)
+        except:
+            earnings_amount = 0
+        try:
+            owed = models.Earning.objects.filter(type="contributor", payment=None).aggregate(Sum('amount'))
+            owed_amount = round(owed['amount__sum'],2)
+        except:
+            owed_amount = 0
         return render(request, "ssw/profile.html", {"user": user, "users": users, "contributors": contributors,
                                                     "clients": clients, "pending": pending, "approved": approved,
                                                     "rejected": rejected, "sales": sales_amount,
@@ -374,12 +383,21 @@ def profile(request):
         return render(request, "ssw/profile.html", {"pending": pending, "approved": approved,
                                                     "rejected": rejected, "user": user, **showCorrectMenu(request.user)})
     elif user.type == "financial_admin":
-        sales = models.Order.objects.aggregate(Sum('total'))
-        sales_amount = round(sales['total__sum'], 2)
-        earnings = models.Earning.objects.filter(type="sowarstock").aggregate(Sum('amount'))
-        earnings_amount = round(earnings['amount__sum'], 2)
-        owed = models.Earning.objects.filter(type="contributor", payment=None).aggregate(Sum('amount'))
-        owed_amount = round(owed['amount__sum'], 2)
+        try:
+            sales = models.Order.objects.aggregate(Sum('total'))
+            sales_amount = round(sales['total__sum'], 2)
+        except:
+            sales_amount = 0
+        try:
+            earnings = models.Earning.objects.filter(type="sowarstock").aggregate(Sum('amount'))
+            earnings_amount = round(earnings['amount__sum'], 2)
+        except:
+            earnings_amount = 0
+        try:
+            owed = models.Earning.objects.filter(type="contributor", payment=None).aggregate(Sum('amount'))
+            owed_amount = round(owed['amount__sum'],2)
+        except:
+            owed_amount = 0
         return render(request, "ssw/profile.html", {"user": user, "sales": sales_amount, "earnings": earnings_amount,
                                                     "owed": owed_amount, **showCorrectMenu(request.user)})
 
