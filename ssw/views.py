@@ -15,6 +15,8 @@ from paypal.standard.forms import PayPalPaymentsForm
 from PIL import Image
 import random
 import uuid
+import os
+from django.conf import settings
 
 from . import models
 from . import forms
@@ -58,7 +60,7 @@ def getSowarStockUser(user):
 
 def create_watermarked_image(product):
     base_image = Image.open(product.image)
-    watermark = Image.open("media/watermarks/Single_Logo_White_60.png")
+    watermark = Image.open(settings.MEDIA_ROOT+"watermarks/Single_Logo_White_60.png")
     wwidth, wheight = watermark.size
     width, height = base_image.size
     offset = ((width - wwidth) // 2, (height - wheight) // 2)
@@ -67,14 +69,12 @@ def create_watermarked_image(product):
     transparent.paste(base_image, (0,0))
     transparent.paste(watermark, offset, mask=watermark)
     watermarked_name = uuid.uuid4()
-    transparent.save("media/products/watermarked/{}.png".format(watermarked_name))
+    transparent.save("{}products/watermarked/{}.png".format(settings.MEDIA_ROOT, watermarked_name))
     product.watermark = "products/watermarked/{}.png".format(watermarked_name)
     product.save()
     #transparent.show()
 
 def eps_to_jpeg(product):
-    import os
-    from django.conf import settings
     new_name = uuid.uuid4() + "." + "jpeg"
     os.system("magick {}{} {}{}".format(settings.MEDIA_ROOT, product.file, settings.MEDIA_ROOT, new_name))
     product.image = new_name
