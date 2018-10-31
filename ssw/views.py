@@ -80,10 +80,10 @@ def eps_to_jpeg(product):
     product.image = new_name
     product.save()
 
+
 # Create your views here.
 def landing(request):
-    slider_images = models.Featured.objects.filter(type="slider")
-    return render(request, "ssw/landing.html", {"user": getSowarStockUser(request.user), "slider_images": slider_images,
+    return render(request, "ssw/landing.html", {"user": getSowarStockUser(request.user),
                                                 "activeDashboardMenu": "home"})
 
 
