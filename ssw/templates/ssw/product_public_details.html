@@ -1,6 +1,5 @@
 {% extends "ssw/main.html" %}
 {% load static from staticfiles %}
-{% load watermark %}
 {% block title %}
 {{product.public_id}}
 {% endblock %}
@@ -10,7 +9,19 @@
     <div class="container">
         <div class="row justify-content-around">
             <div class="col-md-7 col-lg-6">
-               <img alt="Image" src="{{product.image.url|watermark:'watermark white, position=C, opacity=100'}}">
+                <ol class="breadcrumbs">
+                    <li>
+                        {% if product.is_photo %}
+                            <a href="{% url 'photos_main' %}">Photos</a>
+                        {% elif product.is_vector %}
+                            <a href="{% url 'vectors_main' %}">Vectors and Paintings</a>
+                        {% elif product.is_calligraphy %}
+                            <a href="{% url 'calligraphy_main' %}">Calligraphy</a>
+                        {% endif %}
+                    </li>
+                    <li>{{product.public_id}}</li>
+                </ol>
+               <img alt="Image" src="{{product.watermark.url}}">
             </div>
             <div class="col-md-5 col-lg-4">
                 <div class="row">
@@ -29,25 +40,57 @@
                 </div>
                 <br>
                 <div class="row">
-                    <span id="license_chosen" class="h3 inline-block sowar_stock_color_font"><b>$15.00</b></span>
+                    <span id="license_chosen" class="h3 inline-block sowar_stock_color_font"><b>${{product.standard_price}}</b></span>
                 </div>
-                {% if user.type == "client" %}
-                    <form method="post" action="{% url 'add_to_cart' %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="product" value="{{product.pk}}">
-                        <div class="col-md-12">
-                            <label for="license"><b>License</b> Type</label>
-                            <div class="input-select">
-                                <select name="license" id="license">
-                                    <option value="standard">Standard</option>
-                                    <option value="extended">Extended</option>
-                                </select>
+                {% if not user.is_authenticated %}
+                <p>If you are interested in this product, please <a href="{% url 'login' %}">login</a> or <a href="{% url 'signup' %}">create an account</a> in order to purchase it.</p>
+                {% elif user.type == "client" %}
+                    {% if user.is_verified %}
+                        <form method="post" action="{% url 'add_to_cart' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="product" value="{{product.pk}}">
+                            <div class="col-md-12">
+                                <label for="license"><b>License</b> Type</label>
+                                <div class="modal-instance">
+                                    <a href="#" class="modal-trigger color--primary"><i class="far fa-question-circle"></i></a>
+                                    <div class="modal-container">
+                                        <div class="modal-content">
+                                            <div class="boxed boxed--lg">
+                                                <h2>Pricing</h2>
+                                                <hr class="short">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <center><h2><i class="fas fa-pencil-alt"></i></h2></center>
+                                                        <h2>STANDARD LICENSE</h2>
+                                                        <p>MINOR USAGE - Unlimited</p>
+                                                        <p>MAJOR USAGE IN RESALE PRODUCT(S) - Up to 10</p>
+                                                        <p>A MAJOR USAGE IN PRODUCT(S) FOR FREE DISTRIBUTION - Up to 1k</p>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <center><h2><i class="fas fa-star"></i></h2></center>
+                                                        <h2>EXTENDED LICENSE</h2>
+                                                        <p>MINOR USAGE - Unlimited</p>
+                                                        <p>MAJOR USAGE IN RESALE PRODUCT(S) - Up to 500</p>
+                                                        <p>A MAJOR USAGE IN PRODUCT(S) FOR FREE DISTRIBUTION - Up to 100k</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-close modal-close-cross"></div>
+                                        </div>
+                                    </div>
+                                </div><!--end of modal instance-->
+                                <div class="input-select">
+                                    <select name="license" id="license">
+                                        <option value="standard">Standard</option>
+                                        <option value="extended">Extended</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6 col-lg-8">
-                            <button type="submit" class="btn sowar_stock_color">Add To Cart</button>
-                        </div>
-                    </form>
+                            <div class="col-md-6 col-lg-8">
+                                <button type="submit" class="btn sowar_stock_color">Add To Cart</button>
+                            </div>
+                        </form>
+                    {% endif %}
                 {% endif %}
             </div>
         </div>
@@ -96,8 +139,8 @@
                             </div>
                             <br>
                             <hr>
-                            <h4>Add your review</h4>
-                            {% if user.type == "client" %}
+                            {% if user.type == "client" and user.is_verified %}
+                                <h4>Add your review</h4>
                                 <div class="row" style="width:100%">
                                     <form method="post" action="">
                                         <div class="form-group" style="width:100%">
@@ -131,9 +174,9 @@
         $("#license").change(function(){
             var val = $(this).val()
             if(val == "standard"){
-                $("#license_chosen").html("<b>$15.00</b>")
+                $("#license_chosen").html("<b>${{product.standard_price}}</b>")
             }else if(val == "extended"){
-                $("#license_chosen").html("<b>$149.00</b>")
+                $("#license_chosen").html("<b>${{product.extended_price}}</b>")
             }
 
         })

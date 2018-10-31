@@ -1,0 +1,138 @@
+{% extends "ssw/main.html" %}
+{% load static from staticfiles %}
+{% load thumbnail %}
+
+{% block title %}
+Featured
+{% endblock %}
+
+{% block content %}
+
+    <section class="bg--secondary space--sm">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="boxed boxed--lg boxed--border">
+                        <div id="products" class="account-tab">
+                            <h4>
+                                Featured
+                            </h4>
+                            <div class="tabs-container" data-content-align="left">
+                                <ul class="tabs">
+                                    <li class="active">
+                                        <div class="tab__title">
+                                            <span class="h5">Slider</span>
+                                        </div>
+                                        <div class="tab__content">
+                                            <a class="btn btn--primary btn--icon pull-right" href="{% url 'admin_featured_slider_new' %}">
+                                                <span class="btn__text">
+                                                <i class="fa fa-plus"></i> New Image</span>
+                                            </a>
+                                            {% if slider_images %}
+                                                <div class="custom-scroll table-responsive">
+                                                    <table id="sliderImagesTable" class="table table-bordered table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Image</th>
+                                                                <th></th>
+                                                          </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for image in slider_images %}
+                                                                <tr>
+                                                                    <td><a href="{{ image.image.url }}"><img src="{{ image.image|thumbnail_url:'thumbnail'}}"></a></td>
+                                                                    <td>
+                                                                        <a href="{% url 'admin_featured_slider_delete' image.pk %}" class="color--error"><i class="fa fa-trash"></i></a>
+                                                                    </td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            {% else %}
+                                                There are no images
+                                            {% endif %}
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="tab__title">
+                                            <span class="h5">Contributors</span>
+                                        </div>
+                                        <div class="tab__content">
+                                            <a class="btn btn--primary btn--icon pull-right" href="{% url 'admin_featured_contributor_new' %}">
+                                                <span class="btn__text">
+                                                <i class="fa fa-plus"></i> New Contributor</span>
+                                            </a>
+                                            {% if contributors %}
+                                                <div class="custom-scroll table-responsive">
+                                                    <table id="contributorsTable" class="table table-bordered table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Contributor</th>
+                                                                <th></th>
+                                                          </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for contributor in contributors %}
+                                                                <tr>
+                                                                    <td><a href="{% url 'other_profile' contributor.contributor %}">{{contributor.contributor}}</a></td>
+                                                                    <td>
+                                                                        <a href="{% url 'admin_featured_contributor_delete' contributor.pk %}" class="color--error"><i class="fa fa-trash"></i></a>
+                                                                    </td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            {% else %}
+                                                There are no contributors
+                                            {% endif %}
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="tab__title">
+                                            <span class="h5">Products</span>
+                                        </div>
+                                        <div class="tab__content">
+                                            <a class="btn btn--primary btn--icon pull-right" href="{% url 'admin_featured_product_new' %}">
+                                                <span class="btn__text">
+                                                <i class="fa fa-plus"></i> New Product</span>
+                                            </a>
+                                            {% if featured_products %}
+                                                <div class="custom-scroll table-responsive">
+                                                    <table id="productsTable" class="table table-bordered table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Product</th>
+                                                                <th></th>
+                                                          </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for product in featured_products %}
+                                                                <tr>
+                                                                    <td><a href="{{ product.product.image.url }}"><img src="{{ product.product.image|thumbnail_url:'thumbnail'}}"></a></td>
+                                                                    <td>
+                                                                        <a href="{% url 'admin_featured_product_delete' product.pk %}" class="color--error"><i class="fa fa-trash"></i></a>
+                                                                    </td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            {% else %}
+                                                There are on products
+                                            {% endif %}
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div><!--end of tabs container-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end of row-->
+        </div>
+        <!--end of container-->
+    </section>
+
+{% endblock %}

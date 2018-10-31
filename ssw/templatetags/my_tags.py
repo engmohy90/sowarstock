@@ -17,3 +17,7 @@ def mul(num, val):
 @register.filter
 def div(num, val):
     return int(num / val)
+
+@register.filter
+def remove_underscore(word):
+    return word.replace('_', ' ')

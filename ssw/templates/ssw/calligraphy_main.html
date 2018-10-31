@@ -1,13 +1,13 @@
 {% extends "ssw/main.html" %}
 {% load static from staticfiles %}
-{% load watermark %}
+{% load i18n %}
+{% load thumbnail %}
 {% block title %}
-Calligraphy
+{% trans "Calligraphy"%}
 {% endblock %}
 
 {% block content %}
 
-{% if calligraphy %}
 <section class="text-center imagebg" data-overlay="4">
     <div class="background-image-holder" style="background: url(&quot;img/hero-1.jpg&quot;); opacity: 1;">
         <img alt="background" src="{% static 'ssw/img/work-5.jpg' %}">
@@ -15,7 +15,7 @@ Calligraphy
     <div class="container">
         <div class="row">
             <div class="col-md-10 col-lg-8">
-                <h1>Calligraphy</h1>
+                <h1>{% trans "Calligraphy"%}</h1>
             </div>
         </div>
         <!--end of row-->
@@ -24,40 +24,54 @@ Calligraphy
 </section>
 <section>
     <div class="container">
-        <div class="masonry">
-            <div class="masonry-filter-container text-center d-flex flex-wrap justify-content-center align-items-center">
-                <span>Category:</span>
-                <div class="masonry-filter-holder">
-                    <div class="masonry__filters" data-filter-all-text="All Categories">
-                        <ul>
-                            <li class="active" data-masonry-filter="*">All Categories</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="masonry__container row">
-                {% for c in calligraphy %}
-                    <div class="col-md-4 masonry__item" data-masonry-filter="{{c.subcategory}}">
-                        <a href="{% url 'product_public' c.public_id %}" class="block">
-                            <div class="feature feature-1 boxed boxed--border">
-                                <h6 class="type--uppercase color--primary">{% if c.subcategory %}{{c.subcategory}}{% endif %}</h6>
-                                <img src="{{c.image.url|watermark:'watermark white, position=C, opacity=100'}}">
-                                <p>
-                                    {{c.title}}
-                                </p>
+        {% if calligraphy %}
+            <div class="masonry">
+                <div class="masonry-filter-container text-center d-flex flex-wrap justify-content-center align-items-center">
+                    {% if LANGUAGE_CODE == 'ar' %}
+                        <div class="masonry-filter-holder">
+                            <div class="masonry__filters" data-filter-all-text="All Categories">
+                                <ul>
+                                    <li class="active" data-masonry-filter="*">{% trans "All Categories"%}</li>
+                                </ul>
                             </div>
-                            <!--end feature-->
-                        </a>
-                    </div>
-                {% endfor %}
+                        </div>
+                        <span>{% trans "Category:"%}</span>
+                    {% else %}
+                        <span>{% trans "Category:"%}</span>
+                        <div class="masonry-filter-holder">
+                            <div class="masonry__filters" data-filter-all-text="All Categories">
+                                <ul>
+                                    <li class="active" data-masonry-filter="*">{% trans "All Categories"%}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="masonry__container row">
+                    {% for c in calligraphy %}
+                        <div class="col-md-4 masonry__item" data-masonry-filter="{{c.subcategory}}">
+                            <a href="{% url 'product_public' c.public_id %}" class="block">
+                                <div class="feature feature-1 boxed boxed--border">
+                                    <h6 class="type--uppercase color--primary">{% if c.subcategory %}{{c.subcategory}}{% endif %}</h6>
+                                    <center>
+                                        <img src="{{ c.image|thumbnail_url:'thumbnail'}}">
+                                        <p>
+                                            {{c.title}}
+                                        </p>
+                                    </center>
+                                </div>
+                                <!--end feature-->
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+                <!--end of row-->
             </div>
-            <!--end of row-->
-        </div>
+        {% else %}
+            <h2>{% trans "There are no calligraphy."%}</h2>
+        {% endif %}
     </div>
     <!--end of container-->
 </section>
-{% else %}
-There are no calligraphy.
-{% endif %}
 
 {% endblock %}

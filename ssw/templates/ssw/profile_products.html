@@ -1,0 +1,55 @@
+{% extends "ssw/main.html" %}
+{% load static from staticfiles %}
+{% block title %}
+Photos
+{% endblock %}
+
+{% block content %}
+
+{% if products %}
+<section>
+    <div class="container">
+        <h4>{{other_profile}}'s Products</h4>
+        <ol class="breadcrumbs">
+            <li>
+                <a href="{% url 'other_profile' other_profile %}">{{other_profile}}</a>
+            </li>
+            <li>Products</li>
+        </ol>
+        <div class="masonry">
+            <div class="masonry-filter-container text-center d-flex flex-wrap justify-content-center align-items-center">
+                <span>Category:</span>
+                <div class="masonry-filter-holder">
+                    <div class="masonry__filters" data-filter-all-text="All Categories">
+                        <ul>
+                            <li class="active" data-masonry-filter="*">All Categories</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--end masonry filters-->
+            <div class="masonry__container row">
+                {% for product in products reversed %}
+                    <div class="col-md-4 masonry__item" data-masonry-filter="{{product.category}}">
+                        <a href="{% url 'profile_product_details' other_profile product.public_id %}" class="block">
+                            <div class="feature feature-1 boxed boxed--border">
+                                <h6 class="type--uppercase color--primary">{{product.category}}</h6>
+                                <img src="{{product.watermark.url}}">
+                                <p>
+                                    {{product.title}}
+                                </p>
+                            </div>
+                            <!--end feature-->
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+            <!--end of row-->
+        </div>
+    </div>
+</section>
+{% else %}
+There are no products.
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,188 @@
+{% extends "ssw/main.html" %}
+{% load static from staticfiles %}
+{% load thumbnail %}
+{% load my_tags %}
+{% block title %}
+Pending Product {{product.public_id}
+{% endblock %}
+
+{% block content %}
+
+<section class="bg--secondary space--sm">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="boxed boxed--lg boxed--border">
+                    <h4>{{product.public_id}}</h4>
+                    <ol class="breadcrumbs">
+                        <li>
+                            {% if user.type == "image_reviewer" %}
+                                 <a href="{% url 'reviewer_products_main' %}">Products</a>
+                            {% elif user.type == "admin" %}
+                                <a href="{% url 'admin_products_main' %}">Products</a>
+                            {% else %}
+                                <a href="{% url 'products' %}">Products</a>
+                            {% endif %}
+                        </li>
+                        <li>{{product.public_id}}</li>
+                    </ol>
+                    <hr>
+                    <h4>Status: {{product.status|capfirst|remove_underscore}}</h4>
+                     <table id="pendingProductsTable" class="table table-bordered table-hover">
+                          <tbody>
+                            <tr>
+                                <td><b>Title</b></td>
+                                <td>{{product.title}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Image</b></td>
+                                <td><a href="{{ product.image.url }}"><img src="{{ product.image|thumbnail_url:'thumbnail'}}"></a></td>
+                            </tr>
+                            {% if product.file_type == "eps" %}
+                                <tr>
+                                    <td><b>File</b></td>
+                                    <td><a href="{{product.file.url}}">Download</a></td>
+                                </tr>
+                            {% endif %}
+                            <tr>
+                                <td><b>Size</b></td>
+                                <td>{{product.product_size}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Description</b></td>
+                                <td>{{product.description}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Keywords</b></td>
+                                <td>{{product.keywords}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Category</b></td>
+                                <td>{{product.category}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Subcategory</b></td>
+                                <td>{{product.subcategory}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Exclusive</b></td>
+                                <td>{{product.exclusive|yesno:"Yes,No"}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Released</b></td>
+                                <td>{{product.released|yesno:"Yes,No"}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Standard Price</b></td>
+                                <td>${{product.standard_price}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Extended Price</b></td>
+                                <td>${{product.extended_price}}</td>
+                            </tr>
+                            {% if user.type == "image_reviewer" and product.status == "pending_approval" %}
+                                <tr>
+                                    <td><b>Action</b></td>
+                                    <td>
+                                        <p>
+                                            <a href="{% url 'reviewer_product_approve' product.pk %}" class="btn btn-success">Approve</a>
+                                        </p>
+                                        <div class="modal-instance">
+                                            <a href="#" class="btn btn-danger modal-trigger">Reject</a>
+                                            <div class="modal-container">
+                                                <div class="modal-content">
+                                                    <div class="boxed boxed--lg">
+                                                        <h2>Rejection Reason</h2>
+                                                        <hr class="short">
+                                                        <p class="lead">
+                                                            Please tell us the reason for rejection. This will be sent back to the contributor.
+                                                        </p>
+                                                        <form method="post" action="{% url 'reviewer_product_reject' product.pk %}">
+                                                            {% csrf_token %}
+                                                            <select name="rejection_reason" required>
+                                                                {% for reason in product.REJECTION_REASON_OPTIONS %}
+                                                                    <option value="{{reason.0}}">{{reason.1}}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                            <br><br>
+                                                            <p class="lead">Note</p>
+                                                            <textarea name="rejection_note" class="form-control" style="height:10em" required></textarea>
+                                                            <br>
+                                                            <div class="row">
+                                                                <div class="col-md-3">
+                                                                    <button type="submit" class="btn sowar_stock_color btn__upper reject_button">Submit</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="modal-close modal-close-cross"></div>
+                                                </div>
+                                            </div>
+                                        </div><!--end of modal instance-->
+                                    </td>
+                                </tr>
+                            {% elif user.type == "admin" and product.status == "pending_admin_approval" %}
+                                <tr>
+                                    <td><b>Action</b></td>
+                                    <td>
+                                        <p>
+                                            <a href="{% url 'product_approve' product.pk %}" class="btn btn-success">Approve</a>
+                                        </p>
+                                        <div class="modal-instance">
+                                            <a href="#" class="btn btn-danger modal-trigger">Reject</a>
+                                            <div class="modal-container">
+                                                <div class="modal-content">
+                                                    <div class="boxed boxed--lg">
+                                                        <h2>Rejection Reason</h2>
+                                                        <hr class="short">
+                                                        <p class="lead">
+                                                            Please tell us the reason for rejection. This will be sent back to the contributor.
+                                                        </p>
+                                                        <form method="post" action="{% url 'product_reject' product.pk %}">
+                                                            {% csrf_token %}
+                                                            <select name="rejection_reason" required>
+                                                                {% for reason in product.REJECTION_REASON_OPTIONS %}
+                                                                    <option value="{{reason.0}}">{{reason.1}}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                            <br><br>
+                                                            <p class="lead">Note</p>
+                                                            <textarea name="rejection_note" class="form-control" style="height:10em" required></textarea>
+                                                            <br>
+                                                            <div class="row">
+                                                                <div class="col-md-3">
+                                                                    <button type="submit" class="btn sowar_stock_color btn__upper reject_button">Submit</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="modal-close modal-close-cross"></div>
+                                                </div>
+                                            </div>
+                                        </div><!--end of modal instance-->
+                                    </td>
+                                </tr>
+                            {% endif %}
+                          </tbody>
+                      </table>
+                </div>
+            </div>
+        </div>
+        <!--end of row-->
+    </div>
+    <!--end of container-->
+</section>
+{% endblock %}
+
+{% block js %}
+<script>
+$(document).ready(function(){
+
+    $(".reject_button").click(function(){
+        $(this).prop("disabled",true)
+        $(this).html("Submitting ... ")
+        $(this).closest("form").submit()
+    })
+})
+</script>
+{% endblock %}

@@ -1,7 +1,6 @@
 {% extends "ssw/main.html" %}
 {% load static from staticfiles %}
 {% load thumbnail %}
-{% load watermark %}
 {% block title %}
 Products
 {% endblock %}
@@ -37,25 +36,17 @@ Products
                                                       <tr>
                                                           <th>Photo Id</th>
                                                           <th>Thumbnail</th>
-                                                          <th>Keywords</th>
-                                                          <th>Info</th>
-                                                          <th>Delete</th>
+                                                          <th>Title</th>
                                                       </tr>
                                                       </thead>
                                                       <tbody>
                                                       {% for product in pending %}
                                                         <tr>
-                                                            <td>{{ product.public_id }}</td>
-                                                            <td><a href="{{ product.image.url }}"><img src="{{ product.image|thumbnail_url:'thumbnail'}}"></a></td>
-                                                            <td>{{ product.keywords}}</td>
+                                                            <td><a href="{% url 'product_pending' product.public_id %}">{{ product.public_id }}</a></td>
                                                             <td>
-                                                                <p><b>Main Category: </b>{{product.category}}</p>
-                                                                <p><b>Sub Category: </b>{{product.subcategory}}</p>
-                                                                <p><b>Released: </b>{{product.released|yesno:"Yes,No"}}</p>
+                                                                <a href="{{ product.image.url }}"><img src="{{ product.image|thumbnail_url:'thumbnail'}}"></a>
                                                             </td>
-                                                            <td>
-                                                                <a href="{% url 'product_delete' product.pk %}"><i class="fas fa-backspace" style="color:red"></i></a>
-                                                            </td>
+                                                            <td>{{ product.title }}</td>
                                                         </tr>
                                                       {% endfor %}
                                                       </tbody>
@@ -78,25 +69,15 @@ Products
                                                       <tr>
                                                           <th>Photo Id</th>
                                                           <th>Thumbnail</th>
-                                                          <th>Keywords</th>
-                                                          <th>Info</th>
-                                                          <th>Delete</th>
+                                                          <th>Title</th>
                                                       </tr>
                                                       </thead>
                                                       <tbody>
                                                           {% for product in approved %}
                                                             <tr>
-                                                                <td>{{ product.public_id }}</td>
-                                                                <td><a href="{{ product.image.url}}"><img src="{{ product.image|thumbnail_url:'thumbnail'}}"></a></td>
-                                                                <td>{{ product.keywords}}</td>
-                                                                <td>
-                                                                    <p><b>Main Category: </b>{{product.category}}</p>
-                                                                    <p><b>Sub Category: </b>{{product.subcategory}}</p>
-                                                                    <p><b>Released: </b>{{product.released|yesno:"Yes,No"}}</p>
-                                                                </td>
-                                                                <td>
-                                                                    <a href="{% url 'product_delete' product.pk %}"><i class="fas fa-backspace" style="color:red"></i></a>
-                                                                </td>
+                                                                <td><a href="{% url 'product_details' product.public_id %}">{{ product.public_id }}</a></td>
+                                                                <td><a href="{{ product.image.url }}"><img src="{{ product.image|thumbnail_url:'thumbnail'}}"></a></td>
+                                                                <td>{{ product.title }}</td>
                                                             </tr>
                                                           {% endfor %}
                                                       </tbody>
@@ -119,25 +100,15 @@ Products
                                                       <tr>
                                                           <th>Photo Id</th>
                                                           <th>Thumbnail</th>
-                                                          <th>Keywords</th>
-                                                          <th>Info</th>
-                                                          <th>Delete</th>
+                                                          <th>Title</th>
                                                       </tr>
                                                       </thead>
                                                       <tbody>
                                                       {% for product in rejected %}
                                                         <tr>
-                                                            <td>{{ product.public_id }}</td>
-                                                            <td><a href="{{ product.image.url }}"><img src="{{ product.image|thumbnail_url:'thumbnail' }}"></a></td>
-                                                            <td>{{ product.keywords}}</td>
-                                                            <td>
-                                                                <p><b>Main Category: </b>{{product.category}}</p>
-                                                                <p><b>Sub Category: </b>{{product.subcategory}}</p>
-                                                                <p><b>Released: </b>{{product.released|yesno:"Yes,No"}}</p>
-                                                            </td>
-                                                            <td>
-                                                                <a href="{% url 'product_delete' product.pk %}"><i class="fas fa-backspace" style="color:red"></i></a>
-                                                            </td>
+                                                            <td><a href="{% url 'product_details' product.public_id %}">{{ product.public_id }}</a></td>
+                                                            <td><a href="{{ product.image.url }}"><img src="{{ product.image|thumbnail_url:'thumbnail'}}"></a></td>
+                                                            <td>{{ product.title }}</td>
                                                         </tr>
                                                       {% endfor %}
                                                       </tbody>

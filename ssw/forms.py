@@ -1,10 +1,11 @@
 from django import forms
 from django.forms import ModelForm, PasswordInput, Textarea, ImageField, FileField
-from django.forms.widgets import ClearableFileInput, FileInput, SelectMultiple, CheckboxSelectMultiple
+from django.forms.widgets import ClearableFileInput, Select, SelectMultiple, CheckboxSelectMultiple
 from django.utils.translation import ugettext_lazy as _
 from notifications.models import Notification
 
 from . import models
+
 
 class MyProfileImageFileInput(ClearableFileInput):
     initial_text = 'Current Profile Picture'
@@ -13,30 +14,49 @@ class MyProfileImageFileInput(ClearableFileInput):
 
 
 class ProfilePersonalInfoForm(ModelForm):
-    profile_image = ImageField(label='', required=False, widget=MyProfileImageFileInput)
+    profile_image = ImageField(required=False, widget=MyProfileImageFileInput)
+
     class Meta:
-        model = models.Contributor
-        fields = ["profile_image","first_name", "last_name", "email", "country_code","phone", "preferred_language"]
+        model = models.SowarStockUser
+        fields = ["profile_image", "first_name", "last_name", "email", "country_code", "phone", "preferred_language"]
+
 
 class ProfilePublicInfoForm(ModelForm):
     class Meta:
         model = models.Contributor
-        fields = ["display_name","job_title", "description", "portfolio_url"]
+        fields = ["display_name", "job_title", "description", "portfolio_url"]
+
 
 class AddressForm(ModelForm):
     class Meta:
         model = models.Address
-        fields = ["address1", "address2", "city", "state", "zipcode"]
+        fields = ["address1", "address2", "city", "state","country", "zipcode"]
+
 
 class PhotoIdForm(ModelForm):
+
     class Meta:
         model = models.Contributor
         fields = ["photo_id"]
 
+
+class PaymentMethodForm(ModelForm):
+    class Meta:
+        model = models.Contributor
+        fields = ["payment_method"]
+
+
 class ProductForm(ModelForm):
+    price_type = forms.ChoiceField(choices=(("default", "Default"), ("custom", "Custom")))
+
     class Meta:
         model = models.Product
-        fields = ["title", "image", "description","keywords", "category", "subcategory"]
+        fields = ["title", "file_type", "image", "file", "description", "keywords", "category", "subcategory","exclusive", "released",
+                  "price_type", "standard_price", "extended_price"]
+        labels = {
+            'standard_price': _('Standard Price ($)'),
+            'extended_price': _('Extended Price ($)')
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -51,15 +71,18 @@ class ProductForm(ModelForm):
         elif self.instance.pk:
             self.fields['subcategory'].queryset = self.instance.category.subcategory_set.order_by('name')
 
+
 class ReviewForm(ModelForm):
     class Meta:
         model = models.Review
         fields = ["comment"]
 
+
 class FaqForm(ModelForm):
     class Meta:
         model = models.Faq
         fields = ["question", "answer"]
+
 
 class PersonalFaqForm(ModelForm):
     class Meta:
@@ -69,8 +92,10 @@ class PersonalFaqForm(ModelForm):
             'question': _('Have a Question ?')
         }
 
+
 class NotificationForm(ModelForm):
     recipient = forms.ModelMultipleChoiceField(models.SowarStockUser.objects.all(), label="Recipient (select multiple)", widget=SelectMultiple(attrs={'style': 'height:200%'}))
+
     class Meta:
         model = Notification
         fields = ["recipient", "level", "verb"]
@@ -79,26 +104,56 @@ class NotificationForm(ModelForm):
             'level': _('Type'),
         }
 
+
 class CategoryForm(ModelForm):
     class Meta:
         model = models.Category
         fields = ["name"]
 
+
 class SubcategoryForm(ModelForm):
     main_category = forms.ModelMultipleChoiceField(models.Category.objects.all(), label="Category (select multiple)",
                                                widget=SelectMultiple(attrs={'style': 'height:200%'}))
+
     class Meta:
         model = models.SubCategory
         fields = ["name", "main_category"]
 
+
 class CollectionForm(ModelForm):
     product = forms.ModelMultipleChoiceField(models.Product.objects.all(), label="Product (select multiple)",
                                              widget=CheckboxSelectMultiple)
+
     class Meta:
         model = models.Collection
         fields = ["title", "product"]
+
 
 class LegalDocumentForm(ModelForm):
     class Meta:
         model = models.LegalDocument
         fields = ["document"]
+
+
+class FeaturedSliderForm(ModelForm):
+    class Meta:
+        model = models.Featured
+        fields = ["image"]
+
+
+class FeaturedContributorForm(ModelForm):
+    class Meta:
+        model = models.Featured
+        fields = ["contributor"]
+
+
+class FeaturedProductForm(ModelForm):
+    class Meta:
+        model = models.Featured
+        fields = ["product"]
+
+
+class PaymentForm(ModelForm):
+    class Meta:
+        model = models.Payment
+        fields = ["contributor", "receipt"]

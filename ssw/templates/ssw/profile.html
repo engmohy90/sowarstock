@@ -8,84 +8,90 @@ Profile
 {% block content %}
 
 <section class="bg--secondary space--sm">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="boxed boxed--lg boxed--border">
-                    <div class="text-block text-center">
-                        {% if user.profile_image %}
-                            <img alt="avatar" src="{{user.profile_image.url}}" class="image--md img-circle">
-                        {% else %}
-                            <img alt="avatar" src="{% static 'ssw/img/default-avatar.png' %}" class="image--md img-circle">
-                        {% endif %}
-                        <span class="h5">{{user.first_name}} {{user.last_name}}</span>
-                        <span>{{user.job_title|default:""}}</span>
-                        <span class="label">{{user.type}}</span>
-                    </div>
-                    <div class="text-block clearfix text-center">
-                        <ul class="row row--list">
-                            <li class="col-md-4">
-                                <span class="type--fine-print block">Location:</span>
-                                <span>{{user.address.city}}, {{user.address.state}}&nbsp;</span>
-                                <img alt="Image" class="flag" src="{% static 'ssw/img/flag-1.png' %}">
-                            </li>
-                            <li class="col-md-4">
-                                <span class="type--fine-print block">Member Since:</span>
-                                <span>{{user.date_joined|date:'F Y'}}</span>
-                            </li>
-                            <li class="col-md-4">
-                                <span class="type--fine-print block">Contact:</span>
-                                <a href="#">{{user.email}}</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="boxed boxed--border">
-                    <h4>About Me</h4>
-                    <p>{{ user.description_about_artist|default:"" }}</p>
-                </div>
-                {% if user.type == "contributor" %}
-                <div class="boxed boxed--border">
-                    <h4>
-                        Products
-                        {% if user.product_set.all.count > 3 %}
-                            <span class="pull-right h5"><a href="#">view all</a></span>
-                        {% endif %}
-                    </h4>
-
-                    <div class="masonry__container row">
-                        {% for product in user.product_set.all %}
-                            {% if forloop.counter == user.product_set.all.count|sub:1 or forloop.counter == user.product_set.all.count|sub:2 or forloop.last %}
-                                <div class="col-md-4 masonry__item">
-                                    <a href="{% url 'product_public' product.public_id %}" class="block">
-                                        <div class="feature feature-1 boxed boxed--border">
-                                            <h6 class="type--uppercase color--primary">{{product.category}}</h6>
-                                            <img src="{{product.image.url}}">
-                                            <p>
-                                                {{product.title}}
-                                            </p>
-                                        </div>
-                                        <!--end feature-->
-                                    </a>
-                                </div>
+    {% if user.type == "admin" %}
+        {% include "ssw/profile_admin.html" %}
+    {% elif user.type == "financial_admin" %}
+        {% include "ssw/profile_fadmin.html" %}
+    {% elif user.type == "image_reviewer" %}
+        {% include "ssw/profile_reviewer.html" %}
+    {% else %}
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="boxed boxed--lg boxed--border">
+                        <div class="text-block text-center">
+                            {% if user.profile_image %}
+                                <img alt="avatar" src="{{user.profile_image.url}}" class="image--md img-circle">
+                            {% else %}
+                                <img alt="avatar" src="{% static 'ssw/img/default-avatar.png' %}" class="image--md img-circle">
                             {% endif %}
-                        {% empty %}
-                            <p>This contributor has no products yet.</p>
-                        {% endfor %}
+                            <span class="h5">{{user.first_name}} {{user.last_name}}</span>
+                            <span>{{user.job_title|default:""}}</span>
+                            <span class="label">{{user.type}}</span>
+                        </div>
+                        <div class="text-block clearfix text-center">
+                            <ul class="row row--list">
+                                <li class="col-md-4">
+                                    <span class="type--fine-print block">Location:</span>
+                                    <span>{{user.address.country}}&nbsp;</span>
+                                </li>
+                                <li class="col-md-4">
+                                    <span class="type--fine-print block">Member Since:</span>
+                                    <span>{{user.date_joined|date:'F Y'}}</span>
+                                </li>
+                                <li class="col-md-4">
+                                    <span class="type--fine-print block">Contact:</span>
+                                    <a href="#">{{user.email}}</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                    <!--end of row-->
+                    <div class="boxed boxed--border">
+                        <h4>About Me</h4>
+                        <p>{{ user.description|default:"This person doesn't have anything here yet." }}</p>
+                    </div>
+                    {% if user.type == "contributor" %}
+                    <div class="boxed boxed--border">
+                        <h4>
+                            Products
+                            {% if user.product_set.all.count > 3 %}
+                                <span class="pull-right h5"><a href="{% url 'products' %}">view all</a></span>
+                            {% endif %}
+                        </h4>
+                        {% if user.product_set.all %}
+                            <div class="masonry__container row">
+                                {% for product in user.product_set.all %}
+                                    {% if forloop.counter == user.product_set.all.count|sub:1 or forloop.counter == user.product_set.all.count|sub:2 or forloop.last %}
+                                        <div class="col-md-4 masonry__item">
+                                            <a href="{% url 'product_public' product.public_id %}" class="block">
+                                                <div class="feature feature-1 boxed boxed--border">
+                                                    <h6 class="type--uppercase color--primary">{{product.category}}</h6>
+                                                    <img src="{{product.image.url}}">
+                                                    <p>
+                                                        {{product.title}}
+                                                    </p>
+                                                </div>
+                                                <!--end feature-->
+                                            </a>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        <!--end of row-->
+                        {% else %}
+                            <p>You don't have any products yet.</p>
+                        {% endif %}
+                    </div>
+                    <div class="boxed boxed--border">
+                        <h4>Portfolio URL</h4>
+                        <p>{{ user.portfolio_url|default:"" }}</p>
+                    </div>
+                    {% endif%}
                 </div>
-                <div class="boxed boxed--border">
-                    <h4>Portfolio URL</h4>
-                    <p>{{ user.portfolio_url|default:"" }}</p>
-                </div>
-                {% endif%}
             </div>
+            <!--end of row-->
         </div>
-        <!--end of row-->
-    </div>
-    <!--end of container-->
+        <!--end of container-->
+    {% endif %}
 </section>
-
-
 {% endblock %}

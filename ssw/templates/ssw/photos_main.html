@@ -1,13 +1,13 @@
 {% extends "ssw/main.html" %}
 {% load static from staticfiles %}
-{% load watermark %}
+{% load i18n %}
+{% load thumbnail %}
 {% block title %}
-Photos
+{% trans "Photos"%}
 {% endblock %}
 
 {% block content %}
 
-{% if photos %}
 <section class="text-center imagebg" data-overlay="4">
     <div class="background-image-holder" style="background: url(&quot;img/hero-1.jpg&quot;); opacity: 1;">
         <img alt="background" src="{% static 'ssw/img/recruitment-4.jpg' %}">
@@ -15,7 +15,7 @@ Photos
     <div class="container">
         <div class="row">
             <div class="col-md-10 col-lg-8">
-                <h1>Photos</h1>
+                <h1>{% trans "Photos"%}</h1>
             </div>
         </div>
         <!--end of row-->
@@ -24,40 +24,54 @@ Photos
 </section>
 <section>
     <div class="container">
-        <div class="masonry">
-            <div class="masonry-filter-container text-center d-flex flex-wrap justify-content-center align-items-center">
-                <span>Category:</span>
-                <div class="masonry-filter-holder">
-                    <div class="masonry__filters" data-filter-all-text="All Categories">
-                        <ul>
-                            <li class="active" data-masonry-filter="*">All Categories</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <!--end masonry filters-->
-            <div class="masonry__container row">
-                {% for photo in photos %}
-                    <div class="col-md-4 masonry__item" data-masonry-filter="{{photo.subcategory}}">
-                        <a href="{% url 'product_public' photo.public_id %}" class="block">
-                            <div class="feature feature-1 boxed boxed--border">
-                                <h6 class="type--uppercase color--primary">{{photo.subcategory}}</h6>
-                                <img src="{{photo.image.url|watermark:'watermark white, position=C, opacity=100'}}">
-                                <p>
-                                    {{photo.title}}
-                                </p>
+        {% if photos %}
+            <div class="masonry">
+                <div class="masonry-filter-container text-center d-flex flex-wrap justify-content-center align-items-center">
+                    {% if LANGUAGE_CODE == 'ar' %}
+                        <div class="masonry-filter-holder">
+                            <div class="masonry__filters" data-filter-all-text="All Categories">
+                                <ul>
+                                    <li class="active" data-masonry-filter="*">{% trans "All Categories"%}</li>
+                                </ul>
                             </div>
-                            <!--end feature-->
-                        </a>
-                    </div>
-                {% endfor %}
+                        </div>
+                        <span>{% trans "Category:"%}</span>
+                    {% else %}
+                        <span>{% trans "Category:"%}</span>
+                        <div class="masonry-filter-holder">
+                            <div class="masonry__filters" data-filter-all-text="All Categories">
+                                <ul>
+                                    <li class="active" data-masonry-filter="*">{% trans "All Categories"%}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+                <!--end masonry filters-->
+                <div class="masonry__container row">
+                    {% for photo in photos %}
+                        <div class="col-md-4 masonry__item" data-masonry-filter="{{ photo.subcategory }}">
+                            <a href="{% url 'product_public' photo.public_id %}" class="block">
+                                <div class="feature feature-1 boxed boxed--border">
+                                    <h6 class="type--uppercase color--primary">{{photo.subcategory}}</h6>
+                                    <center>
+                                        <img src="{{ photo.image|thumbnail_url:'thumbnail'}}">
+                                        <p>
+                                            {{photo.title}}
+                                        </p>
+                                    </center>
+                                </div>
+                                <!--end feature-->
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+                <!--end of row-->
             </div>
-            <!--end of row-->
-        </div>
+        {% else %}
+        <h2>{% trans "There are no photos."%}</h2>
+        {% endif %}
     </div>
 </section>
-{% else %}
-There are no photos.
-{% endif %}
 
 {% endblock %}

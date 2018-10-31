@@ -1,8 +1,8 @@
 {% extends "ssw/main.html" %}
 {% load static from staticfiles %}
-
+{% load i18n %}
 {% block title %}
-Sign Up
+{% trans "Sign Up"%}
 {% endblock %}
 
 {% block content %}
@@ -15,30 +15,30 @@ Sign Up
                 <div class="container pos-vertical-center">
                     <div class="row">
                         <div class="col-lg-5 col-md-7">
-                            <h2>Create a Sowar Stock account</h2>
-                            <p class="lead">Become a member of our community, either as a contributor or a client</p>
-                                <form method="post" action="/signup/">
+                            <h2>{% trans "Create a Sowar Stock account"%}</h2>
+                            <p class="lead">{% trans "Become a member of our community, either as a contributor or a client"%}</p>
+                                <form method="post" action="{% url 'signup' %}">
                                     {% csrf_token %}
                                     <div class="row">
                                         <div class="col-12">
-                                            <input type="text" name="username" placeholder="Username" />
+                                            <input type="text" name="username" placeholder='{% trans "Username"%}' />
                                         </div>
                                         <div class="col-12">
-                                            <input type="email" name="email" placeholder="Email Address" />
+                                            <input type="email" name="email" placeholder='{% trans "Email Address"%}' />
                                         </div>
                                         <div class="col-12">
-                                            <input type="password" name="password" placeholder="Password" />
+                                            <input type="password" name="password" placeholder='{% trans "Password"%}' />
                                         </div>
                                         <div class="col-6">
                                             <div class="input-radio input-radio--innerlabel">
                                                 <input id="type_contributor" type="radio" name="user_type" value="contributor" />
-                                                <label for="type_contributor">I'm a Contributor</label>
+                                                <label for="type_contributor">{% trans "I'm a Contributor"%}</label>
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="input-radio input-radio--innerlabel">
                                                 <input id="type_client" type="radio" name="user_type" value="client" />
-                                                <label for="type_client">I'm a Client</label>
+                                                <label for="type_client">{% trans "I'm a Client"%}</label>
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -46,10 +46,10 @@ Sign Up
                                                 <input id="checkbox-switch" type="checkbox" name="agree" />
                                                 <label for="checkbox-switch"></label>
                                             </div>
-                                            <span>I have read and agree to the <a href="#">terms and conditions</a></span>
+                                            <span>{% trans "I have read and agree to the"%} <a href="{% url 'legal_terms' %}">{% trans "terms and conditions"%}</a></span>
                                         </div>
                                         <div class="col-12">
-                                            <button type="submit" class="btn sowar_stock_color type--uppercase">Create Account</button>
+                                            <button type="submit" class="btn sowar_stock_color type--uppercase">{% trans "Create Account"%}</button>
                                         </div>
                                     </div>
                                     <!--end row-->

@@ -1,7 +1,8 @@
 {% extends "ssw/main.html" %}
 {% load static from staticfiles %}
+{% load i18n %}
 {% block title %}
-About
+{% trans "About"%}
 {% endblock %}
 
 {% block content %}
@@ -12,9 +13,9 @@ About
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-lg-6">
-                <h1>Hi, We're Sowar Stock</h1>
+                <h1>{% trans "Hi, We're Sowar Stock"%}</h1>
                 <p class="lead">
-                    An innovative collective of like-minded folks making useful and enduring technology products
+                    {% trans "A community of creative people with a common goal, to find the beauty that's hidden in the sand"%}
                 </p>
             </div>
         </div>
@@ -26,9 +27,12 @@ About
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-10 col-lg-8">
-                <h2>Built on passion and ingenuity</h2>
+                <h2>{% trans "Our Mission"%}</h2>
                 <p class="lead">
-                    Medium Rare is an elite author known for offering high-quality, high-value products backed by timely and personable support. Recognised and awarded by Envato on multiple occasions for producing consistently outstanding products, it's no wonder over 20,000 customers enjoy using Medium Rare templates.
+                    To provide an easy to use platform for creative professionals to make a revenue of their work.
+                    We protect the rights of our creative partners and licenses their work to a global market.
+                    Anyone can be a creative partner by just agreeing to our Terms & Conditions and sending us their personal work, simplicity at it’s finest.
+                    We stand for creative professionalism and our platform offers Photographs, Calligraphy, Vectors, and Drawing.
                 </p>
             </div>
         </div>

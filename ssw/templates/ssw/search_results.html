@@ -1,8 +1,9 @@
 {% extends "ssw/main.html" %}
 {% load static from staticfiles %}
-{% load watermark %}
+{% load i18n %}
+{% load thumbnail %}
 {% block title %}
-Search Results
+{% trans "Search Results"%}
 {% endblock %}
 
 {% block content %}
@@ -11,9 +12,9 @@ Search Results
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-10 col-lg-8">
-                <h2>Showing results for “{{keywords}}”</h2>
+                <h2>{% trans "Showing results for "%}“{{keywords}}”</h2>
                 <p class="lead">
-                    <span>{{products|length}}</span> results found
+                    <span>{{products|length}}</span> {% trans "results found"%}
                 </p>
             </div>
         </div>
@@ -30,10 +31,12 @@ Search Results
                     <a href="{% url 'product_public' product.public_id %}" class="block">
                         <div class="feature feature-1 boxed boxed--border">
                             <h6 class="type--uppercase color--primary">{{product.category}}</h6>
-                            <img src="{{product.image.url|watermark:'watermark white, position=C, opacity=100'}}">
-                            <p>
-                                {{product.title}}
-                            </p>
+                            <center>
+                                <img src="{{ product.image|thumbnail_url:'thumbnail'}}">
+                                <p>
+                                    {{product.title}}
+                                </p>
+                            </center>
                         </div>
                         <!--end feature-->
                     </a>
@@ -50,10 +53,10 @@ Search Results
                     <div class="row">
                         <div class="col-md-8 col-lg-6">
                             <div class="cta">
-                                <h2>Didn't find what you were after?</h2>
+                                <h2>{% trans "Didn't find what you were after?"%}</h2>
                                 <a class="btn btn--primary type--uppercase" href="#" data-notification-link="search-box">
                                     <span class="btn__text">
-                                        Try Another Search
+                                        {% trans "Try Another Search"%}
                                     </span>
                                 </a>
                             </div>

@@ -1,7 +1,8 @@
 {% extends "ssw/main.html" %}
 {% load static from staticfiles %}
+{% load i18n %}
 {% block title %}
-License Agreement
+{% trans "License Agreement"%}
 {% endblock %}
 
 {% block content %}
@@ -13,7 +14,7 @@ License Agreement
     <div class="container">
         <div class="row">
             <div class="col-md-10 col-lg-8">
-                <h1>License Agreement</h1>
+                <h1>{% trans "License Agreement"%}</h1>
             </div>
         </div>
         <!--end of row-->
@@ -26,19 +27,19 @@ License Agreement
             <div class="col-md-6">
                 <br><br>
                 <center>
-                    <h4>Last Updated: {{document.updated_at|date:"d F Y"}}</h4>
-                    <h4><a href="{{document.document.url}}" class="sowar_stock_color_font">Download >></a></h4>
+                    <h4>{% trans "Last Updated"%}: {{document.updated_at|date:"d F Y"}}</h4>
+                    <h4><a href="{{document.document.url}}" class="sowar_stock_color_font">{% trans "Download"%} >></a></h4>
                 </center>
             </div>
             <div class="col-md-6">
-                <h4>Dear Sowarstock Customer,</h4>
-                <h4>Please download this document and read it carefully before accessing or using the Sowarstock website.</h4>
-                <h4>This Content License Agreement is entered between you (either an individual or an entity) and Sowarstock,
+                <h4 {% if LANGUAGE_CODE == 'ar' %}style="text-align:right"{% endif %}>{% trans "Dear Sowarstock Customer,"%}</h4>
+                <h4 {% if LANGUAGE_CODE == 'ar' %}style="text-align:right"{% endif %}>{% blocktrans %}Please download this document and read it carefully before accessing or using the Sowarstock website.{% endblocktrans %}</h4>
+                <h4 {% if LANGUAGE_CODE == 'ar' %}style="text-align:right"{% endif %}>{% blocktrans %}This Content License Agreement is entered between you (either an individual or an entity) and Sowarstock,
                     a company incorporated under the laws of Wyoming, United States of America with its filing ID 2017-000774677 (the “Sowarstock”)
                     for the use of the services provided by Sowarstock located at Sowarstock.com. Your use of the Sowarstock Services and Content is
                     subject to this Agreement. By accessing or using the Services provided by Sowarstock you acknowledge that you have read this Agreement,
                     understand it, and you represent and warrant that you have the right, authority and capacity to enter into this Agreement and agree to
-                    be bound by its provisions. If you do not agree with all of the provisions of this Agreement, do not access and/or use the Services.</h4>
+                    be bound by its provisions. If you do not agree with all of the provisions of this Agreement, do not access and/or use the Services.{% endblocktrans %}</h4>
             </div>
         </div>
         <!--end of row-->

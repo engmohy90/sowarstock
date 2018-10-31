@@ -31,23 +31,17 @@ Products
                                                       <tr>
                                                           <th>Photo Id</th>
                                                           <th>Thumbnail</th>
+                                                          <th>Title</th>
                                                           <th>User</th>
-                                                          <th>Keywords</th>
-                                                          <th>Info</th>
                                                       </tr>
                                                       </thead>
                                                       <tbody>
                                                       {% for product in pending %}
                                                         <tr>
-                                                            <td>{{ product.public_id }}</td>
+                                                            <td><a href="{% url 'product_pending' product.public_id %}">{{ product.public_id }}</a></td>
                                                             <td><a href="{{ product.image.url }}"><img src="{{ product.image|thumbnail_url:'thumbnail' }}"></a></td>
-                                                            <td>{{ product.owner }}</td>
-                                                            <td>{{ product.keywords|join:", " }}</td>
-                                                            <td>
-                                                                <p><b>Main Category: </b>{{product.category}}</p>
-                                                                <p><b>Sub Category: </b>{{product.subcategory}}</p>
-                                                                <p><b>Released: </b>{{product.released|yesno:"Yes,No"}}</p>
-                                                            </td>
+                                                            <td>{{ product.title }}</td>
+                                                            <td><a href="{% url 'other_profile' product.owner.username %}">{{ product.owner }}</a></td>
                                                         </tr>
                                                       {% endfor %}
                                                       </tbody>
@@ -70,32 +64,17 @@ Products
                                                       <tr>
                                                           <th>Photo Id</th>
                                                           <th>Thumbnail</th>
+                                                          <th>Title</th>
                                                           <th>User</th>
-                                                          <th>Keywords</th>
-                                                          <th>Info</th>
-                                                          <th></th>
                                                       </tr>
                                                       </thead>
                                                       <tbody>
                                                           {% for product in pending_admin %}
                                                             <tr>
-                                                                <td>{{ product.public_id }}</td>
+                                                                <td><a href="{% url 'product_pending' product.public_id %}">{{ product.public_id }}</a></td>
                                                                 <td><a href="{{ product.image.url }}"><img src="{{ product.image|thumbnail_url:'thumbnail' }}"></a></td>
-                                                                <td>{{ product.owner }}</td>
-                                                                <td>{{ product.keywords}}</td>
-                                                                <td>
-                                                                    <p><b>Main Category: </b>{{product.category}}</p>
-                                                                    <p><b>Sub Category: </b>{{product.subcategory}}</p>
-                                                                    <p><b>Released: </b>{{product.released|yesno:"Yes,No"}}</p>
-                                                                </td>
-                                                                 <td>
-                                                                    <p>
-                                                                        <a href="{% url 'product_approve' product.pk %}" class="btn btn-success">Approve</a>
-                                                                    </p>
-                                                                    <p>
-                                                                        <a href="{% url 'product_reject' product.pk %}" class="btn btn-danger">Reject</a>
-                                                                    </p>
-                                                                </td>
+                                                                <td>{{ product.title }}</td>
+                                                                <td><a href="{% url 'other_profile' product.owner.username %}">{{ product.owner }}</a></td>
                                                             </tr>
                                                           {% endfor %}
                                                       </tbody>
@@ -118,23 +97,17 @@ Products
                                                       <tr>
                                                           <th>Photo Id</th>
                                                           <th>Thumbnail</th>
-                                                          <th>User</th>
-                                                          <th>Keywords</th>
-                                                          <th>Info</th>
+                                                          <th>Title</th>
+                                                          <th>Released</th>
                                                       </tr>
                                                       </thead>
                                                       <tbody>
                                                           {% for product in approved %}
                                                             <tr>
-                                                                <td>{{ product.public_id }}</td>
-                                                                <td><a href="{{ product.image.url }}"><img src="{{ product.image|thumbnail_url:'thumbnail' }}"></a></td>
-                                                                <td>{{ product.owner }}</td>
-                                                                <td>{{ product.keywords}}</td>
-                                                                <td>
-                                                                    <p><b>Main Category: </b>{{product.category}}</p>
-                                                                    <p><b>Sub Category: </b>{{product.subcategory}}</p>
-                                                                    <p><b>Released: </b>{{product.released|yesno:"Yes,No"}}</p>
-                                                                </td>
+                                                                <td><a href="{% url 'product_details' product.public_id %}">{{ product.public_id }}</a></td>
+                                                                <td><a href="{{ product.image.url }}"><img src="{{ product.image|thumbnail_url:'thumbnail'}}"></a></td>
+                                                                <td>{{ product.title }}</td>
+                                                                <td>{{product.released|yesno:"Yes,No"}}</td>
                                                             </tr>
                                                           {% endfor %}
                                                       </tbody>
@@ -154,26 +127,18 @@ Products
                                                 <div class="custom-scroll table-responsive">
                                                   <table id="rejectedProductsTable" class="table table-bordered table-hover">
                                                       <thead>
-                                                      <tr>
+                                                     <tr>
                                                           <th>Photo Id</th>
                                                           <th>Thumbnail</th>
-                                                          <th>User</th>
-                                                          <th>Keywords</th>
-                                                          <th>Info</th>
+                                                          <th>Title</th>
                                                       </tr>
                                                       </thead>
                                                       <tbody>
                                                       {% for product in rejected %}
                                                         <tr>
-                                                            <td>{{ product.public_id }}</td>
-                                                            <td><a href="{{ product.image.url }}"><img src="{{ product.image|thumbnail_url:'thumbnail' }}"></a></td>
-                                                            <td>{{ product.owner }}</td>
-                                                            <td>{{ product.keywords}}</td>
-                                                            <td>
-                                                                <p><b>Main Category: </b>{{product.category}}</p>
-                                                                <p><b>Sub Category: </b>{{product.subcategory}}</p>
-                                                                <p><b>Released: </b>{{product.released|yesno:"Yes,No"}}</p>
-                                                            </td>
+                                                            <td><a href="{% url 'product_details' product.public_id %}">{{ product.public_id }}</a></td>
+                                                            <td><a href="{{ product.image.url }}"><img src="{{ product.image|thumbnail_url:'thumbnail'}}"></a></td>
+                                                            <td>{{ product.title }}</td>
                                                         </tr>
                                                       {% endfor %}
                                                       </tbody>

@@ -4,7 +4,7 @@ from ssw.gadmin import views
 
 urlpatterns = [
     url(r'^users/$', views.users),
-    url(r'^products/$', views.products_main),
+    url(r'^products/$', views.products_main, name="admin_products_main"),
     url(r'^products/(?P<pk>\d+)/approve/$', views.product_approve, name='product_approve'),
     url(r'^products/(?P<pk>\d+)/reject/$', views.product_reject, name='product_reject'),
     url(r'^faqs/$', views.faqs_main, name='faqs_main'),
@@ -27,4 +27,12 @@ urlpatterns = [
     url(r'^categories/delete_subcategory/(?P<pk>\d+)/$', views.subcategories_delete, name='subcategories_delete'),
     url(r'^legal/$', views.legal_main, name='admin_legal_main'),
     url(r'^legal/(?P<pk>\d+)/edit/$', views.legal_edit, name='admin_legal_edit'),
+    url(r'^orders/$', views.orders_main, name='admin_orders_main'),
+    url(r'^featured/$', views.featured_main, name='admin_featured_main'),
+    url(r'^featured/slider/new$', views.featured_slider_new, name='admin_featured_slider_new'),
+    url(r'^featured/contributor/new$', views.featured_contributor_new, name='admin_featured_contributor_new'),
+    url(r'^featured/product/new$', views.featured_product_new, name='admin_featured_product_new'),
+    url(r'^featured/slider/(?P<pk>\d+)/delete$', views.featured_slider_delete, name='admin_featured_slider_delete'),
+    url(r'^featured/contributor/(?P<pk>\d+)/delete$', views.featured_contributor_delete, name='admin_featured_contributor_delete'),
+    url(r'^featured/product/(?P<pk>\d+)/delete$', views.featured_product_delete, name='admin_featured_product_delete'),
 ]

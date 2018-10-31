@@ -1,5 +1,6 @@
 {% load static from staticfiles %}
 {% load notifications_tags %}
+{% load i18n %}
 
 <!doctype html>
 <html lang="en">
@@ -8,6 +9,8 @@
         <title>{% block title %}{% endblock %}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="Site Description Here">
+        <meta charset="utf-8">
+        <link rel="shortcut icon" href="https://static.wixstatic.com/media/2362eb_f406c6b3971945bab759e96ca486cbda%7Emv2.png/v1/fill/w_32%2Ch_32%2Clg_1%2Cusm_0.66_1.00_0.01/2362eb_f406c6b3971945bab759e96ca486cbda%7Emv2.png" type="image/png">
         <link href="{% static 'ssw/css/bootstrap.css' %}" rel="stylesheet" type="text/css" media="all" />
         <link href="{% static 'ssw/css/stack-interface.css' %}" rel="stylesheet" type="text/css" media="all" />
         <link href="{% static 'ssw/css/socicon.css' %}" rel="stylesheet" type="text/css" media="all" />
@@ -36,17 +39,17 @@
                             <ul class="menu-horizontal">
                                 {% if user.is_authenticated %}
                                 <li class="dropdown">
-                                    <span class="dropdown__trigger">Hello, {{ user }}</span>
+                                    <span class="dropdown__trigger">{% trans "Hello"%}, {{ user }}</span>
                                     <div class="dropdown__container" style="left: -438.844px;">
                                         <div class="container">
                                             <div class="row">
                                                 <div class="dropdown__content col-lg-2 col-md-4" style="left: 438.844px;">
                                                     <ul class="menu-vertical">
                                                         <li>
-                                                            <a href="/profile">Profile</a>
+                                                            <a href="/profile">{% trans "Profile"%}</a>
                                                         </li>
                                                         <li>
-                                                            <a href="/logout">Logout</a>
+                                                            <a href="/logout">{% trans "Logout"%}</a>
                                                             <!--end dropdown container-->
                                                         </li>
                                                     </ul>
@@ -61,13 +64,13 @@
                                 {% else %}
                                 <li>
                                     <div class="modal-instance">
-                                        <a href="/login">Login</a>
+                                        <a href="/login">{% trans "Login"%}</a>
 
                                     </div>
                                 </li>
                                 <li>
                                     <div class="modal-instance">
-                                        <a href="/signup">Create Account</a>
+                                        <a href="/signup">{% trans "Create Account"%}</a>
 
                                     </div>
                                 </li>
@@ -89,30 +92,43 @@
                                     </li>
                                 {% endif %}
                                 <li class="dropdown dropdown--absolute">
+                                    {% get_current_language as LANGUAGE_CODE %}
+                                    {% get_available_languages as LANGUAGES %}
+                                    {% get_language_info_list for LANGUAGES as languages %}
                                     <span class="dropdown__trigger">
-                                        <img alt="Image" class="flag" src="{% static 'ssw/img/flag-1.png' %}">
+                                        {% if LANGUAGE_CODE == "en" %}
+                                            <img alt="Image" class="flag" src="{% static 'ssw/img/flag-1.png' %}">
+                                        {% elif LANGUAGE_CODE == "ar" %}
+                                            <img alt="Image" class="flag" src="{% static 'ssw/img/flag-3.png' %}">
+                                        {% endif %}
                                     </span>
                                     <div class="dropdown__container" style="left: -1056.19px;">
                                         <div class="container">
                                             <div class="row">
+
                                                 <div class="col-lg-1 dropdown__content" style="left: 1056.19px;">
                                                     <ul class="menu-vertical text-left">
                                                         <li>
-                                                            <a href="#">ENG</a>
+                                                            <form action="{% url 'set_language' %}" method="post">
+                                                                {% csrf_token %}
+                                                                <input name="next" type="hidden" value="{{ redirect_to }}">
+                                                                <input name="language" type="hidden" value="{{languages.0.code}}">
+                                                                <button style="cursor:pointer;border-width:0; margin-top:0">{{ languages.0.name_local }} ({{ languages.0.code }})</button>
+                                                            </form>
                                                         </li>
                                                         <li>
-                                                            <a href="#">GER</a>
+                                                             <form action="{% url 'set_language' %}" method="post">
+                                                                {% csrf_token %}
+                                                                <input name="next" type="hidden" value="{{ redirect_to }}">
+                                                                <input name="language" type="hidden" value="{{languages.1.code}}">
+                                                                <button style="cursor:pointer;border-width:0; margin-top:0">{{ languages.1.name_local }} ({{ languages.1.code }})</button>
+                                                            </form>
                                                         </li>
                                                     </ul>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </li>
-                                <li>
-                                    <a href="#" data-notification-link="side-menu">
-                                        <i class="stack-dot-3"></i>
-                                    </a>
                                 </li>
                             </ul>
                         </div>
@@ -124,11 +140,11 @@
         </section>
         <!-- search form -->
         <div class="notification pos-top pos-right search-box bg--white border--bottom notification--reveal notification--dismissed" data-animation="from-top" data-notification-link="search-box">
-            <form method="post" action="/search/">
+            <form method="post" action="{% url 'search' %}">
                 {% csrf_token %}
                 <div class="row justify-content-center">
                     <div class="col-lg-6 col-md-8">
-                        <input type="search" name="search" id="search" placeholder="Find visual that work for you">
+                        <input type="search" name="search" id="search" placeholder='{% trans "Find visual that work for you"%}'>
                     </div>
                     <div class="col-lg-1">
                         <button type="submit" class="btn sowar_stock_color"><li class="fa fa-search"></li></button>
@@ -176,27 +192,27 @@
                             <div class="bar__module">
                                 <ul class="menu-horizontal text-left">
                                     <li>
-                                        <a href="/" {% if activeDashboardMenu == "home" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>HOME</a>
+                                        <a href="/" {% if activeDashboardMenu == "home" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>{% trans "Home"%}</a>
                                     </li>
                                     <li class="dropdown">
                                         <span
                                             {% if activeDashboardMenu == "photos" or activeDashboardMenu == "vectors" or activeDashboardMenu == "calligraphy" %} class="dropdown__trigger sowar_stock_color_font sowar_stock_color_underline"{% else %} class="dropdown__trigger"{% endif %}
                                         >
-                                            Marketplace
+                                            {% trans "Marketplace"%}
                                         </span>
                                         <div class="dropdown__container" style="left: -431.016px;">
                                             <div class="container">
                                                 <div class="row">
                                                     <div class="dropdown__content col-lg-2 col-md-4" style="left: 431.016px;">
                                                         <ul class="menu-vertical">
-                                                            <li>
-                                                                <a href="{% url 'photos_main' %}" {% if activeDashboardMenu == "photos" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>Photos</a>
+                                                            <li {% if LANGUAGE_CODE == 'ar' %}style="text-align:right"{% endif %}>
+                                                                <a href="{% url 'photos_main' %}" {% if activeDashboardMenu == "photos" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>{% trans "Photos"%}</a>
                                                             </li>
-                                                            <li>
-                                                                <a href="{% url 'vectors_main' %}" {% if activeDashboardMenu == "vectors" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>Vectors & Paintings</a>
+                                                            <li {% if LANGUAGE_CODE == 'ar' %}style="text-align:right"{% endif %}>
+                                                                <a href="{% url 'vectors_main' %}" {% if activeDashboardMenu == "vectors" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>{% trans "Vectors & Paintings"%}</a>
                                                             </li>
-                                                            <li>
-                                                                <a href="{% url 'calligraphy_main' %}" {% if activeDashboardMenu == "calligraphy" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>Calligraphy</a>
+                                                            <li {% if LANGUAGE_CODE == 'ar' %}style="text-align:right"{% endif %}>
+                                                                <a href="{% url 'calligraphy_main' %}" {% if activeDashboardMenu == "calligraphy" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>{% trans "Calligraphy"%}</a>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -211,24 +227,24 @@
                                         <span
                                             {% if activeDashboardMenu == "legal_contributor" or activeDashboardMenu == "legal_license" or activeDashboardMenu == "legal_privacy" or activeDashboardMenu == "legal_terms" %} class="dropdown__trigger sowar_stock_color_font sowar_stock_color_underline"{% else %} class="dropdown__trigger"{% endif %}
                                         >
-                                            Legal
+                                            {% trans "legal"%}
                                         </span>
                                         <div class="dropdown__container" style="left: -431.016px;">
                                             <div class="container">
                                                 <div class="row">
                                                     <div class="dropdown__content col-lg-2 col-md-4" style="left: 431.016px;">
                                                         <ul class="menu-vertical">
-                                                            <li>
-                                                                <a href="{% url 'legal_contributor' %}" {% if activeDashboardMenu == "legal_contributor" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>Contributor Agreement</a>
+                                                            <li {% if LANGUAGE_CODE == 'ar' %}style="text-align:right"{% endif %}>
+                                                                <a href="{% url 'legal_contributor' %}" {% if activeDashboardMenu == "legal_contributor" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>{% trans "Contributor Agreement"%}</a>
                                                             </li>
-                                                            <li>
-                                                                <a href="{% url 'legal_license' %}" {% if activeDashboardMenu == "legal_license" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>License Agreement</a>
+                                                            <li {% if LANGUAGE_CODE == 'ar' %}style="text-align:right"{% endif %}>
+                                                                <a href="{% url 'legal_license' %}" {% if activeDashboardMenu == "legal_license" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>{% trans "License Agreement"%}</a>
                                                             </li>
-                                                            <li>
-                                                                <a href="{% url 'legal_privacy' %}" {% if activeDashboardMenu == "legal_privacy" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>Privacy Policy</a>
+                                                            <li {% if LANGUAGE_CODE == 'ar' %}style="text-align:right"{% endif %}>
+                                                                <a href="{% url 'legal_privacy' %}" {% if activeDashboardMenu == "legal_privacy" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>{% trans "Privacy Policy"%}</a>
                                                             </li>
-                                                            <li>
-                                                                <a href="{% url 'legal_terms' %}" {% if activeDashboardMenu == "legal_terms" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>Terms & Conditions</a>
+                                                            <li {% if LANGUAGE_CODE == 'ar' %}style="text-align:right"{% endif %}>
+                                                                <a href="{% url 'legal_terms' %}" {% if activeDashboardMenu == "legal_terms" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>{% trans "Terms & Conditions"%}</a>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -240,10 +256,10 @@
                                         <!--end dropdown container-->
                                     </li>
                                     <li>
-                                        <a href="{% url 'about' %}" {% if activeDashboardMenu == "about" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>ABOUT</a>
+                                        <a href="{% url 'about' %}" {% if activeDashboardMenu == "about" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>{% trans "about"%}</a>
                                     </li>
                                     <li>
-                                        <a href="{% url 'contact' %}" {% if activeDashboardMenu == "contact" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>CONTACT</a>
+                                        <a href="{% url 'contact' %}" {% if activeDashboardMenu == "contact" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>{% trans "contact"%}</a>
                                     </li>
                                 </ul>
                             </div>
@@ -278,6 +294,18 @@
         <!-- end image reviewer menu  -->
         {% endif %}
 
+        {% if user.type == "financial_admin" and showfinancialmenu %}
+        <!-- image reviewer menu  -->
+        {% include "ssw/menu/financial_admin_menu.html" %}
+        <!-- end image reviewer menu  -->
+        {% endif %}
+
+        {% if user.type == "client" and showclientmenu %}
+        <!-- client menu  -->
+        {% include "ssw/menu/client_menu.html" %}
+        <!-- end client menu  -->
+        {% endif %}
+
         <div class="main-container">
 
             <div class="row bg--secondary">
@@ -285,16 +313,24 @@
                 <div class="col-md-6">
                     {% for message in messages %}
                         <div class="alert bg--{{message.tags}}">
-                            <div class="alert__body">
+                            <div {% if LANGUAGE_CODE == 'ar' %}style="float:right"{% endif %} class="alert__body">
                                 <span>{{message}}</span>
                             </div>
-                            <div class="alert__close">×</div>
+                            <div {% if LANGUAGE_CODE == 'ar' %}style="float:left"{% endif %} class="alert__close">×</div>
                         </div>
                     {% endfor %}
                     {% if user.type == "contributor" and not user.is_verified %}
                         <div class="alert bg--error">
                             <div class="alert__body">
-                                <span>Please complete your profile from account settings</span>
+                                <span {% if LANGUAGE_CODE == 'ar' %}style="text-align:right"{% endif %}>Please complete your profile from account settings</span>
+                            </div>
+                            <div class="alert__close">×</div>
+                        </div>
+                    {% endif %}
+                    {% if user.type == "client" and not user.is_verified %}
+                        <div class="alert bg--error">
+                            <div class="alert__body">
+                                <span {% if LANGUAGE_CODE == 'ar' %}style="text-align:right"{% endif %}>Please complete your profile by verifying your email address</span>
                             </div>
                             <div class="alert__close">×</div>
                         </div>
@@ -310,17 +346,12 @@
                             <ul class="list-inline">
                                 <li>
                                     <a href="{% url 'about' %}">
-                                        <span class="h6 type--uppercase">About</span>
+                                        <span class="h6 type--uppercase">{% trans "About"%}</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#">
-                                        <span class="h6 type--uppercase">Careers</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span class="h6 type--uppercase">Support</span>
+                                        <span class="h6 type--uppercase">{% trans "Support"%}</span>
                                     </a>
                                 </li>
                             </ul>
@@ -438,6 +469,10 @@
                         }
                     }
                 });
+            {% endif %}
+
+            {% if LANGUAGE_CODE == 'ar' %}
+                $('input').css("text-align","right")
             {% endif %}
         </script>
         {% block js %}{% endblock%}

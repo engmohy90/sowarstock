@@ -16,9 +16,14 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
+from django.urls import path
+from django.views.i18n import set_language
 
-urlpatterns = [
+urlpatterns = [path('i18n/', include('django.conf.urls.i18n'))]
+
+urlpatterns += i18n_patterns(
     url(r'^superadmin/', admin.site.urls),
     url(r'^', include('ssw.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

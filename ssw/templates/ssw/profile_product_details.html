@@ -1,0 +1,152 @@
+{% extends "ssw/main.html" %}
+{% load static from staticfiles %}
+{% block title %}
+{{product.public_id}}
+{% endblock %}
+
+{% block content %}
+<section class="space--lg" style="overflow: scroll;">
+    <div class="container">
+        <div class="row justify-content-around">
+            <div class="col-md-7 col-lg-6">
+                <ol class="breadcrumbs">
+                    <li>
+                        <a href="{% url 'other_profile' other_profile %}">{{other_profile}}</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'profile_products' other_profile %}">Products</a>
+                    </li>
+                    <li>{{product.public_id}}</li>
+                </ol>
+               <img alt="Image" src="{{product.watermark.url}}">
+            </div>
+            <div class="col-md-5 col-lg-4">
+                <div class="row">
+                    <h2>{{product.title}}</h2>
+                </div>
+                <div class="row">
+                    <image src="{{product.owner.profile_image.url}}" class="product-profile-image img-circle" style="vertical-align:middle"/>
+                    {% if product.owner.username == user.username %}
+                        <a href="{% url 'profile'%}"><span style="margin-left:1em">{{product.owner}}</span></a>
+                    {% else %}
+                        <a href="{% url 'other_profile' product.owner.username %}"><span style="margin-left:1em">{{product.owner}}</span></a>
+                    {% endif %}
+                </div>
+                <div class="row">
+                    <b>SKU</b><span style="margin-left: 1em">{{product.public_id}}</span>
+                </div>
+                <br>
+                <div class="row">
+                    <span id="license_chosen" class="h3 inline-block sowar_stock_color_font"><b>${{product.standard_price}}</b></span>
+                </div>
+                {% if not user.is_authenticated %}
+                <p>If you are interested in this product, please <a href="{% url 'login' %}">login</a> or <a href="{% url 'signup' %}">create an account</a> in order to purchase it.</p>
+                {% elif user.type == "client" %}
+                    <form method="post" action="{% url 'add_to_cart' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="product" value="{{product.pk}}">
+                        <div class="col-md-12">
+                            <label for="license"><b>License</b> Type</label>
+                            <div class="input-select">
+                                <select name="license" id="license">
+                                    <option value="standard">Standard</option>
+                                    <option value="extended">Extended</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-8">
+                            <button type="submit" class="btn sowar_stock_color">Add To Cart</button>
+                        </div>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+        <!--end of row-->
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="accordion accordion-2">
+                    <li>
+                        <div class="accordion__title">
+                            <span class="h5">DETAILS</span>
+                        </div>
+                        <div class="accordion__content">
+                            {{product.description}}
+                        </div>
+                    </li>
+                    <li>
+                        <div class="accordion__title">
+                            <span class="h5">REVIEWS</span>
+                        </div>
+                        <div class="accordion__content">
+                            <div class="row" style="width:100%">
+                                <div class="col-md-9">
+                                    {% if product.review_set.all %}
+                                        {% for review in product.review_set.all reversed %}
+                                            <div class="row">
+                                                {% if review.owner.profile_image %}
+                                                    <image src="{{review.owner.profile_image.url}}" class="product-profile-image img-circle" style="vertical-align:middle"/>
+                                                {% else %}
+                                                    <image src="{% static 'ssw/img/default-avatar.png' %}" class="product-profile-image img-circle" style="vertical-align:middle"/>
+                                                {% endif %}
+                                                {% if review.owner.username == user.username %}
+                                                    <a href="{% url 'profile' %}"><span style="margin-left:1em">{{review.owner}}</span></a>
+                                                {% else %}
+                                                    <a href="{% url 'other_profile' review.owner.username %}"><span style="margin-left:1em">{{review.owner}}</span></a>
+                                                {% endif %}
+                                            </div>
+                                            <div class="row">
+                                                <p>{{review}}</p>
+                                            </div>
+                                            <hr>
+                                        {% endfor %}
+                                    {% else %}
+                                        <p>There are no reviews</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <br>
+                            <hr>
+                            <h4>Add your review</h4>
+                            {% if user.type == "client" %}
+                                <div class="row" style="width:100%">
+                                    <form method="post" action="">
+                                        <div class="form-group" style="width:100%">
+                                            <div class="col-md-9">
+                                                {% csrf_token %}
+                                                {{review_form}}
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-3">
+                                                <button type="submit" class="btn sowar_stock_color">Submit</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            {% endif %}
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--end of container-->
+</section>
+{% endblock %}
+
+{% block js %}
+<script>
+    $(document).ready(function(){
+        $("#license").change(function(){
+            var val = $(this).val()
+            if(val == "standard"){
+                $("#license_chosen").html("<b>${{product.standard_price}}</b>")
+            }else if(val == "extended"){
+                $("#license_chosen").html("<b>${{product.extended_price}}</b>")
+            }
+
+        })
+    })
+</script>
+{% endblock %}

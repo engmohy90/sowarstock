@@ -38,7 +38,7 @@ Requests
                                                       <tbody>
                                                       {% for r in pending %}
                                                         <tr>
-                                                            <td><a href="#">{{ r.owner }}</a></td>
+                                                            <td><a href="{% url 'other_profile' r.owner %}">{{ r.owner }}</a></td>
                                                             <td>{{ r.get_status_display }}</td>
                                                             <td><a href="{{ r.body }}">click here</a></td>
                                                             <td>

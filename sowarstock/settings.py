@@ -50,12 +50,13 @@ INSTALLED_APPS = [
     'ssw',
     'easy_thumbnails',
     'notifications',
-    'watermarker'
+    'paypal.standard.ipn'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -77,6 +78,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.i18n',
             ],
         },
     },
@@ -122,7 +124,17 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
+from django.utils.translation import ugettext_lazy as _
+LANGUAGES = (
+    ('en', _('English')),
+    ('ar', _('Arabic')),
+)
+
 LANGUAGE_CODE = 'en-us'
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)
 
 TIME_ZONE = 'Asia/Riyadh'
 
@@ -132,7 +144,12 @@ USE_L10N = True
 
 USE_TZ = True
 
+### PAYPAL ###
+PAYPAL_TEST = True
+PAYPAL_BUY_BUTTON_IMAGE = "https://www.braintreepayments.com/images/features/paypal/paypal-button@2x-d5ec2863.png"
 
+
+### EMAIL ###
 EMAIL_USE_TLS = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -150,12 +167,13 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATIC_URL = '/static/'
 
-#MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
-#MEDIA_URL = '/media/'
+MEDIA_URL = '/media/'
 
 # AMAZON AWS S3 FOR STORING MEDIA FILES
 
+"""
 AWS_QUERYSTRING_AUTH = False
 AWS_ACCESS_KEY_ID = 'AKIAJV3HJ7JFSOKVR5WA'
 AWS_SECRET_ACCESS_KEY = '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'
@@ -166,3 +184,4 @@ MEDIA_URL = "https://s3.amazonaws.com/%s/" % S3_BUCKET
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto.S3BotoStorage"
 THUMBNAIL_DEFAULT_STORAGE = DEFAULT_FILE_STORAGE
 #STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+"""

@@ -1,11 +1,12 @@
 {% load notifications_tags %}
 
-<nav id="menu2" class="bar bar--sm bar-1 hidden-xs bg--secondary ">
+<nav id="menu2" class="bar bar--sm bar-1 bg--secondary ">
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-12 col-md-12 text-right text-left-xs text-left-sm">
                             <div class="bar__module">
                                 <div class="row">
+                                    <!--
                                     <div class="col-md-2 masonry__item">
                                         <div class="card card-1 boxed boxed--sm boxed--border">
                                             <a href="#">
@@ -18,6 +19,7 @@
                                             </a>
                                         </div>
                                     </div>
+                                    -->
                                     <div class="col-md-1 full-width masonry__item">
                                         <div
                                                 {% if activeDashboardMenu == "products" %}
@@ -74,19 +76,7 @@
                                     </div>
                                     <div class="col-md-1 full-width masonry__item">
                                         <div class="card card-1 boxed boxed--sm boxed--border">
-                                            <a href="#">
-                                                <center>
-                                                    <i class="fas fa-shopping-cart fa-2x"></i>
-                                                    <p>
-                                                        Orders
-                                                    </p>
-                                                </center>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-1 full-width masonry__item">
-                                        <div class="card card-1 boxed boxed--sm boxed--border">
-                                            <a href="#">
+                                            <a href="{% url 'earnings_main' %}">
                                                 <center>
                                                     <i class="fas fa-money-bill-wave-alt fa-2x"></i>
                                                     <p>

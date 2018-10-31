@@ -1,8 +1,8 @@
 {% extends "ssw/main.html" %}
 {% load static from staticfiles %}
-
+{% load i18n %}
 {% block title %}
-Recover Account
+{% trans "Recover Account"%}
 {% endblock %}
 
 {% block content %}
@@ -10,17 +10,17 @@ Recover Account
     <div class="container pos-vertical-center">
         <div class="row">
             <div class="col-md-7 col-lg-5">
-                <h2>Recover your account</h2>
+                <h2>{% trans "Recover your account"%}</h2>
                 <p class="lead">
-                    Enter email address to send a recovery email.
+                    {% trans "Enter your email address to send you a recovery email."%}
                 </p>
                 <form method="post" action="">
                     {% csrf_token %}
-                    <input type="email" name="email" id="email" placeholder="Email Address">
-                    <button class="btn sowar_stock_color type--uppercase" type="submit">Recover Account</button>
+                    <input type="email" name="email" id="email" placeholder='{% trans "Email Address"%}'>
+                    <button id="recover_button" class="btn sowar_stock_color type--uppercase" type="submit">{% trans "Recover Account"%}</button>
                 </form>
-                <span class="type--fine-print block">Dont have an account yet?
-                    <a href="/signup">Create account</a>
+                <span class="type--fine-print block">{% trans "Dont have an account yet?"%}
+                    <a href="/signup">{% trans "Create account"%}</a>
                 </span>
             </div>
         </div>
@@ -28,4 +28,22 @@ Recover Account
     </div>
     <!--end of container-->
 </section>
+{% endblock %}
+
+{% block js %}
+<script>
+$(document).ready(function(){
+
+    $("#recover_button").click(function(){
+        $(this).prop("disabled",true)
+        {% if LANGUAGE_CODE == 'ar' %}
+            $(this).html("... جاري الإرسال")
+        {% else %}
+            $(this).html("Submitting ... ")
+        {% endif %}
+
+        $(this).closest("form").submit()
+    })
+})
+</script>
 {% endblock %}

@@ -13,13 +13,170 @@ New Product
             <div class="col-lg-12">
                 <div class="boxed boxed--lg boxed--border">
                     <div id="account-profile" class="account-tab">
-                        <h4>Profile</h4>
+                        <h4>New Product</h4>
+                        <p style="color:red">
+                            Allowed file extensions: JPEG and EPS only<br>
+                            All images must be at least 4 MP (megapixels)<br>
+                            Image size cannot exceed 50 MB, and EPS files cannot exceed 15 MB
+                        </p>
                         <form method="post" action="" enctype="multipart/form-data">
-                            {{ form.as_p }}
+
+                                {{form.title.errors}}
+                                {{form.title.label_tag}}
+                                {{form.title}}
+                                <br><br>
+                                {{form.file_type.errors}}
+                                {{form.file_type.label_tag}}
+                                {{form.file_type}}
+                                <br><br>
+                                <div id="image_field_wrapper">
+                                    {{form.image.errors}}
+                                    {{form.image.label_tag}}
+                                    {{form.image}}
+                                    <br><br>
+                                </div>
+
+                                <div id="file_field_wrapper">
+                                    {{form.file.errors}}
+                                    {{form.file.label_tag}}
+                                    {{form.file}}
+                                    <br><br>
+                                </div>
+                                {{form.description.errors}}
+                                {{form.description.label_tag}}
+                                {{form.description}}
+                                <br><br>
+                                {{form.keywords.errors}}
+                                {{form.keywords.label_tag}}
+                                {{form.keywords}}
+                                <br><br>
+                                {{form.category.errors}}
+                                {{form.category.label_tag}}
+                                {{form.category}}
+                                <br><br>
+                                {{form.subcategory.errors}}
+                                {{form.subcategory.label_tag}}
+                                {{form.subcategory}}
+                                <br><br>
+                                {{form.exclusive.errors}}
+                                <div id="exclusive_checkbox_wrapper" class="input-checkbox input-checkbox--switch">
+                                    <input type="checkbox" name="exclusive" id="id_exclusive">
+                                    <label for="id_exclusive"></label>
+                                </div>
+                                <span>
+                                    Exclusive
+                                    <div class="modal-instance">
+                                    <a href="#" class="modal-trigger color--primary"><i class="far fa-question-circle"></i></a>
+                                    <div class="modal-container">
+                                        <div class="modal-content">
+                                            <div class="boxed boxed--lg">
+                                                <h2>Exclusive</h2>
+                                                <hr class="short">
+                                                <p class="lead">Content that you plan to sell or license through Sowarstock ONLY.</p>
+                                                <p class="lead">The royalty rate is 75% for Exclusive Content and 30% for Non-Exclusive Content.</p>
+                                                <p class="lead">For more, please read <a href="{% url 'legal_contributor' %}">The Contributor Agreement</a></p>
+                                            </div>
+                                            <div class="modal-close modal-close-cross"></div>
+                                        </div>
+                                    </div>
+                                </div><!--end of modal instance-->
+                                </span>
+                                <br><br>
+                                {{form.released.errors}}
+                                <div id="released_checkbox_wrapper" class="input-checkbox input-checkbox--switch">
+                                    <input type="checkbox" name="released" id="id_released">
+                                    <label for="id_released"></label>
+                                </div>
+                                <span>
+                                    Released
+                                    <div class="modal-instance">
+                                    <a href="#" class="modal-trigger color--primary"><i class="far fa-question-circle"></i></a>
+                                    <div class="modal-container">
+                                        <div class="modal-content">
+                                            <div class="boxed boxed--lg">
+                                                <h2>Released</h2>
+                                                <hr class="short">
+                                                <p class="lead">A document stipulating conditions under which the Contributor may lawfully use photographs of another person or property for commercial and other purposes.</p>
+                                                <p class="lead">For more, please read <a href="{% url 'legal_contributor' %}">The Contributor Agreement</a></p>
+                                            </div>
+                                            <div class="modal-close modal-close-cross"></div>
+                                        </div>
+                                    </div>
+                                </div><!--end of modal instance-->
+                                </span>
+                                <br><br>
+                                {{form.price_type.errors}}
+                                {{form.price_type.label_tag}}
+                                {{form.price_type}}
+                                <br><br>
+                                {{form.standard_price.errors}}
+                                {{form.standard_price.label_tag}}
+                                <div class="modal-instance">
+                                    <a href="#" class="modal-trigger color--primary"><i class="far fa-question-circle"></i></a>
+                                    <div class="modal-container">
+                                        <div class="modal-content">
+                                            <div class="boxed boxed--lg">
+                                                <h2>Pricing</h2>
+                                                <hr class="short">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <center><h2><i class="fas fa-pencil-alt"></i></h2></center>
+                                                        <h2>STANDARD LICENSE</h2>
+                                                        <p>MINOR USAGE - Unlimited</p>
+                                                        <p>MAJOR USAGE IN RESALE PRODUCT(S) - Up to 10</p>
+                                                        <p>A MAJOR USAGE IN PRODUCT(S) FOR FREE DISTRIBUTION - Up to 1k</p>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <center><h2><i class="fas fa-star"></i></h2></center>
+                                                        <h2>EXTENDED LICENSE</h2>
+                                                        <p>MINOR USAGE - Unlimited</p>
+                                                        <p>MAJOR USAGE IN RESALE PRODUCT(S) - Up to 500</p>
+                                                        <p>A MAJOR USAGE IN PRODUCT(S) FOR FREE DISTRIBUTION - Up to 100k</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-close modal-close-cross"></div>
+                                        </div>
+                                    </div>
+                                </div><!--end of modal instance-->
+                                {{form.standard_price}}
+                                <br><br>
+                                {{form.extended_price.errors}}
+                                {{form.extended_price.label_tag}}
+                                <div class="modal-instance">
+                                    <a href="#" class="modal-trigger color--primary"><i class="far fa-question-circle"></i></a>
+                                    <div class="modal-container">
+                                        <div class="modal-content">
+                                            <div class="boxed boxed--lg">
+                                                <h2>Pricing</h2>
+                                                <hr class="short">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <center><h2><i class="fas fa-pencil-alt"></i></h2></center>
+                                                        <h2>STANDARD LICENSE</h2>
+                                                        <p>MINOR USAGE - Unlimited</p>
+                                                        <p>MAJOR USAGE IN RESALE PRODUCT(S) - Up to 10</p>
+                                                        <p>A MAJOR USAGE IN PRODUCT(S) FOR FREE DISTRIBUTION - Up to 1k</p>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <center><h2><i class="fas fa-star"></i></h2></center>
+                                                        <h2>EXTENDED LICENSE</h2>
+                                                        <p>MINOR USAGE - Unlimited</p>
+                                                        <p>MAJOR USAGE IN RESALE PRODUCT(S) - Up to 500</p>
+                                                        <p>A MAJOR USAGE IN PRODUCT(S) FOR FREE DISTRIBUTION - Up to 100k</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-close modal-close-cross"></div>
+                                        </div>
+                                    </div>
+                                </div><!--end of modal instance-->
+                                {{form.extended_price}}
+                                <br><br>
                             {% csrf_token %}
                             <div class="row">
                                 <div class="col-lg-3 col-md-4">
-                                    <button type="submit" class="btn btn--primary type--uppercase">Save</button>
+                                    <button id="submit_product_button" type="submit" class="btn btn--primary type--uppercase">Save</button>
                                 </div>
                                 <div class="col-lg-3 col-md-4">
                                     <a href="/products" class="btn btn--default type--uppercase">Cancel</a>
@@ -39,6 +196,19 @@ New Product
 {% block js %}
 <script>
     $( document ).ready(function() {
+
+        $("#id_price_type").change(function(){
+            var priceType = $(this).val()
+
+            if(priceType == "default"){
+                $("#id_standard_price").val("15")
+                $("#id_extended_price").val("149")
+            }else if(priceType == "custom"){
+                $("#id_standard_price").val("")
+                $("#id_extended_price").val("")
+            }
+        })
+
         $("#id_category").change(function(){
             var categoryId = $(this).val()
 
@@ -52,6 +222,35 @@ New Product
                 }
             })
         })
+
+        var fileType = $("#id_file_type").val()
+        if(fileType == "jpeg"){
+                $("#file_field_wrapper").addClass("hidden")
+                $("#image_field_wrapper").removeClass("hidden")
+        }else if(fileType == "eps"){
+                $("#image_field_wrapper").addClass("hidden")
+                 $("#file_field_wrapper").removeClass("hidden")
+        }
+
+        $("#id_file_type").change(function(){
+
+            var fileType = $(this).val()
+
+            if(fileType == "jpeg"){
+                $("#file_field_wrapper").addClass("hidden")
+                $("#image_field_wrapper").removeClass("hidden")
+            }else if(fileType == "eps"){
+                $("#image_field_wrapper").addClass("hidden")
+                 $("#file_field_wrapper").removeClass("hidden")
+            }
+        })
+
+        $("#submit_product_button").click(function(){
+            $(this).prop("disabled",true)
+            $(this).html("Submitting ... ")
+            $(this).closest("form").submit()
+        })
+
     });
 </script>
 {% endblock %}

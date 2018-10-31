@@ -16,7 +16,11 @@ Order {{order.order_no}}
                     <h4>Order {{order.order_no}}</h4>
                     <ol class="breadcrumbs">
                         <li>
-                            <a href="{% url 'orders' %}">Orders</a>
+                            {% if user.type == "client" %}
+                                <a href="{% url 'orders' %}">Orders</a>
+                            {% elif user.type == "admin" %}
+                                <a href="{% url 'admin_orders_main' %}">Orders</a>
+                            {% endif %}
                         </li>
                         <li>{{order.order_no}}</li>
                     </ol>
@@ -25,7 +29,8 @@ Order {{order.order_no}}
                         <table id="ordersTable" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th></th>
+                                    <th>Thumbnail</th>
+                                    <th>File</th>
                                     <th>Product Name</th>
                                     <th>Price</th>
                                 </tr>
@@ -34,6 +39,13 @@ Order {{order.order_no}}
                                 {% for item in order.orderitem.all %}
                                     <tr>
                                         <td><img src="{{item.product.image|thumbnail_url:'thumbnail'}}"></td>
+                                        <td>
+                                            {% if item.product.file_type == "jpeg" %}
+                                                <a href="{{item.product.image.url}}">View/Download</a>
+                                            {% else %}
+                                                <a href="{{item.product.file.url}}">View/Download</a>
+                                            {% endif %}
+                                        </td>
                                         <td>{{ item.product }}</td>
                                         <td>${{ item.price }}</td>
                                     </tr>

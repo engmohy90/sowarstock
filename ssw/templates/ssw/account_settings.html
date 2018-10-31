@@ -45,7 +45,7 @@ Account Settings
                                             <a href="#" data-toggle-class=".account-tab:not(.hidden);hidden|#account-password;hidden">Password</a>
                                         </li>
                                         <li>
-                                            <a href="#" data-toggle-class=".account-tab:not(.hidden);hidden|#account-billing;hidden">Billing Details</a>
+                                            <a href="#" data-toggle-class=".account-tab:not(.hidden);hidden|#account-billing;hidden">Payment Method</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -55,7 +55,7 @@ Account Settings
                             <div class="boxed boxed--lg boxed--border">
                                 <div id="account-personal" class="account-tab">
                                     <h4>Personal Information</h4>
-                                    <form method="post" action="/update_personal_info/" enctype="multipart/form-data">
+                                    <form method="post" action="{% url 'update_personal_info' %}" enctype="multipart/form-data">
                                         {% csrf_token %}
                                             {{ personal_info_form.as_p }}
                                             <div class="col-lg-3 col-md-4">
@@ -65,7 +65,7 @@ Account Settings
                                 </div>
                                 <div id="account-address" class="hidden account-tab">
                                     <h4>Address</h4>
-                                    <form method="post" action="/update_address/" enctype="multipart/form-data">
+                                    <form method="post" action="{% url 'update_address' %}">
                                         {% csrf_token %}
                                             {{ address_form.as_p }}
                                             <div class="col-lg-3 col-md-4">
@@ -89,7 +89,7 @@ Account Settings
 
                                         </p>
                                     {% else %}
-                                        <form method="post" action="/update_photo_id/" enctype="multipart/form-data">
+                                        <form method="post" action="{% url 'update_photo_id' %}" enctype="multipart/form-data">
                                             {% csrf_token %}
                                                 {{ photo_id_form.as_p }}
                                                 <div class="col-lg-3 col-md-4">
@@ -100,7 +100,7 @@ Account Settings
                                 </div>
                                 <div id="account-public" class="hidden account-tab">
                                     <h4>Public Information</h4>
-                                    <form Method="post" action="/update_public_info/">
+                                    <form Method="post" action="{% url 'update_public_info' %}">
                                         {% csrf_token %}
                                         {{ public_info_form.as_p }}
                                         <div class="col-lg-3 col-md-4">
@@ -110,7 +110,7 @@ Account Settings
                                 </div>
                                 <div id="account-password" class="hidden account-tab">
                                     <h4>Password</h4>
-                                    <form Method="post" action="/update_password/">
+                                    <form Method="post" action="{% url 'update_password' %}">
                                         {% csrf_token %}
                                         {{ password_form.as_p }}
                                         <div class="col-lg-3 col-md-4">
@@ -119,33 +119,15 @@ Account Settings
                                     </form>
                                 </div>
                                 <div id="account-billing" class="hidden account-tab">
-                                    <h4>Billing Details</h4>
-                                    <div class="boxed boxed--border bg--secondary">
-                                        <h5>Payment Methods</h5>
-                                        <hr>
-                                        <form>
-                                            <ul>
-                                                <li class="row">
-                                                    <div class="col-md-6">
-                                                        <p>
-                                                            <i class="material-icons">credit_card</i>
-                                                            <span> Mastercard ending in
-                                                                <strong>4722</strong>
-                                                            </span>
-                                                        </p>
-                                                    </div>
-                                                    <div class="col-md-3 text-right text-left-xs">
-                                                        <button type="submit" class="btn bg--error">Remove</button>
-                                                    </div>
-                                                    <div class="col-md-3 text-right text-left-xs">
-                                                        <button type="submit" class="btn">Edit</button>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                            <hr>
-                                            <button type="submit" class="btn">Add New Method</button>
-                                        </form>
-                                    </div>
+                                    <h4>Payment Method</h4>
+                                    <p>Enter the email associated with your Paypal account so we can pay you when you have new earnings.</p>
+                                    <form Method="post" action="{% url 'update_payment_method' %}">
+                                        {% csrf_token %}
+                                        {{ payment_method_form.as_p }}
+                                        <div class="col-lg-3 col-md-4">
+                                            <button type="submit" class="btn btn--primary type--uppercase">Save</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -160,6 +142,12 @@ Account Settings
 {% block js %}
 <script>
     $(document).ready(function(){
+        {% if not user.email_verified %}
+            $("label[for='id_email']").after('<span class="color--error"> unverified</span>')
+        {% else %}
+            $("label[for='id_email']").after('<span class="color--success"> verified</span>')
+        {% endif %}
+
         wrapCheckbox("profile_image-clear_id", "clear_checkbox_wrapper", "Delete")
     })
 </script>

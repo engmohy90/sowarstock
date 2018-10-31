@@ -1,6 +1,6 @@
 {% extends "ssw/main.html" %}
 {% load static from staticfiles %}
-{% load watermark %}
+{% load thumbnail %}
 {% block title %}
 Shopping Cart
 {% endblock %}
@@ -46,7 +46,7 @@ Shopping Cart
                                     </div>
                                 </div>
                                 <br>
-                                <img alt="Image" src="{{item.product.image.url}}">
+                                <img src="{{ item.product.image|thumbnail_url:'thumbnail'}}">
                                 <div>
                                     <h5>{{item.product.title}}</h5>
                                 </div>
