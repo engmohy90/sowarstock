@@ -75,7 +75,7 @@ def create_watermarked_image(product):
     transparent.paste(watermark, offset, mask=watermark)
     watermarked_name = uuid.uuid4()
     img_io = BytesIO()
-    transparent.save(img_io, format='JPEG', quality=100)
+    transparent.save(img_io, format='PNG', quality=100)
     img_content = ContentFile(img_io.getvalue(), '{}.png'.format(watermarked_name))
     product.watermark = img_content
     product.save()
