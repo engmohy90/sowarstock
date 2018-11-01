@@ -17,8 +17,10 @@ import random
 import uuid
 import os
 import requests
-from io import BytesIO
+from io import BytesIO, StringIO
 from django.conf import settings
+import sys
+from django.core.files.base import ContentFile
 
 from . import models
 from . import forms
@@ -72,8 +74,13 @@ def create_watermarked_image(product):
     transparent.paste(base_image, (0,0))
     transparent.paste(watermark, offset, mask=watermark)
     watermarked_name = uuid.uuid4()
-    transparent.save("{}products/watermarked/{}.png".format(settings.MEDIA_URL, watermarked_name))
-    product.watermark = "products/watermarked/{}.png".format(watermarked_name)
+    img_io = BytesIO()
+    transparent.save(img_io, format='JPEG', quality=100)
+    img_content = ContentFile(img_io.getvalue(), '{}.png'.format(watermarked_name))
+    product.watermark = img_content
+    product.save()
+    #transparent.save("{}products/watermarked/{}.png".format(settings.MEDIA_ROOT, watermarked_name))
+    #product.watermark = "products/watermarked/{}.png".format(watermarked_name)
     product.save()
     #transparent.show()
 
@@ -346,9 +353,15 @@ def other_profile(request, username):
     return render(request, "ssw/other_profile.html", {"other_profile": other_user})
 
 
+def percent_cb(complete, total):
+    sys.stdout.write('.')
+    sys.stdout.flush()
+
 @login_required
 def profile(request):
     user = getSowarStockUser(request.user)
+    product = models.Product.objects.get(pk=13)
+    print(product)
     if user.type == "contributor" or user.type == "client":
         return render(request, "ssw/profile.html", {"user": user, **showCorrectMenu(request.user)})
     elif user.type == "admin":
