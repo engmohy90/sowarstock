@@ -26,6 +26,7 @@ def create_watermarked_image(product):
     product.watermark = img_content
     product.save()
 
+
 def eps_to_jpeg(product):
     new_name = uuid.uuid4() + "." + "jpeg"
     os.system("magick {}{} {}{}".format(settings.MEDIA_ROOT, product.file, settings.MEDIA_ROOT, new_name))
