@@ -377,6 +377,8 @@ def profile(request):
 
 @login_required
 def products_main(request):
+    import os
+    os.system("touch test.txt")
     user = getSowarStockUser(request.user)
     if user.type == "contributor":
         pending = models.Product.objects.filter(owner_id=request.user.id, status="pending_approval") | models.Product.objects.filter(owner_id=request.user.id, status="pending_admin_approval")
