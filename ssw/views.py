@@ -16,6 +16,8 @@ from PIL import Image
 import random
 import uuid
 import os
+import requests
+from io import BytesIO
 from django.conf import settings
 
 from . import models
@@ -60,7 +62,8 @@ def getSowarStockUser(user):
 
 def create_watermarked_image(product):
     base_image = Image.open(product.image)
-    watermark = Image.open(settings.MEDIA_URL+"watermarks/Single_Logo_White_60.png")
+    response = requests.get(settings.MEDIA_URL+"watermarks/Single_Logo_White_60.png")
+    watermark = Image.open(BytesIO(response.content))
     wwidth, wheight = watermark.size
     width, height = base_image.size
     offset = ((width - wwidth) // 2, (height - wheight) // 2)
