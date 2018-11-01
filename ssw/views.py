@@ -12,18 +12,11 @@ from django.utils.translation import ugettext as _
 from itertools import chain
 from notifications.models import Notification
 from paypal.standard.forms import PayPalPaymentsForm
-from PIL import Image
 import random
 import uuid
-import os
-import requests
-from io import BytesIO, StringIO
-from django.conf import settings
-import sys
-from django.core.files.base import ContentFile
 
-from . import models
-from . import forms
+from . import models, forms
+from .image_handling import create_watermarked_image, eps_to_jpeg
 
 
 def showCorrectMenu(user):
@@ -60,35 +53,6 @@ def getSowarStockUser(user):
         return u
     else:
         return user
-
-
-def create_watermarked_image(product):
-    base_image = Image.open(product.image)
-    response = requests.get(settings.MEDIA_URL+"watermarks/Single_Logo_White_60.png")
-    watermark = Image.open(BytesIO(response.content))
-    wwidth, wheight = watermark.size
-    width, height = base_image.size
-    offset = ((width - wwidth) // 2, (height - wheight) // 2)
-
-    transparent = Image.new('RGBA', (width, height), (0,0,0,0))
-    transparent.paste(base_image, (0,0))
-    transparent.paste(watermark, offset, mask=watermark)
-    watermarked_name = uuid.uuid4()
-    img_io = BytesIO()
-    transparent.save(img_io, format='PNG', quality=100)
-    img_content = ContentFile(img_io.getvalue(), '{}.png'.format(watermarked_name))
-    product.watermark = img_content
-    product.save()
-    #transparent.save("{}products/watermarked/{}.png".format(settings.MEDIA_ROOT, watermarked_name))
-    #product.watermark = "products/watermarked/{}.png".format(watermarked_name)
-    product.save()
-    #transparent.show()
-
-def eps_to_jpeg(product):
-    new_name = uuid.uuid4() + "." + "jpeg"
-    os.system("magick {}{} {}{}".format(settings.MEDIA_ROOT, product.file, settings.MEDIA_ROOT, new_name))
-    product.image = new_name
-    product.save()
 
 
 # Create your views here.
@@ -266,7 +230,6 @@ def shopping_cart_main(request):
 @login_required
 def update_cart(request):
     if request.method == "POST":
-        print(request.POST)
         cart_pk = request.POST["cart"]
         cart = get_object_or_404(models.ShoppingCart,pk = cart_pk)
         items = models.ShoppingCartItem.objects.filter(cart=cart, status="in_cart")
@@ -353,15 +316,9 @@ def other_profile(request, username):
     return render(request, "ssw/other_profile.html", {"other_profile": other_user})
 
 
-def percent_cb(complete, total):
-    sys.stdout.write('.')
-    sys.stdout.flush()
-
 @login_required
 def profile(request):
     user = getSowarStockUser(request.user)
-    product = models.Product.objects.get(pk=13)
-    print(product)
     if user.type == "contributor" or user.type == "client":
         return render(request, "ssw/profile.html", {"user": user, **showCorrectMenu(request.user)})
     elif user.type == "admin":
@@ -453,7 +410,6 @@ def products_new(request):
                 messages.success(request, "Request to add product has been submitted successfully")
                 return HttpResponseRedirect("/products/")
             else:
-                print(form.errors)
                 messages.error(request, form.errors['__all__'])
 
         return render(request, "ssw/products_new.html", {"user": getSowarStockUser(request.user), "form": form,
