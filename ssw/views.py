@@ -62,20 +62,23 @@ def landing(request):
 
 
 def signup(request):
+    form = forms.SignupForm()
     if request.method == "POST":
         user_type = request.POST['user_type']
-        username = request.POST['username']
-        email = request.POST['email']
-        password = request.POST['password']
-        if user_type == "contributor":
-            user = models.Contributor.objects.create_user(username,email,password, type=user_type, status="unverified")
-        elif user_type == "client":
-            user = models.Client.objects.create_user(username, email, password, type=user_type)
-        email_body = loader.render_to_string("ssw/email_verify_email.html", {"user": user})
-        send_mail("شكرا لإنضمامكم", "", "Sowar Stock", [user.email], False,
-                  None, None, None, email_body)
-        return HttpResponseRedirect("/thanks-for-joining")
-    return render(request, "ssw/signup.html",{"user":getSowarStockUser(request.user)})
+        form = forms.SignupForm(request.POST)
+        if form.is_valid():
+            form.save(False)
+            username = form.cleaned_data.get('username')
+            email = form.cleaned_data.get('email')
+            password = form.cleaned_data.get('password1')
+            if user_type == "contributor":
+                user = models.Contributor.objects.create_user(username, email, password, type=user_type)
+            elif user_type == "client":
+                    user = models.Client.objects.create_user(username, email, password, type=user_type)
+            email_body = loader.render_to_string("ssw/email_verify_email.html", {"user": user})
+            send_mail("شكرا لإنضمامكم", "", "Sowar Stock", [user.email], False, None, None, None, email_body)
+            return HttpResponseRedirect("/thanks-for-joining")
+    return render(request, "ssw/signup.html",{"user":getSowarStockUser(request.user), "form": form})
 
 
 def signin(request):

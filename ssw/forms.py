@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
 from django.forms import ModelForm, PasswordInput, Textarea, ImageField, FileField
 from django.forms.widgets import ClearableFileInput, Select, SelectMultiple, CheckboxSelectMultiple
 from django.utils.translation import ugettext_lazy as _
@@ -12,6 +13,20 @@ class MyProfileImageFileInput(ClearableFileInput):
     input_text = 'Change'
     clear_checkbox_label = 'Delete'
 
+
+class SignupForm(UserCreationForm):
+    email = forms.EmailField(max_length=254, help_text='Required. Enter a valid email address.')
+
+    class Meta:
+        model = models.SowarStockUser
+        fields = ('username', 'email', 'password1', 'password2',)
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        models.SowarStockUser.objects.filter(email=email).count()
+        if email and models.SowarStockUser.objects.filter(email=email).count() > 0:
+            raise forms.ValidationError(u'This email address is already registered.')
+        return email
 
 class ProfilePersonalInfoForm(ModelForm):
     profile_image = ImageField(required=False, widget=MyProfileImageFileInput)

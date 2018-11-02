@@ -53,7 +53,7 @@ class SowarStockUser(User):
 
 class Contributor(SowarStockUser):
     ACCOUNT_STATUS = (("unverified", "Unverified"), ("verified", "Verified"))
-    status = models.CharField(max_length=255, choices=ACCOUNT_STATUS)
+    status = models.CharField(max_length=255, choices=ACCOUNT_STATUS, default="unverified")
     photo_id = models.FileField(upload_to='photo_id/', null=True, blank=True)
     photo_id_verified = models.BooleanField(default=False)
     display_name = models.CharField(max_length=255, null=True, blank=True)

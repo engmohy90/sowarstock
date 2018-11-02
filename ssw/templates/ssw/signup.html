@@ -8,7 +8,7 @@
 {% block content %}
 <section class="imageblock switchable feature-large height-100">
                 <div class="imageblock__content col-lg-6 col-md-4 pos-right">
-                    <div class="background-image-holder" style="background: url(&quot;img/inner-7.jpg&quot;); opacity: 1;">
+                    <div class="background-image-holder">
                         <img alt="image" src="{% static 'ssw/img/inner-7.jpg' %}">
                     </div>
                 </div>
@@ -19,7 +19,9 @@
                             <p class="lead">{% trans "Become a member of our community, either as a contributor or a client"%}</p>
                                 <form method="post" action="{% url 'signup' %}">
                                     {% csrf_token %}
+                                    {{form.as_p}}
                                     <div class="row">
+                                        <!--
                                         <div class="col-12">
                                             <input type="text" name="username" placeholder='{% trans "Username"%}' />
                                         </div>
@@ -29,6 +31,7 @@
                                         <div class="col-12">
                                             <input type="password" name="password" placeholder='{% trans "Password"%}' />
                                         </div>
+                                        -->
                                         <div class="col-6">
                                             <div class="input-radio input-radio--innerlabel">
                                                 <input id="type_contributor" type="radio" name="user_type" value="contributor" />
@@ -42,14 +45,18 @@
                                             </div>
                                         </div>
                                         <div class="col-12">
+                                            <i class="color--error" id="user_type_error_message"></i>
+                                        </div>
+                                        <div class="col-12">
                                             <div class="input-checkbox input-checkbox--switch">
                                                 <input id="checkbox-switch" type="checkbox" name="agree" />
                                                 <label for="checkbox-switch"></label>
                                             </div>
-                                            <span>{% trans "I have read and agree to the"%} <a href="{% url 'legal_terms' %}">{% trans "terms and conditions"%}</a></span>
+                                            <span>{% trans "I have read and agree to the"%} <a href="{% url 'legal_terms' %}" target="_blank">{% trans "terms and conditions"%}</a></span>
+                                            <br><i class="color--error" id="terms_error_message"></i>
                                         </div>
                                         <div class="col-12">
-                                            <button type="submit" class="btn sowar_stock_color type--uppercase">{% trans "Create Account"%}</button>
+                                            <button id="create_account_button" type="submit" class="btn sowar_stock_color type--uppercase">{% trans "Create Account"%}</button>
                                         </div>
                                     </div>
                                     <!--end row-->
@@ -60,4 +67,32 @@
                 </div>
                 <!--end of container-->
             </section>
+{% endblock %}
+{% block js %}
+<script>
+    $( document ).ready(function() {
+
+        $("#create_account_button").click(function(e){
+
+            var userType = $("input[name=user_type]:checked").val()
+
+            if(userType==null){
+                e.preventDefault()
+                $("#user_type_error_message").html("you have to choose a user type")
+            }else{
+                $("#user_type_error_message").html("")
+            }
+
+            var agree = $("#checkbox-switch").is(':checked')
+            if(agree){
+                $("#terms_error_message").html("")
+            }else{
+                e.preventDefault()
+                $("#terms_error_message").html("you have to agree to the terms and conditions")
+            }
+
+        })
+
+    });
+</script>
 {% endblock %}
