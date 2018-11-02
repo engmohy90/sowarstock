@@ -39,7 +39,7 @@ Pending Product {{product.public_id}
                             </tr>
                             <tr>
                                 <td><b>Image</b></td>
-                                <td><a href="{{ product.image.url }}"><img src="{{ product.image|thumbnail_url:'thumbnail'}}"></a></td>
+                                <td><a href="{{ product.get_display_image.url }}"><img src="{{ product.get_display_image|thumbnail_url:'thumbnail'}}"></a></td>
                             </tr>
                             {% if product.file_type == "eps" %}
                                 <tr>

@@ -9,8 +9,12 @@ import requests
 
 
 def create_watermarked_image(product):
-    base_image = Image.open(product.image)
-    response = requests.get(settings.MEDIA_URL+"watermarks/Single_Logo_White_60.png")
+    if product.file_type == "jpeg":
+        base_image = Image.open(product.image)
+    else:
+        base_image = Image.open(product.eps_image)
+    response = requests.get(settings.MEDIA_URL + "watermarks/Single_Logo_White_60.png")
+    #response = requests.get("https://s3.amazonaws.com/sowarstock/watermarks/Single_Logo_White_60.png")
     watermark = Image.open(BytesIO(response.content))
     wwidth, wheight = watermark.size
     width, height = base_image.size

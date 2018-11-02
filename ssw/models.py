@@ -116,6 +116,7 @@ class Product(models.Model):
     description = models.TextField(blank=True, null=True)
     file_type = models.CharField(max_length=255, default="jpeg", choices=FILE_TYPE_OPTIONS)
     image = ThumbnailerImageField(upload_to='products/', null=True, blank=True)
+    eps_image = ThumbnailerImageField(upload_to='products/', null=True, blank=True)
     file = models.FileField(upload_to='products/', null=True, blank=True)
     watermark = ThumbnailerImageField(upload_to='products/watermarked/', null=True, blank=True)
     released = models.BooleanField(default=False)
@@ -126,15 +127,24 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     #keywords = ListCharField(base_field=models.CharField(max_length=255), max_length = 10)
-    keywords = models.CharField(max_length=255)
+    keywords = models.CharField(max_length=255, blank=False, null=False)
     category = models.ForeignKey(Category, blank=True, on_delete=models.CASCADE)
     subcategory = models.ForeignKey(SubCategory, blank=True,null=True, on_delete=models.CASCADE)
     standard_price = models.IntegerField(default=15)
     extended_price = models.IntegerField(default=149)
     owner = models.ForeignKey(Contributor, on_delete=models.CASCADE)
 
+    def get_display_image(self):
+        if self.file_type == "jpeg":
+            return self.image
+        else:
+            return self.eps_image
+
     def product_size(self):
-        return sizeof_fmt(self.image.size)
+        if self.file_type == "jpeg":
+            return sizeof_fmt(self.image.size)
+        else:
+            return sizeof_fmt(self.file.size)
 
     def is_photo(self):
         return self.category.name == "Photos"

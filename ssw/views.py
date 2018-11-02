@@ -377,8 +377,6 @@ def profile(request):
 
 @login_required
 def products_main(request):
-    import os
-    os.system("touch test.txt")
     user = getSowarStockUser(request.user)
     if user.type == "contributor":
         pending = models.Product.objects.filter(owner_id=request.user.id, status="pending_approval") | models.Product.objects.filter(owner_id=request.user.id, status="pending_admin_approval")
@@ -406,8 +404,8 @@ def products_new(request):
                 contributor = models.Contributor.objects.get(id=request.user.id)
                 product.owner = contributor
                 product.save()
-                if product.file_type == "eps":
-                    eps_to_jpeg(product)
+                #if product.file_type == "eps":
+                #    eps_to_jpeg(product)
                 create_watermarked_image(product)
                 messages.success(request, "Request to add product has been submitted successfully")
                 return HttpResponseRedirect("/products/")

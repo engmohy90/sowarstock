@@ -32,7 +32,7 @@
                         <div class="feature feature-1 boxed boxed--border">
                             <h6 class="type--uppercase color--primary">{{product.category}}</h6>
                             <center>
-                                <img src="{{ product.image|thumbnail_url:'thumbnail'}}">
+                                <img src="{{ product.get_display_image|thumbnail_url:'thumbnail'}}">
                                 <p>
                                     {{product.title}}
                                 </p>

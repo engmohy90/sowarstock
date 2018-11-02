@@ -51,8 +51,8 @@ class ProductForm(ModelForm):
 
     class Meta:
         model = models.Product
-        fields = ["title", "file_type", "image", "file", "description", "keywords", "category", "subcategory","exclusive", "released",
-                  "price_type", "standard_price", "extended_price"]
+        fields = ["title", "file_type", "image", "file", "eps_image", "description", "keywords", "category",
+                  "subcategory", "exclusive", "released", "price_type", "standard_price", "extended_price"]
         labels = {
             'standard_price': _('Standard Price ($)'),
             'extended_price': _('Extended Price ($)')

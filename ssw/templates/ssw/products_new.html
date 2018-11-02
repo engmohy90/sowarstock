@@ -17,7 +17,9 @@ New Product
                         <p style="color:red">
                             Allowed file extensions: JPEG and EPS only<br>
                             All images must be at least 4 MP (megapixels)<br>
-                            Image size cannot exceed 50 MB, and EPS files cannot exceed 15 MB
+                            Image size cannot exceed 50 MB, and EPS files cannot exceed 15 MB<br>
+                            For EPS files, you have also to upload an image representing the file and that will
+                            be displayed in the site
                         </p>
                         <form method="post" action="" enctype="multipart/form-data">
 
@@ -40,6 +42,12 @@ New Product
                                     {{form.file.errors}}
                                     {{form.file.label_tag}}
                                     {{form.file}}
+                                    <br><br>
+                                </div>
+                                <div id="eps_image_field_wrapper">
+                                    {{form.eps_image.errors}}
+                                    {{form.eps_image.label_tag}}
+                                    {{form.eps_image}}
                                     <br><br>
                                 </div>
                                 {{form.description.errors}}
@@ -182,6 +190,7 @@ New Product
                                     <a href="/products" class="btn btn--default type--uppercase">Cancel</a>
                                 </div>
                             </div>
+                            <i id="form_error_message" class="color--error"></i>
                         </form>
                     </div>
                 </div>
@@ -226,9 +235,11 @@ New Product
         var fileType = $("#id_file_type").val()
         if(fileType == "jpeg"){
                 $("#file_field_wrapper").addClass("hidden")
+                $("#eps_image_field_wrapper").addClass("hidden")
                 $("#image_field_wrapper").removeClass("hidden")
         }else if(fileType == "eps"){
                 $("#image_field_wrapper").addClass("hidden")
+                $("#eps_image_field_wrapper").removeClass("hidden")
                  $("#file_field_wrapper").removeClass("hidden")
         }
 
@@ -238,17 +249,42 @@ New Product
 
             if(fileType == "jpeg"){
                 $("#file_field_wrapper").addClass("hidden")
+                $("#eps_image_field_wrapper").addClass("hidden")
                 $("#image_field_wrapper").removeClass("hidden")
             }else if(fileType == "eps"){
                 $("#image_field_wrapper").addClass("hidden")
+                $("#eps_image_field_wrapper").removeClass("hidden")
                  $("#file_field_wrapper").removeClass("hidden")
             }
         })
 
-        $("#submit_product_button").click(function(){
-            $(this).prop("disabled",true)
-            $(this).html("Submitting ... ")
-            $(this).closest("form").submit()
+        $("#submit_product_button").click(function(e){
+            e.preventDefault
+            var fileType = $("#id_file_type").val()
+
+            if(fileType=="jpeg"){
+                var image = $("#id_image").val()
+                if(image==""){
+                    e.preventDefault()
+                    $("#form_error_message").html("Please upload an image")
+                }else{
+                    $(this).prop("disabled",true)
+                    $(this).html("Submitting ... ")
+                    $(this).closest("form").submit()
+                }
+            }else if(fileType=="eps"){
+                var file = $("#id_file").val()
+                var epsImage = $("#id_eps_image").val()
+                if(file=="" || epsImage==""){
+                    e.preventDefault()
+                    $("#form_error_message").html("Please upload a file and an image")
+                }else{
+                    $(this).prop("disabled",true)
+                    $(this).html("Submitting ... ")
+                    $(this).closest("form").submit()
+                }
+            }
+
         })
 
     });
