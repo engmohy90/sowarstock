@@ -58,7 +58,10 @@ class PhotoIdForm(ModelForm):
 class PaymentMethodForm(ModelForm):
     class Meta:
         model = models.Contributor
-        fields = ["payment_method"]
+        fields = ["preferred_payment_method", "iban", "western_union_account", "paypal_account"]
+        labels = {
+            'iban': _('IBAN')
+        }
 
 
 class ProductForm(ModelForm):

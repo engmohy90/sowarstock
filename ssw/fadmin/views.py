@@ -37,7 +37,7 @@ def payment_new(request,pk):
                 messages.success(request, "Payment has been successfully made")
                 # notify contributor and send email
                 email_body = loader.render_to_string("ssw/email_new_payment.html", {"payment": payment})
-                send_mail("عملية دفع جديدة لك", "", "Sowar Stock", [payment.contributor.email], False,
+                send_mail("عملية دفع جديدة لك", "", "Sowarstock", [payment.contributor.email], False,
                           None, None, None, email_body)
                 notify.send(request.user, recipient=payment.contributor, level="success",
                             verb='You got paid ${}'.format(payment.amount))

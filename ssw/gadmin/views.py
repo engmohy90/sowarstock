@@ -44,7 +44,7 @@ def product_approve(request, pk):
         product.status = "approved"
         product.save()
         email_body = loader.render_to_string("ssw/email_product_accept.html", {"product": product})
-        send_mail("قبول عملك {}".format(product.public_id), "", "Sowar Stock", [product.owner.email], False,
+        send_mail("قبول عملك {}".format(product.public_id), "", "Sowarstock", [product.owner.email], False,
                   None, None, None, email_body)
         notify.send(request.user, recipient=product.owner, level="success",
                     verb='Product {} has been approved'.format(product.public_id))
@@ -68,7 +68,7 @@ def product_reject(request, pk):
             product.rejection_note = rejection_note
             product.save()
             email_body = loader.render_to_string("ssw/email_product_reject.html", {"product": product})
-            send_mail("رفض عملك {}".format(product.public_id), "", "Sowar Stock", [product.owner.email], False,
+            send_mail("رفض عملك {}".format(product.public_id), "", "Sowarstock", [product.owner.email], False,
                       None, None, None, email_body)
             notify.send(request.user, recipient=product.owner, level="error",
                         verb='Product {} has been rejected'.format(product.public_id))

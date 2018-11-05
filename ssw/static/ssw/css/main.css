@@ -38,10 +38,12 @@
     transform: translateX(1.85714286em);
 }
 
+/*
 .bar .logo {
   max-height: 10em;
   max-width: none;
 }
+*/
 
 .xx-large-font{
     font-size: xx-large;

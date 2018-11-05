@@ -16,12 +16,6 @@ def show_me_the_money(sender, **kwargs):
     cart = get_object_or_404(models.ShoppingCart, owner=user)
     items = models.ShoppingCartItem.objects.filter(cart=cart, status="in_cart")
 
-    print(ipn_obj)
-    print(ipn_obj.payment_status)
-    print(ipn_obj.mc_gross)
-    print(cart.total())
-    print(ipn_obj.mc_gross == cart.total())
-
     order_no = "%08d" % random.randint(1, 100000000)
     order = models.Order.objects.create(order_no=order_no, owner=user, total=cart.total())
     for shopping_item in items:
@@ -40,14 +34,14 @@ def show_me_the_money(sender, **kwargs):
 
     # send email to client
     email_body = loader.render_to_string("ssw/email_order_is_ready.html", {"user": user, "order": order})
-    send_mail("طلبك جاهز", "", "Sowar Stock", [user.email], False,
+    send_mail("طلبك جاهز", "", "Sowarstock", [user.email], False,
               None, None, None, email_body)
     # send email to contributor
     admin = models.SowarStockUser.objects.get(type="admin")
     notify.send(admin, recipient=earning.contributor, level="success",
                 verb='You earned ${} from your product {}'.format(earning.amount, earning.order_item.product.public_id))
     email_body = loader.render_to_string("ssw/email_new_earning.html", {"earning": earning})
-    send_mail("مكسب جديد", "", "Sowar Stock", [earning.contributor.email], False,
+    send_mail("مكسب جديد", "", "Sowarstock", [earning.contributor.email], False,
               None, None, None, email_body)
 
     if ipn_obj.payment_status == ST_PP_COMPLETED:

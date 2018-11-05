@@ -50,7 +50,9 @@ INSTALLED_APPS = [
     'ssw',
     'easy_thumbnails',
     'notifications',
-    'paypal.standard.ipn'
+    'paypal.standard.ipn',
+    'django_countries',
+    'countries_plus'
 ]
 
 MIDDLEWARE = [
@@ -174,6 +176,7 @@ STATIC_URL = '/static/'
 # AMAZON AWS S3 FOR STORING MEDIA FILES
 
 
+
 AWS_QUERYSTRING_AUTH = False
 AWS_ACCESS_KEY_ID = 'AKIAJV3HJ7JFSOKVR5WA'
 AWS_SECRET_ACCESS_KEY = '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'
@@ -184,5 +187,6 @@ MEDIA_URL = "https://s3.amazonaws.com/%s/" % S3_BUCKET
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto.S3BotoStorage"
 THUMBNAIL_DEFAULT_STORAGE = DEFAULT_FILE_STORAGE
 #STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 

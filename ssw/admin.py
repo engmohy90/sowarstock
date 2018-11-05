@@ -1,13 +1,15 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
 from . import models
 # Register your models here.
+
 
 class ShoppingCartItemInline(admin.TabularInline):
     model = models.ShoppingCartItem
 
+
 class ShoppingCartAdmin(admin.ModelAdmin):
     inlines = (ShoppingCartItemInline,)
+
 
 admin.site.register(models.Address)
 admin.site.register(models.SowarStockUser)

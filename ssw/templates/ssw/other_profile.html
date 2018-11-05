@@ -1,6 +1,7 @@
 {% extends "ssw/main.html" %}
 {% load static from staticfiles %}
 {% load my_tags %}
+{% load thumbnail %}
 {% block title %}
 Profile
 {% endblock %}
@@ -59,7 +60,7 @@ Profile
                                     <a href="{% url 'product_public' product.public_id %}" class="block">
                                         <div class="feature feature-1 boxed boxed--border">
                                             <h6 class="type--uppercase color--primary">{{product.category}}</h6>
-                                            <img src="{{product.watermark.url}}">
+                                            <img src="{{ product.get_display_image|thumbnail_url:'thumbnail'}}">
                                             <p>
                                                 {{product.title}}
                                             </p>

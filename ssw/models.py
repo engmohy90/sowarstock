@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
+from django_countries.fields import CountryField
+from countries_plus.models import Country
 from PIL import Image
 import uuid
 from easy_thumbnails.fields import ThumbnailerImageField
@@ -17,12 +19,23 @@ def sizeof_fmt(num, suffix='B'):
     return "%.1f%s%s" % (num, 'Yi', suffix)
 
 
+def get_country_code(self):
+        if self.phone:
+            phone = "+" + self.phone.replace("+", "").replace("-", "")
+        else:
+            phone = ""
+        return "{} ({})".format(self.name, phone)
+
+
+Country.add_to_class("__str__", get_country_code)
+
+
 class Address(models.Model):
     address1 = models.CharField(max_length=255)
     address2 = models.CharField(max_length=255, blank=True, null=True)
     city = models.CharField(max_length=255)
     state = models.CharField(max_length=255)
-    country = models.CharField(max_length=255)
+    country = CountryField()
     zipcode = models.CharField(max_length=255)
 
     def __str__(self):
@@ -36,7 +49,7 @@ class SowarStockUser(User):
     LANGUAGES = (("en", "English"),("ar", "Arabic"))
     FORGOT_PASSWORD_STATUSES = (("none", "None"),("not_used", "Not Used"), ("used", "Used"))
     type = models.CharField(max_length=255, choices=USER_TYPES)
-    country_code = models.CharField(max_length=5, null=True, blank=True)
+    country_code = models.CharField(max_length=255, null=True, blank=True)
     phone = models.CharField(max_length=10, null=True, blank=True)
     preferred_language = models.CharField(max_length=2, choices=LANGUAGES, null=True, blank=True)
     email_verification_code = models.UUIDField(default=uuid.uuid4)
@@ -53,13 +66,18 @@ class SowarStockUser(User):
 
 class Contributor(SowarStockUser):
     ACCOUNT_STATUS = (("unverified", "Unverified"), ("verified", "Verified"))
+    PAYMENT_METHODS = (("direct_bank_deposit", "Direct Bank Deposit"), ("western_union", "Western Union"),
+                       ("paypal", "Paypal"))
     status = models.CharField(max_length=255, choices=ACCOUNT_STATUS, default="unverified")
     photo_id = models.FileField(upload_to='photo_id/', null=True, blank=True)
     photo_id_verified = models.BooleanField(default=False)
     display_name = models.CharField(max_length=255, null=True, blank=True)
     job_title = models.CharField(max_length=255, null=True, blank=True)
     portfolio_url = models.CharField(max_length=255, null=True, blank=True)
-    payment_method = models.CharField(max_length=255, null=True, blank=True)
+    preferred_payment_method = models.CharField(max_length=255, null=True, blank=True, choices=PAYMENT_METHODS)
+    iban = models.CharField(max_length=255, null=True, blank=True)
+    western_union_account = models.CharField(max_length=255, null=True, blank=True)
+    paypal_account = models.CharField(max_length=255, null=True, blank=True)
 
     def is_verified(self):
         return self.address and self.email_verified and self.photo_id_verified

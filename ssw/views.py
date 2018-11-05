@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm, SetPasswordForm
 from django.core.mail import send_mail
+from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Sum
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, JsonResponse
@@ -12,6 +13,8 @@ from django.utils.translation import ugettext as _
 from itertools import chain
 from notifications.models import Notification
 from paypal.standard.forms import PayPalPaymentsForm
+from countries_plus.models import Country
+import json
 import random
 import uuid
 
@@ -76,7 +79,7 @@ def signup(request):
             elif user_type == "client":
                     user = models.Client.objects.create_user(username, email, password, type=user_type)
             email_body = loader.render_to_string("ssw/email_verify_email.html", {"user": user})
-            send_mail("شكرا لإنضمامكم", "", "Sowar Stock", [user.email], False, None, None, None, email_body)
+            send_mail("شكرا لإنضمامكم", "", "Sowarstock", [user.email], False, None, None, None, email_body)
             return HttpResponseRedirect("/thanks-for-joining")
     return render(request, "ssw/signup.html",{"user":getSowarStockUser(request.user), "form": form})
 
@@ -123,7 +126,7 @@ def recover_account(request):
             user.forgot_password_status = "not_used"
             user.save()
             email_body = loader.render_to_string("ssw/email_recover_account.html", {"user": user})
-            send_mail("إعادة كلمة المرور", "", "Sowar Stock", [user.email], False,
+            send_mail("إعادة كلمة المرور", "", "Sowarstock", [user.email], False,
                      None, None, None, email_body)
             messages.success(request, _("An email address has been sent to you"))
         except:
@@ -551,10 +554,15 @@ def account_settings(request, **kwargs):
         photo_id_form = forms.PhotoIdForm(instance=user)
         # payment method form
         payment_method_form = forms.PaymentMethodForm(instance=user)
+        countries = list(Country.objects.all())
+        country_codes = list()
+        for country in countries:
+            country_codes.append("{}".format(country))
+        codes_json = json.dumps(list(country_codes), cls=DjangoJSONEncoder)
         return render(request, 'ssw/account_settings.html', {"user": user,"personal_info_form":personal_info_form,
                                                              "address_form": address_form,"password_form": password_form,
                                                              "public_info_form": public_info_form, "photo_id_form": photo_id_form,
-                                                             "payment_method_form": payment_method_form,
+                                                             "payment_method_form": payment_method_form, "codes_json": codes_json,
                                                              "activeDashboardMenu": "account_settings", **showCorrectMenu(request.user)})
     elif user.type == "client":
         # personal information form

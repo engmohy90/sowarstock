@@ -20,6 +20,8 @@ Products
                                         <span class="btn__text">
                                          <i class="icon-Add-File"></i> New Upload</span>
                                     </a>
+                                {% elif user.type == "contributor" and not user.is_verified %}
+                                    <a href="{% url 'account_settings'%}" class="color--error pull-right">Verify your account</a>
                                 {% endif %}
                             </h4>
                             <div class="tabs-container" data-content-align="left">

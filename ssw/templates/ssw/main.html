@@ -17,6 +17,7 @@
         <link href="{% static 'ssw/css/lightbox.min.css' %}" rel="stylesheet" type="text/css" media="all" />
         <link href="{% static 'ssw/css/flickity.css' %}" rel="stylesheet" type="text/css" media="all" />
         <link href="{% static 'ssw/css/iconsmind.css' %}" rel="stylesheet" type="text/css" media="all" />
+        <link href="{% static 'ssw/css/typeahead.css' %}" rel="stylesheet" type="text/css" media="all" />
         <link href="{% static 'ssw/css/jquery.steps.css' %}" rel="stylesheet" type="text/css" media="all" />
         <link href="{% static 'ssw/css/theme.css' %}" rel="stylesheet" type="text/css" media="all" />
         <link href="{% static 'ssw/css/custom.css' %}" rel="stylesheet" type="text/css" media="all" />
@@ -109,20 +110,20 @@
                                                 <div class="col-lg-1 dropdown__content" style="left: 1056.19px;">
                                                     <ul class="menu-vertical text-left">
                                                         <li>
-                                                            <form action="{% url 'set_language' %}" method="post">
+                                                            <!--<form action="{% url 'set_language' %}" method="post">-->
                                                                 {% csrf_token %}
                                                                 <input name="next" type="hidden" value="{{ redirect_to }}">
                                                                 <input name="language" type="hidden" value="{{languages.0.code}}">
                                                                 <button style="cursor:pointer;border-width:0; margin-top:0">{{ languages.0.name_local }} ({{ languages.0.code }})</button>
-                                                            </form>
+                                                            <!--</form>-->
                                                         </li>
                                                         <li>
-                                                             <form action="{% url 'set_language' %}" method="post">
+                                                             <!--<form action="{% url 'set_language' %}" method="post">-->
                                                                 {% csrf_token %}
                                                                 <input name="next" type="hidden" value="{{ redirect_to }}">
                                                                 <input name="language" type="hidden" value="{{languages.1.code}}">
                                                                 <button style="cursor:pointer;border-width:0; margin-top:0">{{ languages.1.name_local }} ({{ languages.1.code }})</button>
-                                                            </form>
+                                                            <!--</form>-->
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -161,8 +162,8 @@
                     <div class="row">
                         <div class="col-3 col-md-2">
                             <a href="/">
-                                <img class="logo logo-dark" alt="logo" src="{% static 'ssw/img/sowar_stock_logo_black_trans.png' %}">
-                                <img class="logo logo-light" alt="logo" src="{% static 'ssw/img/sowar_stock_logo_black_trans.png' %}">
+                                <img class="logo logo-dark" alt="logo" src="{% static 'ssw/img/logo-dark.png' %}">
+                                <img class="logo logo-light" alt="logo" src="{% static 'ssw/img/logo-dark.png' %}">
                             </a>
                         </div>
                         <div class="col-9 col-md-10 text-right">
@@ -182,8 +183,8 @@
                         <div class="col-lg-1 col-md-2 hidden-xs">
                             <div class="bar__module">
                                 <a href="/">
-                                    <img class="logo logo-dark" style="max-height: 10em" alt="logo" src="{% static 'ssw/img/sowar_stock_logo_black_trans.png' %}">
-                                    <img class="logo logo-light" alt="logo" src="{% static 'ssw/img/sowar_stock_logo_black_trans.png' %}">
+                                    <img class="logo logo-dark" alt="logo" src="{% static 'ssw/img/logo-dark.png' %}">
+                                    <img class="logo logo-light" alt="logo" src="{% static 'ssw/img/logo-dark.png' %}">
                                 </a>
                             </div>
                             <!--end module-->
@@ -319,6 +320,7 @@
                             <div {% if LANGUAGE_CODE == 'ar' %}style="float:left"{% endif %} class="alert__close">×</div>
                         </div>
                     {% endfor %}
+                    <!--
                     {% if user.type == "contributor" and not user.is_verified %}
                         <div class="alert bg--error">
                             <div class="alert__body">
@@ -335,6 +337,7 @@
                             <div class="alert__close">×</div>
                         </div>
                     {% endif %}
+                    -->
                 </div>
             </div>
 
@@ -403,6 +406,7 @@
         <script src="{% static 'ssw/js/parallax.js' %}"></script>
         <script src="{% static 'ssw/js/typed.min.js' %}"></script>
         <script src="{% static 'ssw/js/datepicker.js' %}"></script>
+        <script src="{% static 'ssw/js/typeahead.bundle.js' %}"></script>
         <script src="{% static 'ssw/js/isotope.min.js' %}"></script>
         <script src="{% static 'ssw/js/ytplayer.min.js' %}"></script>
         <script src="{% static 'ssw/js/lightbox.min.js' %}"></script>

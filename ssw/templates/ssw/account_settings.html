@@ -6,9 +6,16 @@ Account Settings
 {% endblock %}
 
 {% block content %}
-
 <section class="bg--secondary space--sm">
                 <div class="container">
+                    {% if user.type == "contributor" and not user.is_verified %}
+                        <div class="alert bg--error">
+                            <div class="alert__body">
+                                <span {% if LANGUAGE_CODE == 'ar' %}style="text-align:right"{% endif %}>Please verify your email, address and photo ID to be verified</span>
+                            </div>
+                            <div class="alert__close">×</div>
+                        </div>
+                    {% endif %}
                     <div class="row">
                         <div class="col-lg-4">
                             <div class="boxed boxed--lg boxed--border">
@@ -45,7 +52,7 @@ Account Settings
                                             <a href="#" data-toggle-class=".account-tab:not(.hidden);hidden|#account-password;hidden">Password</a>
                                         </li>
                                         <li>
-                                            <a href="#" data-toggle-class=".account-tab:not(.hidden);hidden|#account-billing;hidden">Payment Method</a>
+                                            <a href="#" data-toggle-class=".account-tab:not(.hidden);hidden|#account-billing;hidden">Preferred Payment Method</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -119,11 +126,32 @@ Account Settings
                                     </form>
                                 </div>
                                 <div id="account-billing" class="hidden account-tab">
-                                    <h4>Payment Method</h4>
-                                    <p>Enter the email associated with your Paypal account so we can pay you when you have new earnings.</p>
+                                    <h4>Preferred Payment Method</h4>
+                                    <p>Choose your preferred payment method to get paid when you have new earnings.</p>
                                     <form Method="post" action="{% url 'update_payment_method' %}">
                                         {% csrf_token %}
-                                        {{ payment_method_form.as_p }}
+                                        {{payment_method_form.preferred_payment_method.errors}}
+                                        {{payment_method_form.preferred_payment_method.label_tag}}
+                                        {{payment_method_form.preferred_payment_method}}
+                                        <br><br>
+                                        <div id="iban_field_wrapper" class="hidden">
+                                            {{payment_method_form.iban.errors}}
+                                            {{payment_method_form.iban.label_tag}}
+                                            {{payment_method_form.iban}}
+                                            <br><br>
+                                        </div>
+                                        <div id="western_union_field_wrapper" class="hidden">
+                                            {{payment_method_form.western_union_account.errors}}
+                                            {{payment_method_form.western_union_account.label_tag}}
+                                            {{payment_method_form.western_union_account}}
+                                            <br><br>
+                                        </div>
+                                        <div id="paypal_field_wrapper" class="hidden">
+                                            {{payment_method_form.paypal_account.errors}}
+                                            {{payment_method_form.paypal_account.label_tag}}
+                                            {{payment_method_form.paypal_account}}
+                                            <br><br>
+                                        </div>
                                         <div class="col-lg-3 col-md-4">
                                             <button type="submit" class="btn btn--primary type--uppercase">Save</button>
                                         </div>
@@ -142,6 +170,75 @@ Account Settings
 {% block js %}
 <script>
     $(document).ready(function(){
+
+        $("#id_phone").keyup(function(){
+            var phone = $(this).val()
+            if(isNaN(phone)){
+                phone = phone.substring(0, phone.length - 1)
+                $(this).val(phone)
+            }
+        })
+
+        var method = $("#id_preferred_payment_method").val()
+        checkMethod(method)
+
+        $("#id_preferred_payment_method").change(function(){
+            var method = $(this).val()
+            checkMethod(method)
+        })
+
+        function checkMethod(method){
+            if(method == "direct_bank_deposit"){
+                $("#iban_field_wrapper").removeClass("hidden")
+                $("#western_union_field_wrapper").addClass("hidden")
+                $("#paypal_field_wrapper").addClass("hidden")
+            }else if(method == "western_union"){
+                $("#iban_field_wrapper").addClass("hidden")
+                $("#western_union_field_wrapper").removeClass("hidden")
+                $("#paypal_field_wrapper").addClass("hidden")
+            }else if(method == "paypal"){
+                $("#iban_field_wrapper").addClass("hidden")
+                $("#western_union_field_wrapper").addClass("hidden")
+                $("#paypal_field_wrapper").removeClass("hidden")
+            }
+        }
+
+        var substringMatcher = function(strs) {
+          return function findMatches(q, cb) {
+            var matches, substringRegex;
+
+            // an array that will be populated with substring matches
+            matches = [];
+
+            // regex used to determine if a string contains the substring `q`
+            substrRegex = new RegExp(q, 'i');
+
+            // iterate through the pool of strings and for any string that
+            // contains the substring `q`, add it to the `matches` array
+            $.each(strs, function(i, str) {
+              if (substrRegex.test(str)) {
+                matches.push(str);
+              }
+            });
+
+            cb(matches);
+          };
+        };
+
+
+        var codes = {{codes_json|safe}}
+
+        $('#id_country_code').typeahead({
+          hint: true,
+          highlight: true,
+          minLength: 1
+        },
+        {
+          name: 'states',
+          source: substringMatcher(codes)
+        });
+
+
         {% if not user.email_verified %}
             $("label[for='id_email']").after('<span class="color--error"> unverified</span>')
         {% else %}
