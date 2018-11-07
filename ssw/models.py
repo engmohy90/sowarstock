@@ -31,12 +31,12 @@ Country.add_to_class("__str__", get_country_code)
 
 
 class Address(models.Model):
-    address1 = models.CharField(max_length=255)
+    address1 = models.CharField(max_length=255, blank=True, null=True)
     address2 = models.CharField(max_length=255, blank=True, null=True)
-    city = models.CharField(max_length=255)
-    state = models.CharField(max_length=255)
+    city = models.CharField(max_length=255, blank=True, null=True)
+    state = models.CharField(max_length=255, blank=True, null=True)
     country = CountryField()
-    zipcode = models.CharField(max_length=255)
+    zipcode = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return self.address1

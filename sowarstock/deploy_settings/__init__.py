@@ -1,7 +1,7 @@
 import dj_database_url
 from sowarstock.settings import *
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ALLOWED_HOSTS = [
