@@ -1,0 +1,296 @@
+{% extends "ssw/main.html" %}
+{% load static from staticfiles %}
+{% load progress_bar %}
+{% block title %}
+Profile
+{% endblock %}
+
+{% block content %}
+
+<section class="bg--secondary space--sm">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="boxed boxed--lg boxed--border">
+                    <h4>Complete Registration</h4>
+                    <hr>
+                    <form id="complete_registration_form" class="wizard" method="post"
+                          action="{% url 'complete_registration' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <h5>Personal Information</h5>
+                        <section>
+                            {% if user.email_verified %}
+                                <h5>
+                                    Email Address: {{user.email}}
+                                    <span class="color--success"> verified</span>
+                                </h5>
+                            {% else %}
+                                <h5>
+                                    Email Address: {{user.email}}
+                                    <span class="color--error"> unverified</span>
+                                    <a id="resend_email_button" href="#" class="btn btn--sm btn-primary">Resend Email</a>
+                                </h5>
+                            {% endif %}
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {{personal_info_form.first_name.label_tag}}<span class="color--error" style="font-size:large">*</span>
+                                    {{personal_info_form.first_name}}
+                                    {{personal_info_form.first_name.errors}}
+                                </div>
+                                <div class="col-md-6">
+                                    {{personal_info_form.last_name.label_tag}}<span class="color--error" style="font-size:large">*</span>
+                                    {{personal_info_form.last_name}}
+                                    {{personal_info_form.last_name.errors}}
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {{personal_info_form.country_code.label_tag}}<span class="color--error" style="font-size:large">*</span>
+                                    {{personal_info_form.country_code}}
+                                    {{personal_info_form.country_code.errors}}
+                                </div>
+                                <div class="col-md-6">
+                                    {{personal_info_form.phone.label_tag}}<span class="color--error" style="font-size:large">*</span>
+                                    {{personal_info_form.phone}}
+                                    {{personal_info_form.phone.errors}}
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {{personal_info_form.profile_image.label_tag}}
+                                    {{personal_info_form.profile_image}}
+                                    {{personal_info_form.profile_image.errors}}
+                                </div>
+                                <div class="col-md-6">
+                                    {{personal_info_form.preferred_language.label_tag}}
+                                    {{personal_info_form.preferred_language}}
+                                    {{personal_info_form.preferred_language.errors}}
+                                </div>
+                            </div>
+                        </section>
+                        <h5>Address</h5>
+                        <section>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    {{address_form.address1.label_tag}}
+                                    {{address_form.address1}}
+                                    {{address_form.address1.errors}}
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    {{address_form.address2.label_tag}}
+                                    {{address_form.address2}}
+                                    {{address_form.address2.errors}}
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {{address_form.city.label_tag}}
+                                    {{address_form.city}}
+                                    {{address_form.city.errors}}
+                                </div>
+                                <div class="col-md-6">
+                                    {{address_form.state.label_tag}}
+                                    {{address_form.state}}
+                                    {{address_form.state.errors}}
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {{address_form.country.label_tag}}<span class="color--error" style="font-size:large">*</span>
+                                    {{address_form.country}}
+                                    {{address_form.country.errors}}
+                                </div>
+                                <div class="col-md-6">
+                                    {{address_form.zipcode.label_tag}}
+                                    {{address_form.zipcode}}
+                                    {{address_form.zipcode.errors}}
+                                </div>
+                            </div>
+                        </section>
+                        <h5>Photo ID</h5>
+                        <section>
+                            {{photo_id_form.photo_id.label_tag}}<span class="color--error" style="font-size:large">*</span>
+                            {{photo_id_form.photo_id}}
+                            {{photo_id_form.photo_id.errors}}
+                        </section>
+                        <h5>Upload Sample Photos</h5>
+                        <section style="overflow:scroll">
+                            <h5>Please upload 10 of your sample photos. These will help us verify you as a contributor.
+                                They will not be displayed in our site</h5>
+                            {{sample_product_formset}}
+                        </section>
+                    </form>
+
+                    {% progress_bar %}
+                </div>
+            </div>
+        </div>
+        <!--end of row-->
+    </div>
+    <!--end of container-->
+</section>
+{% endblock %}
+
+{% block js %}
+{% progress_bar_media %}
+<script>
+    $(document).ready(function(){
+
+
+        $("#resend_email_button").click(function(e){
+            e.preventDefault()
+            var button = $("#resend_email_button")
+            button.addClass("disabled")
+            button.html("sending...")
+
+            $.ajax({
+                url: '/resend-email-activation/',
+                success: function (data) {
+                    if(data.result="success"){
+                        button.removeClass("disabled")
+                        button.html("Resend Email")
+                        button.after('<i class="fas fa-check-circle color--success"></i>  Email Sent')
+                    }
+                },
+            });
+        })
+
+        var substringMatcher = function(strs) {
+            return function findMatches(q, cb) {
+            var matches, substringRegex;
+
+            // an array that will be populated with substring matches
+            matches = [];
+
+            // regex used to determine if a string contains the substring `q`
+            substrRegex = new RegExp(q, 'i');
+
+            // iterate through the pool of strings and for any string that
+            // contains the substring `q`, add it to the `matches` array
+            $.each(strs, function(i, str) {
+              if (substrRegex.test(str)) {
+                matches.push(str);
+              }
+            });
+
+            cb(matches);
+            };
+        };
+
+
+        var codes = {{codes_json|safe}}
+
+        $('#id_country_code').typeahead({
+          hint: true,
+          highlight: true,
+          minLength: 1
+        },
+        {
+          name: 'codes',
+          source: substringMatcher(codes)
+        });
+
+        {% if not user.email_verified %}
+            var anchor = $('a[href="#next"]')
+            anchor.parent().addClass("disabled")
+            anchor.attr("href","")
+            anchor.parent().after('<br><i class="color--error">Please verify your email before proceeding</i>')
+        {% endif %}
+
+
+        $('a[href="#finish"]').click(function(){
+            var anchor = $(this)
+            var firstName = $("#id_first_name").val()
+            var lastName = $("#id_last_name").val()
+            var countryCode = $("#id_country_code").val()
+            var phone = $("#id_phone").val()
+            var country = $("#id_country").val()
+            var photo_id = $("#id_photo_id").val()
+            var all_image_uploaded = true
+            var error_msg = $("#error_msg")
+
+            if(firstName == ""){
+                if(error_msg.length==0){
+                    anchor.parent().after('<br><i id="error_msg" class="color--error">Please fill out your first name</i>')
+                 }else{
+                    error_msg.html("Please fill out your first name")
+                 }
+            }else{
+                if(lastName == ""){
+                    if(error_msg.length==0){
+                        anchor.parent().after('<br><i id="error_msg" class="color--error">Please fill out your last name</i>')
+                     }else{
+                        error_msg.html("Please fill out your last name")
+                     }
+                }else{
+                    if(countryCode == ""){
+                        if(error_msg.length==0){
+                            anchor.parent().after('<br><i id="error_msg" class="color--error">Please fill out your country code</i>')
+                         }else{
+                            error_msg.html("Please fill out your country code")
+                         }
+                    }else{
+                        if(phone == ""){
+                            if(error_msg.length==0){
+                                anchor.parent().after('<br><i id="error_msg" class="color--error">Please fill out your phone number</i>')
+                             }else{
+                                error_msg.html("Please fill out your phone number")
+                             }
+                        }else{
+                            if(country == ""){
+                                if(error_msg.length==0){
+                                    anchor.parent().after('<br><i id="error_msg" class="color--error">Please choose your country</i>')
+                                 }else{
+                                    error_msg.html("Please choose your country")
+                                 }
+                            }else{
+                                error_msg.html("")
+
+                                if(photo_id == ""){
+                                    if(error_msg.length==0){
+                                        anchor.parent().after('<br><i id="error_msg" class="color--error">Please upload a photo ID</i>')
+                                     }else{
+                                        error_msg.html("Please upload a photo ID")
+                                     }
+                                }else{
+                                    error_msg.html("")
+
+                                    for(i=0;i<10;i++){
+
+                                        var image = $("#id_form-"+i+"-image").val()
+                                        if(image==""){
+                                            all_image_uploaded = false
+                                        }
+                                    }
+
+                                    if(!all_image_uploaded){
+                                        if(error_msg.length==0){
+                                            anchor.parent().after('<br><i id="error_msg" class="color--error">Please upload 10 sample photos</i>')
+                                         }else{
+                                            error_msg.html("Please upload 10 sample photos")
+                                         }
+                                    }else{
+                                        error_msg.html("")
+                                        $("#complete_registration_form").submit()
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        })
+
+
+    })
+</script>
+{% endblock %}

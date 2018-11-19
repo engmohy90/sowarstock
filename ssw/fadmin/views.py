@@ -15,8 +15,8 @@ def earnings_main(request):
     if user.type == "financial_admin":
         searnings = models.Earning.objects.filter(type="sowarstock")
         cearnings = models.Earning.objects.filter(type="contributor")
-        return render(request, "ssw/fadmin/earnings_main.html", {"user": user, "searnings": searnings,
-                                                                 "cearnings": cearnings, **showCorrectMenu(request.user)})
+        return render(request, "ssw/fadmin/earnings_main.html", {"user": user, "searnings": searnings, "cearnings": cearnings,
+                                                                 "activeDashboardMenu": "earnings", **showCorrectMenu(request.user)})
     else:
         messages.error(request, "You are not authorized to view this page !")
         return HttpResponseRedirect("/")
@@ -43,7 +43,7 @@ def payment_new(request,pk):
                             verb='You got paid ${}'.format(payment.amount))
                 return HttpResponseRedirect("/fadmin/earnings")
         return render(request, "ssw/fadmin/payment_new.html", {"user": user, "earning": earning,
-                                                                "form": form,
+                                                                "form": form, "activeDashboardMenu": "earnings",
                                                                 **showCorrectMenu(request.user)})
     else:
         messages.error(request, "You are not authorized to view this page !")

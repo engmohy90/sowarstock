@@ -1,0 +1,56 @@
+{% extends "ssw/main.html" %}
+{% load static from staticfiles %}
+{% load my_tags %}
+{% block title %}
+Featured Contributors
+{% endblock %}
+
+{% block content %}
+
+<section class="bg--secondary space--sm">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="boxed boxed--lg boxed--border">
+                                <h4>Featured Contributors</h4>
+                                <hr>
+                                <form method="post" action="">
+                                    {% csrf_token %}
+                                    <div class="masonry__container row masonry--active" style="position: relative; height: 526.812px; overflow:auto">
+                                        {% for contributor in contributors %}
+                                            <div class="masonry__item col-lg-4 col-6" style="position: absolute; left: {{ forloop.counter|sub:1|modulo:3|mul:380 }}px; top: {{forloop.counter|sub:1|div:3|modulo:3|mul:263}}px;">
+                                                <a href="{% url 'other_profile' contributor %}">
+                                                    <p>{{contributor}}</p>
+                                                    {% if other_profile.profile_image %}
+                                                        <img alt="avatar" src="{{contributor.profile_image.url}}" class="image--md img-circle">
+                                                    {% else %}
+                                                        <img alt="avatar" src="{% static 'ssw/img/default-avatar.png' %}" class="image--md img-circle">
+                                                    {% endif %}
+                                                </a>
+                                                <br>
+                                                <div class="input-checkbox input-checkbox--switch">
+                                                    <input  id="{{contributor.pk}}" type="checkbox" name="contributors" value="{{contributor.pk}}" {% if contributor.featured %}checked{% endif %} />
+                                                    <label for="{{contributor.pk}}"></label>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4">
+                                            <button type="submit" class="btn btn--primary type--uppercase">Save</button>
+                                        </div>
+                                        <div class="col-lg-3 col-md-4">
+                                            <a href="/admin/featured" class="btn btn--default type--uppercase">Cancel</a>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--end of row-->
+                </div>
+                <!--end of container-->
+            </section>
+
+{% endblock %}

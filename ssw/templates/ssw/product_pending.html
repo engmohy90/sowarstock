@@ -1,6 +1,5 @@
 {% extends "ssw/main.html" %}
 {% load static from staticfiles %}
-{% load thumbnail %}
 {% load my_tags %}
 {% block title %}
 Pending Product {{product.public_id}
@@ -38,7 +37,7 @@ Pending Product {{product.public_id}
                                 <td><b>Image</b></td>
                                 <td>
                                     <a href="{{ product.get_display_image.url }}">
-                                        <img src="{{ product.get_display_image|thumbnail_url:'thumbnail'}}">
+                                        <img src="{{ product.thumbnail.url }}">
                                     </a>
                                 </td>
                             </tr>
@@ -52,6 +51,12 @@ Pending Product {{product.public_id}
                                 <td><b>Size</b></td>
                                 <td>{{product.product_size}}</td>
                             </tr>
+                            {% if product.file_type == "jpeg" %}
+                                <tr>
+                                    <td><b>Dimensions</b></td>
+                                    <td>{{product.image.width}} x {{product.image.height}}</td>
+                                </tr>
+                            {% endif %}
                             <tr>
                                 <td><b>Description</b></td>
                                 <td>{{product.description}}</td>
@@ -67,6 +72,10 @@ Pending Product {{product.public_id}
                             <tr>
                                 <td><b>Subcategory</b></td>
                                 <td>{{product.subcategory}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Adult Content</b></td>
+                                <td>{{product.adult_content|yesno:"Yes,No"}}</td>
                             </tr>
                             <tr>
                                 <td><b>Exclusive</b></td>

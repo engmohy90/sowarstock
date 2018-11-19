@@ -6,8 +6,9 @@ from django.http import HttpResponseRedirect
 from django.template import loader
 from notifications.signals import notify
 
-from ssw import models, forms
+from ssw import models
 from ssw.views import getSowarStockUser, showCorrectMenu
+
 
 @login_required
 def products_main(request):
@@ -24,6 +25,7 @@ def products_main(request):
         messages.error(request, "You are not authorized to view this page !")
         return HttpResponseRedirect("/")
 
+
 @login_required
 def product_approve(request, pk):
     user = getSowarStockUser(request.user)
@@ -36,6 +38,7 @@ def product_approve(request, pk):
     else:
         messages.error(request, "You are not authorized to view this page !")
         return HttpResponseRedirect("/")
+
 
 @login_required
 def product_reject(request, pk):
@@ -53,10 +56,39 @@ def product_reject(request, pk):
             send_mail("رفض عملك {}".format(product.public_id), "", "Sowarstock", [product.owner.email], False,
                       None, None, None, email_body)
             notify.send(request.user, recipient=product.owner, level="error",
-                        verb='Product {} has been rejected'.format(product.public_id))
+                        verb='Product {} has been rejected for the following reason: {}, {}'.format(product.public_id,
+                                                                                                    rejection_reason,
+                                                                                                    rejection_note))
             messages.success(request, "Product has been rejected")
             return HttpResponseRedirect("/reviewer/products")
         return HttpResponseRedirect("/reviewer/products")
+    else:
+        messages.error(request, "You are not authorized to view this page !")
+        return HttpResponseRedirect("/")
+
+
+@login_required
+def sample_products_main(request):
+    user = getSowarStockUser(request.user)
+    if user.type == "image_reviewer":
+        new_sample_products = models.SampleProduct.objects.filter(viewed_by_reviewer=False)
+        viewed_sample_products = models.SampleProduct.objects.filter(viewed_by_reviewer=True)
+        return render(request, "ssw/reviewer/sample_products_main.html", {"user": user, "new_sample_products": new_sample_products,
+                                                                          "viewed_sample_products": viewed_sample_products,
+                                                                          "activeDashboardMenu": "sample_products",
+                                                                          **showCorrectMenu(request.user)})
+    else:
+        messages.error(request, "You are not authorized to view this page !")
+        return HttpResponseRedirect("/")
+
+@login_required
+def view_sample_product(request, pk):
+    user = getSowarStockUser(request.user)
+    if user.type == "image_reviewer":
+        sample_product = get_object_or_404(models.SampleProduct, pk=pk)
+        sample_product.viewed_by_reviewer = True
+        sample_product.save()
+        return HttpResponseRedirect("/reviewer/sample-products")
     else:
         messages.error(request, "You are not authorized to view this page !")
         return HttpResponseRedirect("/")

@@ -1,7 +1,6 @@
 {% extends "ssw/main.html" %}
 {% load static from staticfiles %}
 {% load i18n %}
-{% load thumbnail %}
 {% block title %}
 {% trans "Photos"%}
 {% endblock %}
@@ -55,7 +54,7 @@
                                 <div class="feature feature-1 boxed boxed--border">
                                     <h6 class="type--uppercase color--primary">{{photo.subcategory}}</h6>
                                     <center>
-                                        <img src="{{ photo.watermark|thumbnail_url:'thumbnail'}}">
+                                        <img src="{{ photo.thumbnail.url }}">
                                         <p>
                                             {{photo.title}}
                                         </p>

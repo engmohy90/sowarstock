@@ -1,0 +1,53 @@
+{% extends "ssw/main.html" %}
+{% load static from staticfiles %}
+{% load my_tags %}
+{% block title %}
+Featured Products
+{% endblock %}
+
+{% block content %}
+
+<section class="bg--secondary space--sm">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="boxed boxed--lg boxed--border">
+                                <h4>Featured Products</h4>
+                                <hr>
+                                <form method="post" action="">
+                                    {% csrf_token %}
+                                    <div class="masonry__container row masonry--active" style="position: relative; height: 526.812px; overflow:auto">
+                                        {% for product in products %}
+                                            <div class="masonry__item col-lg-4 col-6" style="position: absolute; left: {{ forloop.counter|sub:1|modulo:3|mul:380 }}px; top: {{forloop.counter|sub:1|div:3|modulo:3|mul:263}}px;">
+                                                <a href="{{ product.thumbnail.url }}" data-lightbox="Gallery 1">
+                                                    <p>{{product}}</p>
+                                                    <img alt="Image" src="{{ product.thumbnail.url }}">
+
+                                                </a>
+                                                <br>
+                                                <div class="input-checkbox input-checkbox--switch">
+                                                    <input  id="{{product.pk}}" type="checkbox" name="products" value="{{product.pk}}" {% if product.featured %}checked{% endif %} />
+                                                    <label for="{{product.pk}}"></label>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4">
+                                            <button type="submit" class="btn btn--primary type--uppercase">Save</button>
+                                        </div>
+                                        <div class="col-lg-3 col-md-4">
+                                            <a href="/admin/featured" class="btn btn--default type--uppercase">Cancel</a>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--end of row-->
+                </div>
+                <!--end of container-->
+            </section>
+
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends "ssw/main.html" %}
+{% load static from staticfiles %}
+{% load thumbnail %}
+
+{% block title %}
+Search Keywords
+{% endblock %}
+
+{% block content %}
+
+    <section class="bg--secondary space--sm">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="boxed boxed--lg boxed--border">
+                        <div id="products" class="account-tab">
+                            <h4>
+                                Search Keywords
+                            </h4>
+                            <div class="tabs-container" data-content-align="left">
+                                <ul class="tabs">
+                                    <li class="active">
+                                        <div class="tab__title">
+                                            <span class="h5">Search Keywords</span>
+                                        </div>
+                                        <div class="tab__content">
+                                            {% if keywords %}
+                                                <div class="custom-scroll table-responsive">
+                                                    <table id="keywordsTable" class="table table-bordered table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Word</th>
+                                                                <th>Count</th>
+                                                          </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for keyword in keywords %}
+                                                                <tr>
+                                                                    <td>{{keyword.word}}</td>
+                                                                    <td>{{ keyword.count }}</td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            {% else %}
+                                                There are no search keywords
+                                            {% endif %}
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="tab__title">
+                                            <span class="h5">Keyword Synonyms</span>
+                                        </div>
+                                        <div class="tab__content">
+                                            <a class="btn btn--primary btn--icon pull-right" href="{% url 'admin_search_keyword_synonyms_new' %}">
+                                                <span class="btn__text">
+                                                <i class="fa fa-plus"></i> New Keyword Synonym</span>
+                                            </a>
+                                            {% if synonyms %}
+                                                <div class="custom-scroll table-responsive">
+                                                    <table id="synonymsTable" class="table table-bordered table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Word</th>
+                                                                <th>Synonyms</th>
+                                                                <th></th>
+                                                          </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for synonym in synonyms %}
+                                                                <tr>
+                                                                    <td>{{synonym.word}}</td>
+                                                                    <td>{{ synonym.synonyms }}</td>
+                                                                    <td>
+                                                                        <a href="{% url 'admin_search_keyword_synonyms_edit' synonym.pk %}" class="color--primary"><i class="fa fa-edit"></i></a>
+                                                                        <a href="{% url 'admin_search_keyword_synonyms_delete' synonym.pk %}" class="color--error"><i class="fa fa-trash"></i></a>
+                                                                    </td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            {% else %}
+                                                There are no keyword synonyms
+                                            {% endif %}
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div><!--end of tabs container-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end of row-->
+        </div>
+        <!--end of container-->
+    </section>
+
+{% endblock %}

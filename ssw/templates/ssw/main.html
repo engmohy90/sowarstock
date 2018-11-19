@@ -162,8 +162,8 @@
                     <div class="row">
                         <div class="col-3 col-md-2">
                             <a href="/">
-                                <img class="logo logo-dark" alt="logo" src="{% static 'ssw/img/logo-dark.png' %}">
-                                <img class="logo logo-light" alt="logo" src="{% static 'ssw/img/logo-dark.png' %}">
+                                <img class="logo logo-dark" alt="logo" src="{% static 'ssw/img/sowarstock_logo_grey.png' %}">
+                                <img class="logo logo-light" alt="logo" src="{% static 'ssw/img/sowarstock_logo_grey.png' %}">
                             </a>
                         </div>
                         <div class="col-9 col-md-10 text-right">
@@ -183,8 +183,8 @@
                         <div class="col-lg-1 col-md-2 hidden-xs">
                             <div class="bar__module">
                                 <a href="/">
-                                    <img class="logo logo-dark" alt="logo" src="{% static 'ssw/img/logo-dark.png' %}">
-                                    <img class="logo logo-light" alt="logo" src="{% static 'ssw/img/logo-dark.png' %}">
+                                    <img class="logo logo-dark" alt="logo" src="{% static 'ssw/img/sowarstock_logo_grey.png' %}">
+                                    <img class="logo logo-light" alt="logo" src="{% static 'ssw/img/sowarstock_logo_grey.png' %}">
                                 </a>
                             </div>
                             <!--end module-->
@@ -449,6 +449,28 @@
                         }
                     }
                 });
+
+                $.get( "/ajax/pending_sample_products_count/", function( data ) {
+                    var result = data.result
+                    if(result == "success"){
+                        var count = data.count
+                        if(count > 0){
+                            $("#sample_products_count").after('<span class="label label-danger" style="min-width:10px">'+count+'</span>')
+                        }
+                    }
+                });
+
+                {% if not activeDashboardMenu == "reviews" %}
+                    $.get( "/ajax/pending_reviews_count/", function( data ) {
+                        var result = data.result
+                        if(result == "success"){
+                            var count = data.count
+                            if(count > 0){
+                                $("#reviews_count").html('<span class="label label-danger" style="min-width:10px">'+count+'</span>')
+                            }
+                        }
+                    });
+                {% endif %}
             {% endif %}
 
             {% if user.type == "image_reviewer" %}
@@ -458,6 +480,16 @@
                         var count = data.count
                         if(count > 0){
                             $("#products_count").after('<span class="label label-danger" style="min-width:10px">'+count+'</span>')
+                        }
+                    }
+                });
+
+                $.get( "/ajax/pending_sample_products_count/", function( data ) {
+                    var result = data.result
+                    if(result == "success"){
+                        var count = data.count
+                        if(count > 0){
+                            $("#sample_products_count").after('<span class="label label-danger" style="min-width:10px">'+count+'</span>')
                         }
                     }
                 });
@@ -473,6 +505,20 @@
                         }
                     }
                 });
+            {% endif %}
+
+            {% if user.type == "contributor" %}
+                {% if not activeDashboardMenu == "reviews" %}
+                    $.get( "/ajax/pending_reviews_count/", function( data ) {
+                        var result = data.result
+                        if(result == "success"){
+                            var count = data.count
+                            if(count > 0){
+                                $("#reviews_count").html('<span class="label label-danger" style="min-width:10px">'+count+'</span>')
+                            }
+                        }
+                    });
+                {% endif %}
             {% endif %}
 
             {% if LANGUAGE_CODE == 'ar' %}

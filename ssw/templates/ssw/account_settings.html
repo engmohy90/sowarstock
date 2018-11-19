@@ -8,14 +8,6 @@ Account Settings
 {% block content %}
 <section class="bg--secondary space--sm">
                 <div class="container">
-                    {% if user.type == "contributor" and not user.is_verified %}
-                        <div class="alert bg--error">
-                            <div class="alert__body">
-                                <span {% if LANGUAGE_CODE == 'ar' %}style="text-align:right"{% endif %}>Please verify your email, address and photo ID to be verified</span>
-                            </div>
-                            <div class="alert__close">×</div>
-                        </div>
-                    {% endif %}
                     <div class="row">
                         <div class="col-lg-4">
                             <div class="boxed boxed--lg boxed--border">
@@ -52,7 +44,7 @@ Account Settings
                                             <a href="#" data-toggle-class=".account-tab:not(.hidden);hidden|#account-password;hidden">Password</a>
                                         </li>
                                         <li>
-                                            <a href="#" data-toggle-class=".account-tab:not(.hidden);hidden|#account-billing;hidden">Preferred Payment Method</a>
+                                            <a href="#" data-toggle-class=".account-tab:not(.hidden);hidden|#account-billing;hidden">Payment Settings</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -62,6 +54,14 @@ Account Settings
                             <div class="boxed boxed--lg boxed--border">
                                 <div id="account-personal" class="account-tab">
                                     <h4>Personal Information</h4>
+                                    <h5>
+                                        Email: {{user.email}}
+                                        {% if user.email_verified %}
+                                            <span class="color--success"> verified</span>
+                                        {% else %}
+                                            <span class="color--error"> unverified</span>
+                                        {% endif %}
+                                    </h5>
                                     <form method="post" action="{% url 'update_personal_info' %}" enctype="multipart/form-data">
                                         {% csrf_token %}
                                             {{ personal_info_form.as_p }}
@@ -126,7 +126,7 @@ Account Settings
                                     </form>
                                 </div>
                                 <div id="account-billing" class="hidden account-tab">
-                                    <h4>Preferred Payment Method</h4>
+                                    <h4>Payment Settings</h4>
                                     <p>Choose your preferred payment method to get paid when you have new earnings.</p>
                                     <form Method="post" action="{% url 'update_payment_method' %}">
                                         {% csrf_token %}
@@ -234,16 +234,9 @@ Account Settings
           minLength: 1
         },
         {
-          name: 'states',
+          name: 'codes',
           source: substringMatcher(codes)
         });
-
-
-        {% if not user.email_verified %}
-            $("label[for='id_email']").after('<span class="color--error"> unverified</span>')
-        {% else %}
-            $("label[for='id_email']").after('<span class="color--success"> verified</span>')
-        {% endif %}
 
         wrapCheckbox("profile_image-clear_id", "clear_checkbox_wrapper", "Delete")
     })

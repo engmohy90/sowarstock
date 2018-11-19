@@ -5,6 +5,25 @@
             <div class="col-lg-12 col-md-12 text-right text-left-xs text-left-sm">
                 <div class="bar__module">
                     <div class="row">
+                        <div class="col-md-2 full-width masonry__item">
+                            <div
+                                    {% if activeDashboardMenu == "sample_products" %}
+                                        class="card card-1 boxed boxed--sm boxed--border dashboard-menu-active"
+                                    {% else %}
+                                        class="card card-1 boxed boxed--sm boxed--border"
+                                    {% endif %}
+                            >
+                                <a href="{% url 'reviewer_sample_products_main' %}">
+                                    <center>
+                                        <i class="far fa-images fa-2x"></i>
+                                        <p>
+                                            Sample Products
+                                            <span id="sample_products_count"></span>
+                                        </p>
+                                    </center>
+                                </a>
+                            </div>
+                        </div>
                         <div class="col-md-1 full-width masonry__item">
                             <div
                                     {% if activeDashboardMenu == "products" %}

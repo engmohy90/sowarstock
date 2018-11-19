@@ -1,6 +1,6 @@
 {% extends "ssw/main.html" %}
 {% load static from staticfiles %}
-
+{% load progress_bar %}
 {% block title %}
 New Product
 {% endblock %}
@@ -23,48 +23,72 @@ New Product
                         </p>
                         <form method="post" action="" enctype="multipart/form-data">
 
-                                {{form.title.errors}}
                                 {{form.title.label_tag}}
                                 {{form.title}}
+                                {{form.title.errors}}
                                 <br><br>
-                                {{form.file_type.errors}}
                                 {{form.file_type.label_tag}}
                                 {{form.file_type}}
+                                {{form.file_type.errors}}
                                 <br><br>
                                 <div id="image_field_wrapper">
-                                    {{form.image.errors}}
                                     {{form.image.label_tag}}
                                     {{form.image}}
+                                    {{form.image.errors}}
                                     <br><br>
                                 </div>
 
                                 <div id="file_field_wrapper">
-                                    {{form.file.errors}}
                                     {{form.file.label_tag}}
                                     {{form.file}}
+                                    {{form.file.errors}}
                                     <br><br>
                                 </div>
                                 <div id="eps_image_field_wrapper">
-                                    {{form.eps_image.errors}}
                                     {{form.eps_image.label_tag}}
                                     {{form.eps_image}}
+                                    {{form.eps_image.errors}}
                                     <br><br>
                                 </div>
-                                {{form.description.errors}}
                                 {{form.description.label_tag}}
                                 {{form.description}}
+                                {{form.description.errors}}
                                 <br><br>
-                                {{form.keywords.errors}}
                                 {{form.keywords.label_tag}}
                                 {{form.keywords}}
+                                {{form.keywords.errors}}
                                 <br><br>
-                                {{form.category.errors}}
                                 {{form.category.label_tag}}
                                 {{form.category}}
+                                {{form.category.errors}}
                                 <br><br>
-                                {{form.subcategory.errors}}
                                 {{form.subcategory.label_tag}}
                                 {{form.subcategory}}
+                                {{form.subcategory.errors}}
+                                <br><br>
+                                {{form.adult_content.errors}}
+                                <div id="adult_content_checkbox_wrapper" class="input-checkbox input-checkbox--switch">
+                                    <input type="checkbox" name="adult_content" id="id_adult_content">
+                                    <label for="id_adult_content"></label>
+                                </div>
+                                <span>
+                                    Adult Content
+                                    <div class="modal-instance">
+                                        <a href="#" class="modal-trigger color--primary"><i class="far fa-question-circle"></i></a>
+                                        <div class="modal-container">
+                                            <div class="modal-content">
+                                                <div class="boxed boxed--lg">
+                                                    <h2>Adult Content</h2>
+                                                    <hr class="short">
+                                                    <p class="lead">Content that you plan to sell or license through Sowarstock ONLY.</p>
+                                                    <p class="lead">The royalty rate is 75% for Exclusive Content and 30% for Non-Exclusive Content.</p>
+                                                    <p class="lead">For more, please read <a href="{% url 'legal_contributor' %}" target="_blank">The Contributor Agreement</a></p>
+                                                </div>
+                                                <div class="modal-close modal-close-cross"></div>
+                                            </div>
+                                        </div>
+                                    </div><!--end of modal instance-->
+                                </span>
                                 <br><br>
                                 {{form.exclusive.errors}}
                                 <div id="exclusive_checkbox_wrapper" class="input-checkbox input-checkbox--switch">
@@ -81,8 +105,7 @@ New Product
                                                     <h2>Exclusive</h2>
                                                     <hr class="short">
                                                     <p class="lead">Content that you plan to sell or license through Sowarstock ONLY.</p>
-                                                    <p class="lead">The royalty rate is 75% for Exclusive Content and 30% for Non-Exclusive Content.</p>
-                                                    <p class="lead">For more, please read <a href="{% url 'legal_contributor' %}">The Contributor Agreement</a></p>
+                                                    <p class="lead">For more, please read <a href="{% url 'legal_contributor' %}" target="_blank">The Contributor Agreement</a></p>
                                                 </div>
                                                 <div class="modal-close modal-close-cross"></div>
                                             </div>
@@ -105,7 +128,7 @@ New Product
                                                     <h2>Released</h2>
                                                     <hr class="short">
                                                     <p class="lead">A document stipulating conditions under which the Contributor may lawfully use photographs of another person or property for commercial and other purposes.</p>
-                                                    <p class="lead">For more, please read <a href="{% url 'legal_contributor' %}">The Contributor Agreement</a></p>
+                                                    <p class="lead">For more, please read <a href="{% url 'legal_contributor' %}" target="_blank">The Contributor Agreement</a></p>
                                                 </div>
                                                 <div class="modal-close modal-close-cross"></div>
                                             </div>
@@ -113,11 +136,10 @@ New Product
                                     </div><!--end of modal instance-->
                                 </span>
                                 <br><br>
-                                {{form.price_type.errors}}
                                 {{form.price_type.label_tag}}
                                 {{form.price_type}}
+                                {{form.price_type.errors}}
                                 <br><br>
-                                {{form.standard_price.errors}}
                                 {{form.standard_price.label_tag}}
                                 <div class="modal-instance">
                                     <a href="#" class="modal-trigger color--primary"><i class="far fa-question-circle"></i></a>
@@ -148,8 +170,9 @@ New Product
                                     </div>
                                 </div><!--end of modal instance-->
                                 {{form.standard_price}}
+                                {{form.standard_price.errors}}
+                                <i id="standard_price_error" class="color--error"></i>
                                 <br><br>
-                                {{form.extended_price.errors}}
                                 {{form.extended_price.label_tag}}
                                 <div class="modal-instance">
                                     <a href="#" class="modal-trigger color--primary"><i class="far fa-question-circle"></i></a>
@@ -180,6 +203,8 @@ New Product
                                     </div>
                                 </div><!--end of modal instance-->
                                 {{form.extended_price}}
+                                {{form.extended_price.errors}}
+                                <i id="extended_price_error" class="color--error"></i>
                                 <br><br>
                             {% csrf_token %}
                             <div class="row">
@@ -192,6 +217,9 @@ New Product
                             </div>
                             <i id="form_error_message" class="color--error"></i>
                         </form>
+
+                        {% progress_bar %}
+
                     </div>
                 </div>
             </div>
@@ -203,6 +231,7 @@ New Product
 {% endblock %}
 
 {% block js %}
+    {% progress_bar_media %}
 <script>
     $( document ).ready(function() {
 
@@ -216,6 +245,47 @@ New Product
                 $("#id_standard_price").val("")
                 $("#id_extended_price").val("")
             }
+        })
+
+        $("#id_standard_price").blur(function(){
+            var standardPrice = $(this).val()
+            var extendedPrice = $("#id_extended_price").val()
+
+            if(+standardPrice < 15){
+                $("#standard_price_error").html("Price cannot be less than the default price of $15")
+                $(this).val("15")
+            }else {
+                $("#standard_price_error").html("")
+            }
+
+            if(+standardPrice > +extendedPrice && +extendedPrice < 149){
+                $("#id_extended_price").val("149")
+            }
+
+            if(+standardPrice > +extendedPrice && +extendedPrice >= 149){
+                $("#id_extended_price").val(standardPrice)
+            }
+
+        })
+
+        $("#id_extended_price").blur(function(){
+            var extendedPrice = $(this).val()
+            var standardPrice = $("#id_standard_price").val()
+
+            if(+extendedPrice < 149){
+                $("#extended_price_error").html("Price cannot be less than the default price of $149")
+                $(this).val("149")
+            }else{
+                $("#extended_price_error").html("")
+            }
+
+            if(+standardPrice > +extendedPrice){
+                $("#extended_price_error").html("Extended price cannot be less than standard price")
+                $(this).val(standardPrice)
+            }else{
+                $("#extended_price_error").html("")
+            }
+
         })
 
         $("#id_category").change(function(){

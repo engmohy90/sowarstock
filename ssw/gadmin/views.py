@@ -21,6 +21,43 @@ def users(request):
         messages.error(request, "You are not authorized to view this page !")
         return HttpResponseRedirect("/")
 
+
+@login_required
+def suspend_account(request, username):
+    user = getSowarStockUser(request.user)
+    account = get_object_or_404(models.SowarStockUser, username=username)
+    if user.type == "admin":
+        if request.method == "POST":
+            suspension_reason = request.POST["suspension_reason"]
+            account.suspended = True
+            account.suspension_reason = suspension_reason
+            account.save()
+            # send email
+            email_body = loader.render_to_string("ssw/email_suspend_account.html", {"user": account})
+            send_mail("إيقاف حسابك", "", "Sowarstock", [account.email], False,
+                      None, None, None, email_body)
+            messages.success(request, "Account suspended")
+        return HttpResponseRedirect("/admin/users")
+    else:
+        messages.error(request, "You are not authorized to view this page !")
+        return HttpResponseRedirect("/")
+
+
+@login_required
+def unsuspend_account(request,username):
+    user = getSowarStockUser(request.user)
+    account = get_object_or_404(models.SowarStockUser, username=username)
+    if user.type == "admin":
+        account.suspended = False
+        account.suspension_reason = None
+        account.save()
+        messages.success(request, "Account un-suspended")
+        return HttpResponseRedirect("/admin/users")
+    else:
+        messages.error(request, "You are not authorized to view this page !")
+        return HttpResponseRedirect("/")
+
+
 @login_required
 def products_main(request):
     user = getSowarStockUser(request.user)
@@ -29,8 +66,11 @@ def products_main(request):
         pending_admin = models.Product.objects.filter(status='pending_admin_approval')
         approved = models.Product.objects.filter(status="approved")
         rejected = models.Product.objects.filter(status="rejected")
+        requested_to_archive = models.Product.objects.filter(requested_to_archive=True)
+        archived = models.Product.objects.filter(status="archived")
         return render(request, "ssw/admin/products_main.html", {"user":user,"pending":pending, "pending_admin":pending_admin,
                                                                 "approved":approved, "rejected": rejected,
+                                                                "requested_to_archive": requested_to_archive, "archived": archived,
                                                                 "activeDashboardMenu": "products", **showCorrectMenu(request.user)})
     else:
         messages.error(request, "You are not authorized to view this page !")
@@ -71,10 +111,112 @@ def product_reject(request, pk):
             send_mail("رفض عملك {}".format(product.public_id), "", "Sowarstock", [product.owner.email], False,
                       None, None, None, email_body)
             notify.send(request.user, recipient=product.owner, level="error",
-                        verb='Product {} has been rejected'.format(product.public_id))
+                        verb='Product {} has been rejected for the following reason: {}, {}'.format(product.public_id,
+                                                                                                    rejection_reason,
+                                                                                                    rejection_note))
             messages.success(request, "Product has been rejected")
             return HttpResponseRedirect("/admin/products")
         return HttpResponseRedirect("/admin/products")
+    else:
+        messages.error(request, "You are not authorized to view this page !")
+        return HttpResponseRedirect("/")
+
+
+@login_required
+def product_archive(request, pk):
+    user = getSowarStockUser(request.user)
+    if user.type == "admin":
+        product = get_object_or_404(models.Product, pk=pk)
+        product.status = "archived"
+        product.requested_to_archive = False
+        product.save()
+        messages.success(request, "Product has been archived")
+        return HttpResponseRedirect("/admin/products")
+    else:
+        messages.error(request, "You are not authorized to view this page !")
+        return HttpResponseRedirect("/")
+
+
+@login_required
+def collections_main(request):
+    user = getSowarStockUser(request.user)
+    if user.type == "admin":
+        collections = models.Collection.objects.all()
+        return render(request, "ssw/admin/collections_main.html", {"user":getSowarStockUser(request.user), "collections": collections,
+                                                  "activeDashboardMenu": "collections", **showCorrectMenu(request.user)})
+    else:
+        messages.error(request, "You are not authorized to view this page !")
+        return HttpResponseRedirect("/")
+
+
+@login_required
+def collections_new(request):
+    user = getSowarStockUser(request.user)
+    if user.type == "admin":
+        products = models.Product.objects.filter(status="approved")
+        if request.method == "POST":
+            title = request.POST["title"]
+            products = request.POST.getlist("products")
+            if title == "":
+                messages.error(request, "Please choose a title for your collection")
+                return HttpResponseRedirect("/admin/collections/new")
+            if not products:
+                messages.error(request, "Please select at least one product")
+                return HttpResponseRedirect("/admin/collections/new")
+            collection = models.Collection.objects.create(title=title, owner=user)
+            for product in products:
+                p = get_object_or_404(models.Product, pk=product)
+                collection.products.add(p)
+            collection.save()
+            messages.success(request, "Collection created successfully")
+            return HttpResponseRedirect("/admin/collections")
+        return render(request, "ssw/admin/collections_new.html", {"user":getSowarStockUser(request.user), "products": products,
+                                                      "activeDashboardMenu": "collections", **showCorrectMenu(request.user)})
+    else:
+        messages.error(request, "You are not authorized to view this page !")
+        return HttpResponseRedirect("/")
+
+
+@login_required
+def collections_edit(request,pk):
+    collection = get_object_or_404(models.Collection, pk=pk)
+    user = getSowarStockUser(request.user)
+    if user.type == "admin":
+        if user == collection.owner:
+            products = models.Product.objects.filter(status="approved")
+        else:
+            products = models.Product.objects.filter(owner=collection.owner, status="approved")
+        if request.method == "POST":
+            title = request.POST["title"]
+            products_pks = request.POST.getlist("products")
+            if title == "":
+                messages.error(request, "Please choose a title for your collection")
+                return HttpResponseRedirect("/admin/collections/{}/edit".format(collection.pk))
+            if not products_pks:
+                messages.error(request, "Please select at least one product")
+                return HttpResponseRedirect("/admin/collections/{}/edit".format(collection.pk))
+            collection.products.clear()
+            for product in products_pks:
+                p = get_object_or_404(models.Product, pk=product)
+                collection.products.add(p)
+            collection.save()
+            messages.success(request, "Collection updated successfully")
+            return HttpResponseRedirect("/admin/collections")
+        return render(request, "ssw/admin/collections_new.html", {"user": getSowarStockUser(request.user), "products": products, "collection": collection,
+                                                            "activeDashboardMenu": "collections", **showCorrectMenu(request.user)})
+    else:
+        messages.error(request, "You are not authorized to view this page !")
+        return HttpResponseRedirect("/")
+
+
+@login_required
+def collections_delete(request, pk):
+    collection = get_object_or_404(models.Collection, pk=pk)
+    user = getSowarStockUser(request.user)
+    if user.type == "admin":
+        collection.delete()
+        messages.success(request,"Collection deleted")
+        return HttpResponseRedirect("/admin/collections")
     else:
         messages.error(request, "You are not authorized to view this page !")
         return HttpResponseRedirect("/")
@@ -247,14 +389,20 @@ def notifications_main(request):
     if user.type == "admin":
         form = forms.NotificationForm()
         if request.method == "POST":
-            recipients = request.POST.getlist("recipient")
+            recipients_type = request.POST.getlist("recipients")[0]
+            if recipients_type == "contributors":
+                recipients = models.SowarStockUser.objects.filter(type="contributor")
+            elif recipients_type == "clients":
+                recipients = models.SowarStockUser.objects.filter(type="client")
+            else:
+                recipients = request.POST.getlist("recipient")
             level = request.POST["level"]
             verb = request.POST["verb"]
             for r in recipients:
                 user = get_object_or_404(models.SowarStockUser, pk=r)
-                notify.send(request.user, recipient = user, level = level, verb = verb)
-                messages.success(request, "Notification sent")
-                return HttpResponseRedirect("/admin/notices")
+                notify.send(request.user, recipient=user, level=level, verb=verb)
+            messages.success(request, "Notification sent")
+            return HttpResponseRedirect("/admin/notices")
         return render(request, "ssw/admin/notifications_main.html", {"user": user, "form": form,
                                                                      "activeDashboardMenu": "notifications",
                                                                      **showCorrectMenu(request.user)})
@@ -420,20 +568,33 @@ def orders_main(request):
     user = getSowarStockUser(request.user)
     if user.type == "admin":
         orders = models.Order.objects.all()
-        return render(request, "ssw/admin/orders_main.html", {"user": user, "orders": orders, **showCorrectMenu(request.user)})
+        return render(request, "ssw/admin/orders_main.html", {"user": user, "orders": orders,
+                                                              "activeDashboardMenu": "orders", **showCorrectMenu(request.user)})
     else:
         messages.error(request, "You are not authorized to view this page !")
         return HttpResponseRedirect("/")
+
+
+@login_required
+def order_details(request, order_no):
+    order = get_object_or_404(models.Order, order_no=order_no)
+    user = getSowarStockUser(request.user)
+    if user.type == "admin":
+        return render(request, "ssw/admin/order_details.html", {"user": getSowarStockUser(request.user), "order": order,
+                                                      "activeDashboardMenu": "orders", **showCorrectMenu(request.user)})
+    else:
+        messages.error(request, "You are not authorized to view this page !")
+        return HttpResponseRedirect("/")
+
 
 @login_required
 def featured_main(request):
     user = getSowarStockUser(request.user)
     if user.type == "admin":
-        slider_images = models.Featured.objects.filter(type="slider")
-        contributors = models.Featured.objects.filter(type="contributors")
-        featured_products = models.Featured.objects.filter(type="featured")
-        return render(request, "ssw/admin/featured_main.html", {"user": user, "slider_images": slider_images,
-                                                                "contributors": contributors, "featured_products": featured_products,
+        contributors = models.Contributor.objects.filter(featured=True)
+        products = models.Product.objects.filter(featured=True)
+        return render(request, "ssw/admin/featured_main.html", {"user": user, "contributors": contributors,
+                                                                "products": products, "activeDashboardMenu": "featured",
                                                                 **showCorrectMenu(request.user)})
     else:
         messages.error(request, "You are not authorized to view this page !")
@@ -441,20 +602,23 @@ def featured_main(request):
 
 
 @login_required
-def featured_slider_new(request):
+def featured_contributor_edit(request):
     user = getSowarStockUser(request.user)
     if user.type == "admin":
-        form = forms.FeaturedSliderForm()
+        contributors = models.Contributor.objects.all()
         if request.method == "POST":
-            form = forms.FeaturedSliderForm(request.POST, request.FILES)
-            if form.is_valid():
-                featured = form.save(False)
-                featured.type = "slider"
-                featured.save()
-                return HttpResponseRedirect("/admin/featured")
-            else:
-                messages.error(request, "An error has occurred")
-        return render(request, "ssw/admin/featured_slider_new.html", {"user": user, "form": form,
+            for contributor in contributors:
+                contributor.featured = False
+                contributor.save()
+            cs = request.POST.getlist("contributors")
+            if cs:
+                for contributor in cs:
+                    c = get_object_or_404(models.Contributor, pk=contributor)
+                    c.featured = True
+                    c.save()
+            messages.success(request, "Featured contributors list updated successfully")
+            return HttpResponseRedirect("/admin/featured")
+        return render(request, "ssw/admin/featured_contributor_edit.html", {"user": user, "contributors": contributors,
                                                                 **showCorrectMenu(request.user)})
     else:
         messages.error(request, "You are not authorized to view this page !")
@@ -462,20 +626,23 @@ def featured_slider_new(request):
 
 
 @login_required
-def featured_contributor_new(request):
+def featured_product_edit(request):
     user = getSowarStockUser(request.user)
     if user.type == "admin":
-        form = forms.FeaturedContributorForm()
+        products = models.Product.objects.all()
         if request.method == "POST":
-            form = forms.FeaturedContributorForm(request.POST)
-            if form.is_valid():
-                featured = form.save(False)
-                featured.type = "contributors"
-                featured.save()
-                return HttpResponseRedirect("/admin/featured")
-            else:
-                messages.error(request, "An error has occurred")
-        return render(request, "ssw/admin/featured_contributor_new.html", {"user": user, "form": form,
+            for product in products:
+                product.featured = False
+                product.save()
+            ps = request.POST.getlist("products")
+            if ps:
+                for product in ps:
+                    p = get_object_or_404(models.Product, pk=product)
+                    p.featured = True
+                    p.save()
+            messages.success(request, "Featured products list updated successfully")
+            return HttpResponseRedirect("/admin/featured")
+        return render(request, "ssw/admin/featured_product_edit.html", {"user": user, "products": products,
                                                                 **showCorrectMenu(request.user)})
     else:
         messages.error(request, "You are not authorized to view this page !")
@@ -483,20 +650,42 @@ def featured_contributor_new(request):
 
 
 @login_required
-def featured_product_new(request):
+def earnings_main(request):
     user = getSowarStockUser(request.user)
     if user.type == "admin":
-        form = forms.FeaturedProductForm()
+        searnings = models.Earning.objects.filter(type="sowarstock")
+        cearnings = models.Earning.objects.filter(type="contributor")
+        return render(request, "ssw/admin/earnings_main.html", {"user": user, "searnings": searnings,
+                                                                "cearnings": cearnings, "activeDashboardMenu": "earnings",
+                                                                **showCorrectMenu(request.user)})
+    else:
+        messages.error(request, "You are not authorized to view this page !")
+        return HttpResponseRedirect("/")
+
+
+@login_required
+def payment_new(request, pk):
+    user = getSowarStockUser(request.user)
+    if user.type == "admin":
+        earning = get_object_or_404(models.Earning, pk=pk)
+        form = forms.PaymentForm()
         if request.method == "POST":
-            form = forms.FeaturedProductForm(request.POST)
+            form = forms.PaymentForm(request.POST, request.FILES)
             if form.is_valid():
-                featured = form.save(False)
-                featured.type = "featured"
-                featured.save()
-                return HttpResponseRedirect("/admin/featured")
-            else:
-                messages.error(request, "An error has occurred")
-        return render(request, "ssw/admin/featured_product_new.html", {"user": user, "form": form,
+                payment = form.save(commit=False)
+                payment.amount = earning.amount
+                payment.earning = earning
+                payment.save()
+                messages.success(request, "Payment has been successfully made")
+                # notify contributor and send email
+                email_body = loader.render_to_string("ssw/email_new_payment.html", {"payment": payment})
+                send_mail("عملية دفع جديدة لك", "", "Sowarstock", [payment.contributor.email], False,
+                          None, None, None, email_body)
+                notify.send(request.user, recipient=payment.contributor, level="success",
+                            verb='You got paid ${}'.format(payment.amount))
+                return HttpResponseRedirect("/fadmin/earnings")
+        return render(request, "ssw/admin/payment_new.html", {"user": user, "earning": earning,
+                                                                "form": form,
                                                                 **showCorrectMenu(request.user)})
     else:
         messages.error(request, "You are not authorized to view this page !")
@@ -504,41 +693,97 @@ def featured_product_new(request):
 
 
 @login_required
-def featured_slider_delete(request, pk):
+def sample_products_main(request):
     user = getSowarStockUser(request.user)
     if user.type == "admin":
-        featured = get_object_or_404(models.Featured, pk=pk)
-        featured.image.delete_thumbnails()
-        featured.image.delete(False)
-        featured.delete()
-        messages.success(request, "image has been deleted")
-        return HttpResponseRedirect("/admin/featured")
+        new_sample_products = models.SampleProduct.objects.filter(viewed_by_admin=False)
+        viewed_sample_products = models.SampleProduct.objects.filter(viewed_by_admin=True)
+        return render(request, "ssw/admin/sample_products_main.html", {"user": user, "new_sample_products": new_sample_products,
+                                                                          "viewed_sample_products": viewed_sample_products,
+                                                                          "activeDashboardMenu": "sample_products",
+                                                                          **showCorrectMenu(request.user)})
     else:
         messages.error(request, "You are not authorized to view this page !")
         return HttpResponseRedirect("/")
 
 
 @login_required
-def featured_contributor_delete(request, pk):
+def view_sample_product(request, pk):
     user = getSowarStockUser(request.user)
     if user.type == "admin":
-        featured = get_object_or_404(models.Featured, pk=pk)
-        featured.delete()
-        messages.success(request, "contributor has been deleted")
-        return HttpResponseRedirect("/admin/featured")
+        sample_product = get_object_or_404(models.SampleProduct, pk=pk)
+        sample_product.viewed_by_admin = True
+        sample_product.save()
+        return HttpResponseRedirect("/admin/sample-products")
     else:
         messages.error(request, "You are not authorized to view this page !")
         return HttpResponseRedirect("/")
 
 
 @login_required
-def featured_product_delete(request, pk):
+def search_keywords_main(request):
     user = getSowarStockUser(request.user)
     if user.type == "admin":
-        featured = get_object_or_404(models.Featured, pk=pk)
-        featured.delete()
-        messages.success(request, "product has been deleted")
-        return HttpResponseRedirect("/admin/featured")
+        keywords = models.SearchKeyword.objects.all()
+        synonyms = models.SearchKeywordSynonyms.objects.all()
+        return render(request, "ssw/admin/search_keywords_main.html",
+                      {"user": user, "keywords": keywords, "synonyms": synonyms,
+                       "activeDashboardMenu": "keywords",
+                       **showCorrectMenu(request.user)})
+    else:
+        messages.error(request, "You are not authorized to view this page !")
+        return HttpResponseRedirect("/")
+
+
+@login_required
+def search_keyword_synonyms_new(request):
+    user = getSowarStockUser(request.user)
+    if user.type == "admin":
+        form = forms.SearchKeywordSynonymsForm()
+        if request.method == "POST":
+            form = forms.SearchKeywordSynonymsForm(request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Word synonyms added successfully")
+                return HttpResponseRedirect("/admin/search-keywords")
+        return render(request, "ssw/admin/search_keyword_synonyms_new.html",
+                      {"user": user, "form": form,
+                       "activeDashboardMenu": "keywords",
+                       **showCorrectMenu(request.user)})
+    else:
+        messages.error(request, "You are not authorized to view this page !")
+        return HttpResponseRedirect("/")
+
+
+@login_required
+def search_keyword_synonyms_edit(request, pk):
+    user = getSowarStockUser(request.user)
+    synonym = get_object_or_404(models.SearchKeywordSynonyms, pk=pk)
+    if user.type == "admin":
+        form = forms.SearchKeywordSynonymsForm(instance=synonym)
+        if request.method == "POST":
+            form = forms.SearchKeywordSynonymsForm(request.POST, instance=synonym)
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Word synonyms updated successfully")
+                return HttpResponseRedirect("/admin/search-keywords")
+        return render(request, "ssw/admin/search_keyword_synonyms_new.html",
+                      {"user": user, "form": form,
+                       "activeDashboardMenu": "keywords",
+                       **showCorrectMenu(request.user)})
+    else:
+        messages.error(request, "You are not authorized to view this page !")
+        return HttpResponseRedirect("/")
+
+
+@login_required
+def search_keyword_synonyms_delete(request, pk):
+    user = getSowarStockUser(request.user)
+    synonym = get_object_or_404(models.SearchKeywordSynonyms, pk=pk)
+    if user.type == "admin":
+        synonym.delete()
+        messages.success(request, "Word synonyms deleted successfully")
+        return HttpResponseRedirect("/admin/search-keywords")
     else:
         messages.error(request, "You are not authorized to view this page !")
         return HttpResponseRedirect("/")

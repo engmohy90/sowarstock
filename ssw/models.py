@@ -6,10 +6,10 @@ from django_countries.fields import CountryField
 from countries_plus.models import Country
 from PIL import Image
 import uuid
-from easy_thumbnails.fields import ThumbnailerImageField
 from mimetypes import MimeTypes
 
 # Create your models here.
+
 
 def sizeof_fmt(num, suffix='B'):
     for unit in ['','K','M','G','T','P','E','Z']:
@@ -39,7 +39,7 @@ class Address(models.Model):
     zipcode = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
-        return self.address1
+        return "{}".format(self.country)
 
 
 class SowarStockUser(User):
@@ -54,9 +54,11 @@ class SowarStockUser(User):
     preferred_language = models.CharField(max_length=2, choices=LANGUAGES, null=True, blank=True)
     email_verification_code = models.UUIDField(default=uuid.uuid4)
     email_verified = models.BooleanField(default=False)
+    suspended = models.BooleanField(default=False)
+    suspension_reason = models.TextField(null=True, blank=True)
     forgot_password_verification = models.UUIDField(null=True, blank=True, unique=True)
     forgot_password_status = models.CharField(max_length=255, default="none", choices=FORGOT_PASSWORD_STATUSES)
-    address = models.OneToOneField(Address, on_delete=models.PROTECT, null=True, blank=True)
+    address = models.OneToOneField(Address, on_delete=models.SET_NULL, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     profile_image = models.ImageField(upload_to='profile_images/', null=True, blank=True)
 
@@ -69,11 +71,13 @@ class Contributor(SowarStockUser):
     PAYMENT_METHODS = (("direct_bank_deposit", "Direct Bank Deposit"), ("western_union", "Western Union"),
                        ("paypal", "Paypal"))
     status = models.CharField(max_length=255, choices=ACCOUNT_STATUS, default="unverified")
+    completed_registration = models.BooleanField(default=False)
     photo_id = models.FileField(upload_to='photo_id/', null=True, blank=True)
     photo_id_verified = models.BooleanField(default=False)
     display_name = models.CharField(max_length=255, null=True, blank=True)
     job_title = models.CharField(max_length=255, null=True, blank=True)
     portfolio_url = models.CharField(max_length=255, null=True, blank=True)
+    featured = models.BooleanField(default=False)
     preferred_payment_method = models.CharField(max_length=255, null=True, blank=True, choices=PAYMENT_METHODS)
     iban = models.CharField(max_length=255, null=True, blank=True)
     western_union_account = models.CharField(max_length=255, null=True, blank=True)
@@ -116,10 +120,19 @@ class SubCategory(models.Model):
         verbose_name = "Sub Categorie"
 
 
+class SampleProduct(models.Model):
+    image = models.ImageField(upload_to='sample-products/')
+    thumbnail = models.ImageField(upload_to='sample-products/thumbnails/', null=True, blank=True)
+    owner = models.ForeignKey(Contributor, on_delete=models.CASCADE)
+    viewed_by_reviewer = models.BooleanField(default=False)
+    viewed_by_admin = models.BooleanField(default=False)
+
+
 class Product(models.Model):
     ADMIN_STATUS_OPTIONS = (("pending_approval", "Pending Approval"),
                             ("pending_admin_approval", "Pending Admin Approval"),
-                            ("approved", "Approved"), ("rejected", "Rejected"))
+                            ("approved", "Approved"), ("rejected", "Rejected"),
+                            ("archived", "Archived"))
     REJECTION_REASON_OPTIONS = (("title_description", "Title/Description"), ("size_resolution", "Size and/or Resolution"),
                                 ("trademark_copyright", "Trademark and/or Copyright"), ("lighting_exposure", "Lighting and/or Expusure"),
                                 ("noise_artifact", "Noise, Artifact, and/or Film Grain"), ("focus", "Focus"),
@@ -130,13 +143,15 @@ class Product(models.Model):
                                 ("other", "Other"))
     FILE_TYPE_OPTIONS = (("jpeg", "JPEG"), ("eps", "EPS"))
     public_id = models.IntegerField(unique=True)
-    title = models.CharField(max_length=255, null=False, blank=False)
-    description = models.TextField(blank=True, null=True)
+    title = models.CharField(max_length=255)
+    description = models.TextField()
     file_type = models.CharField(max_length=255, default="jpeg", choices=FILE_TYPE_OPTIONS)
-    image = ThumbnailerImageField(upload_to='products/', null=True, blank=True)
-    eps_image = ThumbnailerImageField(upload_to='products/', null=True, blank=True)
+    image = models.ImageField(upload_to='products/', null=True, blank=True)
+    eps_image = models.ImageField(upload_to='products/', null=True, blank=True)
     file = models.FileField(upload_to='products/', null=True, blank=True)
-    watermark = ThumbnailerImageField(upload_to='products/watermarked/', null=True, blank=True)
+    watermark = models.ImageField(upload_to='products/watermarked/', null=True, blank=True)
+    thumbnail = models.ImageField(upload_to='products/thumbnails/', null=True, blank=True)
+    adult_content = models.BooleanField(default=False)
     released = models.BooleanField(default=False)
     exclusive = models.BooleanField(default=False)
     status = models.CharField(max_length=255, choices=ADMIN_STATUS_OPTIONS, default="pending_approval")
@@ -144,10 +159,12 @@ class Product(models.Model):
     rejection_note = models.TextField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    requested_to_archive = models.BooleanField(default=False)
+    featured = models.BooleanField(default=False)
     #keywords = ListCharField(base_field=models.CharField(max_length=255), max_length = 10)
     keywords = models.CharField(max_length=255, blank=False, null=False)
-    category = models.ForeignKey(Category, blank=True, on_delete=models.CASCADE)
-    subcategory = models.ForeignKey(SubCategory, blank=True,null=True, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    subcategory = models.ForeignKey(SubCategory, blank=True, null=True, on_delete=models.SET_NULL)
     standard_price = models.IntegerField(default=15)
     extended_price = models.IntegerField(default=149)
     owner = models.ForeignKey(Contributor, on_delete=models.CASCADE)
@@ -196,7 +213,9 @@ class Product(models.Model):
             file_size = self.file.size
             mime = MimeTypes()
             mime_type = mime.guess_type(self.file.url)
-            if mime_type[0] != "application/postscript":
+            if not mime_type[0] == "application/postscript":
+                raise ValidationError(_('Format is not EPS'))
+            if not self.file.name.endswith('.eps'):
                 raise ValidationError(_('Format is not EPS'))
             if file_size > 15728640:  # 15 MB
                 raise ValidationError(_('File size has to be less than 15 MB'))
@@ -208,7 +227,7 @@ class Product(models.Model):
 
 class Collection(models.Model):
     title = models.CharField(max_length=255, null=False, blank=False)
-    owner = models.ForeignKey(Contributor, on_delete=models.CASCADE)
+    owner = models.ForeignKey(SowarStockUser, on_delete=models.CASCADE)
     products = models.ManyToManyField(Product)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -223,6 +242,8 @@ class Review(models.Model):
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    read_by_product_owner = models.BooleanField(default=False)
+    read_by_admin = models.BooleanField(default=False)
 
     def __str__(self):
         return self.comment
@@ -328,13 +349,6 @@ class LegalDocument(models.Model):
         return self.title
 
 
-class Featured(models.Model):
-    TYPE_OPTIONS = (("slider", "Slider"), ("contributors", "Contributors"), ("featured", "Featured"))
-    type = models.CharField(max_length=255, choices=TYPE_OPTIONS)
-    product = models.ForeignKey(Product, on_delete=models.PROTECT, null=True, blank=True)
-    contributor = models.ForeignKey(Contributor, on_delete=models.PROTECT, null=True, blank=True)
-    image = ThumbnailerImageField(upload_to='featured/', null=True, blank=True)
-
 
 class Earning(models.Model):
     TYPE_OPTIONS = (("contributor", "Contributor"), ("sowarstock", "SowarStock"))
@@ -342,6 +356,7 @@ class Earning(models.Model):
     order_item = models.ForeignKey(OrderItem, on_delete=models.PROTECT)
     contributor = models.ForeignKey(Contributor, on_delete=models.PROTECT, null=True, blank=True)
     amount = models.DecimalField(max_digits=5, decimal_places=2)
+    created_at = models.DateTimeField(auto_now_add=True)
 
 
     def __str__(self):
@@ -353,6 +368,26 @@ class Payment(models.Model):
     contributor = models.ForeignKey(Contributor, on_delete=models.PROTECT)
     receipt = models.FileField(upload_to='payments/')
     earning = models.OneToOneField(Earning, on_delete=models.PROTECT)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return "${} to {}".format(self.amount, self.contributor)
+
+
+class SearchKeywordSynonyms(models.Model):
+    word = models.CharField(max_length=255)
+    synonyms = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.word
+
+
+class SearchKeyword(models.Model):
+    word = models.CharField(max_length=255)
+    count = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.word
+

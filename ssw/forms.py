@@ -28,12 +28,13 @@ class SignupForm(UserCreationForm):
             raise forms.ValidationError(u'This email address is already registered.')
         return email
 
+
 class ProfilePersonalInfoForm(ModelForm):
     profile_image = ImageField(required=False, widget=MyProfileImageFileInput)
 
     class Meta:
         model = models.SowarStockUser
-        fields = ["profile_image", "first_name", "last_name", "email", "country_code", "phone", "preferred_language"]
+        fields = ["profile_image", "first_name", "last_name", "country_code", "phone", "preferred_language"]
 
 
 class ProfilePublicInfoForm(ModelForm):
@@ -49,7 +50,6 @@ class AddressForm(ModelForm):
 
 
 class PhotoIdForm(ModelForm):
-
     class Meta:
         model = models.Contributor
         fields = ["photo_id"]
@@ -64,13 +64,26 @@ class PaymentMethodForm(ModelForm):
         }
 
 
+class SampleProductForm(ModelForm):
+    class Meta:
+        model = models.SampleProduct
+        fields = ["image"]
+
+
+SampleProductFormset = forms.modelformset_factory(
+    models.SampleProduct,
+    fields= ["image"],
+    extra=10
+)
+
 class ProductForm(ModelForm):
     price_type = forms.ChoiceField(choices=(("default", "Default"), ("custom", "Custom")))
 
     class Meta:
         model = models.Product
         fields = ["title", "file_type", "image", "file", "eps_image", "description", "keywords", "category",
-                  "subcategory", "exclusive", "released", "price_type", "standard_price", "extended_price"]
+                  "subcategory", "adult_content","exclusive", "released", "price_type",
+                  "standard_price", "extended_price"]
         labels = {
             'standard_price': _('Standard Price ($)'),
             'extended_price': _('Extended Price ($)')
@@ -112,11 +125,12 @@ class PersonalFaqForm(ModelForm):
 
 
 class NotificationForm(ModelForm):
+    recipients = forms.ChoiceField(choices=(("contributors", "Contributors"), ("clients", "Clients"), ("custom", "Custom")))
     recipient = forms.ModelMultipleChoiceField(models.SowarStockUser.objects.all(), label="Recipient (select multiple)", widget=SelectMultiple(attrs={'style': 'height:200%'}))
 
     class Meta:
         model = Notification
-        fields = ["recipient", "level", "verb"]
+        fields = ["recipients", "recipient", "level", "verb"]
         labels = {
             'verb': _('Message'),
             'level': _('Type'),
@@ -153,25 +167,13 @@ class LegalDocumentForm(ModelForm):
         fields = ["document"]
 
 
-class FeaturedSliderForm(ModelForm):
-    class Meta:
-        model = models.Featured
-        fields = ["image"]
-
-
-class FeaturedContributorForm(ModelForm):
-    class Meta:
-        model = models.Featured
-        fields = ["contributor"]
-
-
-class FeaturedProductForm(ModelForm):
-    class Meta:
-        model = models.Featured
-        fields = ["product"]
-
-
 class PaymentForm(ModelForm):
     class Meta:
         model = models.Payment
         fields = ["contributor", "receipt"]
+
+
+class SearchKeywordSynonymsForm(ModelForm):
+    class Meta:
+        model = models.SearchKeywordSynonyms
+        fields = ["word","synonyms"]

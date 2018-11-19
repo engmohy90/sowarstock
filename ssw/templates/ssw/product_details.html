@@ -1,6 +1,5 @@
 {% extends "ssw/main.html" %}
 {% load static from staticfiles %}
-{% load thumbnail %}
 {% load my_tags %}
 {% block title %}
 Pending Product {{product.public_id}
@@ -27,7 +26,12 @@ Pending Product {{product.public_id}
                         <li>{{product.public_id}}</li>
                     </ol>
                     <hr>
-                    <h4>Status: {{product.status|capfirst|remove_underscore}}</h4>
+                    <h4>
+                        Status: {{product.status|capfirst|remove_underscore}}
+                        {% if product.requested_to_archive %}
+                            <span class="color--error">(Requested to be deleted)</span>
+                        {% endif %}
+                    </h4>
                     {% if product.status == "rejected" %}
                         <h4>Rejection Reason: <span style="color:red">{{product.get_rejection_reason_display}}</span></h4>
                     {% endif %}
@@ -39,7 +43,7 @@ Pending Product {{product.public_id}
                             </tr>
                             <tr>
                                 <td><b>Image</b></td>
-                                <td><a href="{{ product.get_display_image.url }}"><img src="{{ product.get_display_image|thumbnail_url:'thumbnail'}}"></a></td>
+                                <td><a href="{{ product.get_display_image.url }}"><img src="{{ product.thumbnail.url}}"></a></td>
                             </tr>
                             {% if product.file_type == "eps" %}
                                 <tr>
@@ -51,6 +55,12 @@ Pending Product {{product.public_id}
                                 <td><b>Size</b></td>
                                 <td>{{product.product_size}}</td>
                             </tr>
+                            {% if product.file_type == "jpeg" %}
+                                <tr>
+                                    <td><b>Dimensions</b></td>
+                                    <td>{{product.image.width}} x {{product.image.height}}</td>
+                                </tr>
+                            {% endif %}
                             <tr>
                                 <td><b>Description</b></td>
                                 <td>{{product.description}}</td>
@@ -75,6 +85,10 @@ Pending Product {{product.public_id}
                                 <td><b>Extended Price</b></td>
                                 <td>${{product.extended_price}}</td>
                             </tr>
+                            <tr>
+                                <td><b>Adult Content</b></td>
+                                <td>{{product.adult_content|yesno:"Yes,No"}}</td>
+                            </tr>
                              <tr>
                                 <td><b>Exclusive</b></td>
                                 <td>{{product.exclusive|yesno:"Yes,No"}}</td>
@@ -85,6 +99,32 @@ Pending Product {{product.public_id}
                                     {{product.released|yesno:"Yes,No"}}
                                 </td>
                             </tr>
+                            {% if product.owner == user %}
+                                {% if not product.status == "archived" %}
+                                    {% if not product.requested_to_archive %}
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <a href="{% url 'product_request_to_archive' product.pk %}" class="btn btn-danger">
+                                                    Request to Delete
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
+                            {% if user.type == "admin" %}
+                                {% if product.requested_to_archive %}
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <a href="{% url 'admin_product_archive' product.pk %}" class="btn btn-danger">
+                                                Archive
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            {% endif %}
                           </tbody>
                       </table>
                 </div>

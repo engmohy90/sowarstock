@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm, SetPasswordForm
 from django.core.mail import send_mail
 from django.core.serializers.json import DjangoJSONEncoder
-from django.db.models import Sum
+from django.db.models import Sum, Q
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, JsonResponse
 from django.template import loader
@@ -19,7 +19,7 @@ import random
 import uuid
 
 from . import models, forms
-from .image_handling import create_watermarked_image, eps_to_jpeg
+from .image_handling import create_watermarked_image, create_thumbnailed_image
 
 
 def showCorrectMenu(user):
@@ -56,6 +56,15 @@ def getSowarStockUser(user):
         return u
     else:
         return user
+
+
+def get_country_codes_json():
+    countries = list(Country.objects.all())
+    country_codes = list()
+    for country in countries:
+        country_codes.append("{}".format(country))
+    codes_json = json.dumps(list(country_codes), cls=DjangoJSONEncoder)
+    return codes_json
 
 
 # Create your views here.
@@ -111,6 +120,7 @@ def verfiy_email(request, uuid):
         user = models.SowarStockUser.objects.get(email_verification_code=uuid, email_verified=False)
         user.email_verified = True
         user.save()
+        login(request, user)
         return render(request, "ssw/email_verification_success.html", {"user": getSowarStockUser(request.user)})
     except:
         messages.error(request, _("The link you followed is invalid"))
@@ -126,7 +136,7 @@ def recover_account(request):
             user.forgot_password_status = "not_used"
             user.save()
             email_body = loader.render_to_string("ssw/email_recover_account.html", {"user": user})
-            send_mail("إعادة كلمة المرور", "", "Sowarstock", [user.email], False,
+            send_mail("إسترجاع الحساب", "", "Sowarstock", [user.email], False,
                      None, None, None, email_body)
             messages.success(request, _("An email address has been sent to you"))
         except:
@@ -161,12 +171,37 @@ def search(request):
     if request.method == "POST":
         kws = request.POST['search']
         kws_list = kws.split(" ")
-        products = list()
+        kws_final_list = list()
         for kw in kws_list:
-            qs = models.Product.objects.filter(keywords__icontains=kw, status="approved")
+            try:
+                keyword = models.SearchKeyword.objects.get(word__iexact=kw)
+                keyword.count = keyword.count + 1
+                keyword.save()
+            except:
+                models.SearchKeyword.objects.create(word=kw, count=1)
+        for kw in kws_list:
+            try:
+                synonyms = models.SearchKeywordSynonyms.objects.get(word__iexact=kw)
+                synonyms_list = [x.strip() for x in synonyms.synonyms.split(",")]
+                kws_final_list.append(kw)
+                kws_final_list = kws_final_list + synonyms_list
+            except:
+                kws_final_list.append(kw)
+        products = list()
+        for kw in kws_final_list:
+            qs = models.Product.objects.filter(
+                Q(title__icontains=kw, status="approved") |
+                Q(description__icontains=kw, status="approved") |
+                Q(keywords__icontains=kw, status="approved")
+            )
             products = list(chain(products,qs))
+        # remove duplicates
+        final_products = list()
+        for product in products:
+            if product not in final_products:
+                final_products.append(product)
         return render(request,"ssw/search_results.html", {"user": getSowarStockUser(request.user),
-                                                          "products": list(reversed(products)), "keywords": kws})
+                                                          "products": final_products, "keywords": kws})
     return HttpResponseRedirect("/")
 
 
@@ -272,12 +307,12 @@ def checkout(request):
     # What you want the button to do.
     paypal_dict = {
         "business": "sowarstock.co@gmail.com",
-        "amount": cart.total(),
+        "amount": 1,
         "item_name": '+ '.join(str(e) for e in products),
         "invoice": "unique-invoice-id",
-        "notify_url": "https://sowarstock.herokuapp.com" + reverse('paypal-ipn'),
-        "return": "https://sowarstock.herokuapp.com/thanks-for-payment",
-        "cancel_return": "https://sowarstock.herokuapp.com/checkout",
+        "notify_url": "https://33441949.ngrok.io" + reverse('paypal-ipn'),
+        "return": "https://33441949.ngrok.io/thanks-for-payment",
+        "cancel_return": "https://33441949.ngrok.io/checkout",
         "custom": user
     }
 
@@ -318,20 +353,28 @@ def order_details(request, order_no):
 
 def other_profile(request, username):
     user = get_object_or_404(models.SowarStockUser, username=username)
-    other_user = getSowarStockUser(user)
-    return render(request, "ssw/other_profile.html", {"other_profile": other_user})
+    other_profile = getSowarStockUser(user)
+    products = list()
+    if other_profile.type == "contributor":
+        products = models.Product.objects.filter(owner=other_profile, status="approved")
+    return render(request, "ssw/other_profile.html", {"other_profile": other_profile, "products": products})
 
 
 @login_required
 def profile(request):
     user = getSowarStockUser(request.user)
-    if user.type == "contributor" or user.type == "client":
+    if  user.type == "client":
         return render(request, "ssw/profile.html", {"user": user, **showCorrectMenu(request.user)})
+    elif user.type == "contributor":
+        if user.completed_registration:
+            return render(request, "ssw/profile.html", {"user": user, **showCorrectMenu(request.user)})
+        else:
+            return HttpResponseRedirect("/complete-registration")
     elif user.type == "admin":
         users = models.SowarStockUser.objects.all()
         contributors = models.Contributor.objects.all()
         clients = models.Client.objects.all()
-        pending = models.Product.objects.filter(status="pending_approval") | models.Product.objects.filter(owner_id=request.user.id, status="pending_admin_approval")
+        pending = models.Product.objects.filter(status="pending_approval") | models.Product.objects.filter(status="pending_admin_approval")
         approved = models.Product.objects.filter(status="approved")
         rejected = models.Product.objects.filter(status="rejected")
         try:
@@ -356,7 +399,7 @@ def profile(request):
                                                     **showCorrectMenu(request.user)})
     elif user.type == "image_reviewer":
         pending = models.Product.objects.filter(status="pending_approval") | models.Product.objects.filter(
-            owner_id=request.user.id, status="pending_admin_approval")
+            status="pending_admin_approval")
         approved = models.Product.objects.filter(status="approved")
         rejected = models.Product.objects.filter(status="rejected")
         return render(request, "ssw/profile.html", {"pending": pending, "approved": approved,
@@ -382,6 +425,52 @@ def profile(request):
 
 
 @login_required
+def complete_registration(request):
+    user = getSowarStockUser(request.user)
+    if not user.completed_registration:
+        personal_info_form = forms.ProfilePersonalInfoForm(instance=user)
+        address_form = forms.AddressForm()
+        photo_id_form = forms.PhotoIdForm(instance=user)
+        sample_product_formset = forms.SampleProductFormset
+
+        codes_json = get_country_codes_json()
+
+        if request.method == "POST":
+            personal_info_form = forms.ProfilePersonalInfoForm(request.POST, request.FILES, instance=user)
+            address_form = forms.AddressForm(request.POST, instance=user.address)
+            photo_id_form = forms.PhotoIdForm(request.POST, request.FILES, instance=user)
+            sample_product_formset = forms.SampleProductFormset(request.POST, request.FILES)
+            if personal_info_form.is_valid() and address_form.is_valid() and photo_id_form.is_valid() and sample_product_formset.is_valid():
+                personal_info_form.save()
+                address = address_form.save()
+                user.address = address
+                user.save()
+                photo_id_form.save()
+                samples = sample_product_formset.save(commit=False)
+                for sample in samples:
+                    sample.owner = user
+                    sample.save()
+                    create_thumbnailed_image(sample)
+                user.completed_registration = True
+                user.save()
+                messages.error(request, "Thank you for completing the registration")
+                return HttpResponseRedirect("/profile")
+        return render(request, "ssw/complete_registration.html", {"user": user, "personal_info_form": personal_info_form,
+                                                                  "address_form": address_form, "photo_id_form": photo_id_form,
+                                                                  "sample_product_formset": sample_product_formset,
+                                                                  "codes_json": codes_json})
+    else:
+        return HttpResponseRedirect("/profile")
+
+
+@login_required
+def resend_email_activation(request):
+    user = getSowarStockUser(request.user)
+    email_body = loader.render_to_string("ssw/email_verify_email.html", {"user": user})
+    send_mail("شكرا لإنضمامكم", "", "Sowarstock", [user.email], False, None, None, None, email_body)
+    return JsonResponse({"result": "success", "msg": "email sent"})
+
+@login_required
 def products_main(request):
     user = getSowarStockUser(request.user)
     if user.type == "contributor":
@@ -405,7 +494,7 @@ def products_new(request):
             form = forms.ProductForm(request.POST, request.FILES)
             if form.is_valid():
                 product = form.save(commit=False)
-                public_id = "%08d" % random.randint(1,100000000)
+                public_id = "%08d" % random.randint(1, 100000000)
                 product.public_id = public_id
                 contributor = models.Contributor.objects.get(id=request.user.id)
                 product.owner = contributor
@@ -416,8 +505,8 @@ def products_new(request):
                 messages.success(request, "Request to add product has been submitted successfully")
                 return HttpResponseRedirect("/products/")
             else:
-                messages.error(request, form.errors['__all__'])
-
+                if '__all__' in form.errors:
+                    messages.error(request, form.errors['__all__'])
         return render(request, "ssw/products_new.html", {"user": getSowarStockUser(request.user), "form": form,
                                                          "activeDashboardMenu": "products", **showCorrectMenu(request.user)})
     else:
@@ -431,7 +520,7 @@ def product_pending(request,public_id):
     if not user.type == "client":
         product = get_object_or_404(models.Product, public_id=public_id)
         return render(request, "ssw/product_pending.html", {"user": getSowarStockUser(request.user), "product": product,
-                                                        **showCorrectMenu(request.user)})
+                                                            "activeDashboardMenu": "products", **showCorrectMenu(request.user)})
     else:
         messages.error(request, "You are not authorized to view this page !")
         return HttpResponseRedirect("/")
@@ -443,96 +532,18 @@ def product_details(request,public_id):
     if not user.type == "client":
         product = get_object_or_404(models.Product, public_id=public_id)
         return render(request, "ssw/product_details.html", {"user": getSowarStockUser(request.user), "product": product,
-                                                        **showCorrectMenu(request.user)})
+                                                            "activeDashboardMenu": "products", **showCorrectMenu(request.user)})
     else:
         messages.error(request, "You are not authorized to view this page !")
         return HttpResponseRedirect("/")
 
 
-def pending_product_count(request):
-    if request.user.is_authenticated:
-        user = models.SowarStockUser.objects.get(pk=request.user.pk)
-        if user.type == "admin":
-            count = models.Product.objects.filter(status="pending_admin_approval").count()
-            return JsonResponse({"result": "success", "count": count})
-        elif user.type == "image_reviewer":
-            count = models.Product.objects.filter(status="pending_approval").count()
-            return JsonResponse({"result": "success", "count": count})
-        else:
-            return JsonResponse({"result": "error", "msg": "no admin"})
-    else:
-        return JsonResponse({"result": "error", "msg": "no user"})
-
-
-def pending_requests_count(request):
-    if request.user.is_authenticated:
-        user = models.SowarStockUser.objects.get(pk=request.user.pk)
-        if user.type == "admin":
-            count = models.UserRequest.objects.filter(status="pending_approval").count()
-            return JsonResponse({"result": "success", "count": count})
-        else:
-            return JsonResponse({"result": "error", "msg": "no admin"})
-    else:
-        return JsonResponse({"result": "error", "msg": "no user"})
-
-
-def pending_faqs_count(request):
-    if request.user.is_authenticated:
-        user = models.SowarStockUser.objects.get(pk=request.user.pk)
-        if user.type == "admin":
-            count = models.FaqPersonal.objects.filter(replier__isnull=True).count()
-            return JsonResponse({"result": "success", "count": count})
-        else:
-            return JsonResponse({"result": "error", "msg": "no admin"})
-    else:
-        return JsonResponse({"result": "error", "msg": "no user"})
-
-
-def cart_items_count(request):
-    if request.user.is_authenticated:
-        user = models.SowarStockUser.objects.get(pk=request.user.pk)
-        if user.type == "client":
-            try:
-                cart = models.ShoppingCart.objects.get(owner=user)
-                items = models.ShoppingCartItem.objects.filter(cart=cart, status="in_cart")
-                if items:
-                    count = items.count()
-                    return JsonResponse({"result": "success", "count": count})
-                else:
-                    return JsonResponse({"result": "success", "msg": "no items"})
-            except:
-                return JsonResponse({"result": "success", "msg": "no items"})
-        else:
-            return JsonResponse({"result": "error", "msg": "no client"})
-    else:
-        return JsonResponse({"result": "error", "msg": "no user"})
-
-
 @login_required
-def notifications_undread_to_read(request):
-    notifications = request.user.notifications.unread()
-    notifications.mark_all_as_read()
-    return JsonResponse({"result": "success"})
-
-
-
-@login_required
-def product_delete(request, pk):
-    """
+def product_request_to_archive(request, pk):
     product = get_object_or_404(models.Product, pk=pk)
-    product.image.delete_thumbnails()
-    product.image.delete(False)
-    product.delete()
-    messages.success(request, "product deleted")
-    """
+    product.requested_to_archive = True
+    product.save()
     return HttpResponseRedirect("/products/")
-
-
-@login_required
-def load_subcategories(request):
-    category_id = request.GET.get('category')
-    subcategories = models.SubCategory.objects.filter(main_category = category_id).order_by('name')
-    return render(request, 'ssw/subcategories_dropdown_list_options.html', {'subcategories': subcategories})
 
 
 @login_required
@@ -554,11 +565,7 @@ def account_settings(request, **kwargs):
         photo_id_form = forms.PhotoIdForm(instance=user)
         # payment method form
         payment_method_form = forms.PaymentMethodForm(instance=user)
-        countries = list(Country.objects.all())
-        country_codes = list()
-        for country in countries:
-            country_codes.append("{}".format(country))
-        codes_json = json.dumps(list(country_codes), cls=DjangoJSONEncoder)
+        codes_json = get_country_codes_json()
         return render(request, 'ssw/account_settings.html', {"user": user,"personal_info_form":personal_info_form,
                                                              "address_form": address_form,"password_form": password_form,
                                                              "public_info_form": public_info_form, "photo_id_form": photo_id_form,
@@ -830,7 +837,7 @@ def collections_delete(request, pk):
 def profile_products(request, username):
     other_profile = get_object_or_404(models.Contributor, username=username)
     user = getSowarStockUser(request.user)
-    products = models.Product.objects.filter(owner=other_profile)
+    products = models.Product.objects.filter(owner=other_profile, status="approved")
     return render(request, "ssw/profile_products.html", {"user": user, "other_profile": other_profile,
                                                          "products": products})
 
@@ -838,7 +845,7 @@ def profile_products(request, username):
 def profile_product_details(request, username, public_id):
     user = getSowarStockUser(request.user)
     other_profile = get_object_or_404(models.Contributor, username=username)
-    product = get_object_or_404(models.Product, public_id=public_id, owner=other_profile)
+    product = get_object_or_404(models.Product, public_id=public_id, owner=other_profile, status="approved")
     return render(request, "ssw/profile_product_details.html", {"user":user, "other_profile": other_profile,
                                                                 "product": product})
 

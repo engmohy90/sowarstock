@@ -1,0 +1,92 @@
+{% extends "ssw/main.html" %}
+{% load static from staticfiles %}
+
+{% block title %}
+Sample Products
+{% endblock %}
+
+{% block content %}
+
+    <section class="bg--secondary space--sm">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="boxed boxed--lg boxed--border">
+                        <div id="products" class="account-tab">
+                            <h4>
+                                Sample Products
+                            </h4>
+                            <div class="tabs-container" data-content-align="left">
+                                <ul class="tabs">
+                                    <li class="active">
+                                        <div class="tab__title">
+                                            <span class="h5">New</span>
+                                        </div>
+                                        <div class="tab__content">
+                                            {% if new_sample_products %}
+                                                <div class="custom-scroll table-responsive">
+                                                  <table id="pendingProductsTable" class="table table-bordered table-hover">
+                                                      <thead>
+                                                      <tr>
+                                                          <th>Thumbnail</th>
+                                                          <th>User</th>
+                                                          <th></th>
+                                                      </tr>
+                                                      </thead>
+                                                      <tbody>
+                                                      {% for product in new_sample_products %}
+                                                        <tr>
+                                                            <td><a href="{{ product.image.url }}"><img src="{{ product.thumbnail.url }}"></a></td>
+                                                            <td><a href="{% url 'other_profile' product.owner.username %}">{{ product.owner }}</a></td>
+                                                            <td><a href="{% url 'reviewer_view_sample_product' product.pk %}" class="btn btn--primary color--white btn--sm">Mark as Viewed</a></td>
+                                                        </tr>
+                                                      {% endfor %}
+                                                      </tbody>
+                                                  </table>
+                                                </div>
+                                            {% else %}
+                                            <b>There are no new sample products</b>
+                                            {% endif %}
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="tab__title">
+                                            <span class="h5">Viewed</span>
+                                        </div>
+                                        <div class="tab__content">
+                                            {% if viewed_sample_products %}
+                                                <div class="custom-scroll table-responsive">
+                                                  <table id="pendingAdminProductsTable" class="table table-bordered table-hover">
+                                                      <thead>
+                                                      <tr>
+                                                          <th>Thumbnail</th>
+                                                          <th>User</th>
+                                                      </tr>
+                                                      </thead>
+                                                      <tbody>
+                                                          {% for product in viewed_sample_products %}
+                                                            <tr>
+                                                                <td><a href="{{ product.image.url }}"><img src="{{ product.thumbnail.url }}"></a></td>
+                                                                <td><a href="{% url 'other_profile' product.owner.username %}">{{ product.owner }}</a></td>
+                                                            </tr>
+                                                          {% endfor %}
+                                                      </tbody>
+                                                  </table>
+                                                </div>
+                                            {% else %}
+                                                <b>There are no viewed sample products</b>
+                                            {% endif %}
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div><!--end of tabs container-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end of row-->
+        </div>
+        <!--end of container-->
+    </section>
+
+{% endblock %}

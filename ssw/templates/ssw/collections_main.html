@@ -16,23 +16,16 @@ Collections
                                 <h4>
                                     Collections
                                     {% if user.type == "contributor" and user.is_verified %}
-                                        <a class="btn btn--primary btn--icon pull-right" href="/products/new">
-                                            <span class="btn__text">
-                                             <i class="icon-Add-File"></i> New Upload</span>
-                                        </a>
+                                        <a class="btn btn--primary btn--icon btn--sm pull-right" href="{% url 'collections_new' %}">
+                                        <span class="btn__text">
+                                        <i class="fa fa-plus"></i> New Collection</span>
+                                    </a>
                                     {% elif user.type == "contributor" and not user.is_verified %}
                                         <a href="{% url 'account_settings'%}" class="color--error pull-right">Verify your account</a>
                                     {% endif %}
                                 </h4>
                                 <hr>
-                                {% if user.type == "contributor" and user.is_verified %}
-                                    <a class="btn btn--primary btn--icon pull-right" href="{% url 'collections_new' %}">
-                                        <span class="btn__text">
-                                        <i class="fa fa-plus"></i> New Collection</span>
-                                    </a>
-                                {% endif %}
                                 {% if collections %}
-
                                     <div class="custom-scroll table-responsive">
                                         <table id="approvedProductsTable" class="table table-bordered table-hover">
                                             <thead>
@@ -48,8 +41,8 @@ Collections
                                                         <td>{{ collection.title }}</td>
                                                         <td>
                                                             {% for product in collection.products.all%}
-                                                                <a href="{{ product.image.url }}" data-lightbox="Gallery {{collection.pk}}">
-                                                                    <img alt="Image" src="{{ product.image|thumbnail_url:'thumbnail' }}" style="max-width:50%;max-height:50%">
+                                                                <a href="{{ product.thumbnail.url }}" data-lightbox="Gallery {{collection.pk}}">
+                                                                    <img alt="Image" src="{{ product.thumbnail.url }}" style="max-width:50%;max-height:50%">
                                                                 </a>
                                                             {% endfor %}
                                                         </td>

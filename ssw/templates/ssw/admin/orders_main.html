@@ -29,7 +29,7 @@ Orders
                                 <tbody>
                                     {% for order in orders %}
                                         <tr>
-                                            <td><a href="{% url 'order_details' order.order_no %}">{{ order.order_no }}</a></td>
+                                            <td><a href="{% url 'admin_order_details' order.order_no %}">{{ order.order_no }}</a></td>
                                             <td>{{ order.orderitem.all|length }}</td>
                                             <td><a href="{% url 'other_profile' order.owner%}">{{ order.owner }}</a></td>
                                             <td>${{ order.total }}</td>

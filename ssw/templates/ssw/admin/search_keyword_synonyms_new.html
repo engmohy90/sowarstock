@@ -3,7 +3,7 @@
 {% load thumbnail %}
 
 {% block title %}
-New Featured Product
+{% if synonym %} {{synonym}} {% else %} New Synonym {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -13,7 +13,7 @@ New Featured Product
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="boxed boxed--lg boxed--border">
-                                <h4>New Featured Product</h4>
+                                <h4>{% if synonym %} {{synonym}} {% else %} New Synonym {% endif %}</h4>
                                 <hr>
                                 <form method="post" action="">
                                     {% csrf_token %}
@@ -23,10 +23,11 @@ New Featured Product
                                             <button type="submit" class="btn btn--primary type--uppercase">Save</button>
                                         </div>
                                         <div class="col-lg-3 col-md-4">
-                                            <a href="{% url 'admin_featured_main' %}" class="btn btn--default type--uppercase">Cancel</a>
+                                            <a href="/admin/search-keywords" class="btn btn--default type--uppercase">Cancel</a>
                                         </div>
                                     </div>
                                 </form>
+
                             </div>
                         </div>
                     </div>

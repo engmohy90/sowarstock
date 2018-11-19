@@ -25,12 +25,12 @@ def show_me_the_money(sender, **kwargs):
         shopping_item.save()
         if order_item.product.exclusive:
             earning = models.Earning.objects.create(type="contributor", order_item=order_item, contributor=order_item.product.owner,
-                                          amount=order_item.price*0.75)
-            models.Earning.objects.create(type="sowarstock", order_item=order_item, amount=order_item.price*0.25)
+                                          amount=round(order_item.price*0.75, 2))
+            models.Earning.objects.create(type="sowarstock", order_item=order_item, amount=round(order_item.price*0.25, 2))
         else:
             earning = models.Earning.objects.create(type="contributor", order_item=order_item, contributor=order_item.product.owner,
-                                          amount=order_item.price * 0.3)
-            models.Earning.objects.create(type="sowarstock", order_item=order_item, amount=order_item.price*0.7)
+                                          amount=round(order_item.price * 0.3, 2))
+            models.Earning.objects.create(type="sowarstock", order_item=order_item, amount=round(order_item.price*0.7, 2))
 
     # send email to client
     email_body = loader.render_to_string("ssw/email_order_is_ready.html", {"user": user, "order": order})

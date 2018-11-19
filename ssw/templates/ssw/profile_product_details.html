@@ -25,7 +25,12 @@
                     <h2>{{product.title}}</h2>
                 </div>
                 <div class="row">
-                    <image src="{{product.owner.profile_image.url}}" class="product-profile-image img-circle" style="vertical-align:middle"/>
+                    {% if product.owner.profile_image %}
+                        <image src="{{product.owner.profile_image.url}}" class="product-profile-image img-circle" style="vertical-align:middle"/>
+                    {% else %}
+                        <image src="{% static 'ssw/img/default-avatar.png' %}" class="product-profile-image img-circle" style="vertical-align:middle"/>
+                    {% endif %}
+
                     {% if product.owner.username == user.username %}
                         <a href="{% url 'profile'%}"><span style="margin-left:1em">{{product.owner}}</span></a>
                     {% else %}

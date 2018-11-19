@@ -1,7 +1,5 @@
 {% extends "ssw/main.html" %}
 {% load static from staticfiles %}
-{% load thumbnail %}
-
 {% block title %}
 Reviews
 {% endblock %}
@@ -21,7 +19,7 @@ Reviews
                                             <thead>
                                                 <tr class="center-cell-content">
                                                     <th></th>
-                                                    <th>Name</th>
+                                                    <th>Thumbnail</th>
                                                     <th>Owner</th>
                                                     <th>Comment</th>
                                                     <th></th>
@@ -30,10 +28,18 @@ Reviews
                                             <tbody>
                                             {% for review in reviews %}
                                                 <tr class="center-cell-content">
-                                                    <td><img src="{{review.product.image|thumbnail_url:'thumbnail'}}"></td>
-                                                    <td>{{review.product.title}}</td>
-                                                    <td>{{review.product.owner}}</td>
-                                                    <td>{{review}}<br>by {{review.owner}}</td>
+                                                    <td>
+                                                        {% if not review.read_by_admin %}
+                                                            <span class="color--success new_review">NEW</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        <a href="{% url 'product_details' review.product.public_id %}">
+                                                            <img src="{{review.product.thumbnail.url}}">
+                                                        </a>
+                                                    </td>
+                                                    <td><a href="{% url 'other_profile' review.owner %}">{{review.product.owner}}</a></td>
+                                                    <td>{{review}}<br>by <a href="{% url 'other_profile' review.owner %}">{{review.owner}}</a></td>
                                                     <td><a href="{% url 'reviews_delete' review.pk %}" class="color--error"><i class="fa fa-trash-alt"></i></a></td>
                                                 </tr>
                                             {% endfor %}
@@ -52,4 +58,21 @@ Reviews
                 <!--end of container-->
             </section>
 
+{% endblock %}
+
+{% block js %}
+<script>
+    $(document).ready(function(){
+        var count = $('.new_review').length
+        if(count > 0){
+             $.get( "/ajax/reviews_unread_to_read/", function( data ) {
+                    console.log(data)
+                    var result = data.result
+                    if(result=="success"){
+                        $("#reviews_count").remove()
+                    }
+             });
+        }
+    })
+</script>
 {% endblock %}

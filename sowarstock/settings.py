@@ -52,7 +52,8 @@ INSTALLED_APPS = [
     'notifications',
     'paypal.standard.ipn',
     'django_countries',
-    'countries_plus'
+    'countries_plus',
+    'progressbarupload'
 ]
 
 MIDDLEWARE = [
@@ -66,6 +67,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     #'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
+
+FILE_UPLOAD_HANDLERS = (
+    "progressbarupload.uploadhandler.ProgressBarUploadHandler",
+    "django.core.files.uploadhandler.MemoryFileUploadHandler",
+    "django.core.files.uploadhandler.TemporaryFileUploadHandler",
+)
 
 ROOT_URLCONF = 'sowarstock.urls'
 
@@ -87,12 +94,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'sowarstock.wsgi.application'
-
-THUMBNAIL_ALIASES = {
-    '': {
-        'thumbnail': {'size': (200, 200), 'crop': True},
-    },
-}
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
@@ -176,7 +177,6 @@ STATIC_URL = '/static/'
 # AMAZON AWS S3 FOR STORING MEDIA FILES
 
 
-
 AWS_QUERYSTRING_AUTH = False
 AWS_ACCESS_KEY_ID = 'AKIAJV3HJ7JFSOKVR5WA'
 AWS_SECRET_ACCESS_KEY = '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'
@@ -187,6 +187,7 @@ MEDIA_URL = "https://s3.amazonaws.com/%s/" % S3_BUCKET
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto.S3BotoStorage"
 THUMBNAIL_DEFAULT_STORAGE = DEFAULT_FILE_STORAGE
 #STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 
 

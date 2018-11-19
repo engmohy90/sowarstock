@@ -1,6 +1,5 @@
 {% extends "ssw/main.html" %}
 {% load static from staticfiles %}
-{% load thumbnail %}
 {% block title %}
 Checkout
 {% endblock %}
@@ -25,7 +24,7 @@ Checkout
             <div class="col-md-4">
                 <div class="product">
                     <span class="label">{{item.license_type}}</span>
-                    <img src="{{ item.product.image|thumbnail_url:'thumbnail'}}">
+                    <img src="{{ item.product.watermark.url}}">
                     <div>
                         <h5>{{item.product.title}}</h5>
                     </div>

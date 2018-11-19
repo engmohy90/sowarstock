@@ -19,21 +19,21 @@
                             <p class="lead">{% trans "Become a member of our community, either as a contributor or a client"%}</p>
                                 <form method="post" action="{% url 'signup' %}">
                                     {% csrf_token %}
-                                    {{form.username.errors}}
                                     {{form.username.label_tag}}
                                     {{form.username}}
+                                    {{form.username.errors}}
 
-                                    {{form.email.errors}}
                                     {{form.email.label_tag}}
                                     {{form.email}}
+                                    {{form.email.errors}}
 
-                                    {{form.password1.errors}}
                                     {{form.password1.label_tag}}
                                     {{form.password1}}
+                                    {{form.password1.errors}}
 
-                                    {{form.password2.errors}}
                                     {{form.password2.label_tag}}
                                     {{form.password2}}
+                                    {{form.password2.errors}}
                                     <br><br>
                                     <div class="row">
                                         <!--

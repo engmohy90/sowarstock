@@ -1,6 +1,5 @@
 {% extends "ssw/main.html" %}
 {% load static from staticfiles %}
-{% load thumbnail %}
 
 {% block title %}
 Products
@@ -39,7 +38,7 @@ Products
                                                       {% for product in pending %}
                                                         <tr>
                                                             <td><a href="{% url 'product_pending' product.public_id %}">{{ product.public_id }}</a></td>
-                                                            <td><a href="{{ product.get_display_image.url }}"><img src="{{ product.get_display_image|thumbnail_url:'thumbnail' }}"></a></td>
+                                                            <td><a href="{{ product.get_display_image.url }}"><img src="{{ product.thumbnail.url }}"></a></td>
                                                             <td>{{ product.title }}</td>
                                                             <td><a href="{% url 'other_profile' product.owner.username %}">{{ product.owner }}</a></td>
                                                         </tr>
@@ -72,7 +71,7 @@ Products
                                                           {% for product in pending_admin %}
                                                             <tr>
                                                                 <td><a href="{% url 'product_pending' product.public_id %}">{{ product.public_id }}</a></td>
-                                                                <td><a href="{{ product.image.url }}"><img src="{{ product.image|thumbnail_url:'thumbnail' }}"></a></td>
+                                                                <td><a href="{{ product.get_display_image.url }}"><img src="{{ product.thumbnail.url }}"></a></td>
                                                                 <td>{{ product.title }}</td>
                                                                 <td><a href="{% url 'other_profile' product.owner.username %}">{{ product.owner }}</a></td>
                                                             </tr>
@@ -105,7 +104,7 @@ Products
                                                           {% for product in approved %}
                                                             <tr>
                                                                 <td><a href="{% url 'product_details' product.public_id %}">{{ product.public_id }}</a></td>
-                                                                <td><a href="{{ product.image.url }}"><img src="{{ product.image|thumbnail_url:'thumbnail'}}"></a></td>
+                                                                <td><a href="{{ product.get_display_image.url }}"><img src="{{ product.thumbnail.url }}"></a></td>
                                                                 <td>{{ product.title }}</td>
                                                                 <td>{{product.released|yesno:"Yes,No"}}</td>
                                                             </tr>
@@ -137,7 +136,7 @@ Products
                                                       {% for product in rejected %}
                                                         <tr>
                                                             <td><a href="{% url 'product_details' product.public_id %}">{{ product.public_id }}</a></td>
-                                                            <td><a href="{{ product.image.url }}"><img src="{{ product.image|thumbnail_url:'thumbnail'}}"></a></td>
+                                                            <td><a href="{{ product.get_display_image.url }}"><img src="{{ product.thumbnail.url }}"></a></td>
                                                             <td>{{ product.title }}</td>
                                                         </tr>
                                                       {% endfor %}

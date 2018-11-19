@@ -134,3 +134,7 @@ a:hover {
 .menu-vertical li:not(:hover):not(.dropdown--active) {
     opacity: 1;
 }
+
+input[type] + input[type]{
+    margin-top:0;
+}

@@ -1,7 +1,6 @@
 {% extends "ssw/main.html" %}
 {% load static from staticfiles %}
 {% load i18n %}
-{% load thumbnail %}
 {% block title %}
 {% trans "Calligraphy"%}
 {% endblock %}
@@ -54,7 +53,7 @@
                                 <div class="feature feature-1 boxed boxed--border">
                                     <h6 class="type--uppercase color--primary">{% if c.subcategory %}{{c.subcategory}}{% endif %}</h6>
                                     <center>
-                                        <img src="{{ c.watermark|thumbnail_url:'thumbnail'}}">
+                                        <img src="{{ c.thumbnail.url }}">
                                         <p>
                                             {{c.title}}
                                         </p>

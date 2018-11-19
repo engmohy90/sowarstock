@@ -1,7 +1,6 @@
 {% extends "ssw/main.html" %}
 {% load static from staticfiles %}
 {% load my_tags %}
-{% load thumbnail %}
 {% block title %}
 Profile
 {% endblock %}
@@ -27,7 +26,7 @@ Profile
                         <ul class="row row--list">
                             <li class="col-md-4">
                                 <span class="type--fine-print block">Location:</span>
-                                <span>{{other_profile.address.country}}</span>
+                                <span>{{other_profile.address.country.name}} {{other_profile.address.country.unicode_flag}}</span>
                             </li>
                             <li class="col-md-4">
                                 <span class="type--fine-print block">Member Since:</span>
@@ -45,40 +44,42 @@ Profile
                     <p>{{ other_profile.description|default:"This person doesn't have anything here yet." }}</p>
                 </div>
                 {% if other_profile.type == "contributor" %}
-                <div class="boxed boxed--border">
-                    <h4>
-                        Products
-                        {% if other_profile.product_set.all.count > 3 %}
-                            <span class="pull-right h5"><a href="{% url 'profile_products' other_profile%}">view all</a></span>
-                        {% endif %}
-                    </h4>
-
-                    <div class="masonry__container row">
-                        {% for product in other_profile.product_set.all %}
-                            {% if forloop.counter == other_profile.product_set.all.count|sub:1 or forloop.counter == other_profile.product_set.all.count|sub:2 or forloop.last %}
-                                <div class="col-md-4 masonry__item">
-                                    <a href="{% url 'product_public' product.public_id %}" class="block">
-                                        <div class="feature feature-1 boxed boxed--border">
-                                            <h6 class="type--uppercase color--primary">{{product.category}}</h6>
-                                            <img src="{{ product.get_display_image|thumbnail_url:'thumbnail'}}">
-                                            <p>
-                                                {{product.title}}
-                                            </p>
-                                        </div>
-                                        <!--end feature-->
-                                    </a>
-                                </div>
+                    <div class="boxed boxed--border">
+                        <h4>
+                            Products
+                            {% if products.count > 3 %}
+                                <span class="pull-right h5"><a href="{% url 'profile_products' other_profile%}">view all</a></span>
                             {% endif %}
-                        {% empty %}
-                            <p>This contributor has no products yet.</p>
-                        {% endfor %}
+                        </h4>
+
+                        <div class="masonry__container row">
+                            {% for product in products %}
+                                {% if forloop.counter == other_profile.product_set.all.count|sub:1 or forloop.counter == other_profile.product_set.all.count|sub:2 or forloop.last %}
+                                    <div class="col-md-4 masonry__item">
+                                        <a href="{% url 'product_public' product.public_id %}" class="block">
+                                            <div class="feature feature-1 boxed boxed--border">
+                                                <h6 class="type--uppercase color--primary">{{product.category}}</h6>
+                                                <img src="{{ product.thumbnail.url}}">
+                                                <p>
+                                                    {{product.title}}
+                                                </p>
+                                            </div>
+                                            <!--end feature-->
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            {% empty %}
+                                <p>This contributor has no products yet.</p>
+                            {% endfor %}
+                        </div>
+                        <!--end of row-->
                     </div>
-                    <!--end of row-->
-                </div>
-                <div class="boxed boxed--border">
-                    <h4>Portfolio URL</h4>
-                    <p>{{ other_profile.portfolio_url|default:"" }}</p>
-                </div>
+                    {% if other_profile.featured %}
+                        <div class="boxed boxed--border">
+                            <h4>Portfolio URL</h4>
+                            <p>{{ other_profile.portfolio_url|default:"No profile URL provided yet." }}</p>
+                        </div>
+                    {% endif %}
                 {% endif %}
             </div>
         </div>
