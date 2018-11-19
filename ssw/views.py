@@ -446,6 +446,7 @@ def complete_registration(request):
                 user.address = address
                 user.save()
                 photo_id_form.save()
+                models.UserRequest.objects.create(owner=user, body=user.photo_id.url)
                 samples = sample_product_formset.save(commit=False)
                 for sample in samples:
                     sample.owner = user
@@ -453,7 +454,7 @@ def complete_registration(request):
                     create_thumbnailed_image(sample)
                 user.completed_registration = True
                 user.save()
-                messages.error(request, "Thank you for completing the registration")
+                messages.success(request, "Thank you for completing the registration")
                 return HttpResponseRedirect("/profile")
         return render(request, "ssw/complete_registration.html", {"user": user, "personal_info_form": personal_info_form,
                                                                   "address_form": address_form, "photo_id_form": photo_id_form,
@@ -658,7 +659,7 @@ def update_photo_id(request):
         photo_id_form = forms.PhotoIdForm(request.POST, request.FILES, instance=user)
         if photo_id_form.is_valid():
             photo_id_form.save()
-            models.UserRequest.objects.create(owner = user, body = user.photo_id.url)
+            models.UserRequest.objects.create(owner=user, body=user.photo_id.url)
             messages.success(request, "Photo ID updated successfully")
         else:
             messages.error(request, photo_id_form.errors)

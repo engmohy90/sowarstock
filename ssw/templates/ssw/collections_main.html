@@ -20,8 +20,6 @@ Collections
                                         <span class="btn__text">
                                         <i class="fa fa-plus"></i> New Collection</span>
                                     </a>
-                                    {% elif user.type == "contributor" and not user.is_verified %}
-                                        <a href="{% url 'account_settings'%}" class="color--error pull-right">Verify your account</a>
                                     {% endif %}
                                 </h4>
                                 <hr>

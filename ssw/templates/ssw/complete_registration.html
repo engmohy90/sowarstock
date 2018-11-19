@@ -280,6 +280,9 @@ Profile
                                     }else{
                                         error_msg.html("")
                                         $("#complete_registration_form").submit()
+                                        var anchor = $('a[href="#finish"]')
+                                        anchor.parent().addClass("disabled")
+                                        anchor.attr("href","")
                                     }
                                 }
                             }
