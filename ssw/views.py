@@ -307,12 +307,12 @@ def checkout(request):
     # What you want the button to do.
     paypal_dict = {
         "business": "sowarstock.co@gmail.com",
-        "amount": 1,
+        "amount": cart.total(),
         "item_name": '+ '.join(str(e) for e in products),
         "invoice": "unique-invoice-id",
-        "notify_url": "https://33441949.ngrok.io" + reverse('paypal-ipn'),
-        "return": "https://33441949.ngrok.io/thanks-for-payment",
-        "cancel_return": "https://33441949.ngrok.io/checkout",
+        "notify_url": "https://sowarstock.herokuapp.com/" + reverse('paypal-ipn'),
+        "return": "https://sowarstock.herokuapp.com/thanks-for-payment",
+        "cancel_return": "https://sowarstock.herokuapp.com/checkout",
         "custom": user
     }
 

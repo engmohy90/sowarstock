@@ -11,7 +11,10 @@ Email Verification Success
         <div class="row">
             <div class="col-md-7 col-lg-5">
                 <h2><i class="fas fa-check-circle color--success"></i> Your email address has been verified!<br>
-                You can now <a href="{% url 'complete_registration' %}">complete registration</a></h2>
+                    {% if user.type == "contributor" %}
+                        You can now <a href="{% url 'complete_registration' %}">complete registration</a>
+                    {% endif %}
+                </h2>
             </div>
         </div>
         <!--end of row-->
