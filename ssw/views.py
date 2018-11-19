@@ -310,7 +310,7 @@ def checkout(request):
         "amount": cart.total(),
         "item_name": '+ '.join(str(e) for e in products),
         "invoice": "unique-invoice-id",
-        "notify_url": "https://sowarstock.herokuapp.com/" + reverse('paypal-ipn'),
+        "notify_url": "https://sowarstock.herokuapp.com" + reverse('paypal-ipn'),
         "return": "https://sowarstock.herokuapp.com/thanks-for-payment",
         "cancel_return": "https://sowarstock.herokuapp.com/checkout",
         "custom": user
