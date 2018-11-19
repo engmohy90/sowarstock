@@ -14,7 +14,7 @@ django-model-utils==3.1.2
 django-mysql==2.4.1
 django-notifications-hq==1.5.0
 django-paypal==0.5.0
-django-progressbarupload==0.1.7
+-e git+http://github.com/ouhouhsami/django-progressbarupload.git@d9a56d0caa30d68756c36bf4032905bddeb4efa6#egg=django_progressbarupload
 django-push-notifications==1.6.0
 django-storages==1.7.1
 djangorestframework==3.9.0
