@@ -1,6 +1,6 @@
 {% extends "ssw/main.html" %}
 {% load static from staticfiles %}
-{% load thumbnail %}
+{% load my_tags %}
 
 {% block title %}
 Earnings
@@ -20,21 +20,21 @@ Earnings
                             <table id="earningsTable" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Order No</th>
                                         <th>Order Item</th>
                                         <th>Amount</th>
+                                        <th>Date</th>
                                         <th>Paid</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {% for earning in earnings %}
                                         <tr>
-                                            <td><a href="{% url 'order_details' earning.order_item.order.order_no %}">{{ earning.order_item.order.order_no }}</a></td>
                                             <td>{{ earning.order_item }}</a></td>
                                             <td>$ {{ earning.amount }}</td>
+                                            <td>{{ earning.created_at }}</td>
                                             <td>
                                                 {% if earning.payment %}
-                                                    <a href="{{earning.payment.receipt.url}}">View Payment</a>
+                                                    Yes
                                                 {% else %}
                                                     No
                                                 {% endif %}
@@ -47,6 +47,40 @@ Earnings
                     {% else %}
                         You don't have any earnings
                     {% endif %}
+                    <h4>Earnings Total: <span class="pull-right color--success">${{earnings_total}}</span></h4>
+                    <hr>
+
+                    <h4>Payments</h4>
+                    <hr>
+                    {% if payments %}
+                        <div class="custom-scroll table-responsive">
+                            <table id="paymentsTable" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Amount</th>
+                                        <th>Date</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for payment in payments %}
+                                        <tr>
+                                            <td>$ {{ payment.amount }}</a></td>
+                                            <td>{{ payment.created_at }}</td>
+                                            <td>
+                                                <a href="{{payment.receipt.url}}">View Payment</a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        You don't have any payments
+                    {% endif %}
+                    <h4>Payments Total: <span class="pull-right color--success">${{payments_total}}</span></h4>
+                    <hr>
+                    <h4>Balance: <span class="pull-right color--success">${{earnings_total|sub:payments_total}}</span></h4>
                 </div>
             </div>
         </div>

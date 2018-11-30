@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from django.db.models import Sum
 from django.shortcuts import render
 
 from ssw import models
@@ -9,8 +10,24 @@ from ssw.views import getSowarStockUser
 @login_required
 def load_subcategories(request):
     category_id = request.GET.get('category')
-    subcategories = models.SubCategory.objects.filter(main_category = category_id).order_by('name')
+    subcategories = models.SubCategory.objects.filter(main_category=category_id).order_by('name')
     return render(request, 'ssw/subcategories_dropdown_list_options.html', {'subcategories': subcategories})
+
+
+@login_required
+def load_payment_amount(request):
+    contributor_pk = request.GET.get('pk')
+    try:
+        contributor = models.Contributor.objects.get(pk=contributor_pk)
+        try:
+            owed = models.Earning.objects.filter(type="contributor", payment=None, contributor=contributor).aggregate(Sum('amount'))
+            owed_amount = round(owed['amount__sum'], 2)
+        except:
+            owed_amount = 0
+
+        return JsonResponse({"result": "success", "amount":owed_amount})
+    except:
+        return JsonResponse({"result": "error", "msg": "no contributor"})
 
 
 @login_required

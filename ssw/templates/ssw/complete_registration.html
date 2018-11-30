@@ -117,6 +117,9 @@ Profile
                         </section>
                         <h5>Photo ID</h5>
                         <section>
+                            <h5>Please upload a valid government ID (Passport or National ID). These will help us
+                                verify that you are a real person and will help us make payments to you when you have
+                                any earnings from our site.</h5>
                             {{photo_id_form.photo_id.label_tag}}<span class="color--error" style="font-size:large">*</span>
                             {{photo_id_form.photo_id}}
                             {{photo_id_form.photo_id.errors}}
@@ -283,6 +286,7 @@ Profile
                                         var anchor = $('a[href="#finish"]')
                                         anchor.parent().addClass("disabled")
                                         anchor.attr("href","")
+                                        anchor.html('Submitting' + '<img id="submit_product_loader" style="max-height:1.5em" src="{% static 'ssw/img/ajax-loader.gif' %}">')
                                     }
                                 }
                             }

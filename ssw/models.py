@@ -80,6 +80,8 @@ class Contributor(SowarStockUser):
     featured = models.BooleanField(default=False)
     preferred_payment_method = models.CharField(max_length=255, null=True, blank=True, choices=PAYMENT_METHODS)
     iban = models.CharField(max_length=255, null=True, blank=True)
+    bank_name = models.CharField(max_length=255, null=True, blank=True)
+    bank_country = models.CharField(max_length=255, null=True, blank=True)
     western_union_account = models.CharField(max_length=255, null=True, blank=True)
     paypal_account = models.CharField(max_length=255, null=True, blank=True)
 
@@ -88,6 +90,9 @@ class Contributor(SowarStockUser):
 
     class Meta:
         verbose_name = "Contributor User"
+
+    def __str__(self):
+        return self.username
 
 
 class Client(SowarStockUser):
@@ -116,6 +121,9 @@ class SubCategory(models.Model):
     def __str__(self):
         return self.name
 
+    def get_simple_name(self):
+        return self.name.replace("/", "_").lower()
+
     class Meta:
         verbose_name = "Sub Categorie"
 
@@ -141,11 +149,12 @@ class Product(models.Model):
                                 ("lens_problems","Lens Problems (as Purple or Fringing)"), ("similar_submissions", "Similar Submissions"),
                                 ("limited_commercial_value", "Limited Commercial Value"), ("keywords", "Keywords"),
                                 ("other", "Other"))
-    FILE_TYPE_OPTIONS = (("jpeg", "JPEG"), ("eps", "EPS"))
+    FILE_TYPE_OPTIONS = (("jpeg/tiff", "JPEG/TIFF"), ("eps", "EPS"))
+    ALLOWED_IMAGE_EXTENSIONS = ["JPEG", "TIFF"]
     public_id = models.IntegerField(unique=True)
     title = models.CharField(max_length=255)
     description = models.TextField()
-    file_type = models.CharField(max_length=255, default="jpeg", choices=FILE_TYPE_OPTIONS)
+    file_type = models.CharField(max_length=255, default="jpeg/tiff", choices=FILE_TYPE_OPTIONS)
     image = models.ImageField(upload_to='products/', null=True, blank=True)
     eps_image = models.ImageField(upload_to='products/', null=True, blank=True)
     file = models.FileField(upload_to='products/', null=True, blank=True)
@@ -170,7 +179,7 @@ class Product(models.Model):
     owner = models.ForeignKey(Contributor, on_delete=models.CASCADE)
 
     def get_display_image(self):
-        if self.file_type == "jpeg":
+        if self.file_type == "jpeg/tiff":
             return self.image
         else:
             return self.eps_image
@@ -195,15 +204,16 @@ class Product(models.Model):
 
     def clean(self):
         file_type = self.file_type
-        if file_type == "jpeg":
+        if file_type == "jpeg/tiff":
             image_size = self.image.size
             base_image = Image.open(self.image)
             image_width = base_image.width
             image_height = base_image.height
             image_size_in_megapixels = (image_width * image_height) / 1000000
             image_format = base_image.format
-            if image_format != "JPEG":
-                raise ValidationError(_('Image format has to be only JPEG'))
+            print(image_format)
+            if image_format not in self.ALLOWED_IMAGE_EXTENSIONS:
+                raise ValidationError(_('Image format has to be only JPEG or TIFF'))
             if image_size > 52428800:  # 50 MB
                 raise ValidationError(_('Image size has to be less than 50 MB'))
             if image_size_in_megapixels < 4:
@@ -228,6 +238,7 @@ class Product(models.Model):
 class Collection(models.Model):
     title = models.CharField(max_length=255, null=False, blank=False)
     owner = models.ForeignKey(SowarStockUser, on_delete=models.CASCADE)
+    description = models.TextField()
     products = models.ManyToManyField(Product)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -272,9 +283,11 @@ class FaqPersonal(models.Model):
 
 
 class UserRequest(models.Model):
+    TYPE_OPTIONS = (("id", "ID"), ("delete", "Delete Account"))
     STATUS_OPTIONS = (("pending_approval", "Pending Approval"), ("approved", "Approved"), ("rejected", "Rejected"))
-    body = models.CharField(max_length=255, default="pending_approval")
+    body = models.TextField()
     status = models.CharField(max_length=255, choices=STATUS_OPTIONS, default="pending_approval")
+    type = models.CharField(max_length=255, choices=TYPE_OPTIONS, default="id")
     owner = models.ForeignKey(Contributor, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -349,6 +362,15 @@ class LegalDocument(models.Model):
         return self.title
 
 
+class Payment(models.Model):
+    amount = models.DecimalField(max_digits=5, decimal_places=2)
+    contributor = models.ForeignKey(Contributor, on_delete=models.PROTECT)
+    receipt = models.FileField(upload_to='payments/')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return "${} to {}".format(self.amount, self.contributor)
+
 
 class Earning(models.Model):
     TYPE_OPTIONS = (("contributor", "Contributor"), ("sowarstock", "SowarStock"))
@@ -356,22 +378,11 @@ class Earning(models.Model):
     order_item = models.ForeignKey(OrderItem, on_delete=models.PROTECT)
     contributor = models.ForeignKey(Contributor, on_delete=models.PROTECT, null=True, blank=True)
     amount = models.DecimalField(max_digits=5, decimal_places=2)
+    payment = models.ForeignKey(Payment, on_delete=models.PROTECT, null=True, blank=True )
     created_at = models.DateTimeField(auto_now_add=True)
-
 
     def __str__(self):
         return "${} to {} for order {}".format(self.amount, self.type, self.order_item)
-
-
-class Payment(models.Model):
-    amount = models.DecimalField(max_digits=5, decimal_places=2)
-    contributor = models.ForeignKey(Contributor, on_delete=models.PROTECT)
-    receipt = models.FileField(upload_to='payments/')
-    earning = models.OneToOneField(Earning, on_delete=models.PROTECT)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return "${} to {}".format(self.amount, self.contributor)
 
 
 class SearchKeywordSynonyms(models.Model):

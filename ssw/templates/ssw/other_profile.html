@@ -54,7 +54,7 @@ Profile
 
                         <div class="masonry__container row">
                             {% for product in products %}
-                                {% if forloop.counter == other_profile.product_set.all.count|sub:1 or forloop.counter == other_profile.product_set.all.count|sub:2 or forloop.last %}
+                                {% if forloop.counter == products.count|sub:1 or forloop.counter == products.count|sub:2 or forloop.last %}
                                     <div class="col-md-4 masonry__item">
                                         <a href="{% url 'product_public' product.public_id %}" class="block">
                                             <div class="feature feature-1 boxed boxed--border">

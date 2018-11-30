@@ -46,6 +46,9 @@ Account Settings
                                         <li>
                                             <a href="#" data-toggle-class=".account-tab:not(.hidden);hidden|#account-billing;hidden">Payment Settings</a>
                                         </li>
+                                        <li>
+                                            <a href="#" data-toggle-class=".account-tab:not(.hidden);hidden|#delete-account;hidden">Delete Account</a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -128,7 +131,7 @@ Account Settings
                                 <div id="account-billing" class="hidden account-tab">
                                     <h4>Payment Settings</h4>
                                     <p>Choose your preferred payment method to get paid when you have new earnings.</p>
-                                    <form Method="post" action="{% url 'update_payment_method' %}">
+                                    <form method="post" action="{% url 'update_payment_method' %}">
                                         {% csrf_token %}
                                         {{payment_method_form.preferred_payment_method.errors}}
                                         {{payment_method_form.preferred_payment_method.label_tag}}
@@ -138,6 +141,12 @@ Account Settings
                                             {{payment_method_form.iban.errors}}
                                             {{payment_method_form.iban.label_tag}}
                                             {{payment_method_form.iban}}
+                                            <br><br>
+                                        </div>
+                                        <div id="bank_country_field_wrapper" class="hidden">
+                                            {{payment_method_form.bank_country.errors}}
+                                            {{payment_method_form.bank_country.label_tag}}
+                                            {{payment_method_form.bank_country}}
                                             <br><br>
                                         </div>
                                         <div id="western_union_field_wrapper" class="hidden">
@@ -153,7 +162,20 @@ Account Settings
                                             <br><br>
                                         </div>
                                         <div class="col-lg-3 col-md-4">
-                                            <button type="submit" class="btn btn--primary type--uppercase">Save</button>
+                                            <button id="payment_settings_button"
+                                                    type="submit" class="btn btn--primary type--uppercase">Save</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div id="delete-account" class="hidden account-tab">
+                                    <h4>Delete Account</h4>
+                                    <p>Please use this form to send us a request if you no longer wish to have an account with Sowarstock.</p>
+                                    <form method="post" action="{% url 'update_user_request_delete' %}">
+                                        {% csrf_token %}
+                                        {{user_request_delete_form}}
+                                        <br>
+                                        <div class="col-lg-3 col-md-4">
+                                            <button type="submit" class="btn btn--primary type--uppercase">Submit</button>
                                         </div>
                                     </form>
                                 </div>
@@ -190,14 +212,17 @@ Account Settings
         function checkMethod(method){
             if(method == "direct_bank_deposit"){
                 $("#iban_field_wrapper").removeClass("hidden")
+                $("#bank_country_field_wrapper").removeClass("hidden")
                 $("#western_union_field_wrapper").addClass("hidden")
                 $("#paypal_field_wrapper").addClass("hidden")
             }else if(method == "western_union"){
                 $("#iban_field_wrapper").addClass("hidden")
+                $("#bank_country_field_wrapper").removeClass("hidden")
                 $("#western_union_field_wrapper").removeClass("hidden")
                 $("#paypal_field_wrapper").addClass("hidden")
             }else if(method == "paypal"){
                 $("#iban_field_wrapper").addClass("hidden")
+                $("#bank_country_field_wrapper").addClass("hidden")
                 $("#western_union_field_wrapper").addClass("hidden")
                 $("#paypal_field_wrapper").removeClass("hidden")
             }
@@ -239,6 +264,13 @@ Account Settings
         });
 
         wrapCheckbox("profile_image-clear_id", "clear_checkbox_wrapper", "Delete")
+
+        $("#payment_settings_button").click(function(e){
+            $(this).prop("disabled",true)
+            $(this).html("Saving ... ")
+            $(this).closest("form").submit()
+
+        })
     })
 </script>
 {% endblock %}

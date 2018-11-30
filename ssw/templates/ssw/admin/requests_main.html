@@ -31,7 +31,8 @@ Requests
                                                       <tr>
                                                           <th>User</th>
                                                           <th>Status</th>
-                                                          <th>Photo Id</th>
+                                                          <th>Type</th>
+                                                          <th>Message</th>
                                                           <th></th>
                                                       </tr>
                                                       </thead>
@@ -40,7 +41,14 @@ Requests
                                                         <tr>
                                                             <td><a href="{% url 'other_profile' r.owner %}">{{ r.owner }}</a></td>
                                                             <td>{{ r.get_status_display }}</td>
-                                                            <td><a href="{{ r.body }}">click here</a></td>
+                                                            <td>{{ r.get_type_display }}</td>
+                                                            <td>
+                                                                {% if r.type == "id" %}
+                                                                    <a href="{{ r.body }}">Photo ID</a>
+                                                                {% else %}
+                                                                    <p>{{r.body}}</p>
+                                                                {% endif %}
+                                                            </td>
                                                             <td>
                                                                 <div class="row">
                                                                     <div class="col-md-6">
@@ -73,7 +81,8 @@ Requests
                                                       <tr>
                                                           <th>User</th>
                                                           <th>Status</th>
-                                                          <th>Photo Id</th>
+                                                          <th>Type</th>
+                                                          <th>Message</th>
                                                       </tr>
                                                       </thead>
                                                       <tbody>
@@ -81,7 +90,14 @@ Requests
                                                         <tr>
                                                             <td><a href="#">{{ r.owner }}</a></td>
                                                             <td>{{ r.get_status_display }}</td>
-                                                            <td><a href="{{ r.body }}">click here</a></td>
+                                                            <td>{{ r.get_type_display }}</td>
+                                                            <td>
+                                                                {% if r.type == "id" %}
+                                                                    <a href="{{ r.body }}">Photo Id</a>
+                                                                {% else %}
+                                                                    <p>{{ r.body }}</p>
+                                                                {% endif %}
+                                                            </td>
                                                         </tr>
                                                       {% endfor %}
                                                       </tbody>
@@ -104,7 +120,8 @@ Requests
                                                       <tr>
                                                           <th>User</th>
                                                           <th>Status</th>
-                                                          <th>Photo Id</th>
+                                                          <th>Type</th>
+                                                          <th>Message</th>
                                                       </tr>
                                                       </thead>
                                                       <tbody>
@@ -112,7 +129,14 @@ Requests
                                                         <tr>
                                                             <td><a href="#">{{ r.owner }}</a></td>
                                                             <td>{{ r.get_status_display }}</td>
-                                                            <td><a href="{{ r.body }}">click here</a></td>
+                                                            <td>{{ r.get_type_display }}</td>
+                                                            <td>
+                                                                {% if r.type == "id" %}
+                                                                    <a href="{{ r.body }}">Photo Id</a>
+                                                                {% else %}
+                                                                    <p>{{ r.body }}</p>
+                                                                {% endif %}
+                                                            </td>
                                                         </tr>
                                                       {% endfor %}
                                                       </tbody>

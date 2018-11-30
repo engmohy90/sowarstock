@@ -12,4 +12,5 @@ urlpatterns = [
     url(r'^pending_reviews_count/$', views.pending_reviews_count),
     url(r'^reviews_unread_to_read/$', views.reviews_undread_to_read),
     url(r'^pending_sample_products_count/$', views.pending_sample_products_count),
+    url(r'^load_payment_amount/$', views.load_payment_amount),
 ]

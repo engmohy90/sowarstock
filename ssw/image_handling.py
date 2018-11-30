@@ -7,10 +7,11 @@ import uuid
 import os
 import requests
 
-thumbnail_width = 500
+THUMBNAIL_WIDTH = 500
+THUMBNAIL_HEIGHT = 200
 
 def create_watermarked_image(product):
-    if product.file_type == "jpeg":
+    if product.file_type == "jpeg/tiff":
         base_image = Image.open(product.image)
     else:
         base_image = Image.open(product.eps_image)
@@ -18,15 +19,15 @@ def create_watermarked_image(product):
     response = requests.get("https://s3.amazonaws.com/sowarstock/watermarks/logo_white_400w.png")
     watermark = Image.open(BytesIO(response.content))
     wwidth, wheight = watermark.size
-    width, height = base_image.size
-    ratio = height/width
     thumbnail_img_io = BytesIO()
     watermark_img_io = BytesIO()
 
 
     ## CREATE THUMBNAIL ##
-    thumbnail_height = int(round(thumbnail_width*ratio))
-    base_image.thumbnail((thumbnail_width, thumbnail_height))
+    width, height = base_image.size
+    ratio = height / width
+    thumbnail_height = int(round(THUMBNAIL_WIDTH*ratio))
+    base_image.thumbnail((THUMBNAIL_WIDTH, thumbnail_height))
     thumbnail_name = uuid.uuid4()
     base_image.save(thumbnail_img_io, format="PNG", quality=100)
     base_image_content = ContentFile(thumbnail_img_io.getvalue(), '{}.png'.format(thumbnail_name))
@@ -48,13 +49,14 @@ def create_watermarked_image(product):
     product.save()
 
 
+
 def create_thumbnailed_image(sample_product):
     base_image = Image.open(sample_product.image)
     img_io = BytesIO()
     width, height = base_image.size
     ratio = height / width
-    thumbnail_height = int(round(thumbnail_width * ratio))
-    base_image.thumbnail((thumbnail_width, thumbnail_height))
+    thumbnail_height = int(round(THUMBNAIL_WIDTH * ratio))
+    base_image.thumbnail((THUMBNAIL_WIDTH, thumbnail_height))
     thumbnail_name = uuid.uuid4()
     base_image.save(img_io, format="PNG", quality=100)
     base_image_content = ContentFile(img_io.getvalue(), '{}.png'.format(thumbnail_name))

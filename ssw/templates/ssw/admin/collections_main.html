@@ -40,11 +40,13 @@ Collections
                                                     <tr>
                                                         <td>{{ collection.title }}</td>
                                                         <td>
-                                                            {% for product in collection.products.all%}
-                                                                <a href="{{ product.thumbnail.url }}" data-lightbox="Gallery {{collection.pk}}">
-                                                                    <img alt="Image" src="{{ product.thumbnail.url }}" style="max-width:50%;max-height:50%">
-                                                                </a>
-                                                            {% endfor %}
+                                                            <div class="mygallery">
+                                                                {% for product in collection.products.all%}
+                                                                    <a href="{{ product.thumbnail.url }}" data-lightbox="Gallery {{collection.pk}}">
+                                                                        <img alt="Image" src="{{ product.thumbnail.url }}">
+                                                                    </a>
+                                                                {% endfor %}
+                                                            </div>
                                                         </td>
                                                         <td><a href="{% url 'other_profile' collection.owner %}">{{ collection.owner }}</a></td>
                                                         <td>
@@ -67,4 +69,13 @@ Collections
                 <!--end of container-->
             </section>
 
+{% endblock %}
+
+{% block js %}
+<script>
+    $(document).ready(function(){
+
+        $(".mygallery").justifiedGallery();
+    })
+</script>
 {% endblock %}

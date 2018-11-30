@@ -36,6 +36,7 @@ urlpatterns = [
     url(r'^update_public_info/$', views.update_public_info, name="update_public_info"),
     url(r'^update_photo_id/$', views.update_photo_id, name="update_photo_id"),
     url(r'^update_payment_method/$', views.update_payment_method, name="update_payment_method"),
+    url(r'^update_user_request_delete/$', views.update_user_request_delete, name="update_user_request_delete"),
     url(r'^notifications/$', views.notifications_main),
     url(r'^notifications/(?P<pk>\d+)/delete/$', views.notifications_delete, name="notifications_delete"),
     url(r'^products/public/(?P<public_id>\d+)/$', views.product_public_details, name="product_public"),

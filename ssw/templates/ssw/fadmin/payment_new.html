@@ -15,13 +15,15 @@ New Payment
                     <div id="account-profile" class="account-tab">
                         <h2>NewPayment</h2>
                         <br>
-                        <h4>Payment Amount: <span class="color--success">$ {{ earning.amount }}</span></h4>
+                        <h4>Payment Amount: <span id="payment_amount" class="color--success">____</span></h4>
                         <form method="post" action="" enctype="multipart/form-data">
                             {{ form.as_p }}
                             {% csrf_token %}
                             <div class="row">
                                 <div class="col-lg-3 col-md-4">
-                                    <button id="submit_payment_button" type="submit" class="btn btn-success type--uppercase">Pay</button>
+                                    <button id="submit_payment_button" type="submit" class="btn btn-success type--uppercase" disabled="disabled">
+                                        Pay
+                                    </button>
                                 </div>
                                 <div class="col-lg-3 col-md-4">
                                     <a href="{% url 'fadmin_earnings_main' %}" class="btn btn--default type--uppercase">Cancel</a>
@@ -41,6 +43,30 @@ New Payment
 {% block js %}
 <script>
 $(document).ready(function(){
+
+    $("#id_contributor").change(function(){
+        var pk = $(this).val()
+        var paymentButton = $("#submit_payment_button")
+        paymentButton.prop("disabled",true)
+
+        $.ajax({
+            url: "/ajax/load_payment_amount",
+            data: {
+                'pk' : pk
+            },
+            success: function(data){
+                var result = data.result
+                if(result == "success"){
+                    var amount = data.amount
+                    $("#payment_amount").html("$ "+amount)
+                    if(+amount > 0){
+                        paymentButton.prop("disabled",false)
+
+                    }
+                }
+            }
+        })
+    })
 
     $("#submit_payment_button").click(function(){
         $(this).prop("disabled",true)

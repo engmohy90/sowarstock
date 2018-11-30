@@ -33,12 +33,10 @@ Shopping Cart
                                         <label>License:</label>
                                     </div>
                                     <div class="col-6">
-                                        <div class="input-select">
-                                            <select name="license_{{item.pk}}" id="license_{{item.pk}}">
-                                                <option value="standard" {% if item.license_type == "standard" %}selected{% endif %}>Standard</option>
-                                                <option value="extended" {% if item.license_type == "extended" %}selected{% endif %}>Extended</option>
-                                            </select>
-                                        </div>
+                                        <select name="license_{{item.pk}}" id="license_{{item.pk}}">
+                                            <option value="standard" {% if item.license_type == "standard" %}selected{% endif %}>Standard</option>
+                                            <option value="extended" {% if item.license_type == "extended" %}selected{% endif %}>Extended</option>
+                                        </select>
                                     </div>
                                     <div class="col-3 text-right">
                                         <a href="{% url 'remove_from_cart' item.pk %}" class="checkmark checkmark--cross bg--error"></a>
@@ -69,6 +67,7 @@ Shopping Cart
             <div class="row mt--2">
                 <div class="col-md-12">
                     <div class="boxed boxed--border cart-total">
+                        <!--
                         <div class="row">
                             <div class="col-6">
                                 <span class="h5">Cart Subtotal:</span>
@@ -86,6 +85,7 @@ Shopping Cart
                             </div>
                         </div>
                         <hr>
+                        -->
                         <div class="row">
                             <div class="col-6">
                                 <span class="h5">Total:</span>

@@ -56,6 +56,7 @@ Earnings
                                             <span class="h5">Contributors Earnings</span>
                                         </div>
                                         <div class="tab__content">
+                                            <a href="{% url 'fadmin_payment_new' %}" class="btn btn-success pull-right">Pay</a>
                                             {% if cearnings %}
                                                 <div class="custom-scroll table-responsive">
                                                     <table id="cearningsTable" class="table table-bordered table-hover">
@@ -66,7 +67,6 @@ Earnings
                                                                 <th>Contributor</th>
                                                                 <th>Amount</th>
                                                                 <th>Paid</th>
-                                                                <th></th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -78,16 +78,9 @@ Earnings
                                                                     <td>$ {{ earning.amount }}</td>
                                                                     <td>
                                                                         {% if earning.payment %}
-                                                                            Yes
-                                                                        {% else %}
-                                                                            No
-                                                                        {% endif %}
-                                                                    </td>
-                                                                    <td>
-                                                                        {% if earning.payment %}
                                                                             <a href="{{earning.payment.receipt.url}}">View Payment</a>
                                                                         {% else %}
-                                                                            <a href="{% url 'fadmin_payment_new' earning.pk %}" class="btn btn-success">Pay</a>
+                                                                            No
                                                                         {% endif %}
                                                                     </td>
                                                                 </tr>

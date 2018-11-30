@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.mail import send_mail
+from django.db.models import Sum
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.template import loader
@@ -22,18 +23,29 @@ def earnings_main(request):
         return HttpResponseRedirect("/")
 
 @login_required
-def payment_new(request,pk):
+def payment_new(request):
     user = getSowarStockUser(request.user)
     if user.type == "financial_admin":
-        earning = get_object_or_404(models.Earning, pk=pk)
         form = forms.PaymentForm()
+
         if request.method == "POST":
             form = forms.PaymentForm(request.POST, request.FILES)
             if form.is_valid():
                 payment = form.save(commit=False)
-                payment.amount = earning.amount
-                payment.earning = earning
+                try:
+                    earnings = models.Earning.objects.filter(type="contributor", payment=None,
+                                                             contributor=payment.contributor)
+                    owed = earnings.aggregate(Sum('amount'))
+                    owed_amount = round(owed['amount__sum'], 2)
+                except:
+                    owed_amount = 0
+                payment.amount = owed_amount
                 payment.save()
+
+                for earning in earnings:
+                    earning.payment = payment
+                    earning.save()
+
                 messages.success(request, "Payment has been successfully made")
                 # notify contributor and send email
                 email_body = loader.render_to_string("ssw/email_new_payment.html", {"payment": payment})
@@ -42,8 +54,9 @@ def payment_new(request,pk):
                 notify.send(request.user, recipient=payment.contributor, level="success",
                             verb='You got paid ${}'.format(payment.amount))
                 return HttpResponseRedirect("/fadmin/earnings")
-        return render(request, "ssw/fadmin/payment_new.html", {"user": user, "earning": earning,
-                                                                "form": form, "activeDashboardMenu": "earnings",
+
+        return render(request, "ssw/fadmin/payment_new.html", {"user": user, "form": form,
+                                                               "activeDashboardMenu": "earnings",
                                                                 **showCorrectMenu(request.user)})
     else:
         messages.error(request, "You are not authorized to view this page !")

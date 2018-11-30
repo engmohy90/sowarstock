@@ -156,14 +156,18 @@ def collections_new(request):
         products = models.Product.objects.filter(status="approved")
         if request.method == "POST":
             title = request.POST["title"]
+            description = request.POST["description"]
             products = request.POST.getlist("products")
             if title == "":
                 messages.error(request, "Please choose a title for your collection")
                 return HttpResponseRedirect("/admin/collections/new")
+            if description == "":
+                messages.error(request, "Please choose a description for your collection")
+                return HttpResponseRedirect("/admin/collections/new")
             if not products:
                 messages.error(request, "Please select at least one product")
                 return HttpResponseRedirect("/admin/collections/new")
-            collection = models.Collection.objects.create(title=title, owner=user)
+            collection = models.Collection.objects.create(title=title, description=description, owner=user)
             for product in products:
                 p = get_object_or_404(models.Product, pk=product)
                 collection.products.add(p)
@@ -188,13 +192,19 @@ def collections_edit(request,pk):
             products = models.Product.objects.filter(owner=collection.owner, status="approved")
         if request.method == "POST":
             title = request.POST["title"]
+            description = request.POST["description"]
             products_pks = request.POST.getlist("products")
             if title == "":
                 messages.error(request, "Please choose a title for your collection")
                 return HttpResponseRedirect("/admin/collections/{}/edit".format(collection.pk))
+            if description == "":
+                messages.error(request, "Please choose a description for your collection")
+                return HttpResponseRedirect("/admin/collections/{}/edit".format(collection.pk))
             if not products_pks:
                 messages.error(request, "Please select at least one product")
                 return HttpResponseRedirect("/admin/collections/{}/edit".format(collection.pk))
+            collection.title = title
+            collection.description = description
             collection.products.clear()
             for product in products_pks:
                 p = get_object_or_404(models.Product, pk=product)
@@ -326,13 +336,14 @@ def requests_main(request):
 def requests_approve(request, pk):
     user = getSowarStockUser(request.user)
     if user.type == "admin":
-        r = get_object_or_404(models.UserRequest, pk = pk)
+        r = get_object_or_404(models.UserRequest, pk=pk)
         r.status = "approved"
         r.save()
-        r.owner.photo_id_verified = True
-        r.owner.save()
-        notify.send(request.user, recipient=r.owner, level="success",
-                    verb='Photo ID has been verified')
+        if r.type == "id":
+            r.owner.photo_id_verified = True
+            r.owner.save()
+            notify.send(request.user, recipient=r.owner, level="success",
+                        verb='Photo ID has been verified')
         messages.success(request, "Request has been approved")
         return HttpResponseRedirect("/admin/requests")
     else:
@@ -347,10 +358,14 @@ def requests_reject(request, pk):
         r = get_object_or_404(models.UserRequest, pk=pk)
         r.status = "rejected"
         r.save()
-        r.owner.photo_id = None
-        r.owner.save()
-        notify.send(request.user, recipient=r.owner, level="error",
-                    verb='Photo ID has been rejected')
+        if r.type == "id":
+            r.owner.photo_id = None
+            r.owner.save()
+            notify.send(request.user, recipient=r.owner, level="error",
+                        verb='Photo ID has been rejected')
+        else:
+            notify.send(request.user, recipient=r.owner, level="error",
+                        verb='Your request to delete your account has been rejected')
         messages.success(request, "Request has been rejected")
         return HttpResponseRedirect("/admin/requests")
     else:

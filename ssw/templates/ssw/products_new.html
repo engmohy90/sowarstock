@@ -15,7 +15,7 @@ New Product
                     <div id="account-profile" class="account-tab">
                         <h4>New Product</h4>
                         <p style="color:red">
-                            Allowed file extensions: JPEG and EPS only<br>
+                            Allowed file extensions: JPEG, TIFF and EPS only<br>
                             All images must be at least 4 MP (megapixels)<br>
                             Image size cannot exceed 50 MB, and EPS files cannot exceed 15 MB<br>
                             For EPS files, you have also to upload an image representing the file and that will
@@ -30,7 +30,7 @@ New Product
                                 {{form.file_type.label_tag}}
                                 {{form.file_type}}
                                 {{form.file_type.errors}}
-                                <br><br>
+                                <br>
                                 <div id="image_field_wrapper">
                                     {{form.image.label_tag}}
                                     {{form.image}}
@@ -54,14 +54,14 @@ New Product
                                 {{form.description}}
                                 {{form.description.errors}}
                                 <br><br>
-                                {{form.keywords.label_tag}}
+                                {{form.keywords.label_tag}} (comma separated)
                                 {{form.keywords}}
                                 {{form.keywords.errors}}
                                 <br><br>
                                 {{form.category.label_tag}}
                                 {{form.category}}
                                 {{form.category.errors}}
-                                <br><br>
+                                <br>
                                 {{form.subcategory.label_tag}}
                                 {{form.subcategory}}
                                 {{form.subcategory.errors}}
@@ -80,9 +80,7 @@ New Product
                                                 <div class="boxed boxed--lg">
                                                     <h2>Adult Content</h2>
                                                     <hr class="short">
-                                                    <p class="lead">Content that you plan to sell or license through Sowarstock ONLY.</p>
-                                                    <p class="lead">The royalty rate is 75% for Exclusive Content and 30% for Non-Exclusive Content.</p>
-                                                    <p class="lead">For more, please read <a href="{% url 'legal_contributor' %}" target="_blank">The Contributor Agreement</a></p>
+                                                    <p class="lead">Content that is not generally thought to be appropriate for viewing by children (such as violence, dangerous fantasy, and hate propaganda)</p>
                                                 </div>
                                                 <div class="modal-close modal-close-cross"></div>
                                             </div>
@@ -139,7 +137,7 @@ New Product
                                 {{form.price_type.label_tag}}
                                 {{form.price_type}}
                                 {{form.price_type.errors}}
-                                <br><br>
+                                <br>
                                 {{form.standard_price.label_tag}}
                                 <div class="modal-instance">
                                     <a href="#" class="modal-trigger color--primary"><i class="far fa-question-circle"></i></a>
@@ -209,7 +207,10 @@ New Product
                             {% csrf_token %}
                             <div class="row">
                                 <div class="col-lg-3 col-md-4">
-                                    <button id="submit_product_button" type="submit" class="btn btn--primary type--uppercase">Save</button>
+                                    <button id="submit_product_button" type="submit" class="btn btn--primary type--uppercase">
+                                        <span id="submit_product_text">Save</span>
+                                        <img id="submit_product_loader" class="hidden" style="max-height:1.5em" src="{% static 'ssw/img/ajax-loader.gif' %}">
+                                    </button>
                                 </div>
                                 <div class="col-lg-3 col-md-4">
                                     <a href="/products" class="btn btn--default type--uppercase">Cancel</a>
@@ -301,7 +302,7 @@ New Product
         })
 
         var fileType = $("#id_file_type").val()
-        if(fileType == "jpeg"){
+        if(fileType == "jpeg/tiff"){
                 $("#file_field_wrapper").addClass("hidden")
                 $("#eps_image_field_wrapper").addClass("hidden")
                 $("#image_field_wrapper").removeClass("hidden")
@@ -315,7 +316,7 @@ New Product
 
             var fileType = $(this).val()
 
-            if(fileType == "jpeg"){
+            if(fileType == "jpeg/tiff"){
                 $("#file_field_wrapper").addClass("hidden")
                 $("#eps_image_field_wrapper").addClass("hidden")
                 $("#image_field_wrapper").removeClass("hidden")
@@ -329,14 +330,15 @@ New Product
         $("#submit_product_button").click(function(e){
             var fileType = $("#id_file_type").val()
 
-            if(fileType=="jpeg"){
+            if(fileType=="jpeg/tiff"){
                 var image = $("#id_image").val()
                 if(image==""){
                     e.preventDefault()
                     $("#form_error_message").html("Please upload an image")
                 }else{
                     $(this).prop("disabled",true)
-                    $(this).html("Submitting ... ")
+                    $("#submit_product_text").html("Submitting ... ")
+                    $("#submit_product_loader").removeClass("hidden")
                     $(this).closest("form").submit()
                 }
             }else if(fileType=="eps"){
@@ -347,7 +349,8 @@ New Product
                     $("#form_error_message").html("Please upload a file and an image")
                 }else{
                     $(this).prop("disabled",true)
-                    $(this).html("Submitting ... ")
+                    $("#submit_product_text").html("Submitting ... ")
+                    $("#submit_product_loader").removeClass("hidden")
                     $(this).closest("form").submit()
                 }
             }

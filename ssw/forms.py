@@ -58,7 +58,7 @@ class PhotoIdForm(ModelForm):
 class PaymentMethodForm(ModelForm):
     class Meta:
         model = models.Contributor
-        fields = ["preferred_payment_method", "iban", "western_union_account", "paypal_account"]
+        fields = ["preferred_payment_method", "iban", "bank_country", "western_union_account", "paypal_account"]
         labels = {
             'iban': _('IBAN')
         }
@@ -72,9 +72,10 @@ class SampleProductForm(ModelForm):
 
 SampleProductFormset = forms.modelformset_factory(
     models.SampleProduct,
-    fields= ["image"],
+    fields=["image"],
     extra=10
 )
+
 
 class ProductForm(ModelForm):
     price_type = forms.ChoiceField(choices=(("default", "Default"), ("custom", "Custom")))
@@ -177,3 +178,12 @@ class SearchKeywordSynonymsForm(ModelForm):
     class Meta:
         model = models.SearchKeywordSynonyms
         fields = ["word","synonyms"]
+
+
+class UserRequestDeleteForm(ModelForm):
+    class Meta:
+        model = models.UserRequest
+        fields = ["body"]
+        labels = {
+            'body': _('Reason for Deleting'),
+        }

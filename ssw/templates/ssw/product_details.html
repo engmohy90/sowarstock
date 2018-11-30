@@ -2,7 +2,7 @@
 {% load static from staticfiles %}
 {% load my_tags %}
 {% block title %}
-Pending Product {{product.public_id}
+Pending Product {{product.public_id}}
 {% endblock %}
 
 {% block content %}
@@ -33,7 +33,12 @@ Pending Product {{product.public_id}
                         {% endif %}
                     </h4>
                     {% if product.status == "rejected" %}
-                        <h4>Rejection Reason: <span style="color:red">{{product.get_rejection_reason_display}}</span></h4>
+                        <h4>Rejection Reason:
+                            <span style="color:red">
+                                {{product.get_rejection_reason_display|default:""}}<br>
+                                {{product.rejection_note|default:""}}<br>
+                            </span>
+                        </h4>
                     {% endif %}
                      <table id="pendingProductsTable" class="table table-bordered table-hover">
                           <tbody>

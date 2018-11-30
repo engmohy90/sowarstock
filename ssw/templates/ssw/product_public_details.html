@@ -83,17 +83,17 @@
                                         </div>
                                     </div>
                                 </div><!--end of modal instance-->
-                                <div class="input-select">
-                                    <select name="license" id="license">
-                                        <option value="standard">Standard</option>
-                                        <option value="extended">Extended</option>
-                                    </select>
-                                </div>
+                                <select name="license" id="license">
+                                    <option value="standard">Standard</option>
+                                    <option value="extended">Extended</option>
+                                </select>
                             </div>
                             <div class="col-md-6 col-lg-8">
                                 <button type="submit" class="btn sowar_stock_color">Add To Cart</button>
                             </div>
                         </form>
+                    {% else %}
+                        <p>If you are interested in this product, please verify your email address in order to purchase it.</p>
                     {% endif %}
                 {% endif %}
             </div>

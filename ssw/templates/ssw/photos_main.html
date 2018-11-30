@@ -40,29 +40,21 @@
                         <div class="masonry-filter-holder">
                             <div class="masonry__filters" data-filter-all-text="All Categories">
                                 <ul>
-                                    <li class="active" data-masonry-filter="*">{% trans "All Categories"%}</li>
+                                    <li class="active enable-all-categories" data-masonry-filter="*">{% trans "All Categories"%}</li>
+                                    {% for subcategory in subcategories %}
+                                        <li class="enable-{{subcategory.get_simple_name}}">{{subcategory}}</li>
+                                    {% endfor %}
                                 </ul>
                             </div>
                         </div>
                     {% endif %}
                 </div>
                 <!--end masonry filters-->
-                <div class="masonry__container row">
+                <div id="mygallery" >
                     {% for photo in photos %}
-                        <div class="col-md-4 masonry__item" data-masonry-filter="{{ photo.subcategory }}">
-                            <a href="{% url 'product_public' photo.public_id %}" class="block">
-                                <div class="feature feature-1 boxed boxed--border">
-                                    <h6 class="type--uppercase color--primary">{{photo.subcategory}}</h6>
-                                    <center>
-                                        <img src="{{ photo.thumbnail.url }}">
-                                        <p>
-                                            {{photo.title}}
-                                        </p>
-                                    </center>
-                                </div>
-                                <!--end feature-->
-                            </a>
-                        </div>
+                        <a href="{% url 'product_public' photo.public_id %}" class="{{photo.subcategory.get_simple_name}}">
+                            <img alt="{{photo.title}}" src="{{ photo.thumbnail.url }}">
+                        </a>
                     {% endfor %}
                 </div>
                 <!--end of row-->
@@ -73,4 +65,27 @@
     </div>
 </section>
 
+{% endblock %}
+
+{% block js %}
+<script>
+    $(document).ready(function(){
+
+        $('.enable-all-categories').click(function () {
+            $("#mygallery").justifiedGallery({ filter: false });
+        });
+
+        {% for photo in photos %}
+            $('.enable-{{photo.subcategory.get_simple_name}}').click(function () {
+                $("#mygallery").justifiedGallery({ filter: '.{{photo.subcategory.get_simple_name}}' });
+            });
+        {% endfor %}
+
+        $("#mygallery").justifiedGallery({
+            rowHeight : 200,
+            lastRow : 'nojustify',
+            margins : 5
+        });
+    })
+</script>
 {% endblock %}

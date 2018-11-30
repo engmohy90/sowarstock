@@ -200,27 +200,43 @@ def search(request):
         for product in products:
             if product not in final_products:
                 final_products.append(product)
-        return render(request,"ssw/search_results.html", {"user": getSowarStockUser(request.user),
+        subcategories = set()
+        for product in final_products:
+            subcategories.add(product.subcategory)
+        return render(request, "ssw/search_results.html", {"user": getSowarStockUser(request.user),
+                                                          "subcategories": subcategories,
                                                           "products": final_products, "keywords": kws})
     return HttpResponseRedirect("/")
 
 
 def photos_main(request):
     photos = models.Product.objects.filter(category__name="Photos", status="approved")
-    return render(request, "ssw/photos_main.html", {"user": getSowarStockUser(request.user),
-                                                    "photos": photos, "activeDashboardMenu": "photos"})
+    subcategories = set()
+    for photo in photos:
+        subcategories.add(photo.subcategory)
+    return render(request, "ssw/photos_main.html", {"user": getSowarStockUser(request.user), "photos": photos,
+                                                    "subcategories": subcategories,
+                                                    "activeDashboardMenu": "photos"})
 
 
 def vectors_main(request):
     vectors = models.Product.objects.filter(category__name="Vectors and Paintings", status="approved")
+    subcategories = set()
+    for vector in vectors:
+        subcategories.add(vector.subcategory)
     return render(request, "ssw/vectors_main.html", {"user": getSowarStockUser(request.user),
+                                                     "subcategories": subcategories,
                                                      "vectors": vectors, "activeDashboardMenu": "vectors"})
 
 
 def calligraphy_main(request):
     calligraphy = models.Product.objects.filter(category__name="Calligraphy", status="approved")
+    subcategories = set()
+    for c in calligraphy:
+        subcategories.add(c.subcategory)
     return render(request, "ssw/calligraphy_main.html", {"user": getSowarStockUser(request.user),
                                                          "calligraphy": calligraphy,
+                                                         "subcategories": subcategories,
                                                          "activeDashboardMenu": "calligraphy"})
 
 
@@ -338,10 +354,13 @@ def orders(request):
         messages.error(request, "You are not authorized to view this page !")
         return HttpResponseRedirect("/")
 
-
+import urllib.request
+from PIL import Image
+from io import BytesIO
+import requests
 @login_required
 def order_details(request, order_no):
-    order = get_object_or_404(models.Order, order_no = order_no)
+    order = get_object_or_404(models.Order, order_no=order_no)
     user = getSowarStockUser(request.user)
     if user.type == "client" and order.owner == user:
         return render(request, "ssw/order_details.html", {"user": getSowarStockUser(request.user), "order":order,
@@ -431,7 +450,7 @@ def complete_registration(request):
         personal_info_form = forms.ProfilePersonalInfoForm(instance=user)
         address_form = forms.AddressForm()
         photo_id_form = forms.PhotoIdForm(instance=user)
-        sample_product_formset = forms.SampleProductFormset
+        sample_product_formset = forms.SampleProductFormset(queryset=models.SampleProduct.objects.filter(owner=user))
 
         codes_json = get_country_codes_json()
 
@@ -470,6 +489,7 @@ def resend_email_activation(request):
     email_body = loader.render_to_string("ssw/email_verify_email.html", {"user": user})
     send_mail("شكرا لإنضمامكم", "", "Sowarstock", [user.email], False, None, None, None, email_body)
     return JsonResponse({"result": "success", "msg": "email sent"})
+
 
 @login_required
 def products_main(request):
@@ -566,11 +586,14 @@ def account_settings(request, **kwargs):
         photo_id_form = forms.PhotoIdForm(instance=user)
         # payment method form
         payment_method_form = forms.PaymentMethodForm(instance=user)
+        user_request_delete_form = forms.UserRequestDeleteForm()
         codes_json = get_country_codes_json()
         return render(request, 'ssw/account_settings.html', {"user": user,"personal_info_form":personal_info_form,
                                                              "address_form": address_form,"password_form": password_form,
                                                              "public_info_form": public_info_form, "photo_id_form": photo_id_form,
-                                                             "payment_method_form": payment_method_form, "codes_json": codes_json,
+                                                             "payment_method_form": payment_method_form,
+                                                             "user_request_delete_form": user_request_delete_form,
+                                                             "codes_json": codes_json,
                                                              "activeDashboardMenu": "account_settings", **showCorrectMenu(request.user)})
     elif user.type == "client":
         # personal information form
@@ -673,10 +696,29 @@ def update_payment_method(request):
         payment_method_form = forms.PaymentMethodForm(request.POST, instance=user)
         if payment_method_form.is_valid():
             payment_method_form.save()
+            email_body = loader.render_to_string("ssw/email_update_payment_settings.html", {"user": user})
+            send_mail("تحديث إعدادات الدفع", "", "Sowarstock", [user.email], False, None, None, None, email_body)
             messages.success(request, "Payment method updated successfully")
         else:
             messages.error(request, payment_method_form.errors)
     return HttpResponseRedirect("/account_settings")
+
+
+@login_required
+def update_user_request_delete(request):
+    if request.method == "POST":
+        user = getSowarStockUser(request.user)
+        user_request_delete_form = forms.UserRequestDeleteForm(request.POST)
+        if user_request_delete_form.is_valid():
+            r = user_request_delete_form.save(commit=False)
+            r.owner = user
+            r.type = "delete"
+            r.save()
+            messages.success(request, "Request sent successfully")
+        else:
+            messages.error(request, user_request_delete_form.errors)
+    return HttpResponseRedirect("/account_settings")
+
 
 @login_required
 def notifications_main(request):
@@ -773,15 +815,19 @@ def collections_new(request):
         products = models.Product.objects.filter(owner__id = request.user.id, status="approved")
         if request.method == "POST":
             title = request.POST["title"]
+            description = request.POST["description"]
             products = request.POST.getlist("products")
-            if(title == ""):
+            if title == "" :
                 messages.error(request, "Please choose a title for your collection")
+                return HttpResponseRedirect("/collections/new")
+            if description == "":
+                messages.error(request, "Please choose a description for your collection")
                 return HttpResponseRedirect("/collections/new")
             if not products:
                 messages.error(request, "Please select at least one product")
                 return HttpResponseRedirect("/collections/new")
-            contributor = get_object_or_404(models.Contributor, pk = request.user.pk)
-            collection = models.Collection.objects.create(title=title, owner = contributor)
+            contributor = get_object_or_404(models.Contributor, pk=request.user.pk)
+            collection = models.Collection.objects.create(title=title, description=description, owner=contributor)
             for product in products:
                 p = get_object_or_404(models.Product, pk = product)
                 collection.products.add(p)
@@ -798,17 +844,23 @@ def collections_new(request):
 def collections_edit(request,pk):
     collection = get_object_or_404(models.Collection, pk=pk)
     user = getSowarStockUser(request.user)
-    if user.type == "contributor" and collection.owner == user:
+    if user.type == "contributor" and collection.owner.pk == user.pk:
         products = models.Product.objects.filter(owner__id=request.user.id, status="approved")
         if request.method == "POST":
             title = request.POST["title"]
+            description = request.POST["description"]
             products_pks = request.POST.getlist("products")
             if title == "":
                 messages.error(request, "Please choose a title for your collection")
                 return HttpResponseRedirect("/collections/{}/edit".format(collection.pk))
+            if description == "":
+                messages.error(request, "Please choose a description for your collection")
+                return HttpResponseRedirect("/collections/{}/edit".format(collection.pk))
             if not products_pks:
                 messages.error(request, "Please select at least one product")
                 return HttpResponseRedirect("/collections/{}/edit".format(collection.pk))
+            collection.title = title
+            collection.description = description
             collection.products.clear()
             for product in products_pks:
                 p = get_object_or_404(models.Product, pk=product)
@@ -839,8 +891,11 @@ def profile_products(request, username):
     other_profile = get_object_or_404(models.Contributor, username=username)
     user = getSowarStockUser(request.user)
     products = models.Product.objects.filter(owner=other_profile, status="approved")
+    subcategories = set()
+    for p in products:
+        subcategories.add(p.subcategory)
     return render(request, "ssw/profile_products.html", {"user": user, "other_profile": other_profile,
-                                                         "products": products})
+                                                         "subcategories": subcategories,"products": products})
 
 
 def profile_product_details(request, username, public_id):
@@ -855,7 +910,24 @@ def earnings_main(request):
     user = getSowarStockUser(request.user)
     if user.type == "contributor":
         earnings = models.Earning.objects.filter(contributor=user)
-        return render(request, "ssw/earnings_main.html", {"user": user, "earnings": earnings, **showCorrectMenu(request.user)})
+
+        try:
+            earnings2 = earnings.aggregate(Sum('amount'))
+            earnings_total = round(earnings2['amount__sum'], 2)
+        except:
+            earnings_total = 0
+
+        payments = models.Payment.objects.filter(contributor=user)
+
+        try:
+            payments2 = payments.aggregate(Sum('amount'))
+            payments_total = round(payments2['amount__sum'], 2)
+        except:
+            earnings_total = 0
+
+        return render(request, "ssw/earnings_main.html", {"user": user, "earnings": earnings, "earnings_total": earnings_total,
+                                                          "payments": payments, "payments_total": payments_total,
+                                                          **showCorrectMenu(request.user)})
     else:
         messages.error(request, "You are not authorized to view this page !")
         return HttpResponseRedirect("/")

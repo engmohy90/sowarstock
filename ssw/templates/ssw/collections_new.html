@@ -23,9 +23,16 @@
                                         </div>
                                     </div>
                                     <br>
-                                    <div class="masonry__container row masonry--active" style="position: relative; height: 526.812px; overflow:auto">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="description">Description</label>
+                                            <textarea id="description" name="description">{% if collection %}{{collection.description}}{% endif %}</textarea>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
                                         {% for product in products %}
-                                            <div class="masonry__item col-lg-4 col-6" style="position: absolute; left: {{ forloop.counter|sub:1|modulo:3|mul:380 }}px; top: {{forloop.counter|sub:1|div:3|modulo:3|mul:263}}px;">
+                                            <div class="col-lg-4 col-6">
                                                 <a href="{{ product.thumbnail.url }}" data-lightbox="Gallery 1">
                                                     <img alt="Image" src="{{ product.thumbnail.url }}">
                                                 </a>
@@ -37,6 +44,7 @@
                                             </div>
                                         {% endfor %}
                                     </div>
+                                    <br>
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4">
                                             <button type="submit" class="btn btn--primary type--uppercase">Save</button>

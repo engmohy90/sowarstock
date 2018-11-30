@@ -22,6 +22,7 @@
         <link href="{% static 'ssw/css/theme.css' %}" rel="stylesheet" type="text/css" media="all" />
         <link href="{% static 'ssw/css/custom.css' %}" rel="stylesheet" type="text/css" media="all" />
         <link href="{% static 'ssw/css/font-rubiklato.css' %}" rel="stylesheet" type="text/css" media="all" />
+        <link href="{% static 'ssw/css/justifiedGallery.min.css' %}" rel="stylesheet" type="text/css" media="all" />
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:200,300,400,400i,500,600,700%7CMerriweather:300,300i" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Lato:400,400i,700%7CRubik:300,400,500" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -416,6 +417,7 @@
         <script src="{% static 'ssw/js/twitterfetcher.min.js' %}"></script>
         <script src="{% static 'ssw/js/spectragram.min.js' %}"></script>
         <script src="{% static 'ssw/js/smooth-scroll.min.js' %}"></script>
+        <script src="{% static 'ssw/js/jquery.justifiedGallery.min.js' %}"></script>
         <script src="{% static 'ssw/js/scripts.js' %}"></script>
         <script src="{% static 'ssw/js/main.js' %}"></script>
         <script>
@@ -524,6 +526,10 @@
             {% if LANGUAGE_CODE == 'ar' %}
                 $('input').css("text-align","right")
             {% endif %}
+
+            $('select').wrap('<div class="input-icon input-icon--right">')
+            $('select').after('<i class="stack-down-open"></i>')
+
         </script>
         {% block js %}{% endblock%}
     </body>

@@ -1,5 +1,6 @@
 {% extends "ssw/main.html" %}
 {% load static from staticfiles %}
+{% load i18n %}
 {% block title %}
 Photos
 {% endblock %}
@@ -22,26 +23,20 @@ Photos
                 <div class="masonry-filter-holder">
                     <div class="masonry__filters" data-filter-all-text="All Categories">
                         <ul>
-                            <li class="active" data-masonry-filter="*">All Categories</li>
+                            <li class="active enable-all-categories" data-masonry-filter="*">{% trans "All Categories"%}</li>
+                            {% for subcategory in subcategories %}
+                                <li class="enable-{{subcategory.get_simple_name}}">{{subcategory}}</li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>
             </div>
             <!--end masonry filters-->
-            <div class="masonry__container row">
+             <div id="mygallery" >
                 {% for product in products reversed %}
-                    <div class="col-md-4 masonry__item" data-masonry-filter="{{product.category}}">
-                        <a href="{% url 'profile_product_details' other_profile product.public_id %}" class="block">
-                            <div class="feature feature-1 boxed boxed--border">
-                                <h6 class="type--uppercase color--primary">{{product.category}}</h6>
-                                <img src="{{product.watermark.url}}">
-                                <p>
-                                    {{product.title}}
-                                </p>
-                            </div>
-                            <!--end feature-->
-                        </a>
-                    </div>
+                    <a href="{% url 'product_public' product.public_id %}" class="{{product.subcategory.get_simple_name}}">
+                        <img alt="{{product.title}}" src="{{ product.thumbnail.url }}">
+                    </a>
                 {% endfor %}
             </div>
             <!--end of row-->
@@ -52,4 +47,27 @@ Photos
 There are no products.
 {% endif %}
 
+{% endblock %}
+
+{% block js %}
+<script>
+    $(document).ready(function(){
+
+        $('.enable-all-categories').click(function () {
+            $("#mygallery").justifiedGallery({ filter: false });
+        });
+
+        {% for product in products %}
+            $('.enable-{{product.subcategory.get_simple_name}}').click(function () {
+                $("#mygallery").justifiedGallery({ filter: '.{{product.subcategory.get_simple_name}}' });
+            });
+        {% endfor %}
+
+        $("#mygallery").justifiedGallery({
+            rowHeight : 200,
+            lastRow : 'nojustify',
+            margins : 5
+        });
+    })
+</script>
 {% endblock %}

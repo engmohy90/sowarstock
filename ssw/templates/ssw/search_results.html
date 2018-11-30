@@ -21,32 +21,49 @@
     </div>
     <!--end of container-->
 </section>
-{% if products %}
+
 <section>
     <div class="container">
-        <div class="row">
-            {% for product in products %}
-                <div class="col-md-4">
-                    <a href="{% url 'product_public' product.public_id %}" class="block">
-                        <div class="feature feature-1 boxed boxed--border">
-                            <h6 class="type--uppercase color--primary">{{product.category}}</h6>
-                            <center>
-                                <img src="{{ product.thumbnail.url }}">
-                                <p>
-                                    {{product.title}}
-                                </p>
-                            </center>
+        {% if products %}
+            <div class="masonry">
+                <div class="masonry-filter-container text-center d-flex flex-wrap justify-content-center align-items-center">
+                    {% if LANGUAGE_CODE == 'ar' %}
+                        <div class="masonry-filter-holder">
+                            <div class="masonry__filters" data-filter-all-text="All Categories">
+                                <ul>
+                                    <li class="active" data-masonry-filter="*">{% trans "All Categories"%}</li>
+                                </ul>
+                            </div>
                         </div>
-                        <!--end feature-->
-                    </a>
+                        <span>{% trans "Category:"%}</span>
+                    {% else %}
+                        <span>{% trans "Category:"%}</span>
+                        <div class="masonry-filter-holder">
+                            <div class="masonry__filters" data-filter-all-text="All Categories">
+                                <ul>
+                                    <li class="active enable-all-categories" data-masonry-filter="*">{% trans "All Categories"%}</li>
+                                    {% for subcategory in subcategories %}
+                                        <li class="enable-{{subcategory.get_simple_name}}">{{subcategory}}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    {% endif %}
                 </div>
-            {% endfor %}
-        </div>
-        <!--end of row-->
+                <!--end masonry filters-->
+                <div id="mygallery" >
+                    {% for product in products %}
+                        <a href="{% url 'product_public' product.public_id %}" class="{{product.subcategory.get_simple_name}}">
+                            <img alt="{{product.title}}" src="{{ product.thumbnail.url }}">
+                        </a>
+                    {% endfor %}
+                </div>
+                <!--end of row-->
+            </div>
+        {% endif %}
     </div>
-    <!--end of container-->
 </section>
-{% endif %}
+
 <section class="text-center bg--secondary">
                 <div class="container">
                     <div class="row">
@@ -79,6 +96,22 @@
                     }
              });
         }
+
+        $('.enable-all-categories').click(function () {
+            $("#mygallery").justifiedGallery({ filter: false });
+        });
+
+        {% for product in products %}
+            $('.enable-{{product.subcategory.get_simple_name}}').click(function () {
+                $("#mygallery").justifiedGallery({ filter: '.{{product.subcategory.get_simple_name}}' });
+            });
+        {% endfor %}
+
+        $("#mygallery").justifiedGallery({
+            rowHeight : 200,
+            lastRow : 'nojustify',
+            margins : 5
+        });
     })
 </script>
 {% endblock %}
