@@ -644,7 +644,7 @@ def featured_contributor_edit(request):
 def featured_product_edit(request):
     user = getSowarStockUser(request.user)
     if user.type == "admin":
-        products = models.Product.objects.all(status="approved")
+        products = models.Product.objects.filter(status="approved")
         if request.method == "POST":
             for product in products:
                 product.featured = False
