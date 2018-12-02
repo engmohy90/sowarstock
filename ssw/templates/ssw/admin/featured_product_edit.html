@@ -16,10 +16,10 @@ Featured Products
                                 <hr>
                                 <form method="post" action="">
                                     {% csrf_token %}
-                                    <div class="masonry__container row masonry--active" style="position: relative; height: 526.812px; overflow:auto">
+                                    <div class="row">
                                         {% for product in products %}
-                                            <div class="masonry__item col-lg-4 col-6" style="position: absolute; left: {{ forloop.counter|sub:1|modulo:3|mul:380 }}px; top: {{forloop.counter|sub:1|div:3|modulo:3|mul:263}}px;">
-                                                <a href="{{ product.thumbnail.url }}" data-lightbox="Gallery 1">
+                                            <div class="col-lg-4 col-6">
+                                                <a href="{% url 'product_public' product.public_id %}">
                                                     <p>{{product}}</p>
                                                     <img alt="Image" src="{{ product.thumbnail.url }}">
 

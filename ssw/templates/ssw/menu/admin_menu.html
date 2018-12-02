@@ -227,6 +227,24 @@
                                     </div>
                                     <div class="col-md-1 full-width masonry__item">
                                         <div
+                                            {% if activeDashboardMenu == "reports" %}
+                                                class="card card-1 boxed boxed--sm boxed--border dashboard-menu-active"
+                                            {% else %}
+                                                class="card card-1 boxed boxed--sm boxed--border"
+                                            {% endif %}
+                                        >
+                                            <a href="{% url 'admin_reports_main' %}">
+                                                <center>
+                                                    <i class="fas fa-file-contract fa-2x"></i>
+                                                    <p>
+                                                        Reports
+                                                    </p>
+                                                </center>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1 full-width masonry__item">
+                                        <div
                                             {% if activeDashboardMenu == "faqs" %}
                                                 class="card card-1 boxed boxed--sm boxed--border dashboard-menu-active"
                                             {% else %}
@@ -257,6 +275,24 @@
                                                     <i class="far fa-bell fa-2x"></i>
                                                     <p>
                                                         Notifications
+                                                    </p>
+                                                </center>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1 full-width masonry__item">
+                                        <div
+                                            {% if activeDashboardMenu == "site_settings" %}
+                                                class="card card-1 boxed boxed--sm boxed--border dashboard-menu-active"
+                                            {% else %}
+                                                class="card card-1 boxed boxed--sm boxed--border"
+                                            {% endif %}
+                                        >
+                                            <a href="{% url 'admin_site_settings_main' %}">
+                                                <center>
+                                                    <i class="fas fa-cogs fa-2x"></i>
+                                                    <p>
+                                                        Settings
                                                     </p>
                                                 </center>
                                             </a>

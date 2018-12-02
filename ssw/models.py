@@ -168,6 +168,7 @@ class Product(models.Model):
     rejection_note = models.TextField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    reviewed_by = models.ForeignKey(SowarStockUser, on_delete=models.SET_NULL, null=True, blank=True, related_name="product_reviewer")
     requested_to_archive = models.BooleanField(default=False)
     featured = models.BooleanField(default=False)
     #keywords = ListCharField(base_field=models.CharField(max_length=255), max_length = 10)
@@ -176,7 +177,7 @@ class Product(models.Model):
     subcategory = models.ForeignKey(SubCategory, blank=True, null=True, on_delete=models.SET_NULL)
     standard_price = models.IntegerField(default=15)
     extended_price = models.IntegerField(default=149)
-    owner = models.ForeignKey(Contributor, on_delete=models.CASCADE)
+    owner = models.ForeignKey(Contributor, on_delete=models.CASCADE, related_name="product_owner")
 
     def get_display_image(self):
         if self.file_type == "jpeg/tiff":
@@ -275,8 +276,8 @@ class FaqPersonal(models.Model):
     answer = models.TextField(blank=False, null=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    owner = models.ForeignKey(Contributor, on_delete=models.CASCADE, related_name="owner")
-    replier = models.ForeignKey(SowarStockUser, on_delete=models.PROTECT, null=True, blank=True, related_name="replier")
+    owner = models.ForeignKey(Contributor, on_delete=models.CASCADE, related_name="faq_personal_owner")
+    replier = models.ForeignKey(SowarStockUser, on_delete=models.PROTECT, null=True, blank=True, related_name="faq_personal_replier")
 
     def __str__(self):
         return self.question
@@ -401,4 +402,11 @@ class SearchKeyword(models.Model):
 
     def __str__(self):
         return self.word
+
+
+class SiteSettings(models.Model):
+    watermark = models.ImageField(upload_to='watermarks/', null=True, blank=True)
+    exclusive_percentage = models.IntegerField()
+    non_exclusive_percentage = models.IntegerField()
+    paypal_testing = models.BooleanField(default=True)
 

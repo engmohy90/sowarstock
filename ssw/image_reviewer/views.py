@@ -32,6 +32,7 @@ def product_approve(request, pk):
     if user.type == "image_reviewer":
         product = get_object_or_404(models.Product, pk=pk)
         product.status = "pending_admin_approval"
+        product.reviewed_by = user
         product.save()
         messages.success(request, "Product has been approved by you and now waiting admin approval")
         return HttpResponseRedirect("/reviewer/products")
@@ -51,6 +52,7 @@ def product_reject(request, pk):
             product.status = "rejected"
             product.rejection_reason = rejection_reason
             product.rejection_note = rejection_note
+            product.reviewed_by = user
             product.save()
             email_body = loader.render_to_string("ssw/email_product_reject.html", {"product": product})
             send_mail("رفض عملك {}".format(product.public_id), "", "Sowarstock", [product.owner.email], False,

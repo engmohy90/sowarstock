@@ -187,3 +187,9 @@ class UserRequestDeleteForm(ModelForm):
         labels = {
             'body': _('Reason for Deleting'),
         }
+
+
+class SiteSettingsForm(ModelForm):
+    class Meta:
+        model = models.SiteSettings
+        fields = ["watermark", "exclusive_percentage", "non_exclusive_percentage", "paypal_testing"]

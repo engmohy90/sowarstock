@@ -794,11 +794,45 @@ def search_keyword_synonyms_edit(request, pk):
 @login_required
 def search_keyword_synonyms_delete(request, pk):
     user = getSowarStockUser(request.user)
-    synonym = get_object_or_404(models.SearchKeywordSynonyms, pk=pk)
     if user.type == "admin":
+        synonym = get_object_or_404(models.SearchKeywordSynonyms, pk=pk)
         synonym.delete()
         messages.success(request, "Word synonyms deleted successfully")
         return HttpResponseRedirect("/admin/search-keywords")
     else:
         messages.error(request, "You are not authorized to view this page !")
         return HttpResponseRedirect("/")
+
+
+@login_required
+def reports_main(request):
+    user = getSowarStockUser(request.user)
+    if user.type == "admin":
+        return render(request, "ssw/admin/reports_main.html",
+                      {"user": user, "activeDashboardMenu": "reports",
+                       **showCorrectMenu(request.user)})
+    else:
+        messages.error(request, "You are not authorized to view this page !")
+        return HttpResponseRedirect("/")
+
+
+@login_required
+def site_settings_main(request):
+    user = getSowarStockUser(request.user)
+    if user.type == "admin":
+        settings = models.SiteSettings.objects.get(pk=1)
+        form = forms.SiteSettingsForm(instance=settings)
+        if request.method == "POST":
+            form = forms.SiteSettingsForm(request.POST, request.FILES, instance=settings)
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Settings updated successfully")
+            else:
+                messages.error(request, "An error occurred while trying to save the settings")
+        return render(request, "ssw/admin/site_settings_main.html",
+                      {"user": user, "activeDashboardMenu": "site_settings", "settings": settings,
+                       "form": form, **showCorrectMenu(request.user)})
+    else:
+        messages.error(request, "You are not authorized to view this page !")
+        return HttpResponseRedirect("/")
+

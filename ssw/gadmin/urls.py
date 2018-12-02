@@ -47,4 +47,6 @@ urlpatterns = [
     url(r'^search-keywords/new/$', views.search_keyword_synonyms_new, name="admin_search_keyword_synonyms_new"),
     url(r'^search-keywords/edit/(?P<pk>\d+)/$', views.search_keyword_synonyms_edit, name='admin_search_keyword_synonyms_edit'),
     url(r'^search-keywords/(?P<pk>\d+)/delete/$', views.search_keyword_synonyms_delete, name='admin_search_keyword_synonyms_delete'),
+    url(r'^reports/$', views.reports_main, name="admin_reports_main"),
+    url(r'^site-settings/$', views.site_settings_main, name="admin_site_settings_main"),
 ]

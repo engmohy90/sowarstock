@@ -731,7 +731,7 @@ def notifications_main(request):
 def notifications_delete(request, pk):
     notification = get_object_or_404(Notification, pk=pk)
     user = getSowarStockUser(request.user)
-    if notification.recipient == user:
+    if notification.recipient.pk == user.pk:
         notification.delete()
         messages.success(request, "Notification has been deleted")
         return HttpResponseRedirect("/notifications")
@@ -923,7 +923,7 @@ def earnings_main(request):
             payments2 = payments.aggregate(Sum('amount'))
             payments_total = round(payments2['amount__sum'], 2)
         except:
-            earnings_total = 0
+            payments_total = 0
 
         return render(request, "ssw/earnings_main.html", {"user": user, "earnings": earnings, "earnings_total": earnings_total,
                                                           "payments": payments, "payments_total": payments_total,

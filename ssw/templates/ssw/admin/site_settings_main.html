@@ -1,0 +1,49 @@
+{% extends "ssw/main.html" %}
+{% load static from staticfiles %}
+
+{% block title %}
+Site Settings
+{% endblock %}
+
+{% block content %}
+
+<section class="bg--secondary space--sm">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="boxed boxed--lg boxed--border">
+                    <h4>Site Settings</h4>
+                    <hr>
+                    <p style="color:red">
+                        For best results please make sure the water mark is 400 pixels wide<br>
+                        The percentages are out of 100. Example: 60,40. Not: 0.6, 0.4<br>
+                    </p>
+                    <form method="post" action="" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <div class="row">
+                            <div class="col-lg-3 col-md-4">
+                                <button type="submit" class="btn btn--primary type--uppercase">Save</button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <!--end of row-->
+    </div>
+    <!--end of container-->
+</section>
+
+{% endblock %}
+
+{% block js %}
+<script>
+    $(document).ready(function(){
+        $("#watermark-clear_id").next().remove()
+        $("#watermark-clear_id").remove()
+        wrapCheckbox("id_paypal_testing", "paypal_testing_checkbox_wrapper", "Paypal Testing")
+    })
+</script>
+{% endblock %}
