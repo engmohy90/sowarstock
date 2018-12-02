@@ -14,34 +14,37 @@ Featured Products
                             <div class="boxed boxed--lg boxed--border">
                                 <h4>Featured Products</h4>
                                 <hr>
-                                <form method="post" action="">
-                                    {% csrf_token %}
-                                    <div class="row">
-                                        {% for product in products %}
-                                            <div class="col-lg-4 col-6">
-                                                <a href="{% url 'product_public' product.public_id %}">
-                                                    <p>{{product}}</p>
-                                                    <img alt="Image" src="{{ product.thumbnail.url }}">
+                                {% if products %}
+                                    <form method="post" action="">
+                                        {% csrf_token %}
+                                        <div class="row">
+                                            {% for product in products %}
+                                                <div class="col-lg-4 col-6">
+                                                    <a href="{% url 'product_public' product.public_id %}">
+                                                        <p>{{product}}</p>
+                                                        <img alt="Image" src="{{ product.thumbnail.url }}">
 
-                                                </a>
-                                                <br>
-                                                <div class="input-checkbox input-checkbox--switch">
-                                                    <input  id="{{product.pk}}" type="checkbox" name="products" value="{{product.pk}}" {% if product.featured %}checked{% endif %} />
-                                                    <label for="{{product.pk}}"></label>
+                                                    </a>
+                                                    <br>
+                                                    <div class="input-checkbox input-checkbox--switch">
+                                                        <input  id="{{product.pk}}" type="checkbox" name="products" value="{{product.pk}}" {% if product.featured %}checked{% endif %} />
+                                                        <label for="{{product.pk}}"></label>
+                                                    </div>
                                                 </div>
+                                            {% endfor %}
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-4">
+                                                <button type="submit" class="btn btn--primary type--uppercase">Save</button>
                                             </div>
-                                        {% endfor %}
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-4">
-                                            <button type="submit" class="btn btn--primary type--uppercase">Save</button>
+                                            <div class="col-lg-3 col-md-4">
+                                                <a href="/admin/featured" class="btn btn--default type--uppercase">Cancel</a>
+                                            </div>
                                         </div>
-                                        <div class="col-lg-3 col-md-4">
-                                            <a href="/admin/featured" class="btn btn--default type--uppercase">Cancel</a>
-                                        </div>
-                                    </div>
-                                </form>
-
+                                    </form>
+                                {% else %}
+                                    There are currently no products to choose from.
+                                {% endif %}
                             </div>
                         </div>
                     </div>
