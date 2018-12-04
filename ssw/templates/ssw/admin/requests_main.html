@@ -33,31 +33,20 @@ Requests
                                                           <th>Status</th>
                                                           <th>Type</th>
                                                           <th>Message</th>
-                                                          <th></th>
                                                       </tr>
                                                       </thead>
                                                       <tbody>
                                                       {% for r in pending %}
                                                         <tr>
-                                                            <td><a href="{% url 'other_profile' r.owner %}">{{ r.owner }}</a></td>
+                                                            <td><a href="{% url 'requests_profile' r.pk %}">{{r.owner.first_name}} {{r.owner.last_name}}</a></td>
                                                             <td>{{ r.get_status_display }}</td>
                                                             <td>{{ r.get_type_display }}</td>
                                                             <td>
-                                                                {% if r.type == "id" %}
-                                                                    <a href="{{ r.body }}">Photo ID</a>
+                                                                {% if r.type == "new_contributor" %}
+                                                                    <p>New Contributor Account Request</p>
                                                                 {% else %}
                                                                     <p>{{r.body}}</p>
                                                                 {% endif %}
-                                                            </td>
-                                                            <td>
-                                                                <div class="row">
-                                                                    <div class="col-md-6">
-                                                                        <a href="{% url 'requests_approve' r.pk %}"><i class="fas fa-check-square fa-2x color--success"></i></a>
-                                                                    </div>
-                                                                    <div class="col-md-6">
-                                                                        <a href="{% url 'requests_reject' r.pk %}"><i class="fas fa-trash-alt fa-2x color--error"></i></a>
-                                                                    </div>
-                                                                </div>
                                                             </td>
                                                         </tr>
                                                       {% endfor %}

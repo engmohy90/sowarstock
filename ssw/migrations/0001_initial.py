@@ -185,7 +185,7 @@ class Migration(migrations.Migration):
                 ('profile_image', models.ImageField(blank=True, null=True, upload_to='profile_images/')),
             ],
             options={
-                'verbose_name': 'Sowar Stock User',
+                'verbose_name': 'Sowarstock User',
             },
             bases=('auth.user',),
             managers=[

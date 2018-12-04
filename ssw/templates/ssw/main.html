@@ -452,16 +452,6 @@
                     }
                 });
 
-                $.get( "/ajax/pending_sample_products_count/", function( data ) {
-                    var result = data.result
-                    if(result == "success"){
-                        var count = data.count
-                        if(count > 0){
-                            $("#sample_products_count").after('<span class="label label-danger" style="min-width:10px">'+count+'</span>')
-                        }
-                    }
-                });
-
                 {% if not activeDashboardMenu == "reviews" %}
                     $.get( "/ajax/pending_reviews_count/", function( data ) {
                         var result = data.result
@@ -486,15 +476,6 @@
                     }
                 });
 
-                $.get( "/ajax/pending_sample_products_count/", function( data ) {
-                    var result = data.result
-                    if(result == "success"){
-                        var count = data.count
-                        if(count > 0){
-                            $("#sample_products_count").after('<span class="label label-danger" style="min-width:10px">'+count+'</span>')
-                        }
-                    }
-                });
             {% endif %}
 
             {% if user.type == "client" %}

@@ -333,17 +333,31 @@ def requests_main(request):
 
 
 @login_required
+def requests_profile(request, pk):
+    user = getSowarStockUser(request.user)
+    if user.type == "admin":
+        r = get_object_or_404(models.UserRequest, pk=pk)
+        sample_products = models.SampleProduct.objects.filter(owner=r.owner)
+        return render(request, "ssw/admin/requests_profile.html", {"user": user, "r": r, "sample_products": sample_products,
+                                                                   "activeDashboardMenu": "requests",
+                                                                   **showCorrectMenu(request.user)})
+    else:
+        messages.error(request, "You are not authorized to view this page !")
+        return HttpResponseRedirect("/")
+
+
+@login_required
 def requests_approve(request, pk):
     user = getSowarStockUser(request.user)
     if user.type == "admin":
         r = get_object_or_404(models.UserRequest, pk=pk)
         r.status = "approved"
         r.save()
-        if r.type == "id":
+        if r.type == "new_contributor":
             r.owner.photo_id_verified = True
             r.owner.save()
             notify.send(request.user, recipient=r.owner, level="success",
-                        verb='Photo ID has been verified')
+                        verb='Your account has been verified')
         messages.success(request, "Request has been approved")
         return HttpResponseRedirect("/admin/requests")
     else:
@@ -358,11 +372,11 @@ def requests_reject(request, pk):
         r = get_object_or_404(models.UserRequest, pk=pk)
         r.status = "rejected"
         r.save()
-        if r.type == "id":
+        if r.type == "new_contributor":
             r.owner.photo_id = None
             r.owner.save()
             notify.send(request.user, recipient=r.owner, level="error",
-                        verb='Photo ID has been rejected')
+                        verb='You request to verify your account has been rejected')
         else:
             notify.send(request.user, recipient=r.owner, level="error",
                         verb='Your request to delete your account has been rejected')
@@ -702,34 +716,6 @@ def payment_new(request, pk):
         return render(request, "ssw/admin/payment_new.html", {"user": user, "earning": earning,
                                                                 "form": form,
                                                                 **showCorrectMenu(request.user)})
-    else:
-        messages.error(request, "You are not authorized to view this page !")
-        return HttpResponseRedirect("/")
-
-
-@login_required
-def sample_products_main(request):
-    user = getSowarStockUser(request.user)
-    if user.type == "admin":
-        new_sample_products = models.SampleProduct.objects.filter(viewed_by_admin=False)
-        viewed_sample_products = models.SampleProduct.objects.filter(viewed_by_admin=True)
-        return render(request, "ssw/admin/sample_products_main.html", {"user": user, "new_sample_products": new_sample_products,
-                                                                          "viewed_sample_products": viewed_sample_products,
-                                                                          "activeDashboardMenu": "sample_products",
-                                                                          **showCorrectMenu(request.user)})
-    else:
-        messages.error(request, "You are not authorized to view this page !")
-        return HttpResponseRedirect("/")
-
-
-@login_required
-def view_sample_product(request, pk):
-    user = getSowarStockUser(request.user)
-    if user.type == "admin":
-        sample_product = get_object_or_404(models.SampleProduct, pk=pk)
-        sample_product.viewed_by_admin = True
-        sample_product.save()
-        return HttpResponseRedirect("/admin/sample-products")
     else:
         messages.error(request, "You are not authorized to view this page !")
         return HttpResponseRedirect("/")

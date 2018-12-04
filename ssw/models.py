@@ -63,7 +63,7 @@ class SowarStockUser(User):
     profile_image = models.ImageField(upload_to='profile_images/', null=True, blank=True)
 
     class Meta:
-        verbose_name = "Sowar Stock User"
+        verbose_name = "Sowarstock User"
 
 
 class Contributor(SowarStockUser):
@@ -132,8 +132,6 @@ class SampleProduct(models.Model):
     image = models.ImageField(upload_to='sample-products/')
     thumbnail = models.ImageField(upload_to='sample-products/thumbnails/', null=True, blank=True)
     owner = models.ForeignKey(Contributor, on_delete=models.CASCADE)
-    viewed_by_reviewer = models.BooleanField(default=False)
-    viewed_by_admin = models.BooleanField(default=False)
 
 
 class Product(models.Model):
@@ -284,7 +282,7 @@ class FaqPersonal(models.Model):
 
 
 class UserRequest(models.Model):
-    TYPE_OPTIONS = (("id", "ID"), ("delete", "Delete Account"))
+    TYPE_OPTIONS = (("new_contributor", "New Contributor"), ("delete_account", "Delete Account"))
     STATUS_OPTIONS = (("pending_approval", "Pending Approval"), ("approved", "Approved"), ("rejected", "Rejected"))
     body = models.TextField()
     status = models.CharField(max_length=255, choices=STATUS_OPTIONS, default="pending_approval")

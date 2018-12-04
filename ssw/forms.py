@@ -87,7 +87,9 @@ class ProductForm(ModelForm):
                   "standard_price", "extended_price"]
         labels = {
             'standard_price': _('Standard Price ($)'),
-            'extended_price': _('Extended Price ($)')
+            'extended_price': _('Extended Price ($)'),
+            'file': _('Original EPS File'),
+            'eps_image': _('Thumbnail in JPEG format')
         }
 
     def __init__(self, *args, **kwargs):

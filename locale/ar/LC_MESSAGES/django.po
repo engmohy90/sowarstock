@@ -52,7 +52,7 @@ msgid "About"
 msgstr "من نحن"
 
 #: ssw/templates/ssw/about.html:16
-msgid "Hi, We're Sowar Stock"
+msgid "Hi, We're Sowarstock"
 msgstr "مرحبا، نحن صور ستوك"
 
 #: ssw/templates/ssw/about.html:18
@@ -131,7 +131,7 @@ msgid "Send Enquiry"
 msgstr "ارسل إستفسارك"
 
 #: ssw/templates/ssw/landing.html:5
-msgid "Sowar Stock"
+msgid "Sowarstock"
 msgstr "صور ستوك"
 
 #: ssw/templates/ssw/landing.html:43
@@ -443,7 +443,7 @@ msgid "Sign Up"
 msgstr "إنشاء حساب"
 
 #: ssw/templates/ssw/signup.html:18
-msgid "Create a Sowar Stock account"
+msgid "Create a Sowarstock account"
 msgstr "إنشاء حساب صور ستوك"
 
 #: ssw/templates/ssw/signup.html:19

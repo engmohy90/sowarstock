@@ -127,18 +127,3 @@ def reviews_undread_to_read(request):
             review.save()
     return JsonResponse({"result": "success"})
 
-
-@login_required
-def pending_sample_products_count(request):
-    if request.user.is_authenticated:
-        user = getSowarStockUser(request.user)
-        if user.type == "image_reviewer":
-            count = models.SampleProduct.objects.filter(viewed_by_reviewer=False).count()
-            return JsonResponse({"result": "success", "count": count})
-        elif user.type == "admin":
-            count = models.SampleProduct.objects.filter(viewed_by_admin=False).count()
-            return JsonResponse({"result": "success", "count": count})
-        else:
-            return JsonResponse({"result": "error", "msg": "no reviewer or admin"})
-    else:
-        return JsonResponse({"result": "error", "msg": "no user"})

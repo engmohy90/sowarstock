@@ -65,7 +65,7 @@ def show_me_the_money(sender, **kwargs):
             shopping_item.save()
 
         email_body = loader.render_to_string("ssw/email_order_is_ready.html", {"user": user, "order": order})
-        send_mail("طلبك جاهز", "", "Sowar Stock", [user.email], False,
+        send_mail("طلبك جاهز", "", "Sowarstock", [user.email], False,
                   None, None, None, email_body)
 
     else:

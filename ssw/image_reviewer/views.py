@@ -68,29 +68,3 @@ def product_reject(request, pk):
         messages.error(request, "You are not authorized to view this page !")
         return HttpResponseRedirect("/")
 
-
-@login_required
-def sample_products_main(request):
-    user = getSowarStockUser(request.user)
-    if user.type == "image_reviewer":
-        new_sample_products = models.SampleProduct.objects.filter(viewed_by_reviewer=False)
-        viewed_sample_products = models.SampleProduct.objects.filter(viewed_by_reviewer=True)
-        return render(request, "ssw/reviewer/sample_products_main.html", {"user": user, "new_sample_products": new_sample_products,
-                                                                          "viewed_sample_products": viewed_sample_products,
-                                                                          "activeDashboardMenu": "sample_products",
-                                                                          **showCorrectMenu(request.user)})
-    else:
-        messages.error(request, "You are not authorized to view this page !")
-        return HttpResponseRedirect("/")
-
-@login_required
-def view_sample_product(request, pk):
-    user = getSowarStockUser(request.user)
-    if user.type == "image_reviewer":
-        sample_product = get_object_or_404(models.SampleProduct, pk=pk)
-        sample_product.viewed_by_reviewer = True
-        sample_product.save()
-        return HttpResponseRedirect("/reviewer/sample-products")
-    else:
-        messages.error(request, "You are not authorized to view this page !")
-        return HttpResponseRedirect("/")
