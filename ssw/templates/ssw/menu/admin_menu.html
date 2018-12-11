@@ -1,4 +1,4 @@
-
+{% load notifications_tags %}
 <nav id="menu3" class="bar bar--sm bar-1 bg--secondary ">
                 <div class="container" style="max-width:90%">
                     <div class="row">
@@ -256,6 +256,10 @@
                                                     <i class="far fa-bell fa-2x"></i>
                                                     <p>
                                                         Notifications
+                                                        {% notifications_unread as unread_count %}
+                                                        {% if unread_count %}
+                                                        <span id="notifications_count" class="label label-danger" style="min-width:10px">{{ unread_count }}</span>
+                                                        {% endif %}
                                                     </p>
                                                 </center>
                                             </a>

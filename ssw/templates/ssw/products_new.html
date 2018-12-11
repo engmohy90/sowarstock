@@ -62,10 +62,12 @@ New Product
                                 {{form.category}}
                                 {{form.category.errors}}
                                 <br>
-                                {{form.subcategory.label_tag}}
-                                {{form.subcategory}}
-                                {{form.subcategory.errors}}
-                                <br><br>
+                                <div id="subcategory_field_wrapper">
+                                    {{form.subcategory.label_tag}}
+                                    {{form.subcategory}}
+                                    {{form.subcategory.errors}}
+                                    <br><br>
+                                </div>
                                 {{form.adult_content.errors}}
                                 <div id="adult_content_checkbox_wrapper" class="input-checkbox input-checkbox--switch">
                                     <input type="checkbox" name="adult_content" id="id_adult_content">
@@ -124,6 +126,29 @@ New Product
                                             <div class="modal-content">
                                                 <div class="boxed boxed--lg">
                                                     <h2>Released</h2>
+                                                    <hr class="short">
+                                                    <p class="lead">A document stipulating conditions under which the Contributor may lawfully use photographs of another person or property for commercial and other purposes.</p>
+                                                    <p class="lead">For more, please read <a href="{% url 'legal_contributor' %}" target="_blank">The Contributor Agreement</a></p>
+                                                </div>
+                                                <div class="modal-close modal-close-cross"></div>
+                                            </div>
+                                        </div>
+                                    </div><!--end of modal instance-->
+                                </span>
+                                <br><br>
+                                {{form.editorial.errors}}
+                                <div id="editorial_checkbox_wrapper" class="input-checkbox input-checkbox--switch">
+                                    <input type="checkbox" name="editorial" id="id_editorial">
+                                    <label for="id_editorial"></label>
+                                </div>
+                                <span>
+                                    Editorial
+                                    <div class="modal-instance">
+                                        <a href="#" class="modal-trigger color--primary"><i class="far fa-question-circle"></i></a>
+                                        <div class="modal-container">
+                                            <div class="modal-content">
+                                                <div class="boxed boxed--lg">
+                                                    <h2>Editorial</h2>
                                                     <hr class="short">
                                                     <p class="lead">A document stipulating conditions under which the Contributor may lawfully use photographs of another person or property for commercial and other purposes.</p>
                                                     <p class="lead">For more, please read <a href="{% url 'legal_contributor' %}" target="_blank">The Contributor Agreement</a></p>
@@ -289,6 +314,12 @@ New Product
 
         $("#id_category").change(function(){
             var categoryId = $(this).val()
+
+            if(categoryId==3){
+                $("#subcategory_field_wrapper").addClass("hidden")
+            }else{
+                $("#subcategory_field_wrapper").removeClass("hidden")
+            }
 
             $.ajax({
                 url: "/ajax/load_subcategories",

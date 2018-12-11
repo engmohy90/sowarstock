@@ -24,10 +24,12 @@ Request
                             <hr>
                             <h4>
                                 {{r.owner.first_name}} {{r.owner.last_name}}
-                                <span class="pull-right">
-                                    <a href="{% url 'requests_approve' r.pk %}" class="btn btn-success btn--sm">Approve</a>
-                                    <a href="{% url 'requests_reject' r.pk %}" class="btn btn-danger btn--sm">Reject</a>
-                                </span>
+                                {% if r.status == "pending_approval" %}
+                                    <span class="pull-right">
+                                        <a href="{% url 'requests_approve' r.pk %}" class="btn btn-success btn--sm">Approve</a>
+                                        <a href="{% url 'requests_reject' r.pk %}" class="btn btn-danger btn--sm">Reject</a>
+                                    </span>
+                                {% endif %}
                             </h4>
                             <div class="tabs-container" data-content-align="left">
                                 <ul class="tabs">

@@ -6,365 +6,252 @@
 {% endblock %}
 
 {% block content %}
-<section class="unpad">
-    <div class="container" style="max-width:100%">
-        <div class="row">
-            <div class="col">
-                <!--
-                {% if slider_images %}
-                    <div class="slider" data-flickity='{ "autoPlay": true }'>
+<div class="main-container">
+            <section class="page-navigator">
+                <ul>
+                    <li>
+                        <a href="#home" class="inner-link" data-title="Home"></a>
+                    </li>
+                    <li>
+                        <a href="#about" class="inner-link inner-link--active" data-title="About"></a>
+                    </li>
+                    <li>
+                        <a href="#industries" class="inner-link" data-title="Industries"></a>
+                    </li>
+                    <li>
+                        <a href="#showreel" class="inner-link" data-title="Showreel"></a>
+                    </li>
+                    <li>
+                        <a href="#contact" class="inner-link" data-title="Contact"></a>
+                    </li>
+                </ul>
+            </section>
+            <section id="home" class="imagebg parallax height-100 text-center" data-overlay="1">
+                <div class="background-image-holder" style="transform: translate3d(0px, 499px, 0px); background: url(&quot;img/drone-1.jpg&quot;); opacity: 1;">
+                    <img alt="background" src="{% static 'ssw/img/drone-1.jpg' %}">
+                </div>
+                <div class="container pos-vertical-center">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-7">
+                            <img alt="Image" src="{% static 'ssw/img/headline-4.png' %}">
+                            <p class="lead">
+                                High-quality drone photography and videography shot by
+                                <br class="hidden-xs hidden-sm"> professionals at your location.
+                            </p>
+                            <a class="btn btn--primary type--uppercase" href="#">
+                                <span class="btn__text">
+                                    Book A Consultation
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                    <!--end of row-->
+                </div>
+                <!--end of container-->
+            </section>
+            <section id="about" class="switchable parallax imagebg height-100">
+                <div class="background-image-holder" style="transform: translate3d(0px, 358.484px, 0px); background: url(&quot;img/drone-2.jpg&quot;); opacity: 1;">
+                    <img alt="background" src="{% static 'ssw/img/drone-2.jpg' %}">
+                </div>
+                <div class="container pos-vertical-center">
+                    <div class="row">
+                        <div class="col-md-7">
+                        </div>
+                        <div class="col-md-5 col-lg-4">
+                            <div class="switchable__text">
+                                <h2>A New Perspective</h2>
+                                <p class="lead">
+                                    Elevate the production of your next advertisement, trailer or real estate listing with professionally captured and edited ariel footage — Simply describe your concept and let our skilled team get the perfect shot.
+                                </p>
+                                <hr class="short">
+                                <p>
+                                    Stack is a CASA registered organisation. All staff are highly trained in safely piloting aircraft in all conditions.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end of row-->
+                </div>
+                <!--end of container-->
+            </section>
+            <section class="height-100 imagebg parallax" data-overlay="3" id="industries">
+                <div class="background-image-holder" style="transform: translate3d(0px, 78.4844px, 0px); background: url(&quot;img/drone-3.jpg&quot;); opacity: 1;">
+                    <img alt="background" src="{% static 'ssw/img/drone-3.jpg' %}">
+                </div>
+                <div class="container pos-vertical-center">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="feature feature-3 boxed boxed--lg boxed--border text-center">
+                                <i class="icon icon--lg icon-Compass-Rose"></i>
+                                <h4>Building &amp; Real Estate</h4>
+                                <p>
+                                    From private residential home listings to construction timelapses — Stack has extensive experience delivering highly-quality property films.
+                                </p>
+                                <a href="#">
+                                    Learn More
+                                </a>
+                            </div>
+                            <!--end feature-->
+                        </div>
+                        <div class="col-md-4">
+                            <div class="feature feature-3 boxed boxed--lg boxed--border text-center">
+                                <i class="icon icon--lg icon-Air-Balloon"></i>
+                                <h4>Tourism Trailers</h4>
+                                <p>
+                                    Delight potential customers with a thrilling glimpse of your outdoor adventure experience. We go where no 'go-pro' could ever hope to go, yo.
+                                </p>
+                                <a href="#">
+                                    Learn More
+                                </a>
+                            </div>
+                            <!--end feature-->
+                        </div>
+                        <div class="col-md-4">
+                            <div class="feature feature-3 boxed boxed--lg boxed--border text-center">
+                                <i class="icon icon--lg icon-Sport-Mode"></i>
+                                <h4>Sports Events</h4>
+                                <p>
+                                    Rally your fans and relive the glory from a whole new perspective - Our sporting event films champion the highest quality production values around.
+                                </p>
+                                <a href="#">
+                                    Learn More
+                                </a>
+                            </div>
+                            <!--end feature-->
+                        </div>
+                    </div>
+                    <!--end of row-->
+                </div>
+                <!--end of container-->
+            </section>
+            <section id="showreel" class="cover height-100 text-center imagebg parallax" data-overlay="1">
+                <div class="background-image-holder" style="transform: translate3d(0px, 11.7344px, 0px); background: url(&quot;img/drone-4.jpg&quot;); opacity: 1;">
+                    <img alt="background" src="{% static 'ssw/img/drone-4.jpg' %}">
+                </div>
+                <div class="container pos-vertical-center">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1>Take to the skies.</h1>
+                            <div class="modal-instance block">
+                                <div class="video-play-icon modal-trigger" data-modal-index="0"></div>
 
-                        {% for image in slider_images %}
-                            <div><img alt="Image" style="max-width:none" src="{{image.image.url}}"></div>
-                        {% endfor %}
+                                <!--end of modal-container-->
+                            </div>
+                            <!--end of modal instance-->
+                        </div>
                     </div>
-                {% else %}
-                    <div class="slider" data-flickity='{ "autoPlay": true }'>
-                        <div><img alt="Image" style="max-width:none" src="{% static 'ssw/img/work-1.jpg'%}"></div>
-                        <div><img alt="Image" style="max-width:none" src="{% static 'ssw/img/work-2.jpg'%}"></div>
-                        <div><img alt="Image" style="max-width:none" src="{% static 'ssw/img/work-3.jpg'%}"></div>
-                        <div><img alt="Image" style="max-width:none" src="{% static 'ssw/img/work-4.jpg'%}"></div>
-                        <div><img alt="Image" style="max-width:none" src="{% static 'ssw/img/work-5.jpg'%}"></div>
-                        <div><img alt="Image" style="max-width:none" src="{% static 'ssw/img/work-6.jpg'%}"></div>
-                    </div>
-                {% endif %}
-                -->
-                <div class="slider" data-flickity='{ "autoPlay": true }'>
-                    <div><img alt="Image" style="max-width:none" src="{% static 'ssw/img/work-1.jpg'%}"></div>
-                    <div><img alt="Image" style="max-width:none" src="{% static 'ssw/img/work-2.jpg'%}"></div>
-                    <div><img alt="Image" style="max-width:none" src="{% static 'ssw/img/work-3.jpg'%}"></div>
-                    <div><img alt="Image" style="max-width:none" src="{% static 'ssw/img/work-4.jpg'%}"></div>
-                    <div><img alt="Image" style="max-width:none" src="{% static 'ssw/img/work-5.jpg'%}"></div>
-                    <div><img alt="Image" style="max-width:none" src="{% static 'ssw/img/work-6.jpg'%}"></div>
+                    <!--end of row-->
                 </div>
-            </div>
-            <!--end of col-->
-        </div>
-        <!--end row-->
-    </div>
-    <!--end of container-->
-</section>
-<section class="bg--secondary">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="feature">
-                    <i class="far fa-images fa-3x"></i>
-                    <h4>{% trans "Exclusive Collections"%}</h4>
-                    <p>
-                        {% trans "Wide range of unique images"%}
-                    </p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="feature">
-                    <i class="fas fa-file-contract fa-3x"></i>
-                    <h4>{% trans "Flexible Licensing"%}</h4>
-                    <p>
-                        {% trans "Plans suit any budget"%}
-                    </p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="feature">
-                    <i class="far fa-images fa-3x"></i>
-                    <h4>{% trans "Middle East Images"%}</h4>
-                    <p>
-                        {% trans "Middle Eastern-themed stock"%}
-                    </p>
-                </div>
-            </div>
-        </div>
-        <!--end of row-->
-    </div>
-    <!--end of container-->
-</section>
-<section class="unpad">
-    <div class="masonry masonry--gapless">
-        <div class="masonry__container masonry--active" style="position: relative; height: 956px;">
-            <div class="masonry__item col-lg-4 col-md-6 col-12 filter-digital" data-masonry-filter="Digital" style="position: absolute; left: 0px; top: 0px;">
-                <div class="project-thumb hover-element height-50">
-                    <a href="#">
-                        <div class="hover-element__initial">
-                            <div class="background-image-holder" style="background: url(&quot;img/work-6.jpg&quot;); opacity: 1;">
-                                <img alt="background" src="{% static 'ssw/img/work-6.jpg'%}">
-                            </div>
-                        </div>
-                        <div class="hover-element__reveal" data-overlay="9">
-                            <div class="project-thumb__title">
-                                <h5>Nike Active</h5>
-                                <span>Digital Marketing</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <!--end item-->
-            <div class="masonry__item col-lg-8 col-md-6 col-12 filter-digital" data-masonry-filter="Digital" style="position: absolute; left: 542px; top: 0px;">
-                <div class="project-thumb hover-element height-50">
-                    <a href="#">
-                        <div class="hover-element__initial">
-                            <div class="background-image-holder" style="background: url(&quot;img/work-1.jpg&quot;); opacity: 1;">
-                                <img alt="background" src="{% static 'ssw/img/work-1.jpg'%}">
-                            </div>
-                        </div>
-                        <div class="hover-element__reveal" data-overlay="9">
-                            <div class="project-thumb__title">
-                                <h5>Unvest Capital</h5>
-                                <span>Brand Collateral</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <!--end item-->
-            <div class="masonry__item col-lg-8 col-md-6 col-12 filter-digital" data-masonry-filter="Digital" style="position: absolute; left: 0px; top: 478px;">
-                <div class="project-thumb hover-element height-50">
-                    <a href="#">
-                        <div class="hover-element__initial">
-                            <div class="background-image-holder" style="background: url(&quot;img/work-5.jpg&quot;); opacity: 1;">
-                                <img alt="background" src="{% static 'ssw/img/work-5.jpg'%}">
-                            </div>
-                        </div>
-                        <div class="hover-element__reveal" data-overlay="9">
-                            <div class="project-thumb__title">
-                                <h5>Nuaca</h5>
-                                <span>Digital Design &amp; Strategy</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <!--end item-->
-            <div class="masonry__item col-lg-4 col-md-6 col-12 filter-digital" data-masonry-filter="Digital" style="position: absolute; left: 1084px; top: 478px;">
-                <div class="project-thumb hover-element height-50">
-                    <a href="#">
-                        <div class="hover-element__initial">
-                            <div class="background-image-holder" style="background: url(&quot;img/work-4.jpg&quot;); opacity: 1;">
-                                <img alt="background" src="{% static 'ssw/img/work-4.jpg'%}">
-                            </div>
-                        </div>
-                        <div class="hover-element__reveal" data-overlay="9">
-                            <div class="project-thumb__title">
-                                <h5>Grove Interiors</h5>
-                                <span>Digital Design &amp; Strategy</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <!--end item-->
-        </div>
-        <!--end of masonry container-->
-    </div>
-    <!--end masonry-->
-</section>
-<section style="padding:5em; padding-bottom:0em">
-    <div>
-        <center>
-            <h4>
-                {% trans "New Arrivals"%}
-            </h4>
-        </center>
+                <!--end of container-->
+            </section>
+            <section style="padding-top:0">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="slider slider--inline-arrows" data-arrows="true" data-children="3">
+                                <ul class="slides flickity-enabled is-draggable" tabindex="0">
 
-        <div class="masonry__container row">
-            <div class="col-md-3 masonry__item">
-                <a href="#" class="block">
-                    <div class="feature feature-1 boxed boxed--border">
-                        <h6 class="type--uppercase color--primary">{% trans "Catergory"%}</h6>
-                        <img src="{% static 'ssw/img/work-4.jpg'%}">
-                        <center>
-                            <p>
-                                {% trans "Name"%}
-                            </p>
-                        </center>
 
-                    </div>
-                    <!--end feature-->
-                </a>
-            </div>
-            <div class="col-md-3 masonry__item">
-                <a href="#" class="block">
-                    <div class="feature feature-1 boxed boxed--border">
-                        <h6 class="type--uppercase color--primary">{% trans "Catergory"%}</h6>
-                        <img src="{% static 'ssw/img/work-5.jpg'%}">
-                        <center>
-                            <p>
-                                {% trans "Name"%}
-                            </p>
-                        </center>
-                    </div>
-                    <!--end feature-->
-                </a>
-            </div>
-            <div class="col-md-3 masonry__item">
-                <a href="#" class="block">
-                    <div class="feature feature-1 boxed boxed--border">
-                        <h6 class="type--uppercase color--primary">{% trans "Catergory"%}</h6>
-                        <img src="{% static 'ssw/img/work-6.jpg'%}">
-                        <center>
-                            <p>
-                                {% trans "Name"%}
-                            </p>
-                        </center>
-                    </div>
-                    <!--end feature-->
-                </a>
-            </div>
-            <div class="col-md-3 masonry__item">
-                <a href="#" class="block">
-                    <div class="feature feature-1 boxed boxed--border">
-                        <h6 class="type--uppercase color--primary">{% trans "Catergory"%}</h6>
-                        <img src="{% static 'ssw/img/work-2.jpg'%}">
-                        <center>
-                            <p>
-                                {% trans "Name"%}
-                            </p>
-                        </center>
-                    </div>
-                    <!--end feature-->
-                </a>
-            </div>
-        </div>
-        <!--end of row-->
-    </div>
-</section>
-<section class="bg--secondary" style="padding:5em">
-    <div>
-        <center>
-            <h4>
-               {% trans "Our Contributors"%}
-            </h4>
-        </center>
-        <div class="masonry__container row">
-            <div class="col-md-3 masonry__item">
-                <a href="#" class="block">
-                    <div class="feature feature-1 boxed boxed--border">
-                        <center>
-                            <img src="{% static 'ssw/img/default-avatar.png'%}">
-                            <h5>
-                                <b>Allen</b>
-                            </h5>
-                            <p>{% trans "Photographer"%}</p>
-                        </center>
-                    </div>
-                    <!--end feature-->
-                </a>
-            </div>
-            <div class="col-md-3 masonry__item">
-                <a href="#" class="block">
-                    <div class="feature feature-1 boxed boxed--border">
-                        <center>
-                            <img src="{% static 'ssw/img/default-avatar.png'%}">
-                            <h5>
-                                <b>Gilly</b>
-                            </h5>
-                            <p>{% trans "Photographer"%}</p>
-                        </center>
-                    </div>
-                    <!--end feature-->
-                </a>
-            </div>
-            <div class="col-md-3 masonry__item">
-                <a href="#" class="block">
-                    <div class="feature feature-1 boxed boxed--border">
-                        <center>
-                            <img src="{% static 'ssw/img/default-avatar.png'%}">
-                            <h5>
-                                <b>Jeff</b>
-                            </h5>
-                            <p>{% trans "Photographer"%}</p>
-                        </center>
-                    </div>
-                    <!--end feature-->
-                </a>
-            </div>
-            <div class="col-md-3 masonry__item">
-                <a href="#" class="block">
-                    <div class="feature feature-1 boxed boxed--border">
-                        <center>
-                            <img src="{% static 'ssw/img/default-avatar.png'%}">
-                            <h5>
-                                <b>Lew</b>
-                            </h5>
-                            <p>{% trans "Photographer"%}</p>
-                        </center>
-                    </div>
-                    <!--end feature-->
-                </a>
-            </div>
-        </div>
-        <!--end of row-->
-    </div>
-</section>
-<section style="padding:5em; padding-bottom:0em">
-    <div>
-        <center>
-            <h4>
-                {% trans "Featured Products"%}
-            </h4>
-        </center>
 
-        <div class="masonry__container row">
-            <div class="col-md-3 masonry__item">
-                <a href="#" class="block">
-                    <div class="feature feature-1 boxed boxed--border">
-                        <h6 class="type--uppercase color--primary">{% trans "Catergory"%}</h6>
-                        <img src="{% static 'ssw/img/work-4.jpg'%}">
-                        <center>
-                            <p>
-                                {% trans "Name"%}
-                            </p>
-                        </center>
-
+                                <div class="flickity-viewport" style="height: 189px;"><div class="flickity-slider" style="left: 0px; transform: translate3d(-37.52%, 0px, 0px);"><li class="slide" style="position: absolute; left: 0%;">
+                                        <div class="testimonial row justify-content-center">
+                                            <div class="col-lg-2 col-md-4 col-6 text-center">
+                                                <img class="testimonial__image" alt="Image" src="{% static 'ssw/img/avatar-round-1.png' %}">
+                                            </div>
+                                            <div class="col-lg-7 col-md-8 col-12">
+                                                <span class="h3">“We’ve been using Stack to prototype designs quickly and efficiently. Needless to say we’re hugely impressed by the style and value.”
+                                                </span>
+                                                <h5>Maguerite Holland</h5>
+                                                <span>Interface Designer — Yoke</span>
+                                            </div>
+                                        </div>
+                                    </li><li class="slide is-selected" style="position: absolute; left: 100%;">
+                                        <div class="testimonial row justify-content-center">
+                                            <div class="col-lg-2 col-md-4 col-6 text-center">
+                                                <img class="testimonial__image" alt="Image" src="{% static 'ssw/img/avatar-round-4.png' %}">
+                                            </div>
+                                            <div class="col-lg-7 col-md-8 col-12">
+                                                <span class="h3">“I've been using Medium Rare's templates for a couple of years now and Stack is without a doubt their best work yet. It's fast, performant and absolutely stunning.”
+                                                </span>
+                                                <h5>Lucas Nguyen</h5>
+                                                <span>Freelance Designer</span>
+                                            </div>
+                                        </div>
+                                    </li><li class="slide" style="position: absolute; left: 200%;">
+                                        <div class="testimonial row justify-content-center">
+                                            <div class="col-lg-2 col-md-4 col-6 text-center">
+                                                <img class="testimonial__image" alt="Image" src="{% static 'ssw/img/avatar-round-3.png' %}">
+                                            </div>
+                                            <div class="col-lg-7 col-md-8 col-12">
+                                                <span class="h3">“Variant has been a massive plus for my workflow — I can now get live mockups out in a matter of hours, my clients really love it.”
+                                                </span>
+                                                <h5>Rob Vasquez</h5>
+                                                <span>Interface Designer — Yoke</span>
+                                            </div>
+                                        </div>
+                                    </li></div></div><button class="flickity-prev-next-button previous" type="button" aria-label="previous"><svg viewBox="0 0 100 100"><path d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z" class="arrow"></path></svg></button><button class="flickity-prev-next-button next" type="button" aria-label="next"><svg viewBox="0 0 100 100"><path d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z" class="arrow" transform="translate(100, 100) rotate(180) "></path></svg></button></ul>
+                            </div>
+                        </div>
                     </div>
-                    <!--end feature-->
-                </a>
-            </div>
-            <div class="col-md-3 masonry__item">
-                <a href="#" class="block">
-                    <div class="feature feature-1 boxed boxed--border">
-                        <h6 class="type--uppercase color--primary">{% trans "Catergory"%}</h6>
-                        <img src="{% static 'ssw/img/work-5.jpg'%}">
-                        <center>
-                            <p>
-                                {% trans "Name"%}
-                            </p>
-                        </center>
+                    <!--end of row-->
+                </div>
+                <!--end of container-->
+            </section>
+            <section class=" ">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="feature feature-4 boxed boxed--lg boxed--border">
+                                <i class="icon icon-Hand-Touch"></i>
+                                <h4>Interactive Elements</h4>
+                                <hr>
+                                <p>
+                                    With rich modal and notification functionality and a robust suite of options, Stack makes building feature-heavy pages simple and enjoyable.
+                                </p>
+                                <a class="btn btn--primary" href="#">
+                                    <span class="btn__text">
+                                        Learn More
+                                    </span>
+                                </a>
+                            </div>
+                            <!--end feature-->
+                        </div>
+                        <div class="col-md-4">
+                            <div class="feature feature-4 boxed boxed--lg boxed--border">
+                                <i class="icon icon-Hour"></i>
+                                <h4>Save Development Time</h4>
+                                <hr>
+                                <p>
+                                    Drastically reduce the time it takes to move from initial concept to production-ready with Stack and Variant Page Builder. Your clients will love you for it!
+                                </p>
+                                <a class="btn btn--primary" href="#">
+                                    <span class="btn__text">
+                                        Learn More
+                                    </span>
+                                </a>
+                            </div>
+                            <!--end feature-->
+                        </div>
+                        <div class="col-md-4">
+                            <div class="feature feature-4 boxed boxed--lg boxed--border">
+                                <i class="icon icon-Life-Safer"></i>
+                                <h4>Friendly Support</h4>
+                                <hr>
+                                <p>
+                                    Our customers love the comfort that comes with six-months free support. Our dedicated support forum makes interacting with us hassle-free and efficient.
+                                </p>
+                                <a class="btn btn--primary" href="#">
+                                    <span class="btn__text">
+                                        Learn More
+                                    </span>
+                                </a>
+                            </div>
+                            <!--end feature-->
+                        </div>
                     </div>
-                    <!--end feature-->
-                </a>
-            </div>
-            <div class="col-md-3 masonry__item">
-                <a href="#" class="block">
-                    <div class="feature feature-1 boxed boxed--border">
-                        <h6 class="type--uppercase color--primary">{% trans "Catergory"%}</h6>
-                        <img src="{% static 'ssw/img/work-6.jpg'%}">
-                        <center>
-                            <p>
-                                {% trans "Name"%}
-                            </p>
-                        </center>
-                    </div>
-                    <!--end feature-->
-                </a>
-            </div>
-            <div class="col-md-3 masonry__item">
-                <a href="#" class="block">
-                    <div class="feature feature-1 boxed boxed--border">
-                        <h6 class="type--uppercase color--primary">{% trans "Catergory"%}</h6>
-                        <img src="{% static 'ssw/img/work-2.jpg'%}">
-                        <center>
-                            <p>
-                                {% trans "Name"%}
-                            </p>
-                        </center>
-                    </div>
-                    <!--end feature-->
-                </a>
-            </div>
+                    <!--end of row-->
+                </div>
+                <!--end of container-->
+            </section>
         </div>
-        <!--end of row-->
-    </div>
-</section>
 {% endblock %}

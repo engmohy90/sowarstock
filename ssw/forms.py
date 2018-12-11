@@ -58,7 +58,8 @@ class PhotoIdForm(ModelForm):
 class PaymentMethodForm(ModelForm):
     class Meta:
         model = models.Contributor
-        fields = ["preferred_payment_method", "iban", "bank_country", "western_union_account", "paypal_account"]
+        fields = ["preferred_payment_method", "bank_owner_name", "iban", "bank_name", "bank_country",
+                  "western_union_account", "residency_country", "paypal_account"]
         labels = {
             'iban': _('IBAN')
         }
@@ -83,7 +84,7 @@ class ProductForm(ModelForm):
     class Meta:
         model = models.Product
         fields = ["title", "file_type", "image", "file", "eps_image", "description", "keywords", "category",
-                  "subcategory", "adult_content","exclusive", "released", "price_type",
+                  "subcategory", "adult_content", "exclusive", "released", "editorial", "price_type",
                   "standard_price", "extended_price"]
         labels = {
             'standard_price': _('Standard Price ($)'),

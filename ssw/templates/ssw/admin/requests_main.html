@@ -77,14 +77,14 @@ Requests
                                                       <tbody>
                                                       {% for r in approved %}
                                                         <tr>
-                                                            <td><a href="#">{{ r.owner }}</a></td>
+                                                            <td><a href="{% url 'requests_profile' r.pk %}">{{r.owner.first_name}} {{r.owner.last_name}}</a></td>
                                                             <td>{{ r.get_status_display }}</td>
                                                             <td>{{ r.get_type_display }}</td>
                                                             <td>
-                                                                {% if r.type == "id" %}
-                                                                    <a href="{{ r.body }}">Photo Id</a>
+                                                                {% if r.type == "new_contributor" %}
+                                                                    <p>New Contributor Account Request</p>
                                                                 {% else %}
-                                                                    <p>{{ r.body }}</p>
+                                                                    <p>{{r.body}}</p>
                                                                 {% endif %}
                                                             </td>
                                                         </tr>
@@ -116,14 +116,14 @@ Requests
                                                       <tbody>
                                                       {% for r in rejected %}
                                                         <tr>
-                                                            <td><a href="#">{{ r.owner }}</a></td>
+                                                            <td><a href="{% url 'requests_profile' r.pk %}">{{r.owner.first_name}} {{r.owner.last_name}}</a></td>
                                                             <td>{{ r.get_status_display }}</td>
                                                             <td>{{ r.get_type_display }}</td>
                                                             <td>
-                                                                {% if r.type == "id" %}
-                                                                    <a href="{{ r.body }}">Photo Id</a>
+                                                                {% if r.type == "new_contributor" %}
+                                                                    <p>New Contributor Account Request</p>
                                                                 {% else %}
-                                                                    <p>{{ r.body }}</p>
+                                                                    <p>{{r.body}}</p>
                                                                 {% endif %}
                                                             </td>
                                                         </tr>

@@ -11,13 +11,8 @@
             <div class="col-md-7 col-lg-6">
                 <ol class="breadcrumbs">
                     <li>
-                        {% if product.is_photo %}
-                            <a href="{% url 'photos_main' %}">Photos</a>
-                        {% elif product.is_vector %}
-                            <a href="{% url 'vectors_main' %}">Vectors and Paintings</a>
-                        {% elif product.is_calligraphy %}
-                            <a href="{% url 'calligraphy_main' %}">Calligraphy</a>
-                        {% endif %}
+
+                        <a href="{{back_url}}">{{back_section}}</a>
                     </li>
                     <li>{{product.public_id}}</li>
                 </ol>

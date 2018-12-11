@@ -31,10 +31,18 @@ def product_approve(request, pk):
     user = getSowarStockUser(request.user)
     if user.type == "image_reviewer":
         product = get_object_or_404(models.Product, pk=pk)
-        product.status = "pending_admin_approval"
+        product.status = "approved"
         product.reviewed_by = user
         product.save()
-        messages.success(request, "Product has been approved by you and now waiting admin approval")
+        email_body = loader.render_to_string("ssw/email_product_accept.html", {"product": product})
+        send_mail("قبول عملك {}".format(product.public_id), "", "Sowarstock", [product.owner.email], False,
+                  None, None, None, email_body)
+        notify.send(user, recipient=product.owner, level="success",
+                    verb='Product {} has been approved'.format(product.public_id))
+        admin = models.SowarStockUser.objects.get(type="admin")
+        notify.send(request.user, recipient=admin, level="success",
+                    verb='Product {} has been approved by {}'.format(product.public_id, user))
+        messages.success(request, "Product has been approved")
         return HttpResponseRedirect("/reviewer/products")
     else:
         messages.error(request, "You are not authorized to view this page !")
@@ -58,9 +66,14 @@ def product_reject(request, pk):
             send_mail("رفض عملك {}".format(product.public_id), "", "Sowarstock", [product.owner.email], False,
                       None, None, None, email_body)
             notify.send(request.user, recipient=product.owner, level="error",
-                        verb='Product {} has been rejected for the following reason: {}, {}'.format(product.public_id,
-                                                                                                    rejection_reason,
-                                                                                                    rejection_note))
+                        verb='Product {} has been rejected for the following reason: {}, {}'.format(
+                            product.public_id,
+                            product.get_rejection_reason_display(),
+                            product.rejection_note))
+            admin = models.SowarStockUser.objects.get(type="admin")
+            notify.send(request.user, recipient=admin, level="success",
+                        verb='Product {} has been rejected by {} for the following reason: {}, {}'.format(
+                            product.public_id, user, product.get_rejection_reason_display(), product.rejection_note))
             messages.success(request, "Product has been rejected")
             return HttpResponseRedirect("/reviewer/products")
         return HttpResponseRedirect("/reviewer/products")

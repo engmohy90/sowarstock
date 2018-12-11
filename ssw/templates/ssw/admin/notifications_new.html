@@ -1,0 +1,93 @@
+{% extends "ssw/main.html" %}
+{% load static from staticfiles %}
+{% load thumbnail %}
+
+{% block title %}
+Notifications
+{% endblock %}
+
+{% block content %}
+
+<section class="bg--secondary space--sm">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="boxed boxed--lg boxed--border">
+                                <h4>Notifications
+                                    <a class="btn btn--primary btn--sm pull-right" href="#">
+                                        <span class="btn__text">
+                                            Send Notification
+                                        </span>
+                                    </a>
+                                </h4>
+                                <hr>
+                                <p>Use this form to send custom notfications to users</p>
+                                <form id="notification_form" method="post" action="">
+                                    {% csrf_token %}
+                                    {{ form.recipients.label_tag }}
+                                    {{ form.recipients }}
+                                    {{ form.recipients.errors }}
+                                    <br><br>
+                                    <div id="recipient_field_wrapper" class="hidden">
+                                        {{ form.recipient.label_tag }}
+                                        {{ form.recipient }}
+                                        {{ form.recipient.errors }}
+                                        <br><br>
+                                    </div>
+                                    {{ form.level.label_tag }}
+                                    {{ form.level }}
+                                    {{ form.level.errors }}
+                                    <br><br>
+                                    {{ form.verb.label_tag }}
+                                    {{ form.verb }}
+                                    {{ form.verb.errors }}
+                                    <br><br>
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4">
+                                            <button id="submit_notification_button" type="submit" class="btn btn--primary type--uppercase">Send</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--end of row-->
+                </div>
+                <!--end of container-->
+            </section>
+
+{% endblock %}
+
+{% block js %}
+<script>
+    $( document ).ready(function() {
+
+        var recipientsType = $("#id_recipients").val()
+        if(recipientsType == "custom"){
+                $("#recipient_field_wrapper").removeClass("hidden")
+        }else{
+            $("#recipient_field_wrapper").addClass("hidden")
+        }
+
+        $("#id_recipients").change(function(){
+
+            var recipientsType = $(this).val()
+
+            if(recipientsType == "custom"){
+                $("#recipient_field_wrapper").removeClass("hidden")
+            }else{
+                $("#recipient_field_wrapper").addClass("hidden")
+            }
+        })
+
+        $("#submit_notification_button").click(function(e){
+            var message = $("#id_verb").val()
+            if(message != ""){
+                $("#notification_form").submit()
+            }
+        })
+
+    });
+</script>
+{% endblock %}

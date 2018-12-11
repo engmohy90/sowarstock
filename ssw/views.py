@@ -465,7 +465,7 @@ def complete_registration(request):
                 user.address = address
                 user.save()
                 photo_id_form.save()
-                models.UserRequest.objects.create(owner=user, body=user.photo_id.url)
+                models.UserRequest.objects.create(owner=user)
                 samples = sample_product_formset.save(commit=False)
                 for sample in samples:
                     sample.owner = user
@@ -473,14 +473,19 @@ def complete_registration(request):
                     create_thumbnailed_image(sample)
                 user.completed_registration = True
                 user.save()
-                messages.success(request, "Thank you for completing the registration")
-                return HttpResponseRedirect("/profile")
+                return HttpResponseRedirect("/thanks-for-completing-registration")
         return render(request, "ssw/complete_registration.html", {"user": user, "personal_info_form": personal_info_form,
                                                                   "address_form": address_form, "photo_id_form": photo_id_form,
                                                                   "sample_product_formset": sample_product_formset,
                                                                   "codes_json": codes_json})
     else:
         return HttpResponseRedirect("/profile")
+
+
+@login_required
+def thanks_for_completing_registration(request):
+    user = getSowarStockUser(request.user)
+    return render(request, "ssw/thanks_for_completing_registration.html", {"user": user})
 
 
 @login_required
@@ -734,7 +739,10 @@ def notifications_delete(request, pk):
     if notification.recipient.pk == user.pk:
         notification.delete()
         messages.success(request, "Notification has been deleted")
-        return HttpResponseRedirect("/notifications")
+        if user.type == "admin":
+            return HttpResponseRedirect("/admin/notices")
+        else:
+            return HttpResponseRedirect("/notifications")
     else:
         messages.error(request, "You are not authorized to view this page !")
         return HttpResponseRedirect("/")
@@ -742,7 +750,22 @@ def notifications_delete(request, pk):
 
 def product_public_details(request, public_id):
     product = get_object_or_404(models.Product, public_id = public_id)
-
+    referer = request.META.get('HTTP_REFERER', "")
+    if referer:
+        if "search" in referer:
+            back_section = "Search Results"
+        elif "photos" in referer:
+            back_section = "Photos"
+        elif "vectors" in referer:
+            back_section = "Vectors & Paintings"
+        elif "calligraphy" in referer:
+            back_section = "Calligraphy"
+        elif "editorials" in referer:
+            back_section = "Editorials"
+        else:
+            back_section = product.category
+    else:
+        referer = "/{{product.category}}"
     review_form = forms.ReviewForm()
     if request.method == "POST":
         review_form = forms.ReviewForm(request.POST)
@@ -757,6 +780,7 @@ def product_public_details(request, public_id):
             messages.error(request, "There was an error adding your comment")
         return HttpResponseRedirect("/products/public/{}".format(public_id))
     return render(request, 'ssw/product_public_details.html', {"user": getSowarStockUser(request.user),
+                                                               "back_section": back_section, "back_url": referer,
                                                                "product": product, "review_form": review_form})
 
 

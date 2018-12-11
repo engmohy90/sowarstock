@@ -18,7 +18,7 @@ Profile
                           action="{% url 'complete_registration' %}" enctype="multipart/form-data">
                         {% csrf_token %}
                         <h5>Personal Information</h5>
-                        <section>
+                        <section style="overflow:scroll">
                             {% if user.email_verified %}
                                 <h5>
                                     Email Address: {{user.email}}
@@ -72,7 +72,7 @@ Profile
                             </div>
                         </section>
                         <h5>Address</h5>
-                        <section>
+                        <section style="overflow:scroll">
                             <div class="row">
                                 <div class="col-md-12">
                                     {{address_form.address1.label_tag}}
@@ -116,7 +116,7 @@ Profile
                             </div>
                         </section>
                         <h5>Photo ID</h5>
-                        <section>
+                        <section style="overflow:scroll">
                             <h5>Please upload a valid government ID (Passport or National ID). These will help us
                                 verify that you are a real person and will help us make payments to you when you have
                                 any earnings from our site.</h5>

@@ -19,6 +19,7 @@ urlpatterns = [
     url(r'^about/$', views.about, name="about"),
     url(r'^contact/$', views.contact, name="contact"),
     url(r'^complete-registration/$', views.complete_registration, name="complete_registration"),
+    url(r'^thanks-for-completing-registration/$', views.thanks_for_completing_registration, name="thanks_for_completing_registration"),
     url(r'^resend-email-activation/$', views.resend_email_activation, name="resend_email_activation"),
     url(r'^profile/$', views.profile, name="profile"),
     url(r'^profile/(?P<username>[\w\-]+)/$', views.other_profile, name="other_profile"),

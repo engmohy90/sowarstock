@@ -136,7 +136,19 @@ Account Settings
                                         {{payment_method_form.preferred_payment_method.errors}}
                                         {{payment_method_form.preferred_payment_method.label_tag}}
                                         {{payment_method_form.preferred_payment_method}}
-                                        <br><br>
+                                        <br>
+                                        <div id="bank_owner_name_field_wrapper" class="hidden">
+                                            {{payment_method_form.bank_owner_name.errors}}
+                                            {{payment_method_form.bank_owner_name.label_tag}}
+                                            {{payment_method_form.bank_owner_name}}
+                                            <br><br>
+                                        </div>
+                                        <div id="bank_name_field_wrapper" class="hidden">
+                                            {{payment_method_form.bank_name.errors}}
+                                            {{payment_method_form.bank_name.label_tag}}
+                                            {{payment_method_form.bank_name}}
+                                            <br><br>
+                                        </div>
                                         <div id="iban_field_wrapper" class="hidden">
                                             {{payment_method_form.iban.errors}}
                                             {{payment_method_form.iban.label_tag}}
@@ -153,6 +165,12 @@ Account Settings
                                             {{payment_method_form.western_union_account.errors}}
                                             {{payment_method_form.western_union_account.label_tag}}
                                             {{payment_method_form.western_union_account}}
+                                            <br><br>
+                                        </div>
+                                        <div id="residency_country_field_wrapper" class="hidden">
+                                            {{payment_method_form.residency_country.errors}}
+                                            {{payment_method_form.residency_country.label_tag}}
+                                            {{payment_method_form.residency_country}}
                                             <br><br>
                                         </div>
                                         <div id="paypal_field_wrapper" class="hidden">
@@ -211,16 +229,24 @@ Account Settings
 
         function checkMethod(method){
             if(method == "direct_bank_deposit"){
+                $("#bank_owner_name_field_wrapper").removeClass("hidden")
+                $("#bank_name_field_wrapper").removeClass("hidden")
                 $("#iban_field_wrapper").removeClass("hidden")
                 $("#bank_country_field_wrapper").removeClass("hidden")
                 $("#western_union_field_wrapper").addClass("hidden")
+                $("#residency_country_field_wrapper").addClass("hidden")
                 $("#paypal_field_wrapper").addClass("hidden")
             }else if(method == "western_union"){
+                $("#bank_owner_name_field_wrapper").removeClass("hidden")
+                $("#bank_name_field_wrapper").addClass("hidden")
                 $("#iban_field_wrapper").addClass("hidden")
-                $("#bank_country_field_wrapper").removeClass("hidden")
+                $("#bank_country_field_wrapper").addClass("hidden")
                 $("#western_union_field_wrapper").removeClass("hidden")
+                $("#residency_country_field_wrapper").removeClass("hidden")
                 $("#paypal_field_wrapper").addClass("hidden")
             }else if(method == "paypal"){
+                $("#bank_owner_name_field_wrapper").addClass("hidden")
+                $("#bank_name_field_wrapper").addClass("hidden")
                 $("#iban_field_wrapper").addClass("hidden")
                 $("#bank_country_field_wrapper").addClass("hidden")
                 $("#western_union_field_wrapper").addClass("hidden")

@@ -21,7 +21,7 @@ Notifications
                                                 <span class="color--success new_notification">NEW</span>
                                             {% endif %}
                                             {% if not notification.deleted %}
-                                                <a href="{% url 'notifications_delete' notification.pk %}" class="btn btn-danger pull-right">DELETE</a>
+                                                <a data-tooltip="Delete Notice" href="{% url 'notifications_delete' notification.pk %}" class="color--error pull-right"><i class="fas fa-trash-alt"></i></a>
                                             {% endif %}
                                             {% if notification.level == "info" %}
                                                 <i class="fas fa-info-circle color--primary"></i>

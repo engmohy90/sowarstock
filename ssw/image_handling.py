@@ -7,6 +7,8 @@ import uuid
 import os
 import requests
 
+from . import models
+
 THUMBNAIL_WIDTH = 500
 THUMBNAIL_HEIGHT = 200
 
@@ -15,9 +17,10 @@ def create_watermarked_image(product):
         base_image = Image.open(product.image)
     else:
         base_image = Image.open(product.eps_image)
-    #response = requests.get(settings.MEDIA_URL + "watermarks/Single_Logo_White_60.png")
-    response = requests.get("https://s3.amazonaws.com/sowarstock/watermarks/logo_white_400w.png")
-    watermark = Image.open(BytesIO(response.content))
+    site_settings = models.SiteSettings.objects.get(pk=1)
+    #response = requests.get("https://s3.amazonaws.com/sowarstock/watermarks/logo_white_400w.png")
+    #watermark = Image.open(BytesIO(response.content))
+    watermark = Image.open(site_settings.watermark.url)
     wwidth, wheight = watermark.size
     thumbnail_img_io = BytesIO()
     watermark_img_io = BytesIO()

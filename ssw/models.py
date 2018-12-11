@@ -79,10 +79,12 @@ class Contributor(SowarStockUser):
     portfolio_url = models.CharField(max_length=255, null=True, blank=True)
     featured = models.BooleanField(default=False)
     preferred_payment_method = models.CharField(max_length=255, null=True, blank=True, choices=PAYMENT_METHODS)
+    bank_owner_name = models.CharField(max_length=255, null=True, blank=True)
     iban = models.CharField(max_length=255, null=True, blank=True)
     bank_name = models.CharField(max_length=255, null=True, blank=True)
-    bank_country = models.CharField(max_length=255, null=True, blank=True)
+    bank_country = CountryField(null=True, blank=True)
     western_union_account = models.CharField(max_length=255, null=True, blank=True)
+    residency_country = CountryField(null=True, blank=True)
     paypal_account = models.CharField(max_length=255, null=True, blank=True)
 
     def is_verified(self):
@@ -161,7 +163,8 @@ class Product(models.Model):
     adult_content = models.BooleanField(default=False)
     released = models.BooleanField(default=False)
     exclusive = models.BooleanField(default=False)
-    status = models.CharField(max_length=255, choices=ADMIN_STATUS_OPTIONS, default="pending_approval")
+    editorial = models.BooleanField(default=False)
+    status = models.CharField(max_length=255, choices=ADMIN_STATUS_OPTIONS, default="pending_admin_approval")
     rejection_reason = models.CharField(max_length=255, null=True, blank=True, choices=REJECTION_REASON_OPTIONS)
     rejection_note = models.TextField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -184,7 +187,7 @@ class Product(models.Model):
             return self.eps_image
 
     def product_size(self):
-        if self.file_type == "jpeg":
+        if self.file_type == "jpeg/tiff":
             return sizeof_fmt(self.image.size)
         else:
             return sizeof_fmt(self.file.size)
@@ -286,7 +289,7 @@ class UserRequest(models.Model):
     STATUS_OPTIONS = (("pending_approval", "Pending Approval"), ("approved", "Approved"), ("rejected", "Rejected"))
     body = models.TextField()
     status = models.CharField(max_length=255, choices=STATUS_OPTIONS, default="pending_approval")
-    type = models.CharField(max_length=255, choices=TYPE_OPTIONS, default="id")
+    type = models.CharField(max_length=255, choices=TYPE_OPTIONS, default="new_contributor")
     owner = models.ForeignKey(Contributor, on_delete=models.CASCADE)
 
     def __str__(self):

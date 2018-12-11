@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^reviews/$', views.reviews_main, name='reviews_main'),
     url(r'^reviews/(?P<pk>\d+)/delete/$', views.reviews_delete, name='reviews_delete'),
     url(r'^notices/$', views.notifications_main, name='notifications_main'),
+    url(r'^notices/new$', views.notifications_new, name='admin_notifications_new'),
     url(r'^categories/$', views.categories_main, name='categories_main'),
     url(r'^categories/new_category/$', views.categories_new, name='categories_new'),
     url(r'^categories/edit_category/(?P<pk>\d+)/$', views.categories_edit, name='categories_edit'),

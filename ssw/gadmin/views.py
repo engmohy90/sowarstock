@@ -81,14 +81,9 @@ def product_approve(request, pk):
     user = getSowarStockUser(request.user)
     if user.type == "admin":
         product = get_object_or_404(models.Product, pk=pk)
-        product.status = "approved"
+        product.status = "pending_approval"
         product.save()
-        email_body = loader.render_to_string("ssw/email_product_accept.html", {"product": product})
-        send_mail("قبول عملك {}".format(product.public_id), "", "Sowarstock", [product.owner.email], False,
-                  None, None, None, email_body)
-        notify.send(request.user, recipient=product.owner, level="success",
-                    verb='Product {} has been approved'.format(product.public_id))
-        messages.success(request, "Product has been approved")
+        messages.success(request, "Product has been approved by you and now waiting reviewer approval")
         return HttpResponseRedirect("/admin/products")
     else:
         messages.error(request, "You are not authorized to view this page !")
@@ -416,6 +411,19 @@ def reviews_delete(request,pk):
 def notifications_main(request):
     user = getSowarStockUser(request.user)
     if user.type == "admin":
+        notifications = request.user.notifications.all()
+        return render(request, "ssw/admin/notifications_main.html", {"user": user, "notifications": notifications,
+                                                                     "activeDashboardMenu": "notifications",
+                                                                     **showCorrectMenu(request.user)})
+    else:
+        messages.error(request, "You are not authorized to view this page !")
+        return HttpResponseRedirect("/")
+
+
+@login_required
+def notifications_new(request):
+    user = getSowarStockUser(request.user)
+    if user.type == "admin":
         form = forms.NotificationForm()
         if request.method == "POST":
             recipients_type = request.POST.getlist("recipients")[0]
@@ -432,13 +440,12 @@ def notifications_main(request):
                 notify.send(request.user, recipient=user, level=level, verb=verb)
             messages.success(request, "Notification sent")
             return HttpResponseRedirect("/admin/notices")
-        return render(request, "ssw/admin/notifications_main.html", {"user": user, "form": form,
+        return render(request, "ssw/admin/notifications_new.html", {"user": user, "form": form,
                                                                      "activeDashboardMenu": "notifications",
                                                                      **showCorrectMenu(request.user)})
     else:
         messages.error(request, "You are not authorized to view this page !")
         return HttpResponseRedirect("/")
-
 
 @login_required
 def categories_main(request):
