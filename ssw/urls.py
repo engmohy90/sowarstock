@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^photos/$', views.photos_main, name="photos_main"),
     url(r'^vectors/$', views.vectors_main, name="vectors_main"),
     url(r'^calligraphy/$', views.calligraphy_main, name="calligraphy_main"),
+    url(r'^editorials/$', views.editorials_main, name="editorials_main"),
     url(r'^about/$', views.about, name="about"),
     url(r'^contact/$', views.contact, name="contact"),
     url(r'^complete-registration/$', views.complete_registration, name="complete_registration"),

@@ -168,45 +168,43 @@ def reset_password(request, uuid):
 
 
 def search(request):
-    if request.method == "POST":
-        kws = request.POST['search']
-        kws_list = kws.split(" ")
-        kws_final_list = list()
-        for kw in kws_list:
-            try:
-                keyword = models.SearchKeyword.objects.get(word__iexact=kw)
-                keyword.count = keyword.count + 1
-                keyword.save()
-            except:
-                models.SearchKeyword.objects.create(word=kw, count=1)
-        for kw in kws_list:
-            try:
-                synonyms = models.SearchKeywordSynonyms.objects.get(word__iexact=kw)
-                synonyms_list = [x.strip() for x in synonyms.synonyms.split(",")]
-                kws_final_list.append(kw)
-                kws_final_list = kws_final_list + synonyms_list
-            except:
-                kws_final_list.append(kw)
-        products = list()
-        for kw in kws_final_list:
-            qs = models.Product.objects.filter(
-                Q(title__icontains=kw, status="approved") |
-                Q(description__icontains=kw, status="approved") |
-                Q(keywords__icontains=kw, status="approved")
-            )
-            products = list(chain(products,qs))
-        # remove duplicates
-        final_products = list()
-        for product in products:
-            if product not in final_products:
-                final_products.append(product)
-        subcategories = set()
-        for product in final_products:
-            subcategories.add(product.subcategory)
-        return render(request, "ssw/search_results.html", {"user": getSowarStockUser(request.user),
-                                                          "subcategories": subcategories,
-                                                          "products": final_products, "keywords": kws})
-    return HttpResponseRedirect("/")
+    kws = request.GET.get('keywords', '')
+    kws_list = kws.split(" ")
+    kws_final_list = list()
+    for kw in kws_list:
+        try:
+            keyword = models.SearchKeyword.objects.get(word__iexact=kw)
+            keyword.count = keyword.count + 1
+            keyword.save()
+        except:
+            models.SearchKeyword.objects.create(word=kw, count=1)
+    for kw in kws_list:
+        try:
+            synonyms = models.SearchKeywordSynonyms.objects.get(word__iexact=kw)
+            synonyms_list = [x.strip() for x in synonyms.synonyms.split(",")]
+            kws_final_list.append(kw)
+            kws_final_list = kws_final_list + synonyms_list
+        except:
+            kws_final_list.append(kw)
+    products = list()
+    for kw in kws_final_list:
+        qs = models.Product.objects.filter(
+            Q(title__icontains=kw, status="approved") |
+            Q(description__icontains=kw, status="approved") |
+            Q(keywords__icontains=kw, status="approved")
+        )
+        products = list(chain(products,qs))
+    # remove duplicates
+    final_products = list()
+    for product in products:
+        if product not in final_products:
+            final_products.append(product)
+    subcategories = set()
+    for product in final_products:
+        subcategories.add(product.subcategory)
+    return render(request, "ssw/search_results.html", {"user": getSowarStockUser(request.user),
+                                                      "subcategories": subcategories,
+                                                      "products": final_products, "keywords": kws})
 
 
 def photos_main(request):
@@ -238,6 +236,16 @@ def calligraphy_main(request):
                                                          "calligraphy": calligraphy,
                                                          "subcategories": subcategories,
                                                          "activeDashboardMenu": "calligraphy"})
+
+
+def editorials_main(request):
+    editorials = models.Product.objects.filter(editorial=True, status="approved")
+    subcategories = set()
+    for editorial in editorials:
+        subcategories.add(editorial.subcategory)
+    return render(request, "ssw/editorials_main.html", {"user": getSowarStockUser(request.user), "editorials": editorials,
+                                                    "subcategories": subcategories,
+                                                    "activeDashboardMenu": "editorials"})
 
 
 def about(request):

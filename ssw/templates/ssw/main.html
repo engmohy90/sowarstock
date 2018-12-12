@@ -142,11 +142,10 @@
         </section>
         <!-- search form -->
         <div class="notification pos-top pos-right search-box bg--white border--bottom notification--reveal notification--dismissed" data-animation="from-top" data-notification-link="search-box">
-            <form method="post" action="{% url 'search' %}">
-                {% csrf_token %}
+            <form action="{% url 'search' %}">
                 <div class="row justify-content-center">
                     <div class="col-lg-6 col-md-8">
-                        <input type="search" name="search" id="search" placeholder='{% trans "Find visual that work for you"%}'>
+                        <input type="search" name="keywords" id="keywords" placeholder='{% trans "Find visual that work for you"%}'>
                     </div>
                     <div class="col-lg-1">
                         <button type="submit" class="btn sowar_stock_color"><li class="fa fa-search"></li></button>
@@ -194,16 +193,16 @@
                             <div class="bar__module">
                                 <ul class="menu-horizontal text-left">
                                     <li>
-                                        <a href="/photos" {% if activeDashboardMenu == "photos" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>Photos</a>
+                                        <a href="{% url 'photos_main' %}" {% if activeDashboardMenu == "photos" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>Photos</a>
                                     </li>
                                     <li>
-                                        <a href="/vectors" {% if activeDashboardMenu == "vectors" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>Drawings</a>
+                                        <a href="{% url 'vectors_main' %}" {% if activeDashboardMenu == "vectors" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>Drawings</a>
                                     </li>
                                     <li>
-                                        <a href="/calligraphy" {% if activeDashboardMenu == "calligraphy" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>Calligraphy</a>
+                                        <a href="{% url 'calligraphy_main' %}" {% if activeDashboardMenu == "calligraphy" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>Calligraphy</a>
                                     </li>
                                     <li>
-                                        <a href="#" {% if activeDashboardMenu == "editorials" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>Editorials</a>
+                                        <a href="{% url 'editorials_main' %}" {% if activeDashboardMenu == "editorials" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>Editorials</a>
                                     </li>
                                 </ul>
                             </div>

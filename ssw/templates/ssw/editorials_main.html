@@ -2,19 +2,19 @@
 {% load static from staticfiles %}
 {% load i18n %}
 {% block title %}
-{% trans "Photos"%}
+{% trans "Editorials"%}
 {% endblock %}
 
 {% block content %}
 
 <section class="text-center imagebg" data-overlay="4">
     <div class="background-image-holder" style="opacity: 1;">
-        <img alt="background" src="{% static 'ssw/img/recruitment-4.jpg' %}">
+        <img alt="background" src="{% static 'ssw/img/editorial.jpg' %}">
     </div>
     <div class="container">
         <div class="row">
             <div class="col-md-10 col-lg-8">
-                <h1>{% trans "Photos"%}</h1>
+                <h1>{% trans "Editorials"%}</h1>
             </div>
         </div>
         <!--end of row-->
@@ -23,7 +23,7 @@
 </section>
 <section>
     <div class="container">
-        {% if photos %}
+        {% if editorials %}
             <div class="masonry">
                 <div class="masonry-filter-container text-center d-flex flex-wrap justify-content-center align-items-center">
                     {% if LANGUAGE_CODE == 'ar' %}
@@ -51,16 +51,16 @@
                 </div>
                 <!--end masonry filters-->
                 <div id="mygallery" >
-                    {% for photo in photos %}
-                        <a href="{% url 'product_public' photo.public_id %}" class="{{photo.subcategory.get_simple_name}}">
-                            <img alt="{{photo.title}}" src="{{ photo.thumbnail.url }}">
+                    {% for editorial in editorials %}
+                        <a href="{% url 'product_public' editorial.public_id %}" class="{{editorial.subcategory.get_simple_name}}">
+                            <img alt="{{editorial.title}}" src="{{ editorial.thumbnail.url }}">
                         </a>
                     {% endfor %}
                 </div>
                 <!--end of row-->
             </div>
         {% else %}
-        <h2>{% trans "There are no photos."%}</h2>
+        <h2>{% trans "There are no editorials."%}</h2>
         {% endif %}
     </div>
 </section>
@@ -75,9 +75,9 @@
             $("#mygallery").justifiedGallery({ filter: false });
         });
 
-        {% for photo in photos %}
-            $('.enable-{{photo.subcategory.get_simple_name}}').click(function () {
-                $("#mygallery").justifiedGallery({ filter: '.{{photo.subcategory.get_simple_name}}' });
+        {% for editorial in editorials %}
+            $('.enable-{{editorial.subcategory.get_simple_name}}').click(function () {
+                $("#mygallery").justifiedGallery({ filter: '.{{editorial.subcategory.get_simple_name}}' });
             });
         {% endfor %}
 

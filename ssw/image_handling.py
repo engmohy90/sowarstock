@@ -20,7 +20,7 @@ def create_watermarked_image(product):
     site_settings = models.SiteSettings.objects.get(pk=1)
     #response = requests.get("https://s3.amazonaws.com/sowarstock/watermarks/logo_white_400w.png")
     #watermark = Image.open(BytesIO(response.content))
-    watermark = Image.open(site_settings.watermark.url)
+    watermark = Image.open(site_settings.watermark)
     wwidth, wheight = watermark.size
     thumbnail_img_io = BytesIO()
     watermark_img_io = BytesIO()
