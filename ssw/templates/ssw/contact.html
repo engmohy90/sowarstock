@@ -15,41 +15,24 @@
 </style>
 {% endblock %}
 {% block content %}
+<section class="unpad ">
+    <div id="map">
+        <img src="{% static 'ssw/img/landing-2.jpg' %}" style="width:100%">
+    </div>
+</section>
 <section class="text-center height-50">
     <div class="container pos-vertical-center">
         <div class="row">
             <div class="col-md-8 col-lg-6">
                 <h1>{% trans "Contact Us"%}</h1>
                 <p class="lead">
-                    {% trans "Visit us in Tarout or make contact via the form below to talk more about your project or idea."%}
+                    {% trans "We would love to hear your feedback, comments or suggestions regarding your experience with Sowarstock's website"%}
                 </p>
             </div>
         </div>
         <!--end of row-->
     </div>
     <!--end of container-->
-</section>
-<section class="unpad ">
-    <div id="map"></div>
-    <script>
-      var map;
-      function initMap() {
-        var myLatLng = {lat: 26.5642157, lng: 50.04957250000007};
-
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: myLatLng,
-          zoom: 15
-        });
-
-        var marker = new google.maps.Marker({
-          position: myLatLng,
-          map: map,
-          title: 'Hello World!'
-        });
-      }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCK8UdRckAKgevpUG3epA73kxysKVFVuHE&callback=initMap"
-    async defer></script>
 </section>
 <section class="switchable ">
     <div class="container">
@@ -76,7 +59,7 @@
                         <textarea rows="4" name="message" required></textarea>
                     </div>
                     <div class="col-md-5 col-lg-4 col-6">
-                        <button id="send_enquiry_button" type="submit" class="btn sowar_stock_color type--uppercase">{% trans "Send Enquiry"%}</button>
+                        <button id="send_enquiry_button" type="submit" class="btn sowar_stock_color type--uppercase">{% trans "Send"%}</button>
                     </div>
                 </form>
             </div>
