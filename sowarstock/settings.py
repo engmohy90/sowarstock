@@ -170,13 +170,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
-MEDIA_URL = '/media/'
+#MEDIA_URL = '/media/'
 
 # AMAZON AWS S3 FOR STORING MEDIA FILES
 
-"""
 AWS_QUERYSTRING_AUTH = False
 AWS_ACCESS_KEY_ID = 'AKIAJV3HJ7JFSOKVR5WA'
 AWS_SECRET_ACCESS_KEY = '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'
@@ -187,7 +186,7 @@ MEDIA_URL = "https://s3.amazonaws.com/%s/" % S3_BUCKET
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto.S3BotoStorage"
 THUMBNAIL_DEFAULT_STORAGE = DEFAULT_FILE_STORAGE
 #STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-"""
+
 
 
 
