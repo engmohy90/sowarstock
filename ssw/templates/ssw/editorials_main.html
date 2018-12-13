@@ -22,7 +22,7 @@
     <!--end of container-->
 </section>
 <section>
-    <div class="container">
+    <div class="container" style="max-width:90%">
         {% if editorials %}
             <div class="masonry">
                 <div class="masonry-filter-container text-center d-flex flex-wrap justify-content-center align-items-center">
@@ -82,9 +82,9 @@
         {% endfor %}
 
         $("#mygallery").justifiedGallery({
-            rowHeight : 200,
+            rowHeight : 220,
             lastRow : 'nojustify',
-            margins : 5
+            margins : 8
         });
     })
 </script>

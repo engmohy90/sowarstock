@@ -641,9 +641,13 @@ def featured_main(request):
 def featured_contributor_edit(request):
     user = getSowarStockUser(request.user)
     if user.type == "admin":
-        contributors = models.Contributor.objects.all()
+        contributors = models.Contributor.objects.filter(suspended=False)
+        verified_contributors = list()
+        for contributor in contributors:
+            if contributor.is_verified():
+                verified_contributors.append(contributor)
         if request.method == "POST":
-            for contributor in contributors:
+            for contributor in verified_contributors:
                 contributor.featured = False
                 contributor.save()
             cs = request.POST.getlist("contributors")
@@ -654,7 +658,7 @@ def featured_contributor_edit(request):
                     c.save()
             messages.success(request, "Featured contributors list updated successfully")
             return HttpResponseRedirect("/admin/featured")
-        return render(request, "ssw/admin/featured_contributor_edit.html", {"user": user, "contributors": contributors,
+        return render(request, "ssw/admin/featured_contributor_edit.html", {"user": user, "contributors": verified_contributors,
                                                                 **showCorrectMenu(request.user)})
     else:
         messages.error(request, "You are not authorized to view this page !")

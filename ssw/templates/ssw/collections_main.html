@@ -15,7 +15,7 @@ Collections
                             <div class="boxed boxed--lg boxed--border">
                                 <h4>
                                     Collections
-                                    {% if user.type == "contributor" and user.is_verified %}
+                                    {% if user.type == "contributor" and user.is_verified and not user.suspended %}
                                         <a class="btn btn--primary btn--icon btn--sm pull-right" href="{% url 'collections_new' %}">
                                         <span class="btn__text">
                                         <i class="fa fa-plus"></i> New Collection</span>

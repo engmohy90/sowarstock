@@ -1,11 +1,10 @@
 from django.conf import settings
 from django.core.files.base import ContentFile
-from PIL import Image
+from PIL import Image, ExifTags
 from io import BytesIO
 
 import uuid
 import os
-import requests
 
 from . import models
 
@@ -17,6 +16,20 @@ def create_watermarked_image(product):
         base_image = Image.open(product.image)
     else:
         base_image = Image.open(product.eps_image)
+    for orientation in ExifTags.TAGS.keys():
+        if ExifTags.TAGS[orientation] == 'Orientation': break
+    try:
+        exif = dict(base_image._getexif().items())
+        if exif:
+            if exif[orientation]:
+                if exif[orientation] == 3:
+                    base_image = base_image.rotate(180, expand=True)
+                elif exif[orientation] == 6:
+                    base_image = base_image.rotate(270, expand=True)
+                elif exif[orientation] == 8:
+                    base_image = base_image.rotate(90, expand=True)
+    except:
+        print("no exif for this product")
     site_settings = models.SiteSettings.objects.get(pk=1)
     #response = requests.get("https://s3.amazonaws.com/sowarstock/watermarks/logo_white_400w.png")
     #watermark = Image.open(BytesIO(response.content))

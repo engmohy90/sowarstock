@@ -213,7 +213,6 @@ class Product(models.Model):
             image_height = base_image.height
             image_size_in_megapixels = (image_width * image_height) / 1000000
             image_format = base_image.format
-            print(image_format)
             if image_format not in self.ALLOWED_IMAGE_EXTENSIONS:
                 raise ValidationError(_('Image format has to be only JPEG or TIFF'))
             if image_size > 52428800:  # 50 MB

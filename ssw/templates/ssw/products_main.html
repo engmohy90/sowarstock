@@ -14,7 +14,7 @@ Products
                         <div id="account-profile" class="account-tab">
                             <h4>
                                 Products
-                                {% if user.type == "contributor" and user.is_verified %}
+                                {% if user.type == "contributor" and user.is_verified and not user.suspended %}
                                     <a class="btn btn--primary btn--icon pull-right" href="/products/new">
                                         <span class="btn__text">
                                          <i class="icon-Add-File"></i> New Upload</span>
