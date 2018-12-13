@@ -27,7 +27,7 @@ Profile
                             {% endif %}
                             <span class="h5">{{user.first_name}} {{user.last_name}}</span>
                             <span>{{user.job_title|default:""}}</span>
-                            <span class="label">{{user.type}}</span>
+                            <span class="label">{{user.get_type_display}}</span>
                         </div>
                         <div class="text-block clearfix text-center">
                             <ul class="row row--list">

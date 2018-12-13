@@ -133,6 +133,22 @@ Pending Product {{product.public_id}}
                                         </td>
                                     </tr>
                                 {% endif %}
+                                {% if product.status == "approved" %}
+                                    <tr>
+                                        <td><b>Approved By</b></td>
+                                        <td>
+                                            <a href="{% url 'other_profile' product.reviewed_by%}">{{product.reviewed_by.get_full_name}}</a>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                                {% if product.status == "rejected" %}
+                                    <tr>
+                                        <td><b>Rejected By</b></td>
+                                        <td>
+                                            {{product.reviewed_by.get_full_name}}
+                                        </td>
+                                    </tr>
+                                {% endif %}
                             {% endif %}
                           </tbody>
                       </table>

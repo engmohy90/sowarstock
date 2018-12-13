@@ -1,10 +1,97 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    Reports main here
-</body>
-</html>
+{% extends "ssw/main.html" %}
+{% load static from staticfiles %}
+
+{% block title %}
+Reports
+{% endblock %}
+
+{% block content %}
+
+    <section class="bg--secondary space--sm">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="boxed boxed--lg boxed--border">
+                        <div id="products" class="account-tab">
+                            <h4>
+                                Reports
+                            </h4>
+                            <div class="tabs-container" data-content-align="left">
+                                <ul class="tabs">
+                                    <li class="active">
+                                        <div class="tab__title">
+                                            <span class="h5">Product Approvals</span>
+                                        </div>
+                                        <div class="tab__content">
+                                            {% if approved_list %}
+                                                <div class="custom-scroll table-responsive">
+                                                  <table id="approvedProductsTable" class="table table-bordered table-hover">
+                                                      <thead>
+                                                      <tr>
+                                                          <th>Reviewer</th>
+                                                          <th>Count</th>
+                                                      </tr>
+                                                      </thead>
+                                                      <tbody>
+                                                      {% for approved in approved_list %}
+                                                        <tr>
+                                                            <td><a href="{% url 'other_profile' approved.reviewer.username %}">{{approved.reviewer.get_full_name}}</a></td>
+                                                            <td>{{approved.total}}</td>
+                                                        </tr>
+                                                      {% endfor %}
+                                                      </tbody>
+                                                  </table>
+                                                </div>
+                                            {% else %}
+                                            <b>There are no product approvals.</b>
+                                            {% endif %}
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="tab__title">
+                                            <span class="h5">Product Rejections</span>
+                                        </div>
+                                        <div class="tab__content">
+                                            {% if rejected_list %}
+                                                <div class="custom-scroll table-responsive">
+                                                  <table id="rejectedProductsTable" class="table table-bordered table-hover">
+                                                      <thead>
+                                                      <tr>
+                                                          <th>Reviewer</th>
+                                                          <th>Count</th>
+                                                      </tr>
+                                                      </thead>
+                                                      <tbody>
+                                                      {% for rejected in rejected_list %}
+                                                        <tr>
+                                                            <td><a href="{% url 'other_profile' rejected.reviewer.username %}">{{rejected.reviewer.get_full_name}}</a></td>
+                                                            <td>{{rejected.total}}</td>
+                                                        </tr>
+                                                      {% endfor %}
+                                                      </tbody>
+                                                  </table>
+                                                </div>
+                                            {% else %}
+                                            <b>There are no product rejections.</b>
+                                            {% endif %}
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="tab__title">
+                                            <span class="h5">Coming Soon</span>
+                                        </div>
+                                        <div class="tab__content">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div><!--end of tabs container-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end of row-->
+        </div>
+        <!--end of container-->
+    </section>
+
+{% endblock %}

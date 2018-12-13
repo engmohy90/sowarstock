@@ -20,7 +20,7 @@ Profile
                         {% endif %}
                         <span class="h5">{{other_profile.first_name}} {{other_profile.last_name}}</span>
                         <span>{{other_profile.job_title}}</span>
-                        <span class="label">{{other_profile.type}}</span>
+                        <span class="label">{{other_profile.get_type_display}}</span>
                     </div>
                     <div class="text-block clearfix text-center">
                         <ul class="row row--list">

@@ -41,7 +41,7 @@ def product_approve(request, pk):
                     verb='Product {} has been approved'.format(product.public_id))
         admin = models.SowarStockUser.objects.get(type="admin")
         notify.send(request.user, recipient=admin, level="success",
-                    verb='Product {} has been approved by {}'.format(product.public_id, user))
+                    verb='Product {} has been approved by {}'.format(product.public_id, user.get_full_name()))
         messages.success(request, "Product has been approved")
         return HttpResponseRedirect("/reviewer/products")
     else:
@@ -73,7 +73,7 @@ def product_reject(request, pk):
             admin = models.SowarStockUser.objects.get(type="admin")
             notify.send(request.user, recipient=admin, level="success",
                         verb='Product {} has been rejected by {} for the following reason: {}, {}'.format(
-                            product.public_id, user, product.get_rejection_reason_display(), product.rejection_note))
+                            product.public_id, user.get_full_name(), product.get_rejection_reason_display(), product.rejection_note))
             messages.success(request, "Product has been rejected")
             return HttpResponseRedirect("/reviewer/products")
         return HttpResponseRedirect("/reviewer/products")

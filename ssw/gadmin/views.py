@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
+from django.db.models import Count
 from django.template import loader
 from notifications.signals import notify
 
@@ -805,8 +806,30 @@ def search_keyword_synonyms_delete(request, pk):
 def reports_main(request):
     user = getSowarStockUser(request.user)
     if user.type == "admin":
+        approved_queryset = models.Product.objects.filter(status="approved").values('reviewed_by').annotate(total=Count('reviewed_by'))
+        rejected_queryset = models.Product.objects.filter(status="rejected").values('reviewed_by').annotate(
+            total=Count('reviewed_by'))
+        approved_list = list()
+        rejected_list = list()
+        for q in approved_queryset:
+            pk = q['reviewed_by']
+            total = q['total']
+            approved = {}
+            reviewer = models.SowarStockUser.objects.get(pk=pk)
+            approved["reviewer"] = reviewer
+            approved["total"] = total
+            approved_list.append(approved)
+        for q in rejected_queryset:
+            pk = q['reviewed_by']
+            total = q['total']
+            rejected = {}
+            reviewer = models.SowarStockUser.objects.get(pk=pk)
+            rejected["reviewer"] = reviewer
+            rejected["total"] = total
+            rejected_list.append(rejected)
         return render(request, "ssw/admin/reports_main.html",
-                      {"user": user, "activeDashboardMenu": "reports",
+                      {"user": user, "activeDashboardMenu": "reports", "approved_list": approved_list,
+                       "rejected_list": rejected_list,
                        **showCorrectMenu(request.user)})
     else:
         messages.error(request, "You are not authorized to view this page !")
