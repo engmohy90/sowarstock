@@ -1344,7 +1344,7 @@ mr = (function (mr, $, window, document){
                 fetchNumber = 12;
             
             themeDefaults = {
-                query: 'mediumrarethemes',
+                query: 'sowarstock',
                 max: 12
             };
 

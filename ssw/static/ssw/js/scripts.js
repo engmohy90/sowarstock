@@ -1320,8 +1320,8 @@ mr = (function (mr, $, window, document){
         if($('.instafeed').length){
 
             // Replace with your own Access Token and Client ID
-            var token  = '4079540202.b9b1d8a.1d13c245c68d4a17bfbff87919aaeb14',
-                client = 'b9b1d8ae049d4153b24a6332f0088686',
+            var token  = '4795878788.1677ed0.3ee886673f7d473cabb191f56d996259',
+                client = '589f23aa1af44b3aaf3dd5a8085ab668',
                 elementToken, elementClient;
 
             if($('.instafeed[data-access-token][data-client-id]').length){
@@ -1344,7 +1344,7 @@ mr = (function (mr, $, window, document){
                 fetchNumber = 12;
             
             themeDefaults = {
-                query: 'mediumrarethemes',
+                query: 'sowarstock',
                 max: 12
             };
 
