@@ -19,10 +19,10 @@
                <img alt="Image" src="{{product.watermark.url}}">
             </div>
             <div class="col-md-5 col-lg-4">
-                <div class="row">
+                <div>
                     <h2>{{product.title}}</h2>
                 </div>
-                <div class="row">
+                <div>
                     {% if product.owner.profile_image %}
                         <image src="{{product.owner.profile_image.url}}" class="product-profile-image img-circle" style="vertical-align:middle"/>
                     {% else %}
@@ -34,11 +34,11 @@
                         <a href="{% url 'other_profile' product.owner.username %}"><span style="margin-left:1em">{{product.owner}}</span></a>
                     {% endif %}
                 </div>
-                <div class="row">
+                <div>
                     <b>SKU</b><span style="margin-left: 1em">{{product.public_id}}</span>
                 </div>
                 <br>
-                <div class="row">
+                <div>
                     <span id="license_chosen" class="h3 inline-block sowar_stock_color_font"><b>${{product.standard_price}}</b></span>
                 </div>
                 {% if not user.is_authenticated %}

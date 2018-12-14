@@ -44,12 +44,6 @@ New Product
                                     {{form.file.errors}}
                                     <br><br>
                                 </div>
-                                <div id="eps_image_field_wrapper">
-                                    {{form.eps_image.label_tag}}
-                                    {{form.eps_image}}
-                                    {{form.eps_image.errors}}
-                                    <br><br>
-                                </div>
                                 {{form.description.label_tag}}
                                 {{form.description}}
                                 {{form.description.errors}}
@@ -337,11 +331,9 @@ New Product
         var fileType = $("#id_file_type").val()
         if(fileType == "jpeg/tiff"){
                 $("#file_field_wrapper").addClass("hidden")
-                $("#eps_image_field_wrapper").addClass("hidden")
                 $("#image_field_wrapper").removeClass("hidden")
         }else if(fileType == "eps"){
                 $("#image_field_wrapper").addClass("hidden")
-                $("#eps_image_field_wrapper").removeClass("hidden")
                  $("#file_field_wrapper").removeClass("hidden")
         }
 
@@ -351,11 +343,9 @@ New Product
 
             if(fileType == "jpeg/tiff"){
                 $("#file_field_wrapper").addClass("hidden")
-                $("#eps_image_field_wrapper").addClass("hidden")
                 $("#image_field_wrapper").removeClass("hidden")
             }else if(fileType == "eps"){
                 $("#image_field_wrapper").addClass("hidden")
-                $("#eps_image_field_wrapper").removeClass("hidden")
                  $("#file_field_wrapper").removeClass("hidden")
             }
         })
@@ -376,10 +366,9 @@ New Product
                 }
             }else if(fileType=="eps"){
                 var file = $("#id_file").val()
-                var epsImage = $("#id_eps_image").val()
-                if(file=="" || epsImage==""){
+                if(file==""){
                     e.preventDefault()
-                    $("#form_error_message").html("Please upload a file and an image")
+                    $("#form_error_message").html("Please upload a file")
                 }else{
                     $(this).prop("disabled",true)
                     $("#submit_product_text").html("Submitting ... ")

@@ -15,7 +15,7 @@ def create_watermarked_image(product):
     if product.file_type == "jpeg/tiff":
         base_image = Image.open(product.image)
     else:
-        base_image = Image.open(product.eps_image)
+        base_image = Image.open(product.file)
     for orientation in ExifTags.TAGS.keys():
         if ExifTags.TAGS[orientation] == 'Orientation': break
     try:

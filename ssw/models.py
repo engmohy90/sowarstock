@@ -65,6 +65,16 @@ class SowarStockUser(User):
     class Meta:
         verbose_name = "Sowarstock User"
 
+    def clean(self):
+        profile_image = self.profile_image
+        if profile_image:
+            if profile_image.width != profile_image.height:
+                raise ValidationError(_('Profile Image has to be square'))
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        return super(SowarStockUser, self).save(*args, **kwargs)
+
 
 class Contributor(SowarStockUser):
     ACCOUNT_STATUS = (("unverified", "Unverified"), ("verified", "Verified"))
@@ -156,7 +166,6 @@ class Product(models.Model):
     description = models.TextField()
     file_type = models.CharField(max_length=255, default="jpeg/tiff", choices=FILE_TYPE_OPTIONS)
     image = models.ImageField(upload_to='products/', null=True, blank=True)
-    eps_image = models.ImageField(upload_to='products/', null=True, blank=True)
     file = models.FileField(upload_to='products/', null=True, blank=True)
     watermark = models.ImageField(upload_to='products/watermarked/', null=True, blank=True)
     thumbnail = models.ImageField(upload_to='products/thumbnails/', null=True, blank=True)
@@ -184,7 +193,7 @@ class Product(models.Model):
         if self.file_type == "jpeg/tiff":
             return self.image
         else:
-            return self.eps_image
+            return self.thumbnail
 
     def product_size(self):
         if self.file_type == "jpeg/tiff":

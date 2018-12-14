@@ -83,14 +83,13 @@ class ProductForm(ModelForm):
 
     class Meta:
         model = models.Product
-        fields = ["title", "file_type", "image", "file", "eps_image", "description", "keywords", "category",
+        fields = ["title", "file_type", "image", "file", "description", "keywords", "category",
                   "subcategory", "adult_content", "exclusive", "released", "editorial", "price_type",
                   "standard_price", "extended_price"]
         labels = {
             'standard_price': _('Standard Price ($)'),
             'extended_price': _('Extended Price ($)'),
-            'file': _('Original EPS File'),
-            'eps_image': _('Thumbnail in JPEG format')
+            'file': _('EPS File'),
         }
 
     def __init__(self, *args, **kwargs):

@@ -18,7 +18,7 @@ Account Settings
                                         <img src="{% static 'ssw/img/default-avatar.png' %}" class="image--sm img-circle" alt="User Image">
                                     {% endif %}
                                     <span class="h5">{{user.first_name}} {{user.last_name}}</span>
-                                    <span>{{user.type|title}}</span>
+                                    <span>{{user.get_type_display|title}}</span>
                                     {% if user.is_verified %}
                                         <span class="label label-success">Verified</span>
                                     {% else %}

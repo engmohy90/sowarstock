@@ -148,3 +148,7 @@ input[type] + input[type]{
     height: 7em;
     width: 7em;
 }
+
+.errorlist {
+    color: white;
+}

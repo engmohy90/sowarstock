@@ -608,7 +608,7 @@ def account_settings(request, **kwargs):
                                                              "user_request_delete_form": user_request_delete_form,
                                                              "codes_json": codes_json,
                                                              "activeDashboardMenu": "account_settings", **showCorrectMenu(request.user)})
-    elif user.type == "client":
+    else:
         # personal information form
         personal_info_form = forms.ProfilePersonalInfoForm(instance=user)
         # address form
@@ -623,8 +623,6 @@ def account_settings(request, **kwargs):
                                                              "password_form": password_form,
                                                              "activeDashboardMenu": "account_settings",
                                                              **showCorrectMenu(request.user)})
-    else:
-        return HttpResponseRedirect("/")
 
 
 @login_required
@@ -640,7 +638,10 @@ def update_personal_info(request):
             personal_info_form.save()
             messages.success(request, "Personal Information updated successfully")
         else:
-            messages.error(request, personal_info_form.errors)
+            if '__all__' in personal_info_form.errors:
+                messages.error(request, personal_info_form.errors['__all__'])
+            else:
+                messages.error(request, personal_info_form.errors)
     return HttpResponseRedirect("/account_settings")
 
 
@@ -667,11 +668,9 @@ def update_password(request):
         if password_form.is_valid():
             password = password_form.save()
             update_session_auth_hash(request, password)
-            messages.success(request, "Password updated successfully")
+            messages.success(request, "Password updated successfully. Please login with the new password")
         else:
             messages.error(request, "Please Correct the errors")
-            #url = reverse("account_settings", kwargs={'msg':'hello world'})
-            #return HttpResponseRedirect(url)
     return HttpResponseRedirect("/account_settings")
 
 
