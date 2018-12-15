@@ -1,0 +1,177 @@
+{% extends "ssw/main.html" %}
+{% load static from staticfiles %}
+{% load i18n %}
+{% block title %}
+{% trans "About"%}
+{% endblock %}
+
+{% block content %}
+<section class="text-center imagebg space--lg" data-overlay="3">
+    <div class="background-image-holder" style="opacity: 1;">
+        <img alt="background" src="{% static 'ssw/img/landing-21.jpg' %}">
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-lg-6">
+                <h1>{% trans "Hi, We're Sowarstock"%}</h1>
+                <p class="lead">
+                    {% trans "A community of creative people with a common goal, to find the beauty that's hidden in the sand"%}
+                </p>
+            </div>
+        </div>
+        <!--end of row-->
+    </div>
+    <!--end of container-->
+</section>
+<section class="text-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <h2>{% trans "Our Mission"%}</h2>
+                <p class="lead">
+                    To provide an easy to use platform for creative professionals to make a revenue of their work.
+                    We protect the rights of our creative partners and licenses their work to a global market.
+                    Anyone can be a creative partner by just agreeing to our Terms & Conditions and sending us their personal work, simplicity at it’s finest.
+                    We stand for creative professionalism and our platform offers Photographs, Calligraphy, Vectors, and Drawing.
+                </p>
+            </div>
+        </div>
+        <!--end of row-->
+    </div>
+    <!--end of container-->
+</section>
+
+
+
+<section class="text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-11">
+                <div class="carousel carousel-main" data-flickity='{ "autoPlay": true }'>
+
+                      <img alt="Image" src="{% static 'ssw/img/gallery-1.jpg' %}">
+
+
+                      <img alt="Image" src="{% static 'ssw/img/cowork-1.jpg' %}">
+
+
+                      <img alt="Image" src="{% static 'ssw/img/cowork-5.jpg' %}">
+
+                </div>
+            </div>
+        </div>
+        <!--end of row-->
+    </div>
+    <!--end of container-->
+</section>
+<section class="text-center bg--secondary">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <h2>What drives us</h2>
+                <p class="lead">
+                    Whether you’re building a welcome mat for your SaaS or a clean, corporate portfolio, Stack has your design needs covered.
+                </p>
+            </div>
+        </div>
+        <!--end of row-->
+    </div>
+    <!--end of container-->
+</section>
+<section class="bg--secondary">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="feature">
+                    <h4>Inclusion</h4>
+                    <p>
+                        With rich modal and notification functionality and a robust suite of options, Stack makes building feature-heavy pages simple and enjoyable.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature">
+                    <h4>Ingenuity</h4>
+                    <p>
+                        Drastically reduce the time it takes to move from initial concept to production-ready with Stack and Variant Page Builder. Your clients will love you for it!
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature">
+                    <h4>Innovation</h4>
+                    <p>
+                        Our customers love the comfort that comes with six-months free support. Our dedicated support forum makes interacting with us hassle-free and efficient.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!--end of row-->
+    </div>
+    <!--end of container-->
+</section>
+<section class="text-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <h2>Meet the makers</h2>
+                <p class="lead">
+                    Whether you’re building a welcome mat for your SaaS or a clean, corporate portfolio, Stack has your design needs covered.
+                </p>
+            </div>
+        </div>
+        <!--end of row-->
+    </div>
+    <!--end of container-->
+</section>
+<section class="text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="feature feature-8">
+                    <img alt="Image" src="{% static 'ssw/img/avatar-round-1.png' %}">
+                    <h5>Vera Duncan</h5>
+                    <span>Founder &amp; CEO</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature feature-8">
+                    <img alt="Image" src="{% static 'ssw/img/avatar-round-3.png' %}">
+                    <h5>Zach Smith</h5>
+                    <span>Co-Founder &amp; CTO</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature feature-8">
+                    <img alt="Image" src="{% static 'ssw/img/avatar-round-2.png' %}">
+                    <h5>Bernice Lucas</h5>
+                    <span>Chief of Operations</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature feature-8">
+                    <img alt="Image" src="{% static 'ssw/img/avatar-round-4.png' %}">
+                    <h5>Cameron Nguyen</h5>
+                    <span>Lead Designer</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature feature-8">
+                    <img alt="Image" src="{% static 'ssw/img/avatar-round-5.png' %}">
+                    <h5>Josie Web</h5>
+                    <span>Head of Development</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature feature-8">
+                    <img alt="Image" src="{% static 'ssw/img/avatar-round-6.png' %}">
+                    <h5>Bryce Vaughn</h5>
+                    <span>Marketing Director</span>
+                </div>
+            </div>
+        </div>
+        <!--end of row-->
+    </div>
+    <!--end of container-->
+</section>
+{% endblock %}

@@ -63,6 +63,13 @@
                                     </div>
                                     <!--end dropdown container-->
                                 </li>
+                                {% else %}
+                                <li>
+                                    <div class="modal-instance">
+                                        <a href="/login">{% trans "Login"%}</a>
+
+                                    </div>
+                                </li>
                                 {% endif %}
 
                                 <li>
@@ -154,7 +161,7 @@
                             </a>
                         </div>
                         <div class="col-9 col-md-10 text-right">
-                            <a href="#" class="hamburger-toggle" data-toggle-class="#menu1;hidden-xs">
+                            <a href="#" class="hamburger-toggle" data-toggle-class="#menu2;hidden-xs">
                                 <i class="icon icon--sm stack-interface stack-menu"></i>
                             </a>
                         </div>
@@ -164,10 +171,10 @@
                 <!--end of container-->
             </div>
             <!--end bar-->
-            <nav id="menu1" class="bar bar--sm bar-1 hidden-xs {% if activeDashboardMenu == "home" %} bar--absolute bar--transparent {% endif %}">
+            <nav id="menu2" class="bar bar-2 hidden-xs ">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-1 col-md-2 hidden-xs">
+                        <div class="col-lg-2 text-center text-left-sm hidden-xs order-lg-2">
                             <div class="bar__module">
                                 <a href="/">
                                     <img class="logo logo-dark" alt="logo" src="{% static 'ssw/img/sowarstock_logo_grey.png' %}">
@@ -176,79 +183,42 @@
                             </div>
                             <!--end module-->
                         </div>
-                        <div class="col-lg-11 col-md-12 text-right text-left-xs text-left-sm">
+                        <div class="col-lg-5 order-lg-1">
                             <div class="bar__module">
                                 <ul class="menu-horizontal text-left">
-                                    <li class="dropdown">
+                                    <li>
                                         <a href="{% url 'photos_main' %}" {% if activeDashboardMenu == "photos" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>Photos</a>
                                     </li>
-                                    <li class="dropdown">
-                                        <a href="{% url 'calligraphy_main' %}" {% if activeDashboardMenu == "calligraphy" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>Calligraphy</a>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a href="{% url 'editorials_main' %}" {% if activeDashboardMenu == "editorials" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>Editorials</a>
-                                    </li>
-                                    <li class="dropdown">
+                                    <li>
                                         <a href="{% url 'vectors_main' %}" {% if activeDashboardMenu == "vectors" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>Drawings</a>
                                     </li>
-                                    <li class="dropdown">
-                                        <span class="dropdown__trigger">Legal</span>
-                                        <div class="dropdown__container" style="left: -445.953px;">
-                                            <div class="container">
-                                                <div class="row">
-                                                    <div class="dropdown__content col-lg-2 col-md-4" style="left: 445.953px;">
-                                                        <ul class="menu-vertical">
-                                                            <li>
-                                                                <a href="{% url 'legal_contributor' %}">Contributor Agreement</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="{% url 'legal_license' %}">License Agreement</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="{% url 'legal_privacy' %}">Privacy Policy</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="{% url 'legal_terms' %}">Terms and Conditions</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <!--end dropdown content-->
-                                                </div>
-                                                <!--end row-->
-                                            </div>
-                                        </div>
+                                    <li>
+                                        <a href="{% url 'calligraphy_main' %}" {% if activeDashboardMenu == "calligraphy" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>Calligraphy</a>
                                     </li>
-                                    <li class="dropdown">
-                                        <a href="{% url 'about' %}" {% if activeDashboardMenu == "about" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>About</a>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a href="{% url 'contact' %}" {% if activeDashboardMenu == "contact" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>Contact</a>
+                                    <li>
+                                        <a href="{% url 'editorials_main' %}" {% if activeDashboardMenu == "editorials" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>Editorials</a>
                                     </li>
                                 </ul>
                             </div>
                             <!--end module-->
-                            <div class="bar__module">
-                                {% if not user.is_authenticated %}
-                                    <a class="btn btn--sm type--uppercase" href="/login">
-                                        <span class="btn__text">
-                                            Log in
-                                        </span>
-                                    </a>
+                        </div>
+                        {% if not user.is_authenticated %}
+                            <div class="col-lg-5 text-right text-left-xs text-left-sm order-lg-3">
+                                <div class="bar__module">
                                     <a class="btn btn--sm btn--primary type--uppercase" href="/signup">
                                         <span class="btn__text">
-                                            Sign up
+                                           Join Now
                                         </span>
                                     </a>
-                                {% endif %}
+                                </div>
+                                <!--end module-->
                             </div>
-                            <!--end module-->
-                        </div>
+                        {% endif %}
                     </div>
                     <!--end of row-->
                 </div>
                 <!--end of container-->
             </nav>
-            <!--end bar-->
         </div>
 
         {% if user.type == "contributor" and showcontributormenu %}
@@ -331,7 +301,7 @@
             </div>
 
             {% block content %}{% endblock %}
-            <!--
+
             <footer id="footer" class="footer-6 unpad--bottom bg--secondary ">
                 <div class="container">
                     <div class="row">
@@ -384,6 +354,7 @@
                     </div>
                 </div>
             </footer>
+            <!--
             <footer class="text-center-xs space--xs bg--dark ">
                 <div class="container">
                     <div class="row">
@@ -442,72 +413,6 @@
                 </div>
             </footer>
             -->
-            <footer class="space--sm footer-1 text-center-xs ">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <ul class="list-inline list--hover">
-                                <li>
-                                    <a href="#">
-                                        <span>Our Company</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span>Blogs</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span>Help</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span>Work With Us</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-md-6 text-right text-center-xs">
-                            <ul class="social-list list-inline list--hover">
-                                <li>
-                                    <a href="https://twitter.com/">
-                                        <i class="socicon socicon-twitter icon icon--xs"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="https://www.facebook.com/Sowarstock/">
-                                        <i class="socicon socicon-facebook icon icon--xs"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="https://www.instagram.com/sowarstock/">
-                                        <i class="socicon socicon-instagram icon icon--xs"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                            <a href="/contact" class="btn type--uppercase">
-                                <span class="btn__text">
-                                    Contact Us
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-                    <!--end of row-->
-                    <div class="row">
-                        <div class="col-md-12">
-                            <img alt="Image" class="logo" src="{% static 'ssw/img/sowarstock_logo_grey.png' %}">
-                            <span class="type--fine-print">©
-                                <span class="update-year">2018</span> Sowarstock</span>
-                            <a class="type--fine-print" href="{% url 'legal_privacy' %}">Privacy Policy</a>
-                            <a class="type--fine-print" href="{% url 'legal_terms' %}">Terms</a>
-                        </div>
-                    </div>
-                    <!--end of row-->
-                </div>
-                <!--end of container-->
-            </footer>
         </div>
         <!--<div class="loader"></div>-->
         <a class="back-to-top inner-link" href="#start" data-scroll-class="100vh:active">

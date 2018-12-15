@@ -7,141 +7,246 @@
 
 {% block content %}
 <div class="main-container">
-            <section class="page-navigator">
-                <ul>
-                    <li>
-                        <a href="#home" class="inner-link" data-title="Home"></a>
-                    </li>
-                    <li>
-                        <a href="#testimony" class="inner-link inner-link--active" data-title="Testimony"></a>
-                    </li>
-                    <li>
-                        <a href="#industries" class="inner-link" data-title="Join Us"></a>
-                    </li>
-                    <li>
-                        <a href="#footer" class="inner-link" data-title="Contact Us"></a>
-                    </li>
-                </ul>
-            </section>
-            <section id="home" class="imagebg parallax height-100 text-center" data-overlay="1">
-                <div class="background-image-holder" style="transform: translate3d(0px, 499px, 0px); opacity: 1;">
-                    <img alt="background" src="{% static 'ssw/img/drone-1.jpg' %}">
-                </div>
-                <div class="container pos-vertical-center">
-                    <div class="row">
-                        <div class="col-md-6 col-lg-7">
-                            <img alt="Image" src="{% static 'ssw/img/headline-4.png' %}">
-                            <p class="lead">
-                                High-quality drone photography and videography shot by
-                                <br class="hidden-xs hidden-sm"> professionals at your location.
-                            </p>
-                            <a class="btn btn--primary type--uppercase" href="#">
-                                <span class="btn__text">
-                                    Book A Consultation
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-                    <!--end of row-->
-                </div>
-                <!--end of container-->
-            </section>
-            <section id="testimony" style="padding-top:0">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="slider slider--inline-arrows" data-arrows="true" data-children="3">
-                                <ul class="slides flickity-enabled is-draggable" tabindex="0">
-                                <div class="flickity-viewport" style="height: 189px;"><div class="flickity-slider" style="left: 0px; transform: translate3d(-37.52%, 0px, 0px);"><li class="slide" style="position: absolute; left: 0%;">
-                                        <div class="testimonial row justify-content-center">
-                                            <div class="col-lg-2 col-md-4 col-6 text-center">
-                                                <img class="testimonial__image" alt="Image" src="{% static 'ssw/img/avatar-round-1.png' %}">
-                                            </div>
-                                            <div class="col-lg-7 col-md-8 col-12">
-                                                <span class="h3">“We’ve been using Stack to prototype designs quickly and efficiently. Needless to say we’re hugely impressed by the style and value.”
-                                                </span>
-                                                <h5>Maguerite Holland</h5>
-                                                <span>Interface Designer — Yoke</span>
-                                            </div>
-                                        </div>
-                                    </li><li class="slide is-selected" style="position: absolute; left: 100%;">
-                                        <div class="testimonial row justify-content-center">
-                                            <div class="col-lg-2 col-md-4 col-6 text-center">
-                                                <img class="testimonial__image" alt="Image" src="{% static 'ssw/img/avatar-round-4.png' %}">
-                                            </div>
-                                            <div class="col-lg-7 col-md-8 col-12">
-                                                <span class="h3">“I've been using Medium Rare's templates for a couple of years now and Stack is without a doubt their best work yet. It's fast, performant and absolutely stunning.”
-                                                </span>
-                                                <h5>Lucas Nguyen</h5>
-                                                <span>Freelance Designer</span>
-                                            </div>
-                                        </div>
-                                    </li><li class="slide" style="position: absolute; left: 200%;">
-                                        <div class="testimonial row justify-content-center">
-                                            <div class="col-lg-2 col-md-4 col-6 text-center">
-                                                <img class="testimonial__image" alt="Image" src="{% static 'ssw/img/avatar-round-3.png' %}">
-                                            </div>
-                                            <div class="col-lg-7 col-md-8 col-12">
-                                                <span class="h3">“Variant has been a massive plus for my workflow — I can now get live mockups out in a matter of hours, my clients really love it.”
-                                                </span>
-                                                <h5>Rob Vasquez</h5>
-                                                <span>Interface Designer — Yoke</span>
-                                            </div>
-                                        </div>
-                                    </li></div></div><button class="flickity-prev-next-button previous" type="button" aria-label="previous"><svg viewBox="0 0 100 100"><path d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z" class="arrow"></path></svg></button><button class="flickity-prev-next-button next" type="button" aria-label="next"><svg viewBox="0 0 100 100"><path d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z" class="arrow" transform="translate(100, 100) rotate(180) "></path></svg></button></ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!--end of row-->
-                </div>
-                <!--end of container-->
-            </section>
-            <section class="height-100 imagebg parallax" data-overlay="3" id="industries">
-                <div class="background-image-holder" style="transform: translate3d(0px, 78.4844px, 0px); opacity: 1;">
-                    <img alt="background" src="{% static 'ssw/img/drone-2.jpg' %}">
-                </div>
-                <div class="container pos-vertical-center">
-                    <div class="row">
-                        <div class="col-md-4">
-                        </div>
-                        <div class="col-md-4">
-                            <div class="feature feature-4 boxed boxed--lg boxed--border">
-                                <i class="fas fa-user fa-2x"></i>
-                                <h3 style="font-weight: bold">For Contributors</h3>
-                                <hr>
-                                <p class="h3">
-                                    If you are a photographer, designer or a painter, you could earn money from your works.
-                                    Join us at Sowarstock and start listing your products.
-                                </p>
-                                <a class="btn btn--primary" href="/signup">
-                                    <span class="btn__text" style="font-size:large">
-                                        Join us
-                                    </span>
-                                </a>
-                            </div>
-                            <!--end feature-->
-                        </div>
-                        <div class="col-md-4">
-                            <div class="feature feature-4 boxed boxed--lg boxed--border">
-                                <i class="fas fa-users fa-2x"></i>
-                                <h3 style="font-weight: bold">For Clients</h3>
-                                <hr>
-                                <p class="h3">
-                                    If you are interested in any of the products listed in Sowarstock's website,
-                                    you could join Sowarstock's clients and start buying directly.
-                                </p>
-                                <a class="btn btn--primary" href="/signup">
-                                    <span class="btn__text" style="font-size:large">
-                                        Create Account
-                                    </span>
-                                </a>
-                            </div>
-                            <!--end feature-->
-                        </div>
-                    </div>
-                    <!--end of row-->
-                </div>
-                <!--end of container-->
-            </section>
+<section class="cover cover-features imagebg space--lg" data-scrim-bottom="9">
+    <div class="background-image-holder" style="opacity: 1;">
+        <img alt="background" src="{% static 'ssw/img/adventure-asia-background.jpg' %}">
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 col-lg-7">
+                <h1>
+                    Time To Go With Sowarstock
+                </h1>
+                <p class="lead">
+                    Our creative partners help us achieve our goal by producing creative, elegant, and professional work. The unique products that we offer leave our customers happy and satisfied. Join our expanding creative community.
+                </p>
+                <a class="btn btn--primary type--uppercase" href="/signup">
+                    <span class="btn__text">
+                        JOIN AS A CONTRIBUTOR
+                    </span>
+                </a>
+            </div>
         </div>
+        <!--end of row-->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="feature feature-1 boxed boxed--border bg--white">
+                    <h5>Why to Choose Sowarstock?</h5>
+                    <p>
+                        14 December, 2018
+                    </p>
+                    <a href="#">
+                        Coming Soon
+                    </a>
+                </div>
+                <!--end feature-->
+            </div>
+            <div class="col-md-4">
+                <div class="feature feature-1 boxed boxed--border bg--white">
+                    <h5>Know More About Sowarstock?</h5>
+                    <p>
+                        14 December, 2018
+                    </p>
+                    <a href="#">
+                        Coming Soon
+                    </a>
+                </div>
+                <!--end feature-->
+            </div>
+            <div class="col-md-4">
+                <div class="feature feature-1 boxed boxed--border bg--white">
+                    <h5>Best Selling Images</h5>
+                    <p>
+                        14 December, 2018
+                    </p>
+                    <a href="#">
+                        Coming Soon
+                    </a>
+                </div>
+                <!--end feature-->
+            </div>
+        </div>
+        <!--end of row-->
+    </div>
+    <!--end of container-->
+</section>
+<section class="switchable bg--secondary">
+    <div class="container">
+        <div class="row justify-content-around">
+            <div class="col-md-8 col-lg-7">
+                <h2>Best Artists from MENA Area</h2>
+                <p class="lead">
+                    We are a community of creative people from MENA area and other countries around the globe with a common goal, to find the beauty that's hidden in the sand. We pride our self with the product that we provide.
+                </p>
+                <p class="lead">
+                    We provide an easy to use platform for creative professionals to make a revenue of their work. We protect the rights of our creative partners and licenses their work to a global market. Anyone can be a creative partner by just agreeing to our Terms & Conditions and sending us their personal work, simplicity at it’s finest. We stand for creative professionalism and our platform offers Photographs, Calligraphy, Vectors, and Drawing.
+                </p>
+            </div>
+            <div class="col-md-4 col-lg-3">
+                <div class="text-block">
+                    <h5>Global</h5>
+                    <p>
+                        support@sowarstock.com
+                    </p>
+                </div>
+                <div class="text-block">
+                    <h5>Cheynne</h5>
+                    <p>
+                        Incorp Services, Inc.
+                        <br> 1910 Thomas Ave
+                        <br> Cheyenne, WY 82001
+                    </p>
+                </div>
+                <div class="text-block">
+                    <h5>Almanakh</h5>
+                    <p>
+                        Alhasan Bin Ali St.
+                        <br> Buliding No. 5271
+                        <br> 32917-6657
+                        <br> Almanakh, Tarout, KSA
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!--end of row-->
+    </div>
+    <!--end of container-->
+</section>
+<section class="text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-12">
+                <div class="feature">
+                    <div class="radial radial--active" data-value="33" data-size="208" data-bar-width="8" data-color="#4a90e2" style="height: 208px; width: 208px; margin-top: -10em">
+                        <span class="h3 radial__label" style="margin-top:6em">Sign up</span>
+                    <canvas height="416" width="416" style="height: 208px; width: 208px; margin-top:-5em"></canvas></div>
+                    <!--end radial-->
+                    <p style="margin-top:15em">
+                        Sign up with Sowarstock and join other contributors
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4 col-12">
+                <div class="feature">
+                    <div class="radial radial--active" data-value="66" data-size="208" data-bar-width="8" data-color="#4a90e2" style="height: 208px; width: 208px; margin-top: -10em">
+                        <span class="h3 radial__label" style="margin-top:6em">Upload</span>
+                    <canvas height="416" width="416" style="height: 208px; width: 208px; margin-top:-5em"></canvas></div>
+                    <!--end radial-->
+                    <p style="margin-top:15em">
+                        Start listing your photos, drawings and calligraphy work.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4 col-12">
+                <div class="feature">
+                    <div class="radial radial--active" data-value="100" data-size="208" data-bar-width="8" data-color="#4a90e2" style="height: 208px; width: 208px; margin-top: -10em">
+                        <span class="h3 radial__label" style="margin-top:6em">Earn</span>
+                    <canvas height="416" width="416" style="height: 208px; width: 208px; margin-top:-5em"></canvas></div>
+                    <!--end radial-->
+                    <p style="margin-top:15em">
+                        When someone sees your work and buys it, you will earn money
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!--end of row-->
+    </div>
+    <!--end of container-->
+</section>
+<section class="imageblock switchable feature-large bg--dark">
+    <div class="imageblock__content col-lg-6 col-md-4 pos-right">
+        <div class="background-image-holder" style="opacity: 1;">
+            <img alt="image" src="{% static 'ssw/img/construction-2.jpg' %}">
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5 col-md-7">
+                <h2>Best Images from MENA Area</h2>
+                <p class="lead">
+                    We offer a high-quality licensed content that match with different needs and multiple type of projects.
+                </p>
+                <p class="lead">
+                     Take a look at our collection, choose the images you need, buy a license, download & use directly.
+                </p>
+            </div>
+        </div>
+        <!--end of row-->
+    </div>
+    <!--end of container-->
+</section>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-lg-8">
+                <h2>Get In Touch</h2>
+                <p class="lead">
+                    We would love to hear your feedback, comments or suggestions regarding your experience with Sowarstock's website.
+                </p>
+            </div>
+        </div>
+        <!--end of row-->
+    </div>
+    <!--end of container-->
+</section>
+<section class="switchable">
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-md-5">
+                <p class="lead">
+                    E:
+                    <a href="#">support@sowarstock.com</a>
+                    <br> P: +966 508990660
+                </p>
+                <p class="lead">
+                    To enroll or for any general information, please contact us on email, whatsapp, or use the form here.
+                </p>
+                <p class="lead">
+                    We endeavor to answer all enquiries within 48 hours on business days.
+                </p>
+            </div>
+            <div class="col-md-6 col-12">
+                <form method="post" action="" class="row mx-0">
+                    {% csrf_token %}
+                    <div class="col-md-6 col-12">
+                        <label>Your Name:</label>
+                        <input type="text" name="name" id="name" class="validate-required">
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <label>Email Address:</label>
+                        <input type="email" name="email" id="email" class="validate-required validate-email">
+                    </div>
+                    <div class="col-md-12 col-12">
+                        <label>Message:</label>
+                        <textarea rows="4" name="message" id="message" class="validate-required"></textarea>
+                    </div>
+                    <div class="col-md-5 col-lg-4 col-6">
+                        <button id="send_enquiry_button" type="submit" class="btn sowar_stock_color type--uppercase">Send Enquiry</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!--end of row-->
+    </div>
+    <!--end of container-->
+</section>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+$(document).ready(function(){
+
+    $("#send_enquiry_button").click(function(){
+        $(this).prop("disabled",true)
+        {% if LANGUAGE_CODE == 'ar' %}
+            $(this).html("... جاري الإرسال")
+        {% else %}
+            $(this).html("Submitting ... ")
+        {% endif %}
+
+        $(this).closest("form").submit()
+    })
+})
+</script>
 {% endblock %}

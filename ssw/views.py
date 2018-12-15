@@ -69,6 +69,14 @@ def get_country_codes_json():
 
 # Create your views here.
 def landing(request):
+    if request.method == "POST":
+        name = request.POST["name"]
+        email = request.POST["email"]
+        message = request.POST["message"]
+        body = "name: {}, email: {}, message: {}".format(name,email,message)
+        send_mail("contact us inquery", body, email, ["support@sowarstock.com"])
+        messages.success(request, _("Thanks for your enquiry, we'll be in touch shortly."))
+        return HttpResponseRedirect("/")
     return render(request, "ssw/landing.html", {"user": getSowarStockUser(request.user),
                                                 "activeDashboardMenu": "home"})
 
@@ -260,7 +268,8 @@ def contact(request):
         body = "name: {}, email: {}, message: {}".format(name,email,message)
         send_mail("contact us inquery", body, email, ["support@sowarstock.com"])
         messages.success(request, _("Thanks for your enquiry, we'll be in touch shortly."))
-    return render(request, "ssw/contact.html", {"user":getSowarStockUser(request.user), "activeDashboardMenu": "contact"} )
+        return HttpResponseRedirect("/contact")
+    return render(request, "ssw/contact2.html", {"user":getSowarStockUser(request.user), "activeDashboardMenu": "contact"} )
 
 
 @login_required

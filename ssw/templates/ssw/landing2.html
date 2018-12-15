@@ -1,0 +1,147 @@
+{% extends "ssw/main.html" %}
+{% load static from staticfiles %}
+{% load i18n %}
+{% block title %}
+{% trans "Sowarstock"%}
+{% endblock %}
+
+{% block content %}
+<div class="main-container">
+            <section class="page-navigator">
+                <ul>
+                    <li>
+                        <a href="#home" class="inner-link" data-title="Home"></a>
+                    </li>
+                    <li>
+                        <a href="#testimony" class="inner-link inner-link--active" data-title="Testimony"></a>
+                    </li>
+                    <li>
+                        <a href="#industries" class="inner-link" data-title="Join Us"></a>
+                    </li>
+                    <li>
+                        <a href="#footer" class="inner-link" data-title="Contact Us"></a>
+                    </li>
+                </ul>
+            </section>
+            <section id="home" class="imagebg parallax height-100 text-center" data-overlay="1">
+                <div class="background-image-holder" style="transform: translate3d(0px, 499px, 0px); opacity: 1;">
+                    <img alt="background" src="{% static 'ssw/img/drone-1.jpg' %}">
+                </div>
+                <div class="container pos-vertical-center">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-7">
+                            <img alt="Image" src="{% static 'ssw/img/headline-4.png' %}">
+                            <p class="lead">
+                                High-quality drone photography and videography shot by
+                                <br class="hidden-xs hidden-sm"> professionals at your location.
+                            </p>
+                            <a class="btn btn--primary type--uppercase" href="#">
+                                <span class="btn__text">
+                                    Book A Consultation
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                    <!--end of row-->
+                </div>
+                <!--end of container-->
+            </section>
+            <section id="testimony" style="padding-top:0">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="slider slider--inline-arrows" data-arrows="true" data-children="3">
+                                <ul class="slides flickity-enabled is-draggable" tabindex="0">
+                                <div class="flickity-viewport" style="height: 189px;"><div class="flickity-slider" style="left: 0px; transform: translate3d(-37.52%, 0px, 0px);"><li class="slide" style="position: absolute; left: 0%;">
+                                        <div class="testimonial row justify-content-center">
+                                            <div class="col-lg-2 col-md-4 col-6 text-center">
+                                                <img class="testimonial__image" alt="Image" src="{% static 'ssw/img/avatar-round-1.png' %}">
+                                            </div>
+                                            <div class="col-lg-7 col-md-8 col-12">
+                                                <span class="h3">“We’ve been using Stack to prototype designs quickly and efficiently. Needless to say we’re hugely impressed by the style and value.”
+                                                </span>
+                                                <h5>Maguerite Holland</h5>
+                                                <span>Interface Designer — Yoke</span>
+                                            </div>
+                                        </div>
+                                    </li><li class="slide is-selected" style="position: absolute; left: 100%;">
+                                        <div class="testimonial row justify-content-center">
+                                            <div class="col-lg-2 col-md-4 col-6 text-center">
+                                                <img class="testimonial__image" alt="Image" src="{% static 'ssw/img/avatar-round-4.png' %}">
+                                            </div>
+                                            <div class="col-lg-7 col-md-8 col-12">
+                                                <span class="h3">“I've been using Medium Rare's templates for a couple of years now and Stack is without a doubt their best work yet. It's fast, performant and absolutely stunning.”
+                                                </span>
+                                                <h5>Lucas Nguyen</h5>
+                                                <span>Freelance Designer</span>
+                                            </div>
+                                        </div>
+                                    </li><li class="slide" style="position: absolute; left: 200%;">
+                                        <div class="testimonial row justify-content-center">
+                                            <div class="col-lg-2 col-md-4 col-6 text-center">
+                                                <img class="testimonial__image" alt="Image" src="{% static 'ssw/img/avatar-round-3.png' %}">
+                                            </div>
+                                            <div class="col-lg-7 col-md-8 col-12">
+                                                <span class="h3">“Variant has been a massive plus for my workflow — I can now get live mockups out in a matter of hours, my clients really love it.”
+                                                </span>
+                                                <h5>Rob Vasquez</h5>
+                                                <span>Interface Designer — Yoke</span>
+                                            </div>
+                                        </div>
+                                    </li></div></div><button class="flickity-prev-next-button previous" type="button" aria-label="previous"><svg viewBox="0 0 100 100"><path d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z" class="arrow"></path></svg></button><button class="flickity-prev-next-button next" type="button" aria-label="next"><svg viewBox="0 0 100 100"><path d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z" class="arrow" transform="translate(100, 100) rotate(180) "></path></svg></button></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end of row-->
+                </div>
+                <!--end of container-->
+            </section>
+            <section class="height-100 imagebg parallax" data-overlay="3" id="industries">
+                <div class="background-image-holder" style="transform: translate3d(0px, 78.4844px, 0px); opacity: 1;">
+                    <img alt="background" src="{% static 'ssw/img/drone-2.jpg' %}">
+                </div>
+                <div class="container pos-vertical-center">
+                    <div class="row">
+                        <div class="col-md-4">
+                        </div>
+                        <div class="col-md-4">
+                            <div class="feature feature-4 boxed boxed--lg boxed--border">
+                                <i class="fas fa-user fa-2x"></i>
+                                <h3 style="font-weight: bold">For Contributors</h3>
+                                <hr>
+                                <p class="h3">
+                                    If you are a photographer, designer or a painter, you could earn money from your works.
+                                    Join us at Sowarstock and start listing your products.
+                                </p>
+                                <a class="btn btn--primary" href="/signup">
+                                    <span class="btn__text" style="font-size:large">
+                                        Join us
+                                    </span>
+                                </a>
+                            </div>
+                            <!--end feature-->
+                        </div>
+                        <div class="col-md-4">
+                            <div class="feature feature-4 boxed boxed--lg boxed--border">
+                                <i class="fas fa-users fa-2x"></i>
+                                <h3 style="font-weight: bold">For Clients</h3>
+                                <hr>
+                                <p class="h3">
+                                    If you are interested in any of the products listed in Sowarstock's website,
+                                    you could join Sowarstock's clients and start buying directly.
+                                </p>
+                                <a class="btn btn--primary" href="/signup">
+                                    <span class="btn__text" style="font-size:large">
+                                        Create Account
+                                    </span>
+                                </a>
+                            </div>
+                            <!--end feature-->
+                        </div>
+                    </div>
+                    <!--end of row-->
+                </div>
+                <!--end of container-->
+            </section>
+        </div>
+{% endblock %}
