@@ -17,7 +17,7 @@
                 <form method="post" action="">
                     {% csrf_token %}
                     <input type="email" name="email" id="email" placeholder='{% trans "Email Address"%}'>
-                    <button id="recover_button" class="btn sowar_stock_color type--uppercase" type="submit">{% trans "Recover Account"%}</button>
+                    <button id="recover_button" class="btn btn--primary type--uppercase" type="submit">{% trans "Recover Account"%}</button>
                 </form>
                 <span class="type--fine-print block">{% trans "Dont have an account yet?"%}
                     <a href="/signup">{% trans "Create account"%}</a>
