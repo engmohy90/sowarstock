@@ -148,7 +148,7 @@ USE_L10N = True
 USE_TZ = True
 
 ### PAYPAL ###
-PAYPAL_TEST = True
+PAYPAL_TEST = False
 PAYPAL_BUY_BUTTON_IMAGE = "https://www.braintreepayments.com/images/features/paypal/paypal-button@2x-d5ec2863.png"
 
 
