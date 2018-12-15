@@ -31,6 +31,7 @@
         {% block head %}{% endblock %}
     </head>
     <body class=" ">
+        <a id="start" data-scroll-id="start" tabindex="-1" style="outline: none;"></a>
         <section class="bar bar-3 bar--sm bg--secondary">
             <div class="container">
                 <div class="row">
@@ -212,9 +213,7 @@
                                                             </li>
                                                         </ul>
                                                     </div>
-                                                    <!--end dropdown content-->
                                                 </div>
-                                                <!--end row-->
                                             </div>
                                         </div>
                                     </li>
@@ -226,7 +225,6 @@
                                     </li>
                                 </ul>
                             </div>
-                            <!--end module-->
                             <div class="bar__module">
                                 {% if not user.is_authenticated %}
                                     <a class="btn btn--sm type--uppercase" href="/login">
@@ -241,7 +239,6 @@
                                     </a>
                                 {% endif %}
                             </div>
-                            <!--end module-->
                         </div>
                     </div>
                     <!--end of row-->

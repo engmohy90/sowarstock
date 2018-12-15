@@ -14,7 +14,7 @@
 }
 
 .bar-1 .menu-horizontal > li > .dropdown__trigger, .bar-1 .menu-horizontal > li > a{
-    font-size: 1.2em;
+    font-size: small;
 }
 
 .menu-horizontal > li:not(:hover) > a{
@@ -153,6 +153,15 @@ input[type] + input[type]{
     color: white;
 }
 
-.bar-1 .menu-horizontal > li > a, .bar-1 .menu-horizontal > li > .dropdown__trigger {
-    font-size: small;
+@media only screen and (min-width: 400px) {
+  /* For desktop: */
+  .center-title-to-radial{
+    margin-top:8em
 }
+
+@media only screen and (min-width: 768px) {
+  /* For desktop: */
+  .center-title-to-radial{
+    margin-top:6em
+}
+
