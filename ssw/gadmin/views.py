@@ -354,6 +354,9 @@ def requests_approve(request, pk):
             r.owner.save()
             notify.send(request.user, recipient=r.owner, level="success",
                         verb='Your account has been verified')
+            email_body = loader.render_to_string("ssw/email_new_payment.html", {"user": r.owner})
+            send_mail("تم توثيق حسابك", "", "Sowarstock", [r.owner.email], False,
+                      None, None, None, email_body)
         messages.success(request, "Request has been approved")
         return HttpResponseRedirect("/admin/requests")
     else:
