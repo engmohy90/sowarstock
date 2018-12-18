@@ -151,7 +151,7 @@ USE_TZ = True
 PAYPAL_TEST = False
 PAYPAL_BUY_BUTTON_IMAGE = "https://www.braintreepayments.com/images/features/paypal/paypal-button@2x-d5ec2863.png"
 
-SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = False
 
 ### EMAIL ###
 EMAIL_USE_TLS = True
