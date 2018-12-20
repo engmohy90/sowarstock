@@ -1,8 +1,10 @@
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.db.models import Sum
 from django.shortcuts import render
-
+import uuid
+import boto3
 from ssw import models
 from ssw.views import getSowarStockUser
 
@@ -126,4 +128,38 @@ def reviews_undread_to_read(request):
             review.read_by_admin = True
             review.save()
     return JsonResponse({"result": "success"})
+
+
+@login_required
+def sign_s3(request):
+    S3_BUCKET = settings.S3_BUCKET
+    file_type = request.GET.get('file_type', '')
+    if "png" in file_type:
+        extension = "png"
+    elif "jpeg" in file_type:
+        extension = "jpeg"
+    elif "eps" in file_type:
+        extension = "eps"
+    else:
+        extension = "pdf"
+    destination = request.GET.get("destination", '')
+    file_name = "%s.%s" % (uuid.uuid4(), extension)
+    s3 = boto3.client('s3',
+                      aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+                      aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY
+                      )
+    presigned_post = s3.generate_presigned_post(
+        Bucket=S3_BUCKET,
+        Key="{}/{}".format(destination, file_name),
+        Fields={"acl": "public-read", "Content-Type": file_type},
+        Conditions=[
+            {"acl": "public-read"},
+            {"Content-Type": file_type}
+        ],
+        ExpiresIn=3600
+    )
+    return JsonResponse({
+        'data': presigned_post,
+        'url': 'https://%s.s3.amazonaws.com/%s/%s' % (S3_BUCKET, destination, file_name)
+      })
 

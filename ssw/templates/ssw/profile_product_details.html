@@ -25,8 +25,8 @@
                     <h2>{{product.title}}</h2>
                 </div>
                 <div class="row">
-                    {% if product.owner.profile_image %}
-                        <image src="{{product.owner.profile_image.url}}" class="product-profile-image img-circle" style="vertical-align:middle"/>
+                    {% if product.owner.profile_image_url %}
+                        <image src="{{product.owner.profile_image_url}}" class="product-profile-image img-circle" style="vertical-align:middle"/>
                     {% else %}
                         <image src="{% static 'ssw/img/default-avatar.png' %}" class="product-profile-image img-circle" style="vertical-align:middle"/>
                     {% endif %}
@@ -88,8 +88,8 @@
                                     {% if product.review_set.all %}
                                         {% for review in product.review_set.all reversed %}
                                             <div class="row">
-                                                {% if review.owner.profile_image %}
-                                                    <image src="{{review.owner.profile_image.url}}" class="product-profile-image img-circle" style="vertical-align:middle"/>
+                                                {% if review.owner.profile_image_url %}
+                                                    <image src="{{review.owner.profile_image_url}}" class="product-profile-image img-circle" style="vertical-align:middle"/>
                                                 {% else %}
                                                     <image src="{% static 'ssw/img/default-avatar.png' %}" class="product-profile-image img-circle" style="vertical-align:middle"/>
                                                 {% endif %}

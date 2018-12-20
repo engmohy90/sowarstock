@@ -43,9 +43,9 @@ Order {{order.order_no}}
                                         <td>${{ item.price }}</td>
                                         <td>
                                             {% if item.product.file_type == "jpeg/tiff" %}
-                                                <a href="{{item.product.image.url}}" class="btn btn--primary color--white">Download</a>
+                                                <a href="{{item.product.image_url}}" class="btn btn--primary color--white">Download</a>
                                             {% else %}
-                                                <a href="{{item.product.file.url}}" class="btn btn--primary color--white">Download</a>
+                                                <a href="{{item.product.file_url}}" class="btn btn--primary color--white">Download</a>
                                             {% endif %}
                                         </td>
                                     </tr>

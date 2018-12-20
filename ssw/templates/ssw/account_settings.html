@@ -12,10 +12,12 @@ Account Settings
                         <div class="col-lg-4">
                             <div class="boxed boxed--lg boxed--border">
                                 <div class="text-block text-center">
-                                    {% if user.profile_image %}
-                                        <img src="{{ user.profile_image.url }}" class="image--sm img-circle" alt="User Image">
+                                    {% if user.profile_image_url %}
+                                        <a href="{{user.profile_image_url}}">
+                                            <img id="avatar_preview" src="{{ user.profile_image_url }}" class="image--sm img-circle" alt="User Image">
+                                        </a>
                                     {% else %}
-                                        <img src="{% static 'ssw/img/default-avatar.png' %}" class="image--sm img-circle" alt="User Image">
+                                        <img src="{% static 'ssw/img/default-avatar.png' %}" id="avatar_preview" class="image--sm img-circle" alt="User Image">
                                     {% endif %}
                                     <span class="h5">{{user.first_name}} {{user.last_name}}</span>
                                     <span>{{user.get_type_display|title}}</span>
@@ -65,8 +67,21 @@ Account Settings
                                             <span class="color--error"> unverified</span>
                                         {% endif %}
                                     </h5>
-                                    <form method="post" action="{% url 'update_personal_info' %}" enctype="multipart/form-data">
+                                    <p>
+                                        <label for="profile_image">{% if user.profile_image_url %}Change {% endif %}Profile Image:</label>
+                                        <input type="file" accept="image/*" id="profile_image" name="profile_image">
+                                        <i style="color:red" id="profile_image_error_msg"></i>
+                                    </p>
+                                    <form method="post" action="{% url 'update_personal_info' %}">
                                         {% csrf_token %}
+                                            {% if user.profile_image_url %}
+                                                <div class="input-checkbox input-checkbox--switch">
+                                                    <input type="checkbox" name="profile_image-clear" id="profile_image-clear">
+                                                    <label for="profile_image-clear"></label>
+                                                </div>
+                                                <span> Delete Profile Image </span>
+                                            {% endif %}
+                                            <input type="hidden" id="avatar-url" name="avatar-url">
                                             {{ personal_info_form.as_p }}
                                             <div class="col-lg-3 col-md-4">
                                                 <button type="submit" class="btn btn--primary type--uppercase">Save Profile</button>
@@ -85,8 +100,8 @@ Account Settings
                                 </div>
                                 <div id="account-id" class="hidden account-tab">
                                     <h4>Photo ID</h4>
-                                    {% if user.photo_id %}
-                                        <p>Photo ID: <a href="{{user.photo_id.url}}">{{user.photo_id}}</a></p>
+                                    {% if user.photo_id_url %}
+                                        <p>Photo ID: <a href="{{user.photo_id_url}}">View</a></p>
                                         <p>
                                             <b>Status:  </b>
                                             {% if user.photo_id_verified %}
@@ -99,7 +114,7 @@ Account Settings
 
                                         </p>
                                     {% else %}
-                                        <form method="post" action="{% url 'update_photo_id' %}" enctype="multipart/form-data">
+                                        <form method="post" action="{% url 'update_photo_id' %}">
                                             {% csrf_token %}
                                                 {{ photo_id_form.as_p }}
                                                 <div class="col-lg-3 col-md-4">
@@ -289,7 +304,76 @@ Account Settings
           source: substringMatcher(codes)
         });
 
-        wrapCheckbox("profile_image-clear_id", "clear_checkbox_wrapper", "Delete")
+        $("#profile_image").change(function(){
+            var input = $(this)
+            var files = document.getElementById("profile_image").files;
+            var file = files[0];
+
+            if(file){
+                var size, img, width, height;
+                size = file.size/1024/1024
+                var _URL = window.URL || window.webkitURL;
+                img = new Image();
+                img.onload = function () {
+                    width = this.width
+                    height = this.height
+
+                    if(width != height){
+                        $("#profile_image_error_msg").html("your profile image has to be square")
+                        input.val('')
+                    }else{
+                        $("#profile_image_error_msg").html("")
+                        getSignedRequest(file);
+                    }
+
+                };
+                img.src = _URL.createObjectURL(file);
+
+            }else{
+                $("#profile_image_error_msg").html("")
+            }
+        })
+
+        function getSignedRequest(file){
+          var xhr = new XMLHttpRequest();
+          xhr.open("GET", "/ajax/sign_s3?file_type="+file.type+"&destination=profile_images");
+          xhr.onreadystatechange = function(){
+            if(xhr.readyState === 4){
+              if(xhr.status === 200){
+                var response = JSON.parse(xhr.responseText);
+                uploadFile(file, response.data, response.url);
+              }
+              else{
+                alert("Oops! An error has occurred ! Please try again");
+              }
+            }
+          };
+          xhr.send();
+        }
+
+        function uploadFile(file, s3Data, url){
+          var xhr = new XMLHttpRequest();
+          xhr.open("POST", s3Data.url);
+
+          var postData = new FormData();
+          for(key in s3Data.fields){
+            postData.append(key, s3Data.fields[key]);
+          }
+          postData.append('file', file);
+
+          xhr.onreadystatechange = function() {
+            if(xhr.readyState === 4){
+              if(xhr.status === 200 || xhr.status === 204){
+                document.getElementById("avatar_preview").src = url;
+                document.getElementById("avatar-url").value = url;
+              }
+              else{
+                alert("Could not upload file.");
+              }
+           }
+          };
+          xhr.send(postData);
+        }
 
         $("#payment_settings_button").click(function(e){
             $(this).prop("disabled",true)

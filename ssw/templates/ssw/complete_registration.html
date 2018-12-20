@@ -15,7 +15,7 @@ Profile
                     <h4>Complete Registration</h4>
                     <hr>
                     <form id="complete_registration_form" class="wizard" method="post"
-                          action="{% url 'complete_registration' %}" enctype="multipart/form-data">
+                          action="{% url 'complete_registration' %}">
                         {% csrf_token %}
                         <h5>Personal Information</h5>
                         <section style="overflow:scroll">
@@ -60,9 +60,11 @@ Profile
                             <br>
                             <div class="row">
                                 <div class="col-md-6">
-                                    {{personal_info_form.profile_image.label_tag}}
-                                    {{personal_info_form.profile_image}}
-                                    {{personal_info_form.profile_image.errors}}
+                                    <label for="profile_image">Profile Image:</label>
+                                    <img id="profile_image_loader" class="hidden" style="max-height:1.5em" src="{% static 'ssw/img/ajax-loader.gif' %}">
+                                    <input type="file" accept="image/*" id="profile_image" name="profile_image">
+                                    <i style="color:red" id="profile_image_error_msg"></i>
+                                    <input type="hidden" id="profile_image_url" name="profile_image_url">
                                 </div>
                                 <div class="col-md-6">
                                     {{personal_info_form.preferred_language.label_tag}}
@@ -120,15 +122,23 @@ Profile
                             <h5>Please upload a valid government ID (Passport or National ID). These will help us
                                 verify that you are a real person and will help us make payments to you when you have
                                 any earnings from our site.</h5>
-                            {{photo_id_form.photo_id.label_tag}}<span class="color--error" style="font-size:large">*</span>
-                            {{photo_id_form.photo_id}}
-                            {{photo_id_form.photo_id.errors}}
+                            <label for="photo_id">Photo ID:</label> <span class="color--error" style="font-size:large">*</span>
+                            <img id="photo_id_loader" class="hidden" style="max-height:1.5em" src="{% static 'ssw/img/ajax-loader.gif' %}">
+                            <input type="file" id="photo_id" name="photo_id">
+                            <input type="hidden" id="photo_id_url" name="photo_id_url">
                         </section>
                         <h5>Upload Sample Photos</h5>
                         <section style="overflow:scroll">
                             <h5>Please upload 10 of your sample photos. These will help us verify you as a contributor.
                                 They will not be displayed in our site</h5>
-                            {{sample_product_formset}}
+                            {% for i in "xxxxxxxxxx" %}
+                                <p>
+                                    <label for="sample_image_{{ forloop.counter }}">Sample Image {{ forloop.counter }}</label>
+                                    <img id="sample_image_{{forloop.counter}}_loader" class="hidden" style="max-height:1.5em" src="{% static 'ssw/img/ajax-loader.gif' %}">
+                                    <input type="file" accept="image/*" id="sample_image_{{ forloop.counter }}" name="sample_image_{{ forloop.counter }}">
+                                    <input type="hidden" id="sample_image_{{ forloop.counter }}_url" name="sample_image_{{ forloop.counter }}_url">
+                                </p>
+                            {% endfor %}
                         </section>
                     </form>
 
@@ -208,6 +218,235 @@ Profile
             anchor.parent().after('<br><i class="color--error">Please verify your email before proceeding</i>')
         {% endif %}
 
+        $("#profile_image").change(function(){
+            var input = $(this)
+            var files = document.getElementById("profile_image").files;
+            var file = files[0];
+            $("#profile_image_loader").removeClass("hidden")
+            var anchor = $('a[href="#next"]')
+            anchor.parent().addClass("disabled")
+            anchor.attr("href","")
+
+            if(file){
+                var size, img, width, height;
+                size = file.size/1024/1024
+                var _URL = window.URL || window.webkitURL;
+                img = new Image();
+                img.onload = function () {
+                    width = this.width
+                    height = this.height
+
+                    if(width != height){
+                        $("#profile_image_loader").addClass("hidden")
+                        anchor.parent().removeClass("disabled")
+                        anchor.attr("href","#next")
+                        $("#profile_image_error_msg").html("your profile image has to be square")
+                        input.val('')
+                    }else{
+                        $("#profile_image_error_msg").html("")
+                        getProfileImageSignedRequest(file,anchor);
+                    }
+
+                };
+                img.src = _URL.createObjectURL(file);
+
+            }else{
+                $("#profile_image_loader").addClass("hidden")
+                anchor.parent().removeClass("disabled")
+                anchor.attr("href","#next")
+                $("#profile_image_error_msg").html("")
+            }
+        })
+
+        function getProfileImageSignedRequest(file,anchor){
+          var xhr = new XMLHttpRequest();
+          xhr.open("GET", "/ajax/sign_s3?file_type="+file.type+"&destination=profile_images");
+          xhr.onreadystatechange = function(){
+            if(xhr.readyState === 4){
+              if(xhr.status === 200){
+                var response = JSON.parse(xhr.responseText);
+                uploadProfileImageFile(file, response.data, response.url, anchor);
+              }
+              else{
+                alert("Oops! An error has occurred ! Please try again");
+                $("#profile_image_loader").addClass("hidden")
+                anchor.parent().removeClass("disabled")
+                anchor.attr("href","#next")
+              }
+            }
+          };
+          xhr.send();
+        }
+
+        function uploadProfileImageFile(file, s3Data, url, anchor){
+          var xhr = new XMLHttpRequest();
+          xhr.open("POST", s3Data.url);
+
+          var postData = new FormData();
+          for(key in s3Data.fields){
+            postData.append(key, s3Data.fields[key]);
+          }
+          postData.append('file', file);
+
+          xhr.onreadystatechange = function() {
+            if(xhr.readyState === 4){
+              if(xhr.status === 200 || xhr.status === 204){
+                document.getElementById("profile_image_url").value = url;
+                $("#profile_image_loader").addClass("hidden")
+                anchor.parent().removeClass("disabled")
+                anchor.attr("href","#next")
+              }
+              else{
+                alert("Could not upload file.");
+                $("#profile_image_loader").addClass("hidden")
+                anchor.parent().removeClass("disabled")
+                anchor.attr("href","#next")
+              }
+
+           }
+          };
+          xhr.send(postData);
+        }
+
+        $("#photo_id").change(function(){
+            var input = $(this)
+            var files = document.getElementById("photo_id").files;
+            var file = files[0];
+            $("#photo_id_loader").removeClass("hidden")
+            var anchor = $('a[href="#next"]')
+            anchor.parent().addClass("disabled")
+            anchor.attr("href","")
+
+            if(file){
+                getPhotoIDSignedRequest(file,anchor);
+            }else{
+                $("#profile_image_error_msg").html("")
+                $("#photo_id_loader").addClass("hidden")
+                anchor.parent().removeClass("disabled")
+                anchor.attr("href","#next")
+            }
+        })
+
+        function getPhotoIDSignedRequest(file,anchor){
+          var xhr = new XMLHttpRequest();
+          xhr.open("GET", "/ajax/sign_s3?file_type="+file.type+"&destination=photo_id");
+          xhr.onreadystatechange = function(){
+            if(xhr.readyState === 4){
+              if(xhr.status === 200){
+                var response = JSON.parse(xhr.responseText);
+                uploadPhotoIDFile(file, response.data, response.url, anchor);
+              }
+              else{
+                alert("Oops! An error has occurred ! Please try again");
+                $("#photo_id_loader").addClass("hidden")
+                anchor.parent().removeClass("disabled")
+                anchor.attr("href","#next")
+              }
+            }
+          };
+          xhr.send();
+        }
+
+        function uploadPhotoIDFile(file, s3Data, url, anchor){
+          var xhr = new XMLHttpRequest();
+          xhr.open("POST", s3Data.url);
+
+          var postData = new FormData();
+          for(key in s3Data.fields){
+            postData.append(key, s3Data.fields[key]);
+          }
+          postData.append('file', file);
+
+          xhr.onreadystatechange = function() {
+            if(xhr.readyState === 4){
+              if(xhr.status === 200 || xhr.status === 204){
+                document.getElementById("photo_id_url").value = url;
+                $("#photo_id_loader").addClass("hidden")
+                anchor.parent().removeClass("disabled")
+                anchor.attr("href","#next")
+              }
+              else{
+                alert("Could not upload file.");
+                $("#photo_id_loader").addClass("hidden")
+                anchor.parent().removeClass("disabled")
+                anchor.attr("href","#next")
+              }
+           }
+          };
+          xhr.send(postData);
+        }
+
+        for(i=1;i<11;i++){
+            var index = i
+            $("#sample_image_"+i).change(function(){
+                var input = $(this)
+                var index = input.attr('id').split("_")[2]
+                var files = document.getElementById("sample_image_"+index).files;
+                var file = files[0];
+                $("#sample_image_"+index+"_loader").removeClass("hidden")
+                var anchor = $('a[href="#finish"]')
+                anchor.parent().addClass("disabled")
+                anchor.attr("href","")
+
+                if(file){
+                    getSampleProductSignedRequest(file, index, anchor);
+                }else{
+                    $("#profile_image_error_msg").html("")
+                    $("#sample_image_"+index+"_loader").addClass("hidden")
+                    anchor.parent().removeClass("disabled")
+                    anchor.attr("href","#finish")
+                }
+            })
+        }
+
+        function getSampleProductSignedRequest(file, index, anchor){
+          var xhr = new XMLHttpRequest();
+          xhr.open("GET", "/ajax/sign_s3?file_type="+file.type+"&destination=sample-products");
+          xhr.onreadystatechange = function(){
+            if(xhr.readyState === 4){
+              if(xhr.status === 200){
+                var response = JSON.parse(xhr.responseText);
+                uploadSampleProductFile(file, response.data, response.url, index, anchor);
+              }
+              else{
+                alert("Oops! An error has occurred ! Please try again");
+                $("#sample_image_"+index+"_loader").addClass("hidden")
+                anchor.parent().removeClass("disabled")
+                anchor.attr("href","#finish")
+              }
+            }
+          };
+          xhr.send();
+        }
+
+        function uploadSampleProductFile(file, s3Data, url, index, anchor){
+          var xhr = new XMLHttpRequest();
+          xhr.open("POST", s3Data.url);
+
+          var postData = new FormData();
+          for(key in s3Data.fields){
+            postData.append(key, s3Data.fields[key]);
+          }
+          postData.append('file', file);
+
+          xhr.onreadystatechange = function() {
+            if(xhr.readyState === 4){
+              if(xhr.status === 200 || xhr.status === 204){
+                document.getElementById("sample_image_"+index+"_url").value = url;
+                $("#sample_image_"+index+"_loader").addClass("hidden")
+                anchor.parent().removeClass("disabled")
+                anchor.attr("href","#finish")
+              }
+              else{
+                alert("Could not upload file.");
+                $("#sample_image_"+index+"_loader").addClass("hidden")
+                anchor.parent().removeClass("disabled")
+                anchor.attr("href","#finish")
+              }
+           }
+          };
+          xhr.send(postData);
+        }
 
         $('a[href="#finish"]').click(function(){
             var anchor = $(this)
@@ -266,9 +505,9 @@ Profile
                                 }else{
                                     error_msg.html("")
 
-                                    for(i=0;i<10;i++){
+                                    for(i=1;i<11;i++){
 
-                                        var image = $("#id_form-"+i+"-image").val()
+                                        var image = $("#sample_image_"+i).val()
                                         if(image==""){
                                             all_image_uploaded = false
                                         }

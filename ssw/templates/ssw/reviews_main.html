@@ -60,7 +60,6 @@ Reviews
         var count = $('.new_review').length
         if(count > 0){
              $.get( "/ajax/reviews_unread_to_read/", function( data ) {
-                    console.log(data)
                     var result = data.result
                     if(result=="success"){
                         $("#reviews_count").remove()

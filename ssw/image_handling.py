@@ -1,8 +1,9 @@
 from django.conf import settings
 from django.core.files.base import ContentFile
+from boto.s3.connection import S3Connection, Bucket, Key
 from PIL import Image, ExifTags
 from io import BytesIO
-
+import requests
 import uuid
 import os
 
@@ -11,11 +12,40 @@ from . import models
 THUMBNAIL_WIDTH = 500
 THUMBNAIL_HEIGHT = 200
 
+
+def remove_profile_image(user):
+    S3_BUCKET = settings.S3_BUCKET
+    AWS_ACCESS_KEY_ID = settings.AWS_ACCESS_KEY_ID
+    AWS_SECRET_ACCESS_KEY = settings.AWS_SECRET_ACCESS_KEY
+    conn = S3Connection(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY)
+    url_list = user.profile_image_url.split("/")
+    filename = url_list[len(url_list)-1]
+
+    b = Bucket(conn, S3_BUCKET)
+
+    k = Key(b)
+
+    k.key = 'profile_images/' + filename
+
+    b.delete_key(k)
+
+    user.profile_image_url = None
+    user.save()
+
+
+def image_file_from_url(url):
+    response = requests.get(url)
+    base_image = Image.open(BytesIO(response.content))
+    return base_image
+
+
 def create_watermarked_image(product):
     if product.file_type == "jpeg/tiff":
-        base_image = Image.open(product.image)
+        response = requests.get(product.image_url)
+        base_image = Image.open(BytesIO(response.content))
     else:
-        base_image = Image.open(product.file)
+        response = requests.get(product.file_url)
+        base_image = Image.open(BytesIO(response.content))
     for orientation in ExifTags.TAGS.keys():
         if ExifTags.TAGS[orientation] == 'Orientation': break
     try:
@@ -67,7 +97,24 @@ def create_watermarked_image(product):
 
 
 def create_thumbnailed_image(sample_product):
-    base_image = Image.open(sample_product.image)
+    response = requests.get(sample_product.image_url)
+    base_image = Image.open(BytesIO(response.content))
+
+    for orientation in ExifTags.TAGS.keys():
+        if ExifTags.TAGS[orientation] == 'Orientation': break
+    try:
+        exif = dict(base_image._getexif().items())
+        if exif:
+            if exif[orientation]:
+                if exif[orientation] == 3:
+                    base_image = base_image.rotate(180, expand=True)
+                elif exif[orientation] == 6:
+                    base_image = base_image.rotate(270, expand=True)
+                elif exif[orientation] == 8:
+                    base_image = base_image.rotate(90, expand=True)
+    except:
+        print("no exif for this product")
+
     img_io = BytesIO()
     width, height = base_image.size
     ratio = height / width

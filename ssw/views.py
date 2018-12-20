@@ -19,7 +19,7 @@ import random
 import uuid
 
 from . import models, forms
-from .image_handling import create_watermarked_image, create_thumbnailed_image
+from .image_handling import create_watermarked_image, create_thumbnailed_image, remove_profile_image
 
 
 def showCorrectMenu(user):
@@ -466,34 +466,52 @@ def complete_registration(request):
     if not user.completed_registration:
         personal_info_form = forms.ProfilePersonalInfoForm(instance=user)
         address_form = forms.AddressForm()
-        photo_id_form = forms.PhotoIdForm(instance=user)
-        sample_product_formset = forms.SampleProductFormset(queryset=models.SampleProduct.objects.filter(owner=user))
+        #photo_id_form = forms.PhotoIdForm(instance=user)
+        #sample_product_formset = forms.SampleProductFormset(queryset=models.SampleProduct.objects.filter(owner=user))
 
         codes_json = get_country_codes_json()
 
         if request.method == "POST":
             personal_info_form = forms.ProfilePersonalInfoForm(request.POST, request.FILES, instance=user)
             address_form = forms.AddressForm(request.POST, instance=user.address)
-            photo_id_form = forms.PhotoIdForm(request.POST, request.FILES, instance=user)
-            sample_product_formset = forms.SampleProductFormset(request.POST, request.FILES)
-            if personal_info_form.is_valid() and address_form.is_valid() and photo_id_form.is_valid() and sample_product_formset.is_valid():
+            #photo_id_form = forms.PhotoIdForm(request.POST, request.FILES, instance=user)
+            #sample_product_formset = forms.SampleProductFormset(request.POST, request.FILES)
+            if personal_info_form.is_valid() and address_form.is_valid():
                 personal_info_form.save()
                 address = address_form.save()
                 user.address = address
                 user.save()
-                photo_id_form.save()
+                #photo_id_form.save()
+
+                profile_image_url = request.POST.get('profile_image_url', None)
+                if profile_image_url:
+                    user.profile_image_url = profile_image_url
+                    user.save()
+
+                photo_id_url = request.POST.get('photo_id_url', None)
+                if photo_id_url:
+                    user.photo_id_url = photo_id_url
+                    user.save()
+
+                for i in range(1, 11):
+                    sample_image_url = request.POST.get("sample_image_%s_url" % i, None)
+                    if sample_image_url:
+                        sample = models.SampleProduct.objects.create(image_url=sample_image_url, owner=user)
+                        create_thumbnailed_image(sample)
+
                 models.UserRequest.objects.create(owner=user)
+                """
                 samples = sample_product_formset.save(commit=False)
                 for sample in samples:
                     sample.owner = user
                     sample.save()
                     create_thumbnailed_image(sample)
+                """
                 user.completed_registration = True
                 user.save()
                 return HttpResponseRedirect("/thanks-for-completing-registration")
         return render(request, "ssw/complete_registration.html", {"user": user, "personal_info_form": personal_info_form,
-                                                                  "address_form": address_form, "photo_id_form": photo_id_form,
-                                                                  "sample_product_formset": sample_product_formset,
+                                                                  "address_form": address_form,
                                                                   "codes_json": codes_json})
     else:
         return HttpResponseRedirect("/profile")
@@ -541,9 +559,13 @@ def products_new(request):
                 product.public_id = public_id
                 contributor = models.Contributor.objects.get(id=request.user.id)
                 product.owner = contributor
+                if product.file_type == "eps":
+                    file_url = request.POST.get("file_url", None)
+                    product.file_url = file_url
+                else:
+                    image_url = request.POST.get('image_url', None)
+                    product.image_url = image_url
                 product.save()
-                #if product.file_type == "eps":
-                #    eps_to_jpeg(product)
                 create_watermarked_image(product)
                 messages.success(request, "Request to add product has been submitted successfully")
                 return HttpResponseRedirect("/products/")
@@ -639,10 +661,18 @@ def update_personal_info(request):
     if request.method == "POST":
         user = getSowarStockUser(request.user)
         clear_profile_image = request.POST.get('profile_image-clear', None)
+        avatar_url = request.POST.get('avatar-url', None)
+        if avatar_url:
+            # check if user already has a profile image
+            if user.profile_image_url:
+                remove_profile_image(user)
+            user.profile_image_url = avatar_url
+            user.save()
         if clear_profile_image is not None:
-            storage, path = user.profile_image.storage, user.profile_image.path
-            storage.delete(path)
-        personal_info_form = forms.ProfilePersonalInfoForm(request.POST, request.FILES, instance=user)
+            #storage, path = user.profile_image.storage, user.profile_image.path
+            #storage.delete(path)
+            remove_profile_image(user)
+        personal_info_form = forms.ProfilePersonalInfoForm(request.POST, instance=user)
         if personal_info_form.is_valid():
             personal_info_form.save()
             messages.success(request, "Personal Information updated successfully")
@@ -703,7 +733,7 @@ def update_photo_id(request):
         photo_id_form = forms.PhotoIdForm(request.POST, request.FILES, instance=user)
         if photo_id_form.is_valid():
             photo_id_form.save()
-            models.UserRequest.objects.create(owner=user, body=user.photo_id.url)
+            models.UserRequest.objects.create(owner=user, body=user.photo_id_url)
             messages.success(request, "Photo ID updated successfully")
         else:
             messages.error(request, photo_id_form.errors)
@@ -971,4 +1001,3 @@ def earnings_main(request):
     else:
         messages.error(request, "You are not authorized to view this page !")
         return HttpResponseRedirect("/")
-

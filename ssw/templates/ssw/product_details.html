@@ -48,22 +48,22 @@ Pending Product {{product.public_id}}
                             </tr>
                             <tr>
                                 <td><b>Image</b></td>
-                                <td><a href="{{ product.get_display_image.url }}"><img src="{{ product.thumbnail.url}}"></a></td>
+                                <td><a href="{{ product.get_display_image }}"><img src="{{ product.thumbnail.url}}"></a></td>
                             </tr>
                             {% if product.file_type == "eps" %}
                                 <tr>
                                     <td><b>File</b></td>
-                                    <td><a href="{{product.file.url}}">Download</a></td>
+                                    <td><a href="{{product.file_url}}">Download</a></td>
                                 </tr>
                             {% endif %}
                             <tr>
                                 <td><b>Size</b></td>
-                                <td>{{product.product_size}}</td>
+                                <td></td>
                             </tr>
-                            {% if product.file_type == "jpeg" %}
+                            {% if product.file_type == "jpeg/tiff" %}
                                 <tr>
                                     <td><b>Dimensions</b></td>
-                                    <td>{{product.image.width}} x {{product.image.height}}</td>
+                                    <td>{{product.product_dimensions}}</td>
                                 </tr>
                             {% endif %}
                             <tr>

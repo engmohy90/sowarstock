@@ -30,11 +30,10 @@ class SignupForm(UserCreationForm):
 
 
 class ProfilePersonalInfoForm(ModelForm):
-    profile_image = ImageField(required=False, widget=MyProfileImageFileInput)
 
     class Meta:
         model = models.SowarStockUser
-        fields = ["profile_image", "first_name", "last_name", "country_code", "phone", "preferred_language"]
+        fields = ["first_name", "last_name", "country_code", "phone", "preferred_language"]
 
 
 class ProfilePublicInfoForm(ModelForm):
@@ -83,13 +82,12 @@ class ProductForm(ModelForm):
 
     class Meta:
         model = models.Product
-        fields = ["title", "file_type", "image", "file", "description", "keywords", "category",
+        fields = ["title", "file_type", "description", "keywords", "category",
                   "subcategory", "adult_content", "exclusive", "released", "editorial", "price_type",
                   "standard_price", "extended_price"]
         labels = {
             'standard_price': _('Standard Price ($)'),
             'extended_price': _('Extended Price ($)'),
-            'file': _('EPS File'),
         }
 
     def __init__(self, *args, **kwargs):

@@ -4,9 +4,9 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from django_countries.fields import CountryField
 from countries_plus.models import Country
-from PIL import Image
+
 import uuid
-from mimetypes import MimeTypes
+from .image_handling import image_file_from_url
 
 # Create your models here.
 
@@ -61,6 +61,7 @@ class SowarStockUser(User):
     address = models.OneToOneField(Address, on_delete=models.SET_NULL, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     profile_image = models.ImageField(upload_to='profile_images/', null=True, blank=True)
+    profile_image_url = models.URLField(max_length=255, null=True, blank=True)
 
     class Meta:
         verbose_name = "Sowarstock User"
@@ -83,6 +84,7 @@ class Contributor(SowarStockUser):
     status = models.CharField(max_length=255, choices=ACCOUNT_STATUS, default="unverified")
     completed_registration = models.BooleanField(default=False)
     photo_id = models.FileField(upload_to='photo_id/', null=True, blank=True)
+    photo_id_url = models.URLField(max_length=255, null=True, blank=True)
     photo_id_verified = models.BooleanField(default=False)
     display_name = models.CharField(max_length=255, null=True, blank=True)
     job_title = models.CharField(max_length=255, null=True, blank=True)
@@ -141,7 +143,8 @@ class SubCategory(models.Model):
 
 
 class SampleProduct(models.Model):
-    image = models.ImageField(upload_to='sample-products/')
+    image = models.ImageField(upload_to='sample-products/', null=True, blank=True)
+    image_url = models.URLField(max_length=255, null=True, blank=True)
     thumbnail = models.ImageField(upload_to='sample-products/thumbnails/', null=True, blank=True)
     owner = models.ForeignKey(Contributor, on_delete=models.CASCADE)
 
@@ -166,7 +169,9 @@ class Product(models.Model):
     description = models.TextField()
     file_type = models.CharField(max_length=255, default="jpeg/tiff", choices=FILE_TYPE_OPTIONS)
     image = models.ImageField(upload_to='products/', null=True, blank=True)
+    image_url = models.URLField(max_length=255, blank=True, null=True)
     file = models.FileField(upload_to='products/', null=True, blank=True)
+    file_url = models.URLField(max_length=255, blank=True, null=True)
     watermark = models.ImageField(upload_to='products/watermarked/', null=True, blank=True)
     thumbnail = models.ImageField(upload_to='products/thumbnails/', null=True, blank=True)
     adult_content = models.BooleanField(default=False)
@@ -191,15 +196,27 @@ class Product(models.Model):
 
     def get_display_image(self):
         if self.file_type == "jpeg/tiff":
-            return self.image
+            return self.image_url
         else:
-            return self.thumbnail
+            return self.thumbnail.url
 
     def product_size(self):
         if self.file_type == "jpeg/tiff":
-            return sizeof_fmt(self.image.size)
+            file = image_file_from_url(self.image_url)
+            print(file.size)
+            print(file.info)
+            return sizeof_fmt(file.size)
         else:
-            return sizeof_fmt(self.file.size)
+            file = image_file_from_url(self.file_url)
+            return sizeof_fmt(file.size)
+
+    def product_dimensions(self):
+        if self.file_type == "jpeg/tiff":
+            file = image_file_from_url(self.image_url)
+        else:
+            file = image_file_from_url(self.file_url)
+        return "%s x %s " % (file.width, file.height)
+
 
     def is_photo(self):
         return self.category.name == "Photos"
@@ -212,7 +229,7 @@ class Product(models.Model):
 
     def __str__(self):
         return "{} by {}".format(self.title,self.owner.username)
-
+"""
     def clean(self):
         file_type = self.file_type
         if file_type == "jpeg/tiff":
@@ -243,7 +260,7 @@ class Product(models.Model):
     def save(self, *args, **kwargs):
         self.full_clean()
         return super(Product, self).save(*args, **kwargs)
-
+"""
 
 class Collection(models.Model):
     title = models.CharField(max_length=255, null=False, blank=False)
@@ -365,6 +382,7 @@ class OrderItem(models.Model):
 class LegalDocument(models.Model):
     title = models.CharField(max_length=255)
     document = models.FileField(upload_to='legal/')
+    document_url = models.URLField(max_length=255, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

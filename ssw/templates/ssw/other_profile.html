@@ -13,8 +13,8 @@ Profile
             <div class="col-lg-8">
                 <div class="boxed boxed--lg boxed--border">
                     <div class="text-block text-center">
-                        {% if other_profile.profile_image %}
-                            <img alt="avatar" src="{{other_profile.profile_image.url}}" class="image--md img-circle">
+                        {% if other_profile.profile_image_url %}
+                            <img alt="avatar" src="{{other_profile.profile_image_url}}" class="image--md img-circle">
                         {% else %}
                             <img alt="avatar" src="{% static 'ssw/img/default-avatar.png' %}" class="image--md img-circle">
                         {% endif %}
