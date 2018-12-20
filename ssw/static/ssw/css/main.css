@@ -1,4 +1,4 @@
-.sowar_stock_color, .input-radio--innerlabel input:checked + label {
+.sowar_stock_color {
     background: #ed424e;
     border-color: #ed424e;
     color: #fff;
@@ -19,23 +19,6 @@
 
 .menu-horizontal > li:not(:hover) > a{
     opacity: 1
-}
-
-.input-radio--innerlabel:hover, .input-radio label:hover, .input-checkbox label:hover,
- .input-checkbox.input-checkbox--switch label:hover:before{
-    border-color: #ed424e;
-}
-
-.input-checkbox input:checked + label {
-    border-color: #ed424e;
-    background: #ed424e;
-}
-
-.input-checkbox.input-checkbox--switch input:checked + label:before {
-    animation: none !important;
-    background: #ed424e;
-    border-color: #ed424e;
-    transform: translateX(1.85714286em);
 }
 
 /*
@@ -147,10 +130,6 @@ input[type] + input[type]{
 .image--md {
     height: 7em;
     width: 7em;
-}
-
-.errorlist {
-    color: white;
 }
 
 @media only screen and (min-width: 400px) {

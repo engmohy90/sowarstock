@@ -140,6 +140,8 @@ def sign_s3(request):
         extension = "jpeg"
     elif "eps" in file_type:
         extension = "eps"
+    elif "tiff" in file_type:
+        extension = "tiff"
     else:
         extension = "pdf"
     destination = request.GET.get("destination", '')

@@ -358,17 +358,13 @@ New Product
             var file = files[0];
             $("#image_loader").removeClass("hidden")
             $("#submit_product_button").prop("disabled",true)
-
             if(file){
                 var extension = file.name.split(".").pop().toLowerCase()
-
-                if(extension == "jpg" || extension == "jpeg" || extension == "tiff"){
-                    var size, img;
-                    size = file.size/1024/1024
-
-                    if(size < 50){
+                var size = file.size/1024/1024
+                if(size < 50){
+                    if(extension == "jpg" || extension == "jpeg"){
                         var _URL = window.URL || window.webkitURL;
-                        img = new Image();
+                        var img = new Image();
                         img.onload = function () {
                             var image_size_in_megapixels = (this.width * this.height) / 1000000
                             if(image_size_in_megapixels < 4){
@@ -382,21 +378,35 @@ New Product
                             }
                         };
                         img.src = _URL.createObjectURL(file);
+                    }else if(extension == "tiff"){
+                        var reader = new FileReader()
+                        reader.onload = function () {
+                            var image_size_in_megapixels = (this.width * this.height) / 1000000
+                            if(image_size_in_megapixels < 4){
+                                alert("Image has to be at least 4 Megapixels")
+                                input.val("")
+                                $("#image_loader").addClass("hidden")
+                                $("#submit_product_button").prop("disabled",false)
+                                return
+                            }else{
+                                getSignedRequest(file);
+                            }
+                        }
+                        reader.readAsArrayBuffer( file )
                     }else{
-                        alert("Image size has to be less than 50 MB")
+                        alert("Image type has to be only jpeg or tiff")
                         input.val("")
                         $("#image_loader").addClass("hidden")
                         $("#submit_product_button").prop("disabled",false)
                         return
                     }
                 }else{
-                    alert("Image type has to be only jpeg or tiff")
+                    alert("Image size has to be less than 50 MB")
                     input.val("")
                     $("#image_loader").addClass("hidden")
                     $("#submit_product_button").prop("disabled",false)
                     return
                 }
-
             }
         })
 

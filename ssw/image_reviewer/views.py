@@ -39,7 +39,7 @@ def product_approve(request, pk):
                   None, None, None, email_body)
         notify.send(user, recipient=product.owner, level="success",
                     verb='Product {} has been approved'.format(product.public_id))
-        admin = models.SowarStockUser.objects.get(type="admin")
+        admin = models.SowarStockUser.objects.filter(type="admin")
         notify.send(request.user, recipient=admin, level="success",
                     verb='Product {} has been approved by {}'.format(product.public_id, user.get_full_name()))
         messages.success(request, "Product has been approved")
@@ -70,7 +70,7 @@ def product_reject(request, pk):
                             product.public_id,
                             product.get_rejection_reason_display(),
                             product.rejection_note))
-            admin = models.SowarStockUser.objects.get(type="admin")
+            admin = models.SowarStockUser.objects.filter(type="admin")
             notify.send(request.user, recipient=admin, level="success",
                         verb='Product {} has been rejected by {} for the following reason: {}, {}'.format(
                             product.public_id, user.get_full_name(), product.get_rejection_reason_display(), product.rejection_note))
