@@ -317,6 +317,7 @@ class UserRequest(models.Model):
     status = models.CharField(max_length=255, choices=STATUS_OPTIONS, default="pending_approval")
     type = models.CharField(max_length=255, choices=TYPE_OPTIONS, default="new_contributor")
     owner = models.ForeignKey(Contributor, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.owner.username

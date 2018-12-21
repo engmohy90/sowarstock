@@ -51,7 +51,11 @@ def crop_profile_image(user):
     if width == height:
         cropped = base_image
     else:
-        cropped = base_image.crop((0,0,width,width))
+        if width < height:
+            measure = width
+        else:
+            measure = height
+        cropped = base_image.crop((0,0,measure,measure))
     img_io = BytesIO()
     cropped.save(img_io, format="PNG", quality=100)
     name = uuid.uuid4()
