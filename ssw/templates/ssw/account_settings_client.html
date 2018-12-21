@@ -53,6 +53,7 @@ Account Settings
                                     <h4>Personal Information</h4>
                                     <p>
                                         <label for="profile_image">{% if user.profile_image_url %}Change {% endif %}Profile Image:</label>
+                                        <img id="image_loader" class="hidden" style="max-height:1.5em" src="{% static 'ssw/img/ajax-loader.gif' %}">
                                         <input type="file" accept="image/*" id="profile_image" name="profile_image">
                                         <i style="color:red" id="profile_image_error_msg"></i>
                                     </p>
@@ -68,7 +69,7 @@ Account Settings
                                             <input type="hidden" id="avatar-url" name="avatar-url">
                                             {{ personal_info_form.as_p }}
                                             <div class="col-lg-3 col-md-4">
-                                                <button type="submit" class="btn btn--primary type--uppercase">Save Profile</button>
+                                                <button type="submit" id="save_personal_info_button" class="btn btn--primary type--uppercase">Save Profile</button>
                                             </div>
                                     </form>
                                 </div>
@@ -126,9 +127,14 @@ Account Settings
             var input = $(this)
             var files = document.getElementById("profile_image").files;
             var file = files[0];
+            $("#image_loader").removeClass("hidden")
+            $("#save_personal_info_button").prop("disabled",true)
 
             if(file){
                 getSignedRequest(file);
+            }else{
+                $("#image_loader").addClass("hidden")
+                $("#save_personal_info_button").prop("disabled",false)
             }
         })
 
@@ -143,6 +149,8 @@ Account Settings
               }
               else{
                 alert("Oops! An error has occurred ! Please try again");
+                $("#image_loader").addClass("hidden")
+                $("#save_personal_info_button").prop("disabled",false)
               }
             }
           };
@@ -163,9 +171,13 @@ Account Settings
             if(xhr.readyState === 4){
               if(xhr.status === 200 || xhr.status === 204){
                 document.getElementById("avatar-url").value = url;
+                $("#image_loader").addClass("hidden")
+                $("#save_personal_info_button").prop("disabled",false)
               }
               else{
                 alert("Could not upload file.");
+                $("#image_loader").addClass("hidden")
+                $("#save_personal_info_button").prop("disabled",false)
               }
            }
           };
