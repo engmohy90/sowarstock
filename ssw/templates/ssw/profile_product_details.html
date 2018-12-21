@@ -26,7 +26,9 @@
                 </div>
                 <div class="row">
                     {% if product.owner.profile_image_url %}
-                        <image src="{{product.owner.profile_image_url}}" class="product-profile-image img-circle" style="vertical-align:middle"/>
+                        <a href="{{product.owner.profile_image_url}}">
+                            <image src="{{product.owner.profile_image_crop.url}}" class="product-profile-image img-circle" style="vertical-align:middle"/>
+                        </a>
                     {% else %}
                         <image src="{% static 'ssw/img/default-avatar.png' %}" class="product-profile-image img-circle" style="vertical-align:middle"/>
                     {% endif %}
@@ -89,7 +91,9 @@
                                         {% for review in product.review_set.all reversed %}
                                             <div class="row">
                                                 {% if review.owner.profile_image_url %}
-                                                    <image src="{{review.owner.profile_image_url}}" class="product-profile-image img-circle" style="vertical-align:middle"/>
+                                                    <a href="{{review.owner.profile_image_url}}">
+                                                        <image src="{{review.owner.profile_image_crop.url}}" class="product-profile-image img-circle" style="vertical-align:middle"/>
+                                                    </a>
                                                 {% else %}
                                                     <image src="{% static 'ssw/img/default-avatar.png' %}" class="product-profile-image img-circle" style="vertical-align:middle"/>
                                                 {% endif %}

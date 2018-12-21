@@ -15,7 +15,7 @@ Account Settings
                                 <div class="text-block text-center">
                                     {% if user.profile_image_url %}
                                         <a href="{{user.profile_image_url}}">
-                                            <img id="avatar_preview" src="{{ user.profile_image_url }}" class="image--sm img-circle" alt="User Image">
+                                            <img id="avatar_preview" src="{{ user.profile_image_crop.url }}" class="image--sm img-circle" alt="User Image">
                                         </a>
                                     {% else %}
                                         <img id="avatar_preview" src="{% static 'ssw/img/default-avatar.png' %}" class="image--sm img-circle" alt="User Image">
@@ -128,27 +128,7 @@ Account Settings
             var file = files[0];
 
             if(file){
-                var size, img, width, height;
-                size = file.size/1024/1024
-                var _URL = window.URL || window.webkitURL;
-                img = new Image();
-                img.onload = function () {
-                    width = this.width
-                    height = this.height
-
-                    if(width != height){
-                        $("#profile_image_error_msg").html("your profile image has to be square")
-                        input.val('')
-                    }else{
-                        $("#profile_image_error_msg").html("")
-                        getSignedRequest(file);
-                    }
-
-                };
-                img.src = _URL.createObjectURL(file);
-
-            }else{
-                $("#profile_image_error_msg").html("")
+                getSignedRequest(file);
             }
         })
 
@@ -182,7 +162,6 @@ Account Settings
           xhr.onreadystatechange = function() {
             if(xhr.readyState === 4){
               if(xhr.status === 200 || xhr.status === 204){
-                document.getElementById("avatar_preview").src = url;
                 document.getElementById("avatar-url").value = url;
               }
               else{

@@ -62,6 +62,7 @@ class SowarStockUser(User):
     description = models.TextField(null=True, blank=True)
     profile_image = models.ImageField(upload_to='profile_images/', null=True, blank=True)
     profile_image_url = models.URLField(max_length=255, null=True, blank=True)
+    profile_image_crop = models.ImageField(upload_to='profile_images/crop/', null=True, blank=True)
 
     class Meta:
         verbose_name = "Sowarstock User"

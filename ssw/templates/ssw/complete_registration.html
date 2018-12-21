@@ -228,28 +228,7 @@ Profile
             anchor.attr("href","")
 
             if(file){
-                var size, img, width, height;
-                size = file.size/1024/1024
-                var _URL = window.URL || window.webkitURL;
-                img = new Image();
-                img.onload = function () {
-                    width = this.width
-                    height = this.height
-
-                    if(width != height){
-                        $("#profile_image_loader").addClass("hidden")
-                        anchor.parent().removeClass("disabled")
-                        anchor.attr("href","#next")
-                        $("#profile_image_error_msg").html("your profile image has to be square")
-                        input.val('')
-                    }else{
-                        $("#profile_image_error_msg").html("")
-                        getProfileImageSignedRequest(file,anchor);
-                    }
-
-                };
-                img.src = _URL.createObjectURL(file);
-
+                getProfileImageSignedRequest(file,anchor);
             }else{
                 $("#profile_image_loader").addClass("hidden")
                 anchor.parent().removeClass("disabled")

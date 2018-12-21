@@ -12,31 +12,53 @@ from . import models
 THUMBNAIL_WIDTH = 500
 THUMBNAIL_HEIGHT = 200
 
+def image_file_from_url(url):
+    response = requests.get(url)
+    base_image = Image.open(BytesIO(response.content))
+    return base_image
+
 
 def remove_profile_image(user):
     S3_BUCKET = settings.S3_BUCKET
     AWS_ACCESS_KEY_ID = settings.AWS_ACCESS_KEY_ID
     AWS_SECRET_ACCESS_KEY = settings.AWS_SECRET_ACCESS_KEY
     conn = S3Connection(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY)
-    url_list = user.profile_image_url.split("/")
-    filename = url_list[len(url_list)-1]
+    url_list1 = user.profile_image_url.split("/")
+    filename1 = url_list1[len(url_list1)-1]
+    url_list2 = user.profile_image_crop.url.split("/")
+    filename2 = url_list2[len(url_list2) - 1]
 
     b = Bucket(conn, S3_BUCKET)
 
     k = Key(b)
 
-    k.key = 'profile_images/' + filename
+    k.key = 'profile_images/' + filename1
+
+    b.delete_key(k)
+
+    k.key = 'profile_images/crop/' + filename2
 
     b.delete_key(k)
 
     user.profile_image_url = None
+    user.profile_image_crop = None
     user.save()
 
 
-def image_file_from_url(url):
-    response = requests.get(url)
-    base_image = Image.open(BytesIO(response.content))
-    return base_image
+def crop_profile_image(user):
+    base_image = image_file_from_url(user.profile_image_url)
+    width, height = base_image.size
+    if width == height:
+        cropped = base_image
+    else:
+        cropped = base_image.crop((0,0,width,width))
+    img_io = BytesIO()
+    cropped.save(img_io, format="PNG", quality=100)
+    name = uuid.uuid4()
+    base_image_content = ContentFile(img_io.getvalue(), '{}.png'.format(name))
+    user.profile_image_crop = base_image_content
+    user.save()
+
 
 
 def create_watermarked_image(product):

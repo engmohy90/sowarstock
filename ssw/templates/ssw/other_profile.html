@@ -14,7 +14,9 @@ Profile
                 <div class="boxed boxed--lg boxed--border">
                     <div class="text-block text-center">
                         {% if other_profile.profile_image_url %}
-                            <img alt="avatar" src="{{other_profile.profile_image_url}}" class="image--md img-circle">
+                            <a href="{{other_profile.profile_image_url}}">
+                                <img alt="avatar" src="{{other_profile.profile_image_crop.url}}" class="image--md img-circle">
+                            </a>
                         {% else %}
                             <img alt="avatar" src="{% static 'ssw/img/default-avatar.png' %}" class="image--md img-circle">
                         {% endif %}

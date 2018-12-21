@@ -1,7 +1,7 @@
 import dj_database_url
 from sowarstock.settings import *
 
-DEBUG = True
+DEBUG = False
 SECURE_SSL_REDIRECT = True
 TEMPLATE_DEBUG = DEBUG
 

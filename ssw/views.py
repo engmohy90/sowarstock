@@ -19,7 +19,7 @@ import random
 import uuid
 
 from . import models, forms
-from .image_handling import create_watermarked_image, create_thumbnailed_image, remove_profile_image
+from .image_handling import create_watermarked_image, create_thumbnailed_image, remove_profile_image, crop_profile_image
 
 
 def showCorrectMenu(user):
@@ -487,6 +487,7 @@ def complete_registration(request):
                 if profile_image_url:
                     user.profile_image_url = profile_image_url
                     user.save()
+                    crop_profile_image(user)
 
                 photo_id_url = request.POST.get('photo_id_url', None)
                 if photo_id_url:
@@ -668,6 +669,7 @@ def update_personal_info(request):
                 remove_profile_image(user)
             user.profile_image_url = avatar_url
             user.save()
+            crop_profile_image(user)
         if clear_profile_image is not None:
             #storage, path = user.profile_image.storage, user.profile_image.path
             #storage.delete(path)
