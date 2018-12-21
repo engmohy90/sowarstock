@@ -316,7 +316,7 @@ class UserRequest(models.Model):
     body = models.TextField()
     status = models.CharField(max_length=255, choices=STATUS_OPTIONS, default="pending_approval")
     type = models.CharField(max_length=255, choices=TYPE_OPTIONS, default="new_contributor")
-    owner = models.ForeignKey(Contributor, on_delete=models.CASCADE)
+    owner = models.ForeignKey(Contributor, on_delete=models.PROTECT)
 
     def __str__(self):
         return self.owner.username
