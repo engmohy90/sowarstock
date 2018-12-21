@@ -87,6 +87,11 @@
 <script>
     $( document ).ready(function() {
 
+        $("#id_username").keyup(function(){
+            var username = $(this).val()
+            $(this).val(username.toLowerCase())
+        })
+
         $("#create_account_button").click(function(e){
 
             var userType = $("input[name=user_type]:checked").val()

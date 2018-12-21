@@ -21,7 +21,7 @@
                                 {% csrf_token %}
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <input type="text" name="username" placeholder='{% trans "Username"%}'>
+                                        <input type="text" id="username" name="username" placeholder='{% trans "Username"%}'>
                                     </div>
                                     <div class="col-md-12">
                                         <input type="password" name="password" placeholder='{% trans "Password"%}'>
@@ -44,4 +44,15 @@
                 </div>
                 <!--end of container-->
             </section>
+{% endblock %}
+
+{% block js %}
+<script>
+    $(document).ready(function(){
+        $("#username").keyup(function(){
+            var username = $(this).val()
+            $(this).val(username.toLowerCase())
+        })
+    })
+</script>
 {% endblock %}
