@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     'paypal.standard.ipn',
     'django_countries',
     'countries_plus',
-    'progressbarupload'
+    'progressbarupload',
 ]
 
 MIDDLEWARE = [

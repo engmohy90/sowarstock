@@ -357,6 +357,7 @@ Account Settings
                 $("#save_personal_info_button").prop("disabled",false)
               }
               else{
+                console.log(xhr)
                 alert("Could not upload file.");
                 $("#image_loader").addClass("hidden")
                 $("#save_personal_info_button").prop("disabled",false)
