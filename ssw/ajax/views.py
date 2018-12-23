@@ -165,3 +165,18 @@ def sign_s3(request):
         'url': 'https://%s.s3.amazonaws.com/%s/%s' % (S3_BUCKET, destination, file_name)
       })
 
+
+@login_required
+def upload_file_result(request):
+    xhr = request.GET.get('xhr', '')
+    result = request.GET.get('result', '')
+    attempt_no = request.GET.get('attemptNo', '')
+    username = request.GET.get('user', '')
+    user = models.SowarStockUser.objects.get(username=username)
+    models.SystemLog.objects.create(short_description="attempt no %s from user %s to upload a file. Result: %s" % (attempt_no, user, result),
+                                    long_description=xhr,
+                                    owner=user)
+    return JsonResponse({
+        'data': 'sent',
+    })
+

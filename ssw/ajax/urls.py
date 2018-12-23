@@ -13,4 +13,5 @@ urlpatterns = [
     url(r'^reviews_unread_to_read/$', views.reviews_undread_to_read),
     url(r'^load_payment_amount/$', views.load_payment_amount),
     url(r'^sign_s3/$', views.sign_s3),
+    url(r'^upload_result/$', views.upload_file_result),
 ]

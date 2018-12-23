@@ -439,3 +439,9 @@ class SiteSettings(models.Model):
     non_exclusive_percentage = models.IntegerField()
     paypal_testing = models.BooleanField(default=True)
 
+
+class SystemLog(models.Model):
+    short_description = models.CharField(max_length=255)
+    long_description = models.TextField(null=True, blank=True)
+    owner = models.ForeignKey(SowarStockUser, on_delete=models.PROTECT)
+    created_at = models.DateTimeField(auto_now_add=True)
