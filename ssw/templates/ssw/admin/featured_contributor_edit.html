@@ -19,7 +19,7 @@ Featured Contributors
                                         {% csrf_token %}
                                         <div class="masonry__container row masonry--active">
                                             {% for contributor in contributors %}
-                                                <div class="masonry__item col-lg-4 col-6">
+                                                <div class="masonry__item col-lg-4 col-6" style="margin-bottom:3em">
                                                     <a href="{% url 'other_profile' contributor %}">
                                                         <p>{{contributor.first_name}} {{contributor.last_name}}</p>
                                                         {% if contributor.profile_image_url %}
