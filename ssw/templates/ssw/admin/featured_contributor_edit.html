@@ -17,9 +17,9 @@ Featured Contributors
                                 {% if contributors %}
                                     <form method="post" action="">
                                         {% csrf_token %}
-                                        <div class="masonry__container row masonry--active" style="position: relative; height: 526.812px; overflow:auto">
+                                        <div class="masonry__container row masonry--active">
                                             {% for contributor in contributors %}
-                                                <div class="masonry__item col-lg-4 col-6" style="position: absolute; left: {{ forloop.counter|sub:1|modulo:3|mul:380 }}px; top: {{forloop.counter|sub:1|div:3|modulo:3|mul:263}}px;">
+                                                <div class="masonry__item col-lg-4 col-6">
                                                     <a href="{% url 'other_profile' contributor %}">
                                                         <p>{{contributor.first_name}} {{contributor.last_name}}</p>
                                                         {% if contributor.profile_image_url %}
@@ -27,7 +27,9 @@ Featured Contributors
                                                                 <img alt="avatar" src="{{contributor.profile_image_crop.url}}" class="image--md img-circle">
                                                             </a>
                                                         {% else %}
-                                                            <img alt="avatar" src="{% static 'ssw/img/default-avatar.png' %}" class="image--md img-circle">
+                                                            <a href="{% static 'ssw/img/default-avatar.png' %}">
+                                                                <img alt="avatar" src="{% static 'ssw/img/default-avatar.png' %}" class="image--md img-circle">
+                                                            </a>
                                                         {% endif %}
                                                     </a>
                                                     <br>
