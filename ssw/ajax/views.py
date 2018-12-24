@@ -172,6 +172,7 @@ def upload_file_result(request):
     result = request.GET.get('result', '')
     attempt_no = request.GET.get('attemptNo', '')
     username = request.GET.get('user', '')
+    print(username)
     user = models.SowarStockUser.objects.get(username=username)
     models.SystemLog.objects.create(short_description="attempt no %s from user %s to upload a file. Result: %s" % (attempt_no, user, result),
                                     long_description=xhr,
