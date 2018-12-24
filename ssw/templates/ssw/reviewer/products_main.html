@@ -31,7 +31,6 @@ Products
                                                           <th>Photo Id</th>
                                                           <th>Thumbnail</th>
                                                           <th>Title</th>
-                                                          <th>User</th>
                                                           <th>Upload Date</th>
                                                       </tr>
                                                       </thead>
@@ -41,7 +40,6 @@ Products
                                                             <td><a href="{% url 'product_pending' product.public_id %}">{{ product.public_id }}</a></td>
                                                             <td><a href="{{ product.get_display_image }}"><img src="{{ product.thumbnail.url }}"></a></td>
                                                             <td>{{ product.title }}</td>
-                                                            <td><a href="{% url 'other_profile' product.owner.username %}">{{ product.owner }}</a></td>
                                                             <td>{{product.created_at}}</td>
                                                         </tr>
                                                       {% endfor %}
@@ -66,7 +64,6 @@ Products
                                                           <th>Photo Id</th>
                                                           <th>Thumbnail</th>
                                                           <th>Title</th>
-                                                          <th>User</th>
                                                           <th>Upload Date</th>
                                                       </tr>
                                                       </thead>
@@ -76,7 +73,6 @@ Products
                                                                 <td><a href="{% url 'product_pending' product.public_id %}">{{ product.public_id }}</a></td>
                                                                 <td><a href="{{ product.get_display_image }}"><img src="{{ product.thumbnail.url }}"></a></td>
                                                                 <td>{{ product.title }}</td>
-                                                                <td><a href="{% url 'other_profile' product.owner.username %}">{{ product.owner }}</a></td>
                                                                 <td>{{product.created_at}}</td>
                                                             </tr>
                                                           {% endfor %}
@@ -101,7 +97,6 @@ Products
                                                               <th>Photo Id</th>
                                                               <th>Thumbnail</th>
                                                               <th>Title</th>
-                                                              <th>User</th>
                                                               <th>Upload Date</th>
                                                           </tr>
                                                       </thead>
@@ -111,7 +106,6 @@ Products
                                                                 <td><a href="{% url 'product_details' product.public_id %}">{{ product.public_id }}</a></td>
                                                                 <td><a href="{{ product.get_display_image }}"><img src="{{ product.thumbnail.url }}"></a></td>
                                                                 <td>{{ product.title }}</td>
-                                                                <td><a href="{% url 'other_profile' product.owner.username %}">{{ product.owner }}</a></td>
                                                                 <td>{{product.created_at}}</td>
                                                             </tr>
                                                           {% endfor %}
@@ -136,7 +130,6 @@ Products
                                                               <th>Photo Id</th>
                                                               <th>Thumbnail</th>
                                                               <th>Title</th>
-                                                              <th>User</th>
                                                               <th>Upload Date</th>
                                                           </tr>
                                                       </thead>
@@ -146,7 +139,6 @@ Products
                                                             <td><a href="{% url 'product_details' product.public_id %}">{{ product.public_id }}</a></td>
                                                             <td><a href="{{ product.get_display_image }}"><img src="{{ product.thumbnail.url }}"></a></td>
                                                             <td>{{ product.title }}</td>
-                                                            <td><a href="{% url 'other_profile' product.owner.username %}">{{ product.owner }}</a></td>
                                                             <td>{{product.created_at}}</td>
                                                         </tr>
                                                       {% endfor %}

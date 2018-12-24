@@ -26,25 +26,23 @@ Profile
                     </div>
                     <div class="text-block clearfix text-center">
                         <ul class="row row--list">
-                            <li class="col-md-4">
+                            <li class="col-md-6">
                                 <span class="type--fine-print block">Location:</span>
                                 <span>{{other_profile.address.country.name}} {{other_profile.address.country.unicode_flag}}</span>
                             </li>
-                            <li class="col-md-4">
+                            <li class="col-md-6">
                                 <span class="type--fine-print block">Member Since:</span>
                                 <span>{{other_profile.date_joined|date:'F Y'}}</span>
-                            </li>
-                            <li class="col-md-4">
-                                <span class="type--fine-print block">Contact:</span>
-                                <a href="#">{{other_profile.email}}</a>
                             </li>
                         </ul>
                     </div>
                 </div>
+                {% if other_profile.type == "contributor" and other_profile.featured %}
                 <div class="boxed boxed--border">
                     <h4>About Me</h4>
                     <p>{{ other_profile.description|default:"This person doesn't have anything here yet." }}</p>
                 </div>
+                {% endif %}
                 {% if other_profile.type == "contributor" %}
                     <div class="boxed boxed--border">
                         <h4>

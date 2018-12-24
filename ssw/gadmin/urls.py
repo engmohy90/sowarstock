@@ -4,8 +4,8 @@ from ssw.gadmin import views
 
 urlpatterns = [
     url(r'^users/$', views.users, name="admin_users"),
-    url(r'^users/(?P<username>[\w\-]+)/suspend/$', views.suspend_account, name="admin_users_suspend"),
-    url(r'^users/(?P<username>[\w\-]+)/unsuspend/$', views.unsuspend_account, name="admin_users_unsuspend"),
+    url(r'^users/(?P<username>[\w.@+-]+)/suspend/$', views.suspend_account, name="admin_users_suspend"),
+    url(r'^users/(?P<username>[\w.@+-]+)/unsuspend/$', views.unsuspend_account, name="admin_users_unsuspend"),
     url(r'^products/$', views.products_main, name="admin_products_main"),
     url(r'^products/(?P<pk>\d+)/approve/$', views.product_approve, name='product_approve'),
     url(r'^products/(?P<pk>\d+)/reject/$', views.product_reject, name='product_reject'),
