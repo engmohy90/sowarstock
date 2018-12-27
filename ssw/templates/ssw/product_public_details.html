@@ -9,7 +9,7 @@ Product {{product.public_id}}
 {% endblock %}
 
 {% block metaimage %}
-<meta name="image" content="{{product.thumbnail}}">
+<meta name="og:image" content="{{product.thumbnail.url}}">
 {% endblock %}
 
 {% block content %}
