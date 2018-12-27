@@ -797,7 +797,7 @@ def notifications_delete(request, pk):
 
 
 def product_public_details(request, public_id):
-    product = get_object_or_404(models.Product, public_id = public_id)
+    product = get_object_or_404(models.Product, public_id=public_id)
     referer = request.META.get('HTTP_REFERER', "")
     if referer:
         if "search" in referer:
@@ -813,7 +813,8 @@ def product_public_details(request, public_id):
         else:
             back_section = product.category
     else:
-        referer = "/{{product.category}}"
+        referer = "/%s" % product.category.name.lower()
+        back_section = product.category
     review_form = forms.ReviewForm()
     if request.method == "POST":
         review_form = forms.ReviewForm(request.POST)

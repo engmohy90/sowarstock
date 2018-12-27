@@ -1,7 +1,11 @@
 {% extends "ssw/main.html" %}
 {% load static from staticfiles %}
 {% block title %}
-{{product.public_id}}
+Product {{product.public_id}}
+{% endblock %}
+
+{% block metadescription %}
+<meta name="description" content="{{product.description}}">
 {% endblock %}
 
 {% block content %}
