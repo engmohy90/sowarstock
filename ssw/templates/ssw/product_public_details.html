@@ -8,6 +8,10 @@ Product {{product.public_id}}
 <meta name="description" content="{{product.description}}">
 {% endblock %}
 
+{% block metaimage %}
+<meta name="image" content="{{product.thumbnail}}">
+{% endblock %}
+
 {% block content %}
 <section class="space--lg" style="overflow: scroll;">
     <div class="container">
