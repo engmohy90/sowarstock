@@ -21,8 +21,9 @@ Users
                                           <thead>
                                           <tr>
                                               <th>Username</th>
+                                              <th>Full Name</th>
                                               <th>Type</th>
-                                              <th>Status</th>
+                                              <th>Email Verified?</th>
                                               <th>Action</th>
                                           </tr>
                                           </thead>
@@ -30,8 +31,9 @@ Users
                                           {% for user in users %}
                                             <tr>
                                                 <td><a href="{% url 'other_profile' user.username %}">{{ user.username }}</a></td>
+                                                <td>{{ user.get_full_name }}</td>
                                                 <td>{{ user.get_type_display }}</td>
-                                                <td> {{user.verified}} </td>
+                                                <td> {{ user.email_verified|yesno:"Verified, Unverified" }} </td>
                                                 <td>
                                                     {% if user.type == "contributor" or user.type == "client" %}
                                                         {% if not user.suspended %}
@@ -93,6 +95,8 @@ $(document).ready(function(){
         $(this).html("Submitting ... ")
         $(this).closest("form").submit()
     })
+
+    $('#usersTable').DataTable();
 })
 </script>
 {% endblock %}

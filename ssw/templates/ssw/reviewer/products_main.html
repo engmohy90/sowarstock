@@ -35,7 +35,7 @@ Products
                                                       </tr>
                                                       </thead>
                                                       <tbody>
-                                                      {% for product in pending %}
+                                                      {% for product in pending reversed %}
                                                         <tr>
                                                             <td><a href="{% url 'product_pending' product.public_id %}">{{ product.public_id }}</a></td>
                                                             <td><a href="{{ product.get_display_image }}"><img src="{{ product.thumbnail.url }}"></a></td>
@@ -68,7 +68,7 @@ Products
                                                       </tr>
                                                       </thead>
                                                       <tbody>
-                                                          {% for product in pending_admin %}
+                                                          {% for product in pending_admin reversed %}
                                                             <tr>
                                                                 <td><a href="{% url 'product_pending' product.public_id %}">{{ product.public_id }}</a></td>
                                                                 <td><a href="{{ product.get_display_image }}"><img src="{{ product.thumbnail.url }}"></a></td>
@@ -101,7 +101,7 @@ Products
                                                           </tr>
                                                       </thead>
                                                       <tbody>
-                                                          {% for product in approved %}
+                                                          {% for product in approved reversed %}
                                                             <tr>
                                                                 <td><a href="{% url 'product_details' product.public_id %}">{{ product.public_id }}</a></td>
                                                                 <td><a href="{{ product.get_display_image }}"><img src="{{ product.thumbnail.url }}"></a></td>
@@ -134,7 +134,7 @@ Products
                                                           </tr>
                                                       </thead>
                                                       <tbody>
-                                                      {% for product in rejected %}
+                                                      {% for product in rejected reversed %}
                                                         <tr>
                                                             <td><a href="{% url 'product_details' product.public_id %}">{{ product.public_id }}</a></td>
                                                             <td><a href="{{ product.get_display_image }}"><img src="{{ product.thumbnail.url }}"></a></td>

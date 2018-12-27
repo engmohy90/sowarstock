@@ -445,3 +445,6 @@ class SystemLog(models.Model):
     long_description = models.TextField(null=True, blank=True)
     owner = models.ForeignKey(SowarStockUser, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.short_description

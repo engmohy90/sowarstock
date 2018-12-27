@@ -36,7 +36,7 @@ Requests
                                                       </tr>
                                                       </thead>
                                                       <tbody>
-                                                      {% for r in pending %}
+                                                      {% for r in pending reversed %}
                                                         <tr>
                                                             <td><a href="{% url 'requests_profile' r.pk %}">{{r.owner.first_name}} {{r.owner.last_name}}</a></td>
                                                             <td>{{ r.get_status_display }}</td>
@@ -75,7 +75,7 @@ Requests
                                                       </tr>
                                                       </thead>
                                                       <tbody>
-                                                      {% for r in approved %}
+                                                      {% for r in approved reversed %}
                                                         <tr>
                                                             <td><a href="{% url 'requests_profile' r.pk %}">{{r.owner.first_name}} {{r.owner.last_name}}</a></td>
                                                             <td>{{ r.get_status_display }}</td>
@@ -114,7 +114,7 @@ Requests
                                                       </tr>
                                                       </thead>
                                                       <tbody>
-                                                      {% for r in rejected %}
+                                                      {% for r in rejected reversed %}
                                                         <tr>
                                                             <td><a href="{% url 'requests_profile' r.pk %}">{{r.owner.first_name}} {{r.owner.last_name}}</a></td>
                                                             <td>{{ r.get_status_display }}</td>

@@ -38,6 +38,7 @@
         <link href="https://fonts.googleapis.com/css?family=Lato:400,400i,700%7CRubik:300,400,500" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+        <link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" media="all" />
         <link href="{% static 'ssw/css/main.css' %}" rel="stylesheet" type="text/css" media="all" />
         {% block head %}{% endblock %}
     </head>
@@ -541,6 +542,7 @@
         <script src="{% static 'ssw/js/smooth-scroll.min.js' %}"></script>
         <script src="{% static 'ssw/js/jquery.justifiedGallery.min.js' %}"></script>
         <script src="{% static 'ssw/js/scripts.js' %}"></script>
+        <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
         <script src="{% static 'ssw/js/main.js' %}"></script>
         <script>
             {% if user.type == "admin" %}
