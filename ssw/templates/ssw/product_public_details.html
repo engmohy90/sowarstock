@@ -4,13 +4,12 @@
 Product {{product.public_id}}
 {% endblock %}
 
-{% block metadescription %}
-<meta name="description" content="{{product.description}}">
+{% block meta %}
+<meta property="og:url" content="https://www.shutterstock.com/image-photo/mother-pupil-kids-holding-hands-going-1095921515">
+<meta property="og:image" content="//image.shutterstock.com/image-photo/mother-pupil-kids-holding-hands-450w-1095921515.jpg">
+<meta property="og:title" content="{{ product.description }}">
 {% endblock %}
 
-{% block metaimage %}
-<meta name="og:image" content="{{product.thumbnail.url}}">
-{% endblock %}
 
 {% block content %}
 <section class="space--lg" style="overflow: scroll;">

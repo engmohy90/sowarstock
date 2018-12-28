@@ -18,9 +18,10 @@
         <meta charset="utf-8">
         <title>{% block title %}{% endblock %}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        {% block metadescription %}{% endblock %}
-        {% block metaimage %}{% endblock %}
+        {% block meta %}{% endblock %}
         <meta charset="utf-8">
+        <meta property="og:site_name" content="sowarstock.com">
+        <meta property="og:type" content="website">
         <link rel="shortcut icon" href="https://s3.amazonaws.com/sowarstock/sowarstock_favicon.png" type="image/png">
         <link href="{% static 'ssw/css/bootstrap.css' %}" rel="stylesheet" type="text/css" media="all" />
         <link href="{% static 'ssw/css/stack-interface.css' %}" rel="stylesheet" type="text/css" media="all" />
