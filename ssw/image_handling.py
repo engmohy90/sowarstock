@@ -9,8 +9,7 @@ import os
 
 from . import models
 
-THUMBNAIL_WIDTH = 500
-THUMBNAIL_HEIGHT = 200
+THUMBNAIL_CONSTANT = 450
 
 def image_file_from_url(url):
     response = requests.get(url)
@@ -98,9 +97,14 @@ def create_watermarked_image(product):
 
     ## CREATE THUMBNAIL ##
     width, height = base_image.size
-    ratio = height / width
-    thumbnail_height = int(round(THUMBNAIL_WIDTH*ratio))
-    base_image.thumbnail((THUMBNAIL_WIDTH, thumbnail_height))
+    if width > height:
+        ratio = height / width
+        thumbnail_height = int(round(THUMBNAIL_CONSTANT*ratio))
+        base_image.thumbnail((THUMBNAIL_CONSTANT, thumbnail_height))
+    else:
+        ratio = width / height
+        thumbnail_width = int(round(THUMBNAIL_CONSTANT * ratio))
+        base_image.thumbnail((thumbnail_width, THUMBNAIL_CONSTANT))
     thumbnail_name = uuid.uuid4()
     base_image.save(thumbnail_img_io, format="PNG", quality=100)
     base_image_content = ContentFile(thumbnail_img_io.getvalue(), '{}.png'.format(thumbnail_name))
