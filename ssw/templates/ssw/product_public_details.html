@@ -5,8 +5,8 @@ Product {{product.public_id}}
 {% endblock %}
 
 {% block meta %}
-<meta property="og:url" content="https://www.shutterstock.com/image-photo/mother-pupil-kids-holding-hands-going-1095921515">
-<meta property="og:image" content="//image.shutterstock.com/image-photo/mother-pupil-kids-holding-hands-450w-1095921515.jpg">
+<meta property="og:url" content="https://sowarstock.herokuapp.com/{{request.path}}">
+<meta property="og:image" content="//{{product.thumbnail.url}}">
 <meta property="og:title" content="{{ product.description }}">
 {% endblock %}
 
