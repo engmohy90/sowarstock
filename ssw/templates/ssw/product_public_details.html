@@ -6,7 +6,7 @@ Product {{product.public_id}}
 
 {% block meta %}
 <meta property="og:url" content="https://sowarstock.herokuapp.com/{{request.path}}">
-<meta property="og:image" content="//{{product.thumbnail.url}}">
+<meta property="og:image" content="{{product.thumbnail.url}}">
 <meta property="og:title" content="{{ product.description }}">
 {% endblock %}
 
