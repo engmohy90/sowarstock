@@ -12,17 +12,17 @@ def show_me_the_money(sender, **kwargs):
     """signal function"""
     ipn_obj = sender
 
+    username = ipn_obj.custom.split(":")[0]
+    user = get_object_or_404(models.Client, username=username)
+    cart = get_object_or_404(models.ShoppingCart, owner=user)
+
     if ipn_obj.payment_status == ST_PP_COMPLETED:
-        print('working')
         if ipn_obj.receiver_email != "sowarstock.co@gmail.com":
             # Not a valid payment
             return
         if ipn_obj.mc_gross != cart.total():
             return
 
-        username = ipn_obj.custom
-        user = get_object_or_404(models.Client, username=username)
-        cart = get_object_or_404(models.ShoppingCart, owner=user)
         items = models.ShoppingCartItem.objects.filter(cart=cart, status="in_cart")
 
         order_no = "%08d" % random.randint(1, 100000000)

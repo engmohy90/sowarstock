@@ -338,15 +338,16 @@ def checkout(request):
     for item in items:
         products.append(item.product)
     # What you want the button to do.
+    invoice_id = uuid.uuid4()
     paypal_dict = {
         "business": "sowarstock.co@gmail.com",
         "amount": cart.total(),
         "item_name": '+ '.join(str(e) for e in products),
-        "invoice": "unique-invoice-id",
+        "invoice": uuid.uuid4(),
         "notify_url": "https://www.sowarstock.com" + reverse('paypal-ipn'),
         "return": "https://www.sowarstock.com/thanks-for-payment",
         "cancel_return": "https://www.sowarstock.com/checkout",
-        "custom": user
+        "custom": "%s:%s" % (user,invoice_id)
     }
 
     # Create the instance.
