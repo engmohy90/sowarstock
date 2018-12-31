@@ -22,8 +22,10 @@ Users
                                           <tr>
                                               <th>Username</th>
                                               <th>Full Name</th>
+                                              <th>Email</th>
                                               <th>Type</th>
-                                              <th>Email Verified?</th>
+                                              <th>Completed Registration?</th>
+                                              <th>Date Joined</th>
                                               <th>Action</th>
                                           </tr>
                                           </thead>
@@ -32,8 +34,10 @@ Users
                                             <tr>
                                                 <td><a href="{% url 'other_profile' user.username %}">{{ user.username }}</a></td>
                                                 <td>{{ user.get_full_name }}</td>
+                                                <td> {{ user.email }} </td>
                                                 <td>{{ user.get_type_display }}</td>
-                                                <td> {{ user.email_verified|yesno:"Verified, Unverified" }} </td>
+                                                <td> {{ user.completed_registration }} </td>
+                                                <td> {{user.date_joined}} </td>
                                                 <td>
                                                     {% if user.type == "contributor" or user.type == "client" %}
                                                         {% if not user.suspended %}

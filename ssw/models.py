@@ -67,6 +67,16 @@ class SowarStockUser(User):
     class Meta:
         verbose_name = "Sowarstock User"
 
+    def completed_registration(self):
+        if self.type == "contributor":
+            cont = Contributor.objects.get(pk=self.pk)
+            if cont.completed_registration:
+                return "Yes"
+            else:
+                return "No"
+        else:
+            return "N/A"
+
     def clean(self):
         profile_image = self.profile_image
         if profile_image:
