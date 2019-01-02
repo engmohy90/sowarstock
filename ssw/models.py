@@ -100,6 +100,7 @@ class Contributor(SowarStockUser):
     display_name = models.CharField(max_length=255, null=True, blank=True)
     job_title = models.CharField(max_length=255, null=True, blank=True)
     portfolio_url = models.CharField(max_length=255, null=True, blank=True)
+    sample_portfolio_url = models.CharField(max_length=255, null=True, blank=True)
     featured = models.BooleanField(default=False)
     preferred_payment_method = models.CharField(max_length=255, null=True, blank=True, choices=PAYMENT_METHODS)
     bank_owner_name = models.CharField(max_length=255, null=True, blank=True)
@@ -451,6 +452,16 @@ class SiteSettings(models.Model):
 
 
 class SystemLog(models.Model):
+    short_description = models.CharField(max_length=255)
+    long_description = models.TextField(null=True, blank=True)
+    owner = models.ForeignKey(SowarStockUser, on_delete=models.PROTECT)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.short_description
+
+
+class ActivityLog(models.Model):
     short_description = models.CharField(max_length=255)
     long_description = models.TextField(null=True, blank=True)
     owner = models.ForeignKey(SowarStockUser, on_delete=models.PROTECT)

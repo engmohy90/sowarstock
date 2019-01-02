@@ -127,18 +127,14 @@ Profile
                             <input type="file" id="photo_id" name="photo_id">
                             <input type="hidden" id="photo_id_url" name="photo_id_url">
                         </section>
-                        <h5>Upload Sample Photos</h5>
+                        <h5>Sample Photos</h5>
                         <section style="overflow:scroll">
-                            <h5>Please upload 10 of your sample photos. These will help us verify you as a contributor.
-                                They will not be displayed in our site</h5>
-                            {% for i in "xxxxxxxxxx" %}
+                            <h5>Help us to get to know you better by showing us a sample of your work by sharing with us
+                                a link to your instagram account, facebook account, personal account, or even a google drive folder.</h5>
                                 <p>
-                                    <label for="sample_image_{{ forloop.counter }}">Sample Image {{ forloop.counter }}</label>
-                                    <img id="sample_image_{{forloop.counter}}_loader" class="hidden" style="max-height:1.5em" src="{% static 'ssw/img/ajax-loader.gif' %}">
-                                    <input type="file" accept="image/*" id="sample_image_{{ forloop.counter }}" name="sample_image_{{ forloop.counter }}">
-                                    <input type="hidden" id="sample_image_{{ forloop.counter }}_url" name="sample_image_{{ forloop.counter }}_url">
+                                    <label for="sample_portfolio_url">URL</label>
+                                    <input type="text" id="sample_portfolio_url" name="sample_portfolio_url">
                                 </p>
-                            {% endfor %}
                         </section>
                     </form>
 
@@ -355,78 +351,6 @@ Profile
           xhr.send(postData);
         }
 
-        for(i=1;i<11;i++){
-            var index = i
-            $("#sample_image_"+i).change(function(){
-                var input = $(this)
-                var index = input.attr('id').split("_")[2]
-                var files = document.getElementById("sample_image_"+index).files;
-                var file = files[0];
-                $("#sample_image_"+index+"_loader").removeClass("hidden")
-                var anchor = $('a[href="#finish"]')
-                anchor.parent().addClass("disabled")
-                anchor.attr("href","")
-
-                if(file){
-                    getSampleProductSignedRequest(file, index, anchor);
-                }else{
-                    $("#profile_image_error_msg").html("")
-                    $("#sample_image_"+index+"_loader").addClass("hidden")
-                    anchor.parent().removeClass("disabled")
-                    anchor.attr("href","#finish")
-                }
-            })
-        }
-
-        function getSampleProductSignedRequest(file, index, anchor){
-          var xhr = new XMLHttpRequest();
-          xhr.open("GET", "/ajax/sign_s3?file_type="+file.type+"&destination=sample-products");
-          xhr.onreadystatechange = function(){
-            if(xhr.readyState === 4){
-              if(xhr.status === 200){
-                var response = JSON.parse(xhr.responseText);
-                uploadSampleProductFile(file, response.data, response.url, index, anchor);
-              }
-              else{
-                alert("Oops! An error has occurred ! Please try again");
-                $("#sample_image_"+index+"_loader").addClass("hidden")
-                anchor.parent().removeClass("disabled")
-                anchor.attr("href","#finish")
-              }
-            }
-          };
-          xhr.send();
-        }
-
-        function uploadSampleProductFile(file, s3Data, url, index, anchor){
-          var xhr = new XMLHttpRequest();
-          xhr.open("POST", s3Data.url);
-
-          var postData = new FormData();
-          for(key in s3Data.fields){
-            postData.append(key, s3Data.fields[key]);
-          }
-          postData.append('file', file);
-
-          xhr.onreadystatechange = function() {
-            if(xhr.readyState === 4){
-              if(xhr.status === 200 || xhr.status === 204){
-                document.getElementById("sample_image_"+index+"_url").value = url;
-                $("#sample_image_"+index+"_loader").addClass("hidden")
-                anchor.parent().removeClass("disabled")
-                anchor.attr("href","#finish")
-              }
-              else{
-                alert("Could not upload file.");
-                $("#sample_image_"+index+"_loader").addClass("hidden")
-                anchor.parent().removeClass("disabled")
-                anchor.attr("href","#finish")
-              }
-           }
-          };
-          xhr.send(postData);
-        }
-
         $('a[href="#finish"]').click(function(){
             var anchor = $(this)
             var firstName = $("#id_first_name").val()
@@ -434,8 +358,8 @@ Profile
             var countryCode = $("#id_country_code").val()
             var phone = $("#id_phone").val()
             var country = $("#id_country").val()
-            var photo_id = $("#id_photo_id").val()
-            var all_image_uploaded = true
+            var photo_id = $("#photo_id_url").val()
+            var sample_portfolio_url = $("#sample_portfolio_url").val()
             var error_msg = $("#error_msg")
 
             if(firstName == ""){
@@ -484,19 +408,11 @@ Profile
                                 }else{
                                     error_msg.html("")
 
-                                    for(i=1;i<11;i++){
-
-                                        var image = $("#sample_image_"+i).val()
-                                        if(image==""){
-                                            all_image_uploaded = false
-                                        }
-                                    }
-
-                                    if(!all_image_uploaded){
+                                    if(sample_portfolio_url == ""){
                                         if(error_msg.length==0){
-                                            anchor.parent().after('<br><i id="error_msg" class="color--error">Please upload 10 sample photos</i>')
+                                            anchor.parent().after('<br><i id="error_msg" class="color--error">Please share us a link that contains some of your work</i>')
                                          }else{
-                                            error_msg.html("Please upload 10 sample photos")
+                                            error_msg.html("Please share us a link that contains some of your work")
                                          }
                                     }else{
                                         error_msg.html("")

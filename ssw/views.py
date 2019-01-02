@@ -472,6 +472,8 @@ def complete_registration(request):
 
         codes_json = get_country_codes_json()
 
+        models.ActivityLog.objects.create(short_description="user %s started completing registration" % user, owner=user)
+
         if request.method == "POST":
             personal_info_form = forms.ProfilePersonalInfoForm(request.POST, request.FILES, instance=user)
             address_form = forms.AddressForm(request.POST, instance=user.address)
@@ -495,14 +497,20 @@ def complete_registration(request):
                     user.photo_id_url = photo_id_url
                     user.save()
 
+                sample_portfolio_url = request.POST.get('sample_portfolio_url', None)
+                if sample_portfolio_url:
+                    user.sample_portfolio_url = sample_portfolio_url
+                    user.save()
+
+                models.ActivityLog.objects.create(short_description="user %s finished completing registration" % user,
+                                                  owner=user)
+                models.UserRequest.objects.create(owner=user)
+                """
                 for i in range(1, 11):
                     sample_image_url = request.POST.get("sample_image_%s_url" % i, None)
                     if sample_image_url:
                         sample = models.SampleProduct.objects.create(image_url=sample_image_url, owner=user)
                         create_thumbnailed_image(sample)
-
-                models.UserRequest.objects.create(owner=user)
-                """
                 samples = sample_product_formset.save(commit=False)
                 for sample in samples:
                     sample.owner = user

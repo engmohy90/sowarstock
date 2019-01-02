@@ -122,7 +122,7 @@ Request
                                             <span class="h5">Photo ID</span>
                                         </div>
                                         <div class="tab__content">
-                                            <a href="{{r.owner.photo_id_url}}">View Here</a>
+                                            <a href="{{r.owner.photo_id_url}}" target="_blank">View Here</a>
                                         </div>
                                     </li>
                                     <li>
@@ -130,24 +130,30 @@ Request
                                             <span class="h5">Sample Products</span>
                                         </div>
                                         <div class="tab__content">
-                                            <div class="custom-scroll table-responsive">
-                                                  <table id="sampleProductsTable" class="table table-bordered table-hover">
-                                                      <thead>
-                                                      <tr>
-                                                          <th></th>
-                                                          <th>Sample Product</th>
-                                                      </tr>
-                                                      </thead>
-                                                      <tbody>
-                                                      {% for product in sample_products %}
-                                                        <tr>
-                                                            <td>{{ forloop.counter }}</td>
-                                                            <td><a href="{{ product.image_url }}"><img src="{{ product.thumbnail.url }}"></a></td>
-                                                        </tr>
-                                                      {% endfor %}
-                                                      </tbody>
-                                                  </table>
-                                            </div>
+                                            {% if sample_products %}
+                                                <div class="custom-scroll table-responsive">
+                                                      <table id="sampleProductsTable" class="table table-bordered table-hover">
+                                                          <thead>
+                                                          <tr>
+                                                              <th></th>
+                                                              <th>Sample Product</th>
+                                                          </tr>
+                                                          </thead>
+                                                          <tbody>
+                                                          {% for product in sample_products %}
+                                                            <tr>
+                                                                <td>{{ forloop.counter }}</td>
+                                                                <td><a href="{{ product.image_url }}"><img src="{{ product.thumbnail.url }}"></a></td>
+                                                            </tr>
+                                                          {% endfor %}
+                                                          </tbody>
+                                                      </table>
+                                                </div>
+                                            {% elif r.owner.sample_portfolio_url %}
+                                                <a href="{{ r.owner.sample_portfolio_url }}" target="_blank">{{ r.owner.sample_portfolio_url }}</a>
+                                            {% else %}
+                                                Nothing to Display
+                                            {% endif %}
                                         </div>
                                     </li>
                                 </ul>
