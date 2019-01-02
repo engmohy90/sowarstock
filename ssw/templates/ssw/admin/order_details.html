@@ -32,6 +32,10 @@ Order {{order.order_no}}
                                     <th>Thumbnail</th>
                                     <th>Product Name</th>
                                     <th>Price</th>
+                                    {% if not item.paid %}
+                                        <th></th>
+                                    {% endif %}
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -40,6 +44,9 @@ Order {{order.order_no}}
                                         <td><img src="{{item.product.thumbnail.url}}"></td>
                                         <td>{{ item.product }}</td>
                                         <td>${{ item.price }}</td>
+                                        {% if not item.paid %}
+                                            <th><a href="#" class="btn btn-success">Refund</a></th>
+                                        {% endif %}
                                     </tr>
                                 {% endfor %}
                             </tbody>

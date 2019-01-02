@@ -370,6 +370,16 @@ class ShoppingCartItem(models.Model):
             return self.product.extended_price
 
 
+class Refund(models.Model):
+    amount = models.DecimalField(max_digits=5, decimal_places=2)
+    contributor = models.ForeignKey(Contributor, on_delete=models.PROTECT)
+    receipt = models.FileField(upload_to='refunds/')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return "${} to {}".format(self.amount, self.contributor)
+
+
 class Order(models.Model):
     order_no = models.IntegerField(unique=True)
     total = models.IntegerField()
@@ -385,8 +395,16 @@ class OrderItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.PROTECT, related_name="product")
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="orderitem")
     shopping_cart_item = models.ForeignKey(ShoppingCartItem, on_delete=models.PROTECT, related_name="shopping_cart_item")
+    refund = models.ForeignKey(Refund, on_delete=models.PROTECT, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def paid(self):
+        earning = Earning.objects.get(order_item=self, type="contributor")
+        if earning.payment:
+            return True
+        else:
+            return False
 
     def __str__(self):
         return "{} | {}".format(self.product.title,self.order.order_no)
@@ -419,7 +437,7 @@ class Earning(models.Model):
     order_item = models.ForeignKey(OrderItem, on_delete=models.PROTECT)
     contributor = models.ForeignKey(Contributor, on_delete=models.PROTECT, null=True, blank=True)
     amount = models.DecimalField(max_digits=5, decimal_places=2)
-    payment = models.ForeignKey(Payment, on_delete=models.PROTECT, null=True, blank=True )
+    payment = models.ForeignKey(Payment, on_delete=models.PROTECT, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
