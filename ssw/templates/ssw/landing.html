@@ -20,14 +20,14 @@
         <div class="row">
             <div class="col-md-9 col-lg-7">
                 <h1>
-                    Time To Go With Sowarstock
+                    {% trans "Time To Go With Sowarstock"%}
                 </h1>
                 <p class="lead">
-                    Our creative partners help us achieve our goal by producing creative, elegant, and professional work. The unique products that we offer leave our customers happy and satisfied. Join our expanding creative community.
+                    {% blocktrans %}Our creative partners help us achieve our goal by producing creative, elegant, and professional work. The unique products that we offer leave our customers happy and satisfied. Join our expanding creative community.{% endblocktrans %}
                 </p>
-                <a class="btn btn--primary type--uppercase" href="/signup">
+                <a class="btn btn--primary type--uppercase {% if LANGUAGE_CODE == "ar" %}pull-right{% endif %}" href="/signup">
                     <span class="btn__text">
-                        JOIN AS A CONTRIBUTOR
+                        {% trans "JOIN AS A CONTRIBUTOR" %}
                     </span>
                 </a>
             </div>
@@ -36,36 +36,36 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="feature feature-1 boxed boxed--border bg--white">
-                    <h5>Why Choose Sowarstock?</h5>
+                    <h5>{% trans "Why Choose Sowarstock?"%}</h5>
                     <p>
-                        14 December, 2018
+                        {% trans "14 December, 2018" %}
                     </p>
-                    <a href="#">
-                        Coming Soon
+                    <a href="#" {% if LANGUAGE_CODE == "ar" %} class="pull-right" {% endif %}>
+                        {% trans "Coming Soon"%}
                     </a>
                 </div>
                 <!--end feature-->
             </div>
             <div class="col-md-4">
                 <div class="feature feature-1 boxed boxed--border bg--white">
-                    <h5>Learn More About Sowarstock</h5>
+                    <h5>{% trans "Learn More About Sowarstock"%}</h5>
                     <p>
-                        14 December, 2018
+                        {% trans "14 December, 2018" %}
                     </p>
-                    <a href="#">
-                        Coming Soon
+                    <a href="#" {% if LANGUAGE_CODE == "ar" %} class="pull-right" {% endif %}>
+                        {% trans "Coming Soon"%}
                     </a>
                 </div>
                 <!--end feature-->
             </div>
             <div class="col-md-4">
                 <div class="feature feature-1 boxed boxed--border bg--white">
-                    <h5>Best Selling Images</h5>
+                    <h5>{% trans "Best Selling Images"%}</h5>
                     <p>
-                        14 December, 2018
+                        {% trans "14 December, 2018" %}
                     </p>
-                    <a href="#">
-                        Coming Soon
+                    <a href="#" {% if LANGUAGE_CODE == "ar" %} class="pull-right" {% endif %}>
+                        {% trans "Coming Soon"%}
                     </a>
                 </div>
                 <!--end feature-->
@@ -79,12 +79,12 @@
     <div class="container">
         <div class="row justify-content-around">
             <div class="col-md-8 col-lg-7">
-                <h2>Best Artists from the MENA Area</h2>
+                <h2>{% trans "Best Artists from the MENA Area"%}</h2>
                 <p class="lead">
-                    We are a community of creative people from the MENA area and other countries around the globe with a common goal, to find the beauty that is hidden in the sand. We pride ourselves with the product that we provide.
+                    {% trans "We are a community of creative people from the MENA area and other countries around the globe with a common goal, to find the beauty that is hidden in the sand. We pride ourselves with the product that we provide."%}
                 </p>
                 <p class="lead">
-                    We provide an easy to use platform for creative professionals to make a revenue of their work. We protect the rights of our creative partners and license their work to a global market. Anyone can be a creative partner by just agreeing to our Terms & Conditions and sending us their personal work, simplicity at its finest. We stand for creative professionalism and our platform offers Photographs, Calligraphy, Vectors, and Drawings.
+                    {% trans "We provide an easy to use platform for creative professionals to make a revenue of their work. We protect the rights of our creative partners and license their work to a global market. Anyone can be a creative partner by just agreeing to our Terms & Conditions and sending us their personal work, simplicity at its finest. We stand for creative professionalism and our platform offers Photographs, Calligraphy, Vectors, and Drawings."%}
                 </p>
             </div>
             <div class="col-md-4 col-lg-3">
@@ -123,33 +123,33 @@
             <div class="col-md-4 col-12">
                 <div class="feature">
                     <div class="radial radial--active" data-value="33" data-size="208" data-bar-width="8" data-color="#4a90e2" style="height: 208px; width: 208px; margin-top: -10em">
-                        <span class="h3 radial__label center-title-to-radial">Sign up</span>
+                        <span class="h3 radial__label center-title-to-radial">{% trans "Sign up" %}</span>
                     <canvas height="416" width="416" style="height: 208px; width: 208px; margin-top:-5em"></canvas></div>
                     <!--end radial-->
                     <p style="margin-top:15em">
-                        Sign up with Sowarstock and join other contributors
+                        {% trans "Sign up with Sowarstock and join other contributors." %}
                     </p>
                 </div>
             </div>
             <div class="col-md-4 col-12">
                 <div class="feature">
                     <div class="radial radial--active" data-value="66" data-size="208" data-bar-width="8" data-color="#4a90e2" style="height: 208px; width: 208px; margin-top: -10em">
-                        <span class="h3 radial__label center-title-to-radial">Upload</span>
+                        <span class="h3 radial__label center-title-to-radial">{% trans "Upload" %}</span>
                     <canvas height="416" width="416" style="height: 208px; width: 208px; margin-top:-5em"></canvas></div>
                     <!--end radial-->
                     <p style="margin-top:15em">
-                        Start listing your photos, drawings and calligraphy work.
+                        {% trans "Start listing your photos, drawings and calligraphy work." %}
                     </p>
                 </div>
             </div>
             <div class="col-md-4 col-12">
                 <div class="feature">
                     <div class="radial radial--active" data-value="100" data-size="208" data-bar-width="8" data-color="#4a90e2" style="height: 208px; width: 208px; margin-top: -10em">
-                        <span class="h3 radial__label center-title-to-radial">Earn</span>
+                        <span class="h3 radial__label center-title-to-radial">{% trans "Earn" %}</span>
                     <canvas height="416" width="416" style="height: 208px; width: 208px; margin-top:-5em"></canvas></div>
                     <!--end radial-->
                     <p style="margin-top:15em">
-                        When someone sees your work and buys it, you will earn money
+                        {% trans "When someone sees your work and buys it, you will earn money." %}
                     </p>
                 </div>
             </div>

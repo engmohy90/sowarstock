@@ -41,6 +41,10 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
         <link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" media="all" />
         <link href="{% static 'ssw/css/main.css' %}" rel="stylesheet" type="text/css" media="all" />
+        {% if LANGUAGE_CODE == "ar" %}
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rtl/3.4.0/css/bootstrap-rtl.min.css">
+            <link href="{% static 'ssw/css/main-ar.css' %}" rel="stylesheet" type="text/css" media="all" />
+        {% endif %}
         {% block head %}{% endblock %}
     </head>
     <body class=" ">
@@ -109,7 +113,6 @@
                                     <div class="dropdown__container" style="left: -1056.19px;">
                                         <div class="container">
                                             <div class="row">
-
                                                 <div class="col-lg-1 dropdown__content" style="left: 1056.19px;">
                                                     <ul class="menu-vertical text-left">
                                                         <li>
@@ -196,19 +199,19 @@
                             <div class="bar__module">
                                 <ul class="menu-horizontal text-left">
                                     <li class="dropdown">
-                                        <a href="{% url 'photos_main' %}" {% if activeDashboardMenu == "photos" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>Photos</a>
+                                        <a href="{% url 'photos_main' %}" {% if activeDashboardMenu == "photos" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>{% trans "Photos" %}</a>
                                     </li>
                                     <li class="dropdown">
-                                        <a href="{% url 'calligraphy_main' %}" {% if activeDashboardMenu == "calligraphy" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>Calligraphy</a>
+                                        <a href="{% url 'calligraphy_main' %}" {% if activeDashboardMenu == "calligraphy" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>{% trans "Calligraphy" %}</a>
                                     </li>
                                     <li class="dropdown">
-                                        <a href="{% url 'editorials_main' %}" {% if activeDashboardMenu == "editorials" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>Editorials</a>
+                                        <a href="{% url 'editorials_main' %}" {% if activeDashboardMenu == "editorials" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>{% trans "Editorials" %}</a>
                                     </li>
                                     <li class="dropdown">
-                                        <a href="{% url 'vectors_main' %}" {% if activeDashboardMenu == "vectors" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>Drawings</a>
+                                        <a href="{% url 'vectors_main' %}" {% if activeDashboardMenu == "vectors" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>{% trans "Drawings" %}</a>
                                     </li>
                                     <li class="dropdown">
-                                        <span class="dropdown__trigger">Legal</span>
+                                        <span class="dropdown__trigger">{% trans "Legal" %}</span>
                                         <div class="dropdown__container" style="left: -445.953px;">
                                             <div class="container">
                                                 <div class="row">
@@ -233,10 +236,10 @@
                                         </div>
                                     </li>
                                     <li class="dropdown">
-                                        <a href="{% url 'about' %}" {% if activeDashboardMenu == "about" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>About</a>
+                                        <a href="{% url 'about' %}" {% if activeDashboardMenu == "about" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>{% trans "About" %}</a>
                                     </li>
                                     <li class="dropdown">
-                                        <a href="{% url 'contact' %}" {% if activeDashboardMenu == "contact" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>Contact us</a>
+                                        <a href="{% url 'contact' %}" {% if activeDashboardMenu == "contact" %} class="sowar_stock_color_font sowar_stock_color_underline"{% endif %}>{% trans "Contact us" %}</a>
                                     </li>
                                 </ul>
                             </div>
@@ -309,36 +312,6 @@
                         <div class="notification-close-cross notification-close color--white"></div>
                     </div>
                 {% endfor %}
-                <!--
-                <div class="col-md-3"></div>
-                <div class="col-md-6">
-                    {% for message in messages %}
-                        <div class="alert bg--{{message.tags}}">
-                            <div {% if LANGUAGE_CODE == 'ar' %}style="float:right"{% endif %} class="alert__body">
-                                <span>{{message}}</span>
-                            </div>
-                            <div {% if LANGUAGE_CODE == 'ar' %}style="float:left"{% endif %} class="alert__close">×</div>
-                        </div>
-                    {% endfor %}
-                    -->
-                    <!--
-                    {% if user.type == "contributor" and not user.is_verified %}
-                        <div class="alert bg--error">
-                            <div class="alert__body">
-                                <span {% if LANGUAGE_CODE == 'ar' %}style="text-align:right"{% endif %}>Please complete your profile from account settings</span>
-                            </div>
-                            <div class="alert__close">×</div>
-                        </div>
-                    {% endif %}
-                    {% if user.type == "client" and not user.is_verified %}
-                        <div class="alert bg--error">
-                            <div class="alert__body">
-                                <span {% if LANGUAGE_CODE == 'ar' %}style="text-align:right"{% endif %}>Please complete your profile by verifying your email address</span>
-                            </div>
-                            <div class="alert__close">×</div>
-                        </div>
-                    {% endif %}
-                    -->
                 </div>
             </div>
 

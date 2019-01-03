@@ -46,6 +46,20 @@ def remove_profile_image(user):
 
 def crop_profile_image(user):
     base_image = image_file_from_url(user.profile_image_url)
+    for orientation in ExifTags.TAGS.keys():
+        if ExifTags.TAGS[orientation] == 'Orientation': break
+    try:
+        exif = dict(base_image._getexif().items())
+        if exif:
+            if exif[orientation]:
+                if exif[orientation] == 3:
+                    base_image = base_image.rotate(180, expand=True)
+                elif exif[orientation] == 6:
+                    base_image = base_image.rotate(270, expand=True)
+                elif exif[orientation] == 8:
+                    base_image = base_image.rotate(90, expand=True)
+    except:
+        print("no exif for this product")
     width, height = base_image.size
     if width == height:
         cropped = base_image

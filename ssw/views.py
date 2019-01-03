@@ -499,7 +499,10 @@ def complete_registration(request):
 
                 sample_portfolio_url = request.POST.get('sample_portfolio_url', None)
                 if sample_portfolio_url:
-                    user.sample_portfolio_url = sample_portfolio_url
+                    if "http" not in sample_portfolio_url:
+                        user.sample_portfolio_url = "http://" + sample_portfolio_url
+                    else:
+                        user.sample_portfolio_url = sample_portfolio_url
                     user.save()
 
                 models.ActivityLog.objects.create(short_description="user %s finished completing registration" % user,
