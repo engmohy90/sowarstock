@@ -89,13 +89,13 @@
             </div>
             <div class="col-md-4 col-lg-3">
                 <div class="text-block">
-                    <h5>Global</h5>
+                    <h5>{% trans "Global"%}</h5>
                     <p>
                         support@sowarstock.com
                     </p>
                 </div>
                 <div class="text-block">
-                    <h5>Cheynne</h5>
+                    <h5>{% trans "Cheynne"%}</h5>
                     <p>
                         Incorp Services, Inc.
                         <br> 1910 Thomas Ave
@@ -103,12 +103,12 @@
                     </p>
                 </div>
                 <div class="text-block">
-                    <h5>Almanakh</h5>
+                    <h5>{% trans "Almanakh"%}</h5>
                     <p>
-                        Alhasan Bin Ali St.
-                        <br> Buliding No. 5271
-                        <br> 32917-6657
-                        <br> Almanakh, Tarout, KSA
+                        {% trans "Alhasan Bin Ali St."%}
+                        <br>{% trans " Buliding No. 5271"%}
+                        <br>{% trans " 32917-6657"%}
+                        <br>{% trans " Almanakh, Tarout, KSA"%}
                     </p>
                 </div>
             </div>
@@ -165,14 +165,14 @@
         </div>
     </div>
     <div class="container">
-        <div class="row">
+        <div class="row {% if LANGUAGE_CODE == 'ar' %} justify-content-end {% endif %}">
             <div class="col-lg-5 col-md-7">
-                <h2>Best Images from the MENA Area</h2>
+                <h2>{% trans "Best Images from the MENA Area" %}</h2>
                 <p class="lead">
-                    We offer a high-quality licensed content that matches with different needs and multiple types of projects.
+                    {% trans "We offer a high-quality licensed content that matches with different needs and multiple types of projects." %}
                 </p>
                 <p class="lead">
-                     Take a look at our collection, choose the images you need, buy the licenses, download & use directly.
+                     {% trans "Take a look at our collection, choose the images you need, buy the licenses, download & use directly." %}
                 </p>
             </div>
         </div>
@@ -184,9 +184,9 @@
     <div class="container">
         <div class="row">
             <div class="col-md-10 col-lg-8">
-                <h2>Get In Touch</h2>
+                <h2>{% trans "Get In Touch" %}</h2>
                 <p class="lead">
-                    We would love to hear your feedback, comments or suggestions regarding your experience with Sowarstock.
+                    {% trans "We would love to hear your feedback, comments or suggestions regarding your experience with Sowarstock." %}
                 </p>
             </div>
         </div>
@@ -199,34 +199,34 @@
         <div class="row justify-content-between">
             <div class="col-md-5">
                 <p class="lead">
-                    E:
+                    {% trans "E:" %}
                     <a href="#">support@sowarstock.com</a>
-                    <br> P: +966 508990660
+                    <br> {% trans "P:" %} +966 508990660
                 </p>
                 <p class="lead">
-                    To enroll or for any general information, please contact us on email, whatsapp, or use the form here.
+                    {% trans "To enroll or for any general information, please contact us on email, whatsapp, or use the form here." %}
                 </p>
                 <p class="lead">
-                    We endeavor to answer all enquiries within 2 business days.
+                    {% trans "We endeavor to answer all enquiries within 2 business days." %}
                 </p>
             </div>
             <div class="col-md-6 col-12">
                 <form method="post" action="" class="row mx-0">
                     {% csrf_token %}
                     <div class="col-md-6 col-12">
-                        <label>Your Name:</label>
+                        <label {% if LANGUAGE_CODE == 'ar' %} class="pull-right"{% endif %}>{% trans "Your Name:" %}</label>
                         <input type="text" name="name" id="name" class="validate-required">
                     </div>
                     <div class="col-md-6 col-12">
-                        <label>Email Address:</label>
+                        <label {% if LANGUAGE_CODE == 'ar' %} class="pull-right"{% endif %}>{% trans "Email Address:" %}</label>
                         <input type="email" name="email" id="email" class="validate-required validate-email">
                     </div>
                     <div class="col-md-12 col-12">
-                        <label>Message:</label>
+                        <label {% if LANGUAGE_CODE == 'ar' %} class="pull-right"{% endif %}>{% trans "Message:" %}</label>
                         <textarea rows="4" name="message" id="message" class="validate-required"></textarea>
                     </div>
                     <div class="col-md-5 col-lg-4 col-6">
-                        <button id="send_enquiry_button" type="submit" class="btn btn--primary type--uppercase">Send Enquiry</button>
+                        <button id="send_enquiry_button" type="submit" class="btn btn--primary type--uppercase">{% trans "Send Enquiry" %}</button>
                     </div>
                 </form>
             </div>

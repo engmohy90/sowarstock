@@ -52,18 +52,20 @@
         <section class="bar bar-3 bar--sm bg--secondary">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-6">
-                    </div>
+                    {% if LANGUAGE_CODE == 'en' %}
+                        <div class="col-lg-6">
+                        </div>
+                    {% endif %}
                     <div class="col-lg-6 text-right text-left-xs text-left-sm">
                         <div class="bar__module">
                             <ul class="menu-horizontal">
                                 {% if user.is_authenticated %}
                                 <li class="dropdown">
                                     <span class="dropdown__trigger">{% trans "Hello"%}, {{ user }}</span>
-                                    <div class="dropdown__container" style="left: -438.844px;">
+                                    <div class="dropdown__container">
                                         <div class="container">
                                             <div class="row">
-                                                <div class="dropdown__content col-lg-2 col-md-4" style="left: 438.844px;">
+                                                <div class="dropdown__content col-lg-2 col-md-4">
                                                     <ul class="menu-vertical">
                                                         <li>
                                                             <a href="/profile">{% trans "Profile"%}</a>
@@ -172,7 +174,7 @@
                                 <img class="logo logo-light" alt="logo" src="{% static 'ssw/img/sowarstock_logo_grey.png' %}">
                             </a>
                         </div>
-                        <div class="col-9 col-md-10 text-right">
+                        <div class="col-9 col-md-10 {% if LANGUAGE_CODE == 'en' %} text-right {% else %} text-left {% endif %}">
                             <a href="#" class="hamburger-toggle" data-toggle-class="#menu1;hidden-xs">
                                 <i class="icon icon--sm stack-interface stack-menu"></i>
                             </a>
@@ -212,22 +214,22 @@
                                     </li>
                                     <li class="dropdown">
                                         <span class="dropdown__trigger">{% trans "Legal" %}</span>
-                                        <div class="dropdown__container" style="left: -445.953px;">
+                                        <div class="dropdown__container">
                                             <div class="container">
                                                 <div class="row">
-                                                    <div class="dropdown__content col-lg-2 col-md-4" style="left: 445.953px;">
+                                                    <div class="dropdown__content col-lg-2 col-md-4">
                                                         <ul class="menu-vertical">
                                                             <li>
-                                                                <a href="{% url 'legal_contributor' %}">Contributor Agreement</a>
+                                                                <a href="{% url 'legal_contributor' %}">{% trans "Contributor Agreement" %}</a>
                                                             </li>
                                                             <li>
-                                                                <a href="{% url 'legal_license' %}">License Agreement</a>
+                                                                <a href="{% url 'legal_license' %}">{% trans "License Agreement" %}</a>
                                                             </li>
                                                             <li>
-                                                                <a href="{% url 'legal_privacy' %}">Privacy Policy</a>
+                                                                <a href="{% url 'legal_privacy' %}">{% trans "Privacy Policy" %}</a>
                                                             </li>
                                                             <li>
-                                                                <a href="{% url 'legal_terms' %}">Terms and Conditions</a>
+                                                                <a href="{% url 'legal_terms' %}">{% trans "Terms and Conditions" %}</a>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -247,12 +249,12 @@
                                 {% if not user.is_authenticated %}
                                     <a class="btn btn--sm type--uppercase" href="/login">
                                         <span class="btn__text">
-                                            Log in
+                                            {% trans "Log in" %}
                                         </span>
                                     </a>
                                     <a class="btn btn--sm btn--primary type--uppercase" href="/signup">
                                         <span class="btn__text">
-                                            Sign up
+                                            {% trans "Sign up" %}
                                         </span>
                                     </a>
                                 {% endif %}
@@ -430,31 +432,31 @@
             <footer class="space--sm footer-1 text-center-xs ">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6 {% if LANGUAGE_CODE == 'ar' %} text-right {% endif %}">
                             <ul class="list-inline list--hover">
                                 <li>
                                     <a href="#">
-                                        <span>Our Company</span>
+                                        <span>{% trans "Our Company" %}</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#">
-                                        <span>Blogs</span>
+                                        <span>{% trans "Blogs" %}</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#">
-                                        <span>Help</span>
+                                        <span>{% trans "Help" %}</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#">
-                                        <span>Work With Us</span>
+                                        <span>{% trans "Work With Us" %}</span>
                                     </a>
                                 </li>
                             </ul>
                         </div>
-                        <div class="col-md-6 text-right text-center-xs">
+                        <div class="col-md-6 {% if LANGUAGE_CODE == 'ar' %} text-left {% else %} text-right {% endif %} text-center-xs">
                             <ul class="social-list list-inline list--hover">
                                 <li>
                                     <a href="https://twitter.com/">
@@ -474,7 +476,7 @@
                             </ul>
                             <a href="/contact" class="btn type--uppercase">
                                 <span class="btn__text">
-                                    Contact Us
+                                    {% trans "Contact Us" %}
                                 </span>
                             </a>
                         </div>
@@ -482,11 +484,11 @@
                     <!--end of row-->
                     <div class="row">
                         <div class="col-md-12">
-                            <img alt="Image" class="logo" src="{% static 'ssw/img/sowarstock_logo_grey.png' %}">
-                            <span class="type--fine-print">©
-                                <span class="update-year">2018</span> Sowarstock</span>
-                            <a class="type--fine-print" href="{% url 'legal_privacy' %}">Privacy Policy</a>
-                            <a class="type--fine-print" href="{% url 'legal_terms' %}">Terms</a>
+                            <img alt="Image" class="logo {% if LANGUAGE_CODE == 'ar' %} pull-right {% endif %}" src="{% static 'ssw/img/sowarstock_logo_grey.png' %}">
+                            <span class="type--fine-print {% if LANGUAGE_CODE == 'ar' %} pull-right {% endif %}">©
+                                <span class="update-year">2018</span>{% trans "Sowarstock" %}</span>
+                            <a class="type--fine-print {% if LANGUAGE_CODE == 'ar' %} pull-right {% endif %}" href="{% url 'legal_privacy' %}">{% trans "Privacy Policy" %}</a>
+                            <a class="type--fine-print {% if LANGUAGE_CODE == 'ar' %} pull-right {% endif %}" href="{% url 'legal_terms' %}">{% trans "Terms" %}</a>
                         </div>
                     </div>
                     <!--end of row-->
@@ -519,6 +521,7 @@
         <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
         <script src="{% static 'ssw/js/main.js' %}"></script>
         <script>
+        $(document).ready(function(){
             {% if user.type == "admin" %}
                 $.get( "/ajax/pending_products_count/", function( data ) {
                     var result = data.result
@@ -604,11 +607,13 @@
 
             {% if LANGUAGE_CODE == 'ar' %}
                 $('input').css("text-align","right")
+                $('.dropdown__container').removeAttr( 'style' )
+                $('.dropdown__content').removeAttr( 'style' )
             {% endif %}
 
             $('select').wrap('<div class="input-icon input-icon--right">')
             $('select').after('<i class="stack-down-open"></i>')
-
+        })
         </script>
         {% block js %}{% endblock%}
     </body>

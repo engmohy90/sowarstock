@@ -1,3 +1,55 @@
 h1, h2, h5, p, a {
     text-align: right;
 }
+
+@media (min-width: 990px)
+.menu-horizontal > li:not(:last-child) {
+    margin-right: 0em;
+    margin-left: 1.85714286em;
+}
+
+
+.menu-horizontal li:not(:last-child) {
+    margin-right:0em;
+    margin-left: 1.23809524em;
+}
+
+
+.bar-1 .bar__module + .bar__module {
+    margin-left: 0em;
+    margin-right: 1.85714286em;
+}
+
+.btn.btn--sm + .btn--sm {
+    margin-left: 0em;
+    margin-right: 0.92857143em;
+}
+
+.dropdown{
+    text-align: right;
+}
+
+.list-inline li:not(:last-child) {
+    margin-left: 1.85714286em;
+    margin-right: 0em;
+    text-align: center;
+}
+
+.list-inline li:last-child {
+    text-align: center;
+}
+
+.list-inline:not(:last-child) {
+    margin-left: 1.85714286em;
+    margin-right: 0em;
+}
+
+footer .logo:not(:last-child) {
+    margin-left: 1.85714286em;
+    margin-right: 0em;
+}
+
+footer a.type--fine-print:not(:first-child) {
+    margin-right: 1.85714286em;
+    margin-left: 0em;
+}
