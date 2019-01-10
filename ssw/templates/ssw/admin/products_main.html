@@ -103,6 +103,7 @@ Products
                                                           <th>Title</th>
                                                           <th>User</th>
                                                           <th>Upload Date</th>
+                                                          <th></th>
                                                       </tr>
                                                       </thead>
                                                       <tbody>
@@ -113,7 +114,8 @@ Products
                                                                 <td>{{ product.title }}</td>
                                                                 <td><a href="{% url 'other_profile' product.owner.username %}">{{ product.owner }}</a></td>
                                                                 <td>{{product.created_at}}</td>
-                                                            </tr>
+                                                                <td><a href="{% url 'admin_product_delete' product.pk %}" class="color--error"><i class="fas fa-trash-alt"></i></a></td>
+                                                             </tr>
                                                           {% endfor %}
                                                       </tbody>
                                                   </table>

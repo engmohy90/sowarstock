@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^products/(?P<pk>\d+)/approve/$', views.product_approve, name='product_approve'),
     url(r'^products/(?P<pk>\d+)/reject/$', views.product_reject, name='product_reject'),
     url(r'^products/(?P<pk>\d+)/archive/$', views.product_archive, name='admin_product_archive'),
+    url(r'^products/(?P<pk>\d+)/delete/$', views.product_delete, name='admin_product_delete'),
     url(r'^collections/$', views.collections_main, name="admin_collections_main"),
     url(r'^collections/new/$', views.collections_new, name="admin_collections_new"),
     url(r'^collections/(?P<pk>\d+)/edit/$', views.collections_edit, name="admin_collections_edit"),

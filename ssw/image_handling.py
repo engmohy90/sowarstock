@@ -44,6 +44,35 @@ def remove_profile_image(user):
     user.save()
 
 
+def delete_product_image(product):
+    S3_BUCKET = settings.S3_BUCKET
+    AWS_ACCESS_KEY_ID = settings.AWS_ACCESS_KEY_ID
+    AWS_SECRET_ACCESS_KEY = settings.AWS_SECRET_ACCESS_KEY
+    conn = S3Connection(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY)
+    url_list1 = product.image_url.split("/")
+    filename1 = url_list1[len(url_list1) - 1]
+    url_list2 = product.thumbnail.url.split("/")
+    filename2 = url_list2[len(url_list2) - 1]
+    url_list3 = product.watermark.url.split("/")
+    filename3 = url_list3[len(url_list3) - 1]
+
+    b = Bucket(conn, S3_BUCKET)
+
+    k = Key(b)
+
+    k.key = 'products/' + filename1
+
+    b.delete_key(k)
+
+    k.key = 'products/thumbnails/' + filename2
+
+    b.delete_key(k)
+
+    k.key = 'products/watermarked/' + filename3
+
+    b.delete_key(k)
+
+
 def crop_profile_image(user):
     base_image = image_file_from_url(user.profile_image_url)
     for orientation in ExifTags.TAGS.keys():

@@ -9,6 +9,7 @@ from notifications.signals import notify
 
 from ssw import models, forms
 from ssw.views import getSowarStockUser, showCorrectMenu
+from ssw.image_handling import delete_product_image
 
 
 @login_required
@@ -85,6 +86,8 @@ def product_approve(request, pk):
         product.status = "pending_approval"
         product.save()
         messages.success(request, "Product has been approved by you and now waiting reviewer approval")
+        models.ActivityLog.objects.create(short_description="admin %s approved product %s" % (user, product),
+                                          owner=user)
         return HttpResponseRedirect("/admin/products")
     else:
         messages.error(request, "You are not authorized to view this page !")
@@ -112,6 +115,8 @@ def product_reject(request, pk):
                                                                                                     rejection_reason,
                                                                                                     rejection_note))
             messages.success(request, "Product has been rejected")
+            models.ActivityLog.objects.create(short_description="admin %s rejected product %s" % (user, product),
+                                              owner=user)
             return HttpResponseRedirect("/admin/products")
         return HttpResponseRedirect("/admin/products")
     else:
@@ -133,6 +138,21 @@ def product_archive(request, pk):
         messages.error(request, "You are not authorized to view this page !")
         return HttpResponseRedirect("/")
 
+
+@login_required
+def product_delete(request, pk):
+    user = getSowarStockUser(request.user)
+    if user.type == "admin":
+        product = get_object_or_404(models.Product, pk=pk)
+        models.ActivityLog.objects.create(short_description="admin %s deleted product %s" % (user, product),
+                                          owner=user)
+        delete_product_image(product)
+        product.delete()
+        messages.success(request, "Product has been deleted")
+        return HttpResponseRedirect("/admin/products")
+    else:
+        messages.error(request, "You are not authorized to view this page !")
+        return HttpResponseRedirect("/")
 
 @login_required
 def collections_main(request):
@@ -358,6 +378,8 @@ def requests_approve(request, pk):
             email_body = loader.render_to_string("ssw/email_account_verified.html", {"user": r.owner})
             send_mail("تم توثيق حسابك", "", "Sowarstock", [r.owner.email], False,
                       None, None, None, email_body)
+            models.ActivityLog.objects.create(short_description="admin %s approved user request %s" % (user, r),
+                                              owner=user)
         messages.success(request, "Request has been approved")
         return HttpResponseRedirect("/admin/requests")
     else:

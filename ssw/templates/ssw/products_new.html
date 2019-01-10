@@ -360,31 +360,66 @@ New Product
         uploadProductFile("{{user.username}}")
 
         $("#submit_product_button").click(function(e){
+            var title = $("#id_title").val()
+            var description = $("#id_description").val()
             var fileType = $("#id_file_type").val()
+            var keywords = $("#id_keywords").val()
+            var category = $("#id_category").val()
+            var subcategory = $("#id_subcategory").val()
 
             if(fileType=="jpeg/tiff"){
                 var image = $("#image_url").val()
                 if(image==""){
                     e.preventDefault()
                     $("#form_error_message").html("Please upload/repload an image")
-                }else{
-                    $(this).prop("disabled",true)
-                    $("#submit_product_text").html("Submitting ... ")
-                    $("#submit_product_loader").removeClass("hidden")
-                    $(this).closest("form").submit()
+                    return
                 }
             }else if(fileType=="eps"){
                 var file = $("#file_url").val()
                 if(file==""){
                     e.preventDefault()
                     $("#form_error_message").html("Please upload/reapload a file")
-                }else{
-                    $(this).prop("disabled",true)
-                    $("#submit_product_text").html("Submitting ... ")
-                    $("#submit_product_loader").removeClass("hidden")
-                    $(this).closest("form").submit()
+                    return
                 }
             }
+
+            if(title == ""){
+                e.preventDefault()
+                $("#form_error_message").html("Please choose a title")
+                return
+            }
+
+            if(description == ""){
+                e.preventDefault()
+                $("#form_error_message").html("Please choose a description")
+                return
+            }
+
+             if(keywords == ""){
+                e.preventDefault()
+                $("#form_error_message").html("Please choose some keywords")
+                return
+            }
+
+            if(category == ""){
+                e.preventDefault()
+                $("#form_error_message").html("Please choose a category")
+                return
+            }
+
+            if(category == 1 | category == 2){
+                if(subcategory == ""){
+                    e.preventDefault()
+                    $("#form_error_message").html("Please choose a subcategory")
+                    return
+                }
+            }
+
+            $(this).prop("disabled",true)
+            $("#submit_product_text").html("Submitting ... ")
+            $("#submit_product_loader").removeClass("hidden")
+            $("#form_error_message").html("")
+            $(this).closest("form").submit()
 
         })
 

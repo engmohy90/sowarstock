@@ -43,6 +43,8 @@ def product_approve(request, pk):
         notify.send(request.user, recipient=admin, level="success",
                     verb='Product {} has been approved by {}'.format(product.public_id, user.get_full_name()))
         messages.success(request, "Product has been approved")
+        models.ActivityLog.objects.create(short_description="image reviewer %s approved product %s" % (user, product),
+                                          owner=user)
         return HttpResponseRedirect("/reviewer/products")
     else:
         messages.error(request, "You are not authorized to view this page !")
@@ -75,6 +77,8 @@ def product_reject(request, pk):
                         verb='Product {} has been rejected by {} for the following reason: {}, {}'.format(
                             product.public_id, user.get_full_name(), product.get_rejection_reason_display(), product.rejection_note))
             messages.success(request, "Product has been rejected")
+            models.ActivityLog.objects.create(short_description="image reviewer %s rejected product %s" % (user, product),
+                                              owner=user)
             return HttpResponseRedirect("/reviewer/products")
         return HttpResponseRedirect("/reviewer/products")
     else:

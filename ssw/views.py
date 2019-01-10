@@ -581,6 +581,8 @@ def products_new(request):
                 product.save()
                 create_watermarked_image(product)
                 messages.success(request, "Request to add product has been submitted successfully")
+                models.ActivityLog.objects.create(short_description="user %s submitted a new product %s" % (user,product),
+                                                  owner=user)
                 return HttpResponseRedirect("/products/")
             else:
                 if '__all__' in form.errors:
@@ -722,6 +724,8 @@ def update_password(request):
             password = password_form.save()
             update_session_auth_hash(request, password)
             messages.success(request, "Password updated successfully. Please login with the new password")
+            models.ActivityLog.objects.create(short_description="user %s updated password" % user,
+                                              owner=user)
         else:
             messages.error(request, "Please Correct the errors")
     return HttpResponseRedirect("/account_settings")
