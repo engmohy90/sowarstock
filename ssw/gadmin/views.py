@@ -396,6 +396,7 @@ def requests_reject(request, pk):
         r.save()
         if r.type == "new_contributor":
             r.owner.photo_id = None
+            r.owner.completed_registration = False
             r.owner.save()
             notify.send(request.user, recipient=r.owner, level="error",
                         verb='You request to verify your account has been rejected')
