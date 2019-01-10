@@ -402,6 +402,8 @@ def requests_reject(request, pk):
         else:
             notify.send(request.user, recipient=r.owner, level="error",
                         verb='Your request to delete your account has been rejected')
+        models.ActivityLog.objects.create(short_description="admin %s rejected user request %s" % (user, r),
+                                          owner=user)
         messages.success(request, "Request has been rejected")
         return HttpResponseRedirect("/admin/requests")
     else:

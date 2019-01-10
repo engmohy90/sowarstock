@@ -751,7 +751,7 @@ def update_photo_id(request):
         photo_id_form = forms.PhotoIdForm(request.POST, request.FILES, instance=user)
         if photo_id_form.is_valid():
             photo_id_form.save()
-            models.UserRequest.objects.create(owner=user, body=user.photo_id_url)
+            models.UserRequest.objects.create(owner=user)
             messages.success(request, "Photo ID updated successfully")
         else:
             messages.error(request, photo_id_form.errors)
