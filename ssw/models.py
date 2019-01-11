@@ -67,6 +67,13 @@ class SowarStockUser(User):
     class Meta:
         verbose_name = "Sowarstock User"
 
+    def __str__(self):
+        full_name = self.get_full_name()
+        if full_name:
+            return full_name
+        else:
+            return self.username
+
     def completed_registration(self):
         if self.type == "contributor":
             cont = Contributor.objects.get(pk=self.pk)
