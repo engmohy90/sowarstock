@@ -391,21 +391,28 @@ def requests_approve(request, pk):
 def requests_reject(request, pk):
     user = getSowarStockUser(request.user)
     if user.type == "admin":
-        r = get_object_or_404(models.UserRequest, pk=pk)
-        r.status = "rejected"
-        r.save()
-        if r.type == "new_contributor":
-            r.owner.photo_id = None
-            r.owner.completed_registration = False
-            r.owner.save()
-            notify.send(request.user, recipient=r.owner, level="error",
-                        verb='You request to verify your account has been rejected')
-        else:
-            notify.send(request.user, recipient=r.owner, level="error",
-                        verb='Your request to delete your account has been rejected')
-        models.ActivityLog.objects.create(short_description="admin %s rejected user request %s" % (user, r),
-                                          owner=user)
-        messages.success(request, "Request has been rejected")
+        if request.method == "POST":
+            r = get_object_or_404(models.UserRequest, pk=pk)
+            rejection_note = request.POST["rejection_note"]
+            r.rejection_note = rejection_note
+            r.status = "rejected"
+            r.save()
+            if r.type == "new_contributor":
+                r.owner.photo_id = None
+                r.owner.completed_registration = False
+                r.owner.save()
+                notify.send(request.user, recipient=r.owner, level="error",
+                            verb='You request to verify your account has been rejected')
+                email_body = loader.render_to_string("ssw/email_request_reject.html", {"user": r.owner})
+                send_mail("لم نتمكن من توثيق حسابك", "", "Sowarstock", [r.owner.email], False,
+                          None, None, None, email_body)
+            else:
+                notify.send(request.user, recipient=r.owner, level="error",
+                            verb='Your request to delete your account has been rejected')
+            models.ActivityLog.objects.create(short_description="admin %s rejected user request %s" % (user, r),
+                                              owner=user)
+            messages.success(request, "Request has been rejected")
+
         return HttpResponseRedirect("/admin/requests")
     else:
         messages.error(request, "You are not authorized to view this page !")

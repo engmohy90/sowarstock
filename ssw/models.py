@@ -331,14 +331,15 @@ class FaqPersonal(models.Model):
 class UserRequest(models.Model):
     TYPE_OPTIONS = (("new_contributor", "New Contributor"), ("delete_account", "Delete Account"))
     STATUS_OPTIONS = (("pending_approval", "Pending Approval"), ("approved", "Approved"), ("rejected", "Rejected"))
-    body = models.TextField()
+    body = models.TextField(blank=True, null=True)
+    rejection_note = models.TextField(blank=True, null=True)
     status = models.CharField(max_length=255, choices=STATUS_OPTIONS, default="pending_approval")
     type = models.CharField(max_length=255, choices=TYPE_OPTIONS, default="new_contributor")
     owner = models.ForeignKey(Contributor, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.owner.username
+        return "%s | Status: %s" % (self.owner.username, self.get_status_display())
 
 
 class ShoppingCart(models.Model):

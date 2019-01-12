@@ -27,10 +27,40 @@ Request
                                 {% if r.status == "pending_approval" %}
                                     <span class="pull-right">
                                         <a href="{% url 'requests_approve' r.pk %}" class="btn btn-success btn--sm">Approve</a>
-                                        <a href="{% url 'requests_reject' r.pk %}" class="btn btn-danger btn--sm">Reject</a>
+                                        <div class="modal-instance">
+                                            <a href="#" class="btn btn-danger modal-trigger">Reject</a>
+                                            <div class="modal-container">
+                                                <div class="modal-content">
+                                                    <div class="boxed boxed--lg">
+                                                        <h2>Rejection Reason</h2>
+                                                        <hr class="short">
+                                                        <p class="lead">
+                                                            Please tell us the reason for rejection. This will be sent back to the contributor.
+                                                        </p>
+                                                        <form method="post" action="{% url 'requests_reject' r.pk %}">
+                                                            {% csrf_token %}
+                                                            <textarea name="rejection_note" class="form-control" style="height:10em" required></textarea>
+                                                            <br>
+                                                            <div class="row">
+                                                                <div class="col-md-3">
+                                                                    <button type="submit" class="btn sowar_stock_color btn__upper reject_button">Submit</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="modal-close modal-close-cross"></div>
+                                                </div>
+                                            </div>
+                                        </div><!--end of modal instance-->
                                     </span>
                                 {% endif %}
                             </h4>
+                            {% if r.status == "approved" %}
+                                    <p class="color--success">Status: Approved</p>
+                            {% elif r.status == "rejected" %}
+                                    <p class="color--error">Status: Rejected</p>
+                                    <p class="color--error">Rejection Reason: {{r.rejection_note}}</p>
+                            {% endif %}
                             <div class="tabs-container" data-content-align="left">
                                 <ul class="tabs">
                                     <li class="active">
