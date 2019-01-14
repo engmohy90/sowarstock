@@ -26,7 +26,9 @@ Users
                                               <th>Type</th>
                                               <th>Completed Registration?</th>
                                               <th>Date Joined</th>
-                                              <th>Action</th>
+                                              {% if user.type == "admin" %}
+                                                <th>Action</th>
+                                              {% endif %}
                                           </tr>
                                           </thead>
                                           <tbody>
@@ -38,39 +40,41 @@ Users
                                                 <td>{{ user.get_type_display }}</td>
                                                 <td> {{ user.completed_registration }} </td>
                                                 <td> {{user.date_joined}} </td>
-                                                <td>
-                                                    {% if user.type == "contributor" or user.type == "client" %}
-                                                        {% if not user.suspended %}
-                                                            <div class="modal-instance">
-                                                                <a href="#" class="btn btn-danger modal-trigger">Suspend</a>
-                                                                <div class="modal-container">
-                                                                    <div class="modal-content">
-                                                                        <div class="boxed boxed--lg">
-                                                                            <h2>Suspension Reason</h2>
-                                                                            <hr class="short">
-                                                                            <p class="lead">
-                                                                                Please tell us the reason for suspension. This will be sent back to the user.
-                                                                            </p>
-                                                                            <form method="post" action="{% url 'admin_users_suspend' user.username %}">
-                                                                                {% csrf_token %}
-                                                                                <textarea name="suspension_reason" class="form-control" style="height:10em" required></textarea>
-                                                                                <br>
-                                                                                <div class="row">
-                                                                                    <div class="col-md-3">
-                                                                                        <button type="submit" class="btn sowar_stock_color btn__upper suspend_button">Submit</button>
+                                                {% if user.type == "admin" %}
+                                                    <td>
+                                                        {% if user.type == "contributor" or user.type == "client" %}
+                                                            {% if not user.suspended %}
+                                                                <div class="modal-instance">
+                                                                    <a href="#" class="btn btn-danger modal-trigger">Suspend</a>
+                                                                    <div class="modal-container">
+                                                                        <div class="modal-content">
+                                                                            <div class="boxed boxed--lg">
+                                                                                <h2>Suspension Reason</h2>
+                                                                                <hr class="short">
+                                                                                <p class="lead">
+                                                                                    Please tell us the reason for suspension. This will be sent back to the user.
+                                                                                </p>
+                                                                                <form method="post" action="{% url 'admin_users_suspend' user.username %}">
+                                                                                    {% csrf_token %}
+                                                                                    <textarea name="suspension_reason" class="form-control" style="height:10em" required></textarea>
+                                                                                    <br>
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-3">
+                                                                                            <button type="submit" class="btn sowar_stock_color btn__upper suspend_button">Submit</button>
+                                                                                        </div>
                                                                                     </div>
-                                                                                </div>
-                                                                            </form>
+                                                                                </form>
+                                                                            </div>
+                                                                            <div class="modal-close modal-close-cross"></div>
                                                                         </div>
-                                                                        <div class="modal-close modal-close-cross"></div>
                                                                     </div>
-                                                                </div>
-                                                            </div><!--end of modal instance-->
-                                                        {% else %}
-                                                            <a href="{% url 'admin_users_unsuspend' user.username %}" class="btn btn-success">Unsuspend</a>
+                                                                </div><!--end of modal instance-->
+                                                            {% else %}
+                                                                <a href="{% url 'admin_users_unsuspend' user.username %}" class="btn btn-success">Unsuspend</a>
+                                                            {% endif %}
                                                         {% endif %}
-                                                    {% endif %}
-                                                </td>
+                                                    </td>
+                                                {% endif %}
                                             </tr>
                                           {% endfor %}
                                           </tbody>

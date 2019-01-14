@@ -15,7 +15,7 @@ from ssw.image_handling import delete_product_image
 @login_required
 def users(request):
     user = getSowarStockUser(request.user)
-    if user.type == "admin":
+    if user.type == "admin" or user.type == "customer_rep":
         users = models.SowarStockUser.objects.all()
         return render(request, "ssw/admin/users.html", {"user": user, "users": users,
                                                         "activeDashboardMenu": "users", **showCorrectMenu(request.user)})
@@ -107,6 +107,7 @@ def product_reject(request, pk):
             product.rejection_note = rejection_note
             product.reviewed_by = user
             product.save()
+            """
             email_body = loader.render_to_string("ssw/email_product_reject.html", {"product": product})
             send_mail("رفض عملك {}".format(product.public_id), "", "Sowarstock", [product.owner.email], False,
                       None, None, None, email_body)
@@ -114,6 +115,7 @@ def product_reject(request, pk):
                         verb='Product {} has been rejected for the following reason: {}, {}'.format(product.public_id,
                                                                                                     rejection_reason,
                                                                                                     rejection_note))
+            """
             messages.success(request, "Product has been rejected")
             models.ActivityLog.objects.create(short_description="admin %s rejected product %s" % (user, product),
                                               owner=user)
@@ -376,7 +378,7 @@ def requests_approve(request, pk):
             notify.send(request.user, recipient=r.owner, level="success",
                         verb='Your account has been verified')
             email_body = loader.render_to_string("ssw/email_account_verified.html", {"user": r.owner})
-            send_mail("تم توثيق حسابك", "", "Sowarstock", [r.owner.email], False,
+            send_mail("تهانينا. تم توثيق حسابك. ابدأ الآن", "", "Sowarstock", [r.owner.email], False,
                       None, None, None, email_body)
             models.ActivityLog.objects.create(short_description="admin %s approved user request %s" % (user, r),
                                               owner=user)
@@ -403,7 +405,7 @@ def requests_reject(request, pk):
                 r.owner.save()
                 notify.send(request.user, recipient=r.owner, level="error",
                             verb='You request to verify your account has been rejected')
-                email_body = loader.render_to_string("ssw/email_request_reject.html", {"user": r.owner})
+                email_body = loader.render_to_string("ssw/email_request_reject.html", {"r": r})
                 send_mail("لم نتمكن من توثيق حسابك", "", "Sowarstock", [r.owner.email], False,
                           None, None, None, email_body)
             else:

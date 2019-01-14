@@ -45,7 +45,7 @@ class Address(models.Model):
 class SowarStockUser(User):
     USER_TYPES = (("contributor", "Contributor"),("client", "Client"),
                   ("admin", "Admin"),("image_reviewer", "Image Reviewer"),
-                  ("financial_admin", "Financial Admin"))
+                  ("financial_admin", "Financial Admin"), ("customer_rep", "Customer Representative"))
     LANGUAGES = (("en", "English"),("ar", "Arabic"))
     FORGOT_PASSWORD_STATUSES = (("none", "None"),("not_used", "Not Used"), ("used", "Used"))
     type = models.CharField(max_length=255, choices=USER_TYPES)

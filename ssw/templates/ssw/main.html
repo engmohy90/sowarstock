@@ -292,6 +292,12 @@
         <!-- end image reviewer menu  -->
         {% endif %}
 
+        {% if user.type == "customer_rep" and showcustomerrepmenu %}
+        <!-- customer rep menu  -->
+        {% include "ssw/menu/customer_rep_menu.html" %}
+        <!-- end customer rep menu  -->
+        {% endif %}
+
         {% if user.type == "client" and showclientmenu %}
         <!-- client menu  -->
         {% include "ssw/menu/client_menu.html" %}

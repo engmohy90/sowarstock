@@ -28,6 +28,7 @@ def showCorrectMenu(user):
     showreviewermenu = False
     showclientmenu = False
     showfinancialmenu = False
+    showcustomerrepmenu = False
     u = models.SowarStockUser.objects.get(id=user.id)
     if u.type == "contributor":
         showcontributormenu = True
@@ -37,11 +38,13 @@ def showCorrectMenu(user):
         showreviewermenu = True
     elif u.type == "financial_admin":
         showfinancialmenu = True
+    elif u.type == "customer_rep":
+        showcustomerrepmenu = True
     elif u.type == "client":
         showclientmenu = True
     return {"showcontributormenu": showcontributormenu, "showadminmenu": showadminmenu,
             "showfinancialmenu": showfinancialmenu, "showreviewermenu": showreviewermenu,
-            "showclientmenu": showclientmenu}
+            "showcustomerrepmenu": showcustomerrepmenu, "showclientmenu": showclientmenu}
 
 
 def getSowarStockUser(user):
@@ -93,10 +96,11 @@ def signup(request):
             password = form.cleaned_data.get('password1')
             if user_type == "contributor":
                 user = models.Contributor.objects.create_user(username, email, password, type=user_type)
-            elif user_type == "client":
+                email_body = loader.render_to_string("ssw/email_verify_email_contributor.html", {"user": user})
+            else: #client
                     user = models.Client.objects.create_user(username, email, password, type=user_type)
-            email_body = loader.render_to_string("ssw/email_verify_email.html", {"user": user})
-            send_mail("شكرا لإنضمامكم", "", "Sowarstock", [user.email], False, None, None, None, email_body)
+                    email_body = loader.render_to_string("ssw/email_verify_email_client.html", {"user": user})
+            send_mail("توثيق بريدك الإلكتروني على صورستوك", "", "Sowarstock", [user.email], False, None, None, None, email_body)
             return HttpResponseRedirect("/thanks-for-joining")
     return render(request, "ssw/signup.html",{"user":getSowarStockUser(request.user), "form": form})
 
@@ -144,7 +148,7 @@ def recover_account(request):
             user.forgot_password_status = "not_used"
             user.save()
             email_body = loader.render_to_string("ssw/email_recover_account.html", {"user": user})
-            send_mail("إسترجاع الحساب", "", "Sowarstock", [user.email], False,
+            send_mail("استرجاع حسابك", "", "Sowarstock", [user.email], False,
                      None, None, None, email_body)
             messages.success(request, _("An email address has been sent to you"))
         except:
@@ -400,7 +404,7 @@ def other_profile(request, username):
 @login_required
 def profile(request):
     user = getSowarStockUser(request.user)
-    if  user.type == "client":
+    if user.type == "client":
         return render(request, "ssw/profile.html", {"user": user, **showCorrectMenu(request.user)})
     elif user.type == "contributor":
         if user.completed_registration:
@@ -459,6 +463,15 @@ def profile(request):
             owed_amount = 0
         return render(request, "ssw/profile.html", {"user": user, "sales": sales_amount, "earnings": earnings_amount,
                                                     "owed": owed_amount, **showCorrectMenu(request.user)})
+
+    elif user.type == "customer_rep":
+        users = models.SowarStockUser.objects.all()
+        contributors = models.Contributor.objects.all()
+        clients = models.Client.objects.all()
+
+        return render(request, "ssw/profile.html", {"user": user, "users": users, "contributors": contributors,
+                                                    "clients": clients, **showCorrectMenu(request.user)})
+
 
 
 @login_required
@@ -522,6 +535,9 @@ def complete_registration(request):
                 """
                 user.completed_registration = True
                 user.save()
+                email_body = loader.render_to_string("ssw/email_thanks_for_completing_registration.html", {"user": user})
+                send_mail("شكرا لانضمامك إلى صورستوك", "", "Sowarstock", [user.email], False,
+                          None, None, None, email_body)
                 return HttpResponseRedirect("/thanks-for-completing-registration")
         return render(request, "ssw/complete_registration.html", {"user": user, "personal_info_form": personal_info_form,
                                                                   "address_form": address_form,
@@ -539,7 +555,7 @@ def thanks_for_completing_registration(request):
 @login_required
 def resend_email_activation(request):
     user = getSowarStockUser(request.user)
-    email_body = loader.render_to_string("ssw/email_verify_email.html", {"user": user})
+    email_body = loader.render_to_string("ssw/email_verify_email_client.html", {"user": user})
     send_mail("شكرا لإنضمامكم", "", "Sowarstock", [user.email], False, None, None, None, email_body)
     return JsonResponse({"result": "success", "msg": "email sent"})
 
