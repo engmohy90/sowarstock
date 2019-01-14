@@ -32,18 +32,18 @@ Users
                                           </tr>
                                           </thead>
                                           <tbody>
-                                          {% for user in users %}
+                                          {% for u in users %}
                                             <tr>
-                                                <td><a href="{% url 'other_profile' user.username %}">{{ user.username }}</a></td>
-                                                <td>{{ user.get_full_name }}</td>
-                                                <td> {{ user.email }} </td>
-                                                <td>{{ user.get_type_display }}</td>
-                                                <td> {{ user.completed_registration }} </td>
-                                                <td> {{user.date_joined}} </td>
+                                                <td><a href="{% url 'other_profile' user.username %}">{{ u.username }}</a></td>
+                                                <td>{{ u.get_full_name }}</td>
+                                                <td> {{ u.email }} </td>
+                                                <td>{{ u.get_type_display }}</td>
+                                                <td> {{ u.completed_registration }} </td>
+                                                <td> {{u.date_joined}} </td>
                                                 {% if user.type == "admin" %}
                                                     <td>
-                                                        {% if user.type == "contributor" or user.type == "client" %}
-                                                            {% if not user.suspended %}
+                                                        {% if u.type == "contributor" or u.type == "client" %}
+                                                            {% if not u.suspended %}
                                                                 <div class="modal-instance">
                                                                     <a href="#" class="btn btn-danger modal-trigger">Suspend</a>
                                                                     <div class="modal-container">
@@ -54,7 +54,7 @@ Users
                                                                                 <p class="lead">
                                                                                     Please tell us the reason for suspension. This will be sent back to the user.
                                                                                 </p>
-                                                                                <form method="post" action="{% url 'admin_users_suspend' user.username %}">
+                                                                                <form method="post" action="{% url 'admin_users_suspend' u.username %}">
                                                                                     {% csrf_token %}
                                                                                     <textarea name="suspension_reason" class="form-control" style="height:10em" required></textarea>
                                                                                     <br>
