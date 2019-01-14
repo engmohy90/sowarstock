@@ -107,7 +107,6 @@ def product_reject(request, pk):
             product.rejection_note = rejection_note
             product.reviewed_by = user
             product.save()
-            """
             email_body = loader.render_to_string("ssw/email_product_reject.html", {"product": product})
             send_mail("رفض عملك {}".format(product.public_id), "", "Sowarstock", [product.owner.email], False,
                       None, None, None, email_body)
@@ -115,7 +114,6 @@ def product_reject(request, pk):
                         verb='Product {} has been rejected for the following reason: {}, {}'.format(product.public_id,
                                                                                                     rejection_reason,
                                                                                                     rejection_note))
-            """
             messages.success(request, "Product has been rejected")
             models.ActivityLog.objects.create(short_description="admin %s rejected product %s" % (user, product),
                                               owner=user)
