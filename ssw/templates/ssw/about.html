@@ -14,9 +14,9 @@
         <div class="row">
             <div class="col-md-8 col-lg-5">
                 <h1>
-                    Sowarstock LLC.
+                    {% trans "Sowarstock LLC."%}
                 </h1>
-                <ul class="social-list list-inline list--hover">
+                <ul class="social-list list-inline list--hover" {% if LANGUAGE_CODE == 'ar' %} style="position:relative; left: 18em" {% endif %}>
                     <li>
                         <a href="https://twitter.com/">
                             <i class="socicon socicon-twitter icon icon--xs"></i>
@@ -39,11 +39,11 @@
                     </li>
                 </ul>
                 <p class="lead">
-                    A global provider of high-quality licensed images and artworks. We are working with great contributors from the MENA area and other countries around the world, to build a rich stock of photographs, calligraphy, and drawings. Sowarstock was founded in Wyoming in 2017.
+                    {% trans "A global provider of high-quality licensed images and artworks. We are working with great contributors from the MENA area and other countries around the world, to build a rich stock of photographs, calligraphy, and drawings. Sowarstock was founded in Wyoming in 2017."%}
                 </p>
-                <a class="btn btn--primary type--uppercase" href="/contact">
+                <a class="btn btn--primary type--uppercase {% if LANGUAGE_CODE == 'ar' %} pull-right {% endif %}" href="/contact">
                     <span class="btn__text">
-                        Get In Touch
+                        {% trans "Get In Touch"%}
                     </span>
                 </a>
             </div>

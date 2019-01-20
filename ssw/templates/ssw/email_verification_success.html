@@ -1,6 +1,6 @@
 {% extends "ssw/main.html" %}
 {% load static from staticfiles %}
-
+{% load i18n %}
 {% block title %}
 Email Verification Success
 {% endblock %}
@@ -10,9 +10,9 @@ Email Verification Success
     <div class="container pos-vertical-center">
         <div class="row">
             <div class="col-md-7 col-lg-5">
-                <h2><i class="fas fa-check-circle color--success"></i> Your email address has been verified!<br>
+                <h2><i class="fas fa-check-circle color--success"></i> {% trans "Your email address has been verified!"%}<br>
                     {% if user.type == "contributor" %}
-                        You can now <a href="{% url 'complete_registration' %}">complete registration</a>
+                        {% trans "You can now complete registration by"%} <a href="{% url 'complete_registration' %}">{% trans "clicking here."%}</a>
                     {% endif %}
                 </h2>
             </div>

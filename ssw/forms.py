@@ -15,7 +15,7 @@ class MyProfileImageFileInput(ClearableFileInput):
 
 
 class SignupForm(UserCreationForm):
-    email = forms.EmailField(max_length=254, help_text='Required. Enter a valid email address.')
+    email = forms.EmailField(max_length=254, help_text='Required. Enter a valid email address.', label=_('Email Address'))
 
     class Meta:
         model = models.SowarStockUser
@@ -34,6 +34,11 @@ class ProfilePersonalInfoForm(ModelForm):
     class Meta:
         model = models.SowarStockUser
         fields = ["first_name", "last_name", "country_code", "phone", "preferred_language"]
+        labels = {
+            'country_code': _('Country Code'),
+            'phone': _('Phone'),
+            'preferred_language': _('Preferred Language')
+        }
 
 
 class ProfilePublicInfoForm(ModelForm):
@@ -46,6 +51,14 @@ class AddressForm(ModelForm):
     class Meta:
         model = models.Address
         fields = ["address1", "address2", "city", "state","country", "zipcode"]
+        labels = {
+            'address1': _('Address 1'),
+            'address2': _('Address 2'),
+            'city': _('City'),
+            'state': _('State'),
+            'country': _('Country'),
+            'zipcode': _('Zip Code'),
+        }
 
 
 class PhotoIdForm(ModelForm):
@@ -78,7 +91,7 @@ SampleProductFormset = forms.modelformset_factory(
 
 
 class ProductForm(ModelForm):
-    price_type = forms.ChoiceField(choices=(("default", "Default"), ("custom", "Custom")))
+    price_type = forms.ChoiceField(choices=(("default", _("Default")), ("custom", _("Custom"))))
 
     class Meta:
         model = models.Product
@@ -86,6 +99,17 @@ class ProductForm(ModelForm):
                   "subcategory", "adult_content", "exclusive", "released", "editorial", "price_type",
                   "standard_price", "extended_price"]
         labels = {
+            'title': _('Title'),
+            'file_type': _('File Type'),
+            'description': _('Description'),
+            'keywords': _('Keywords'),
+            'category': _('Category'),
+            'subcategory': _('Subcategory'),
+            'adult_content': _('Adult Content'),
+            'exclusive': _('Exclusive'),
+            'released': _('Released'),
+            'editorial': _('Editorial'),
+            'price_type': _('Price type'),
             'standard_price': _('Standard Price ($)'),
             'extended_price': _('Extended Price ($)'),
         }

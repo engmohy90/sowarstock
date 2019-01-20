@@ -56,6 +56,8 @@
                         <div class="col-lg-6">
                         </div>
                     {% endif %}
+                    <div class="col-lg-6">
+                    </div>
                     <div class="col-lg-6 text-right text-left-xs text-left-sm">
                         <div class="bar__module">
                             <ul class="menu-horizontal">
@@ -101,44 +103,7 @@
                                     </li>
                                 {% endif %}
                                 <!--
-                                <li class="dropdown dropdown--absolute">
-                                    {% get_current_language as LANGUAGE_CODE %}
-                                    {% get_available_languages as LANGUAGES %}
-                                    {% get_language_info_list for LANGUAGES as languages %}
-                                    <span class="dropdown__trigger">
-                                        {% if LANGUAGE_CODE == "en" %}
-                                            <img alt="Image" class="flag" src="{% static 'ssw/img/flag-1.png' %}">
-                                        {% elif LANGUAGE_CODE == "ar" %}
-                                            <img alt="Image" class="flag" src="{% static 'ssw/img/flag-3.png' %}">
-                                        {% endif %}
-                                    </span>
-                                    <div class="dropdown__container" style="left: -1056.19px;">
-                                        <div class="container">
-                                            <div class="row">
-                                                <div class="col-lg-1 dropdown__content" style="left: 1056.19px;">
-                                                    <ul class="menu-vertical text-left">
-                                                        <li>
-                                                            <form action="{% url 'set_language' %}" method="post">
-                                                                {% csrf_token %}
-                                                                <input name="next" type="hidden" value="{{ redirect_to }}">
-                                                                <input name="language" type="hidden" value="{{languages.0.code}}">
-                                                                <button style="cursor:pointer;border-width:0; margin-top:0">{{ languages.0.name_local }} ({{ languages.0.code }})</button>
-                                                            </form>
-                                                        </li>
-                                                        <li>
-                                                             <form action="{% url 'set_language' %}" method="post">
-                                                                {% csrf_token %}
-                                                                <input name="next" type="hidden" value="{{ redirect_to }}">
-                                                                <input name="language" type="hidden" value="{{languages.1.code}}">
-                                                                <button style="cursor:pointer;border-width:0; margin-top:0">{{ languages.1.name_local }} ({{ languages.1.code }})</button>
-                                                            </form>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
+                                Language options here
                                 -->
                             </ul>
                         </div>
@@ -441,7 +406,7 @@
                         <div class="col-md-6 {% if LANGUAGE_CODE == 'ar' %} text-right {% endif %}">
                             <ul class="list-inline list--hover">
                                 <li>
-                                    <a href="#">
+                                    <a href="{% url 'about' %}">
                                         <span>{% trans "Our Company" %}</span>
                                     </a>
                                 </li>
@@ -451,7 +416,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a href="{% url 'contact' %}">
                                         <span>{% trans "Help" %}</span>
                                     </a>
                                 </li>

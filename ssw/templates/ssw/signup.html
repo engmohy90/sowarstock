@@ -13,25 +13,33 @@
                     </div>
                 </div>
                 <div class="container pos-vertical-center">
-                    <div class="row">
+                    <div class="row {% if LANGUAGE_CODE == 'ar' %} justify-content-end {% endif %}">
                         <div class="col-lg-5 col-md-7">
                             <h2>{% trans "Create a Sowarstock account"%}</h2>
                             <p class="lead">{% trans "Become a member of our community, either as a contributor or a client"%}</p>
                                 <form method="post" action="{% url 'signup' %}">
                                     {% csrf_token %}
-                                    {{form.username.label_tag}}
+                                    <div {% if LANGUAGE_CODE == 'ar' %} class="pull-right" {% endif %}>
+                                        {{form.username.label_tag}}
+                                    </div>
                                     {{form.username}}
                                     {{form.username.errors}}
 
-                                    {{form.email.label_tag}}
+                                    <div {% if LANGUAGE_CODE == 'ar' %} class="pull-right" {% endif %}>
+                                        {{form.email.label_tag}}
+                                    </div>
                                     {{form.email}}
                                     {{form.email.errors}}
 
-                                    {{form.password1.label_tag}}
+                                    <div {% if LANGUAGE_CODE == 'ar' %} class="pull-right" {% endif %}>
+                                        {{form.password1.label_tag}}
+                                    </div>
                                     {{form.password1}}
                                     {{form.password1.errors}}
 
-                                    {{form.password2.label_tag}}
+                                    <div {% if LANGUAGE_CODE == 'ar' %} class="pull-right" {% endif %}>
+                                        {{form.password2.label_tag}}
+                                    </div>
                                     {{form.password2}}
                                     {{form.password2.errors}}
                                     <br><br>
@@ -63,11 +71,20 @@
                                             <i class="color--error" id="user_type_error_message"></i>
                                         </div>
                                         <div class="col-12">
-                                            <div class="input-checkbox input-checkbox--switch">
-                                                <input id="checkbox-switch" type="checkbox" name="agree" />
-                                                <label for="checkbox-switch"></label>
-                                            </div>
-                                            <span>{% trans "I have read and agree to the"%} <a href="{% url 'legal_terms' %}" target="_blank">{% trans "terms and conditions"%}</a></span>
+                                            {% if LANGUAGE_CODE == 'ar' %}
+                                                <span>{% trans "I have read and agreed to the"%} <a href="{% url 'legal_terms' %}" target="_blank">{% trans "terms and conditions"%}</a></span>
+                                                <div class="input-checkbox input-checkbox--switch">
+                                                    <input id="checkbox-switch" type="checkbox" name="agree" />
+                                                    <label for="checkbox-switch"></label>
+                                                </div>
+                                            {% else %}
+                                                <div class="input-checkbox input-checkbox--switch">
+                                                    <input id="checkbox-switch" type="checkbox" name="agree" />
+                                                    <label for="checkbox-switch"></label>
+                                                </div>
+                                                <span>{% trans "I have read and agreed to the"%} <a href="{% url 'legal_terms' %}" target="_blank">{% trans "terms and conditions"%}</a></span>
+                                            {% endif %}
+
                                             <br><i class="color--error" id="terms_error_message"></i>
                                         </div>
                                         <div class="col-12">

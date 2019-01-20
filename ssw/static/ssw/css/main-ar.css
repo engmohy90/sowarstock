@@ -1,4 +1,4 @@
-h1, h2, h5, p, a {
+h1, h2, h4, h5, p, a {
     text-align: right;
 }
 
@@ -52,4 +52,30 @@ footer .logo:not(:last-child) {
 footer a.type--fine-print:not(:first-child) {
     margin-right: 1.85714286em;
     margin-left: 0em;
+}
+
+.wizard > .steps li:first-child a:after{
+    left:0;
+}
+
+.wizard > .steps li:last-child a:after{
+    left: 9.2em;
+}
+
+.wizard > .steps .current a,
+.wizard > .steps .disabled a,
+.wizard > .steps .done a{
+    padding-right: 5em;
+}
+
+.col-md-1 {
+    width: 100%;
+}
+
+.tabs-content > .active > .tab__content{
+    text-align: start;
+}
+
+.tabs-container{
+    float: right;
 }

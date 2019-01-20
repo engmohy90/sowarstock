@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-05 03:44+0300\n"
+"POT-Creation-Date: 2019-01-20 16:54+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,43 +27,160 @@ msgstr ""
 msgid "Arabic"
 msgstr ""
 
-#: ssw/forms.py:63
+#: ssw/forms.py:18 ssw/templates/ssw/recover_account.html:19
+#: ssw/templates/ssw/signup.html:52
+msgid "Email Address"
+msgstr "بريدك الإلكتروني"
+
+#: ssw/forms.py:38
+msgid "Country Code"
+msgstr "رمز البلد"
+
+#: ssw/forms.py:39
+msgid "Phone"
+msgstr "رقم الهاتف"
+
+#: ssw/forms.py:40
+msgid "Preferred Language"
+msgstr "اللغة المفضلة"
+
+#: ssw/forms.py:55
+msgid "Address 1"
+msgstr "العنوان ١"
+
+#: ssw/forms.py:56
+msgid "Address 2"
+msgstr "العنوان ٢"
+
+#: ssw/forms.py:57
+msgid "City"
+msgstr "المدينة"
+
+#: ssw/forms.py:58
+msgid "State"
+msgstr "المحافظة"
+
+#: ssw/forms.py:59
+msgid "Country"
+msgstr "البلد"
+
+#: ssw/forms.py:60
+msgid "Zip Code"
+msgstr "الرمز البريدي"
+
+#: ssw/forms.py:76
 msgid "IBAN"
 msgstr ""
 
-#: ssw/forms.py:89
+#: ssw/forms.py:94
+msgid "Default"
+msgstr "الأسعار الافتراضية"
+
+#: ssw/forms.py:94
+msgid "Custom"
+msgstr "تخصيص أسعار أخرى"
+
+#: ssw/forms.py:102
+msgid "Title"
+msgstr "العنوان"
+
+#: ssw/forms.py:103
+msgid "File Type"
+msgstr "نوع الملف"
+
+#: ssw/forms.py:104
+msgid "Description"
+msgstr "الوصف"
+
+#: ssw/forms.py:105
+msgid "Keywords"
+msgstr "الكلمات الدالة"
+
+#: ssw/forms.py:106
+msgid "Category"
+msgstr "الفئة الرئيسية"
+
+#: ssw/forms.py:107
+msgid "Subcategory"
+msgstr "الفئة الفرعية"
+
+#: ssw/forms.py:108 ssw/templates/ssw/products_new.html:88
+#: ssw/templates/ssw/products_new.html:114
+msgid "Adult Content"
+msgstr "محتوى للبالغين"
+
+#: ssw/forms.py:109 ssw/templates/ssw/products_new.html:135
+#: ssw/templates/ssw/products_new.html:162
+msgid "Exclusive"
+msgstr "حصري"
+
+#: ssw/forms.py:110 ssw/templates/ssw/products_new.html:184
+#: ssw/templates/ssw/products_new.html:211
+msgid "Released"
+msgstr "محتوى مصدور"
+
+#: ssw/forms.py:111 ssw/templates/ssw/products_new.html:233
+#: ssw/templates/ssw/products_new.html:262
+msgid "Editorial"
+msgstr "محتوى توثيقي"
+
+#: ssw/forms.py:112 ssw/templates/ssw/products_new.html:283
+msgid "Price type"
+msgstr "نوع السعر"
+
+#: ssw/forms.py:113
 msgid "Standard Price ($)"
-msgstr ""
+msgstr "سعر أساسي ($)"
 
-#: ssw/forms.py:90
+#: ssw/forms.py:114
 msgid "Extended Price ($)"
-msgstr ""
+msgstr "سعر اضافي ($)"
 
-#: ssw/forms.py:124
+#: ssw/forms.py:148
 msgid "Have a Question ?"
-msgstr ""
+msgstr "لديك سؤال ؟"
 
-#: ssw/forms.py:136
+#: ssw/forms.py:160
 msgid "Message"
-msgstr ""
+msgstr "الرسالة"
 
-#: ssw/forms.py:137
+#: ssw/forms.py:161
 msgid "Type"
 msgstr ""
 
-#: ssw/forms.py:188
+#: ssw/forms.py:212
 msgid "Reason for Deleting"
-msgstr ""
+msgstr "سبب الحذف"
 
-#: ssw/models.py:84
+#: ssw/models.py:91
 msgid "Profile Image has to be square"
 msgstr ""
 
 #: ssw/templates/ssw/about.html:5 ssw/templates/ssw/about2.html:5
-#: ssw/templates/ssw/main.html:241 ssw/templates/ssw/main.html:381
+#: ssw/templates/ssw/main.html:239 ssw/templates/ssw/main.html:385
 #: ssw/templates/ssw/main2.html:353 ssw/templates/ssw/main3.html:365
 msgid "About"
 msgstr "من نحن"
+
+#: ssw/templates/ssw/about.html:17
+msgid "Sowarstock LLC."
+msgstr "شركة صورستوك المحدودة المسؤولية"
+
+#: ssw/templates/ssw/about.html:42
+msgid ""
+"A global provider of high-quality licensed images and artworks. We are "
+"working with great contributors from the MENA area and other countries "
+"around the world, to build a rich stock of photographs, calligraphy, and "
+"drawings. Sowarstock was founded in Wyoming in 2017."
+msgstr ""
+"موقع صورستوك هو عبارة عن منصة عالمية لتوفير محتوى مرخّص وعالي الجودة من الصور "
+"الفوتوغرافية، والرسوم، والمخطوطات. نحن مهتمون بأن نعمل مع مجموعة مميزة من "
+"المصورين والفنانين من الشرق الأوسط وشمال أفريقيا ودول العالم الأخرى لتوفير "
+"ذلك النوع من المحتوى الذي يتناسب مع مختلف احتياجات عملائنا حول العالم."
+
+#: ssw/templates/ssw/about.html:46 ssw/templates/ssw/landing.html:187
+msgid "Get In Touch"
+msgstr "تواصل معنا"
 
 #: ssw/templates/ssw/about2.html:16
 msgid "Hi, We're Sowarstock"
@@ -80,7 +197,7 @@ msgid "Our Mission"
 msgstr ""
 
 #: ssw/templates/ssw/calligraphy_main.html:5
-#: ssw/templates/ssw/calligraphy_main.html:17 ssw/templates/ssw/main.html:207
+#: ssw/templates/ssw/calligraphy_main.html:17 ssw/templates/ssw/main.html:205
 #: ssw/templates/ssw/main2.html:217
 msgid "Calligraphy"
 msgstr "مخطوطات"
@@ -108,18 +225,102 @@ msgstr ""
 #: ssw/templates/ssw/vectors_main.html:38
 #: ssw/templates/ssw/vectors_main.html:40
 msgid "Category:"
-msgstr ""
+msgstr "الفئة الرئيسية"
 
 #: ssw/templates/ssw/calligraphy_main.html:62
 msgid "There are no calligraphy."
+msgstr "ليس هناك خطوط"
+
+#: ssw/templates/ssw/collections_main.html:6
+#: ssw/templates/ssw/collections_main.html:17
+#: ssw/templates/ssw/menu/contributor_menu.html:54
+msgid "Collections"
+msgstr "المجموعات"
+
+#: ssw/templates/ssw/collections_main.html:59
+msgid "You don't have any collections"
+msgstr "ليس لديك مجموعات"
+
+#: ssw/templates/ssw/complete_registration.html:15
+msgid "Complete Registration"
+msgstr "إتمام عملية إنشاء حسابك الجديد"
+
+#: ssw/templates/ssw/complete_registration.html:20
+msgid "Personal Information"
+msgstr "المعلومات الشخصية"
+
+#: ssw/templates/ssw/complete_registration.html:24
+#: ssw/templates/ssw/complete_registration.html:29
+#: ssw/templates/ssw/contact.html:54 ssw/templates/ssw/contact2.html:78
+#: ssw/templates/ssw/landing.html:221
+msgid "Email Address:"
+msgstr "بريدك الإلكتروني"
+
+#: ssw/templates/ssw/complete_registration.html:25
+msgid "verified"
+msgstr "موثق"
+
+#: ssw/templates/ssw/complete_registration.html:30
+msgid "unverified"
+msgstr "غير موثق"
+
+#: ssw/templates/ssw/complete_registration.html:31
+msgid "Resend Email"
+msgstr "إعادة إرسال البريد الالكتروني"
+
+#: ssw/templates/ssw/complete_registration.html:72
+msgid "Profile Image:"
+msgstr "صورة الملف الشخصي"
+
+#: ssw/templates/ssw/complete_registration.html:88
+msgid "Address"
+msgstr "العنوان"
+
+#: ssw/templates/ssw/complete_registration.html:144
+msgid "Photo ID"
+msgstr "صورة الهوية"
+
+#: ssw/templates/ssw/complete_registration.html:146
+msgid ""
+"Please upload a valid government ID (Passport or National ID). These will "
+"help us\n"
+"                                verify that you are a real person and will "
+"help us make payments to you when you have\n"
+"                                any earnings from our site."
 msgstr ""
+"لنتمكن من التأكد من هويتك، والدفع لك عندما تحقق أرباحا مالية من أعمالك على "
+"صورستوك، نحن بحاجة للحصول على صورة من إثبات الهوية الخاص بك (جواز السفر أو "
+"بطاقة الأحوال الوطنية)."
+
+#: ssw/templates/ssw/complete_registration.html:150
+msgid "Photo ID:"
+msgstr "صورة الهوية"
+
+#: ssw/templates/ssw/complete_registration.html:156
+msgid "Sample Photos"
+msgstr "عينات صور"
+
+#: ssw/templates/ssw/complete_registration.html:158
+msgid ""
+"Help us to get to know you better by showing us a sample of your work by "
+"sharing with us\n"
+"                                a link to your instagram account, facebook "
+"account, personal account, or even a google drive folder."
+msgstr ""
+"ساعدنا في التعرّف عليك أكثر ورؤية عينات من أعمالك الرائعة عبر مشاركة رابط أي "
+"من حساباتك على انستغرام أو فيسبوك أو رابط موقعك الشخصي."
+
+#: ssw/templates/ssw/complete_registration.html:161
+#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:2223
+msgid "URL"
+msgstr "الرابط الإلكتروني"
 
 #: ssw/templates/ssw/contact.html:5 ssw/templates/ssw/contact2.html:5
 msgid "Contact"
 msgstr "اتصل بنا"
 
-#: ssw/templates/ssw/contact.html:27 ssw/templates/ssw/main.html:386
-#: ssw/templates/ssw/main.html:479 ssw/templates/ssw/main3.html:370
+#: ssw/templates/ssw/contact.html:27 ssw/templates/ssw/main.html:390
+#: ssw/templates/ssw/main.html:483 ssw/templates/ssw/main3.html:370
 msgid "Contact Us"
 msgstr "اتصل بنا"
 
@@ -144,11 +345,6 @@ msgstr ""
 msgid "Your Name:"
 msgstr "الإسم"
 
-#: ssw/templates/ssw/contact.html:54 ssw/templates/ssw/contact2.html:78
-#: ssw/templates/ssw/landing.html:221
-msgid "Email Address:"
-msgstr "الإيميل"
-
 #: ssw/templates/ssw/contact.html:58 ssw/templates/ssw/contact2.html:82
 #: ssw/templates/ssw/landing.html:225
 msgid "Message:"
@@ -160,29 +356,63 @@ msgstr ""
 
 #: ssw/templates/ssw/contact2.html:22
 msgid "Let’s get in touch"
-msgstr ""
+msgstr "لنبقى على تواصل"
 
 #: ssw/templates/ssw/contact2.html:24
 msgid ""
 "We would love to hear your feedback, comments, suggestions, or questions "
 "about your experience with Sowarstock."
 msgstr ""
+"نحن مهتمون بمعرفة ما يدور بذهنك من أفكار، ملاحظات، أو استفسارات بشأن تجربتك "
+"مع صورستوك."
+
+#: ssw/templates/ssw/contact2.html:59 ssw/templates/ssw/landing.html:202
+msgid "E:"
+msgstr "ايميل: "
+
+#: ssw/templates/ssw/contact2.html:61 ssw/templates/ssw/landing.html:204
+msgid "P:"
+msgstr "الهاتف: "
+
+#: ssw/templates/ssw/contact2.html:64 ssw/templates/ssw/landing.html:207
+msgid ""
+"To enroll or for any general information, please contact us on email, "
+"whatsapp, or use the form here."
+msgstr ""
+"للمزيد من التفاصيل يمكنكم مراسلتنا على البريد الإلكتروني، المراسلة عبر "
+"واتساب، أو تعبئة النموذج التالي."
+
+#: ssw/templates/ssw/contact2.html:67 ssw/templates/ssw/landing.html:210
+msgid "We endeavor to answer all enquiries within 2 business days."
+msgstr "نحاول الرد على جميع استفساراتكم خلال يومين عمل"
 
 #: ssw/templates/ssw/contact2.html:86 ssw/templates/ssw/landing.html:229
 msgid "Send Enquiry"
 msgstr "أرسل"
 
 #: ssw/templates/ssw/editorials_main.html:5
-#: ssw/templates/ssw/editorials_main.html:17 ssw/templates/ssw/main.html:210
+#: ssw/templates/ssw/editorials_main.html:17 ssw/templates/ssw/main.html:208
 msgid "Editorials"
 msgstr "توثيقية"
 
 #: ssw/templates/ssw/editorials_main.html:63
 msgid "There are no editorials."
-msgstr ""
+msgstr "ليس هناك أي أعمال توثيقية"
+
+#: ssw/templates/ssw/email_verification_success.html:13
+msgid "Your email address has been verified!"
+msgstr "لقد تم توثيق بريدك الإلكتروني بنجاح"
+
+#: ssw/templates/ssw/email_verification_success.html:15
+msgid "You can now complete registration by"
+msgstr "أكمل الآن خطوات إنشاء حسابك الجديد كمساهم على صورستوك."
+
+#: ssw/templates/ssw/email_verification_success.html:15
+msgid "clicking here."
+msgstr "اضغط هنا"
 
 #: ssw/templates/ssw/landing.html:5 ssw/templates/ssw/landing2.html:5
-#: ssw/templates/ssw/main.html:489
+#: ssw/templates/ssw/main.html:493
 msgid "Sowarstock"
 msgstr "صورستوك"
 
@@ -285,7 +515,7 @@ msgstr "الرمز البريدي ٣٢٦١٧"
 msgid " Almanakh, Tarout, KSA"
 msgstr "المناخ"
 
-#: ssw/templates/ssw/landing.html:126 ssw/templates/ssw/main.html:257
+#: ssw/templates/ssw/landing.html:126 ssw/templates/ssw/main.html:255
 msgid "Sign up"
 msgstr "أنشئ حساب"
 
@@ -330,10 +560,6 @@ msgstr ""
 "ابحث عما تحتاجه من صور ضمن مجموعتنا، اختر الصورة، قم بالدفع مقابل الاستخدام، "
 "حمّل العمل مباشرة، وابدأ باستخدامه."
 
-#: ssw/templates/ssw/landing.html:187
-msgid "Get In Touch"
-msgstr "اتصل بنا"
-
 #: ssw/templates/ssw/landing.html:189
 msgid ""
 "We would love to hear your feedback, comments or suggestions regarding your "
@@ -343,33 +569,16 @@ msgstr ""
 "لا تتردد في كتابة تعليقك، ملاحظاتك، أو أي مقترح يخطر ببالك وإرساله لنا عبر "
 "أي من وسائل الاتصال الخاصة بنا."
 
-#: ssw/templates/ssw/landing.html:202
-msgid "E:"
-msgstr "ايميل: "
-
-#: ssw/templates/ssw/landing.html:204
-msgid "P:"
-msgstr "الهاتف: "
-
-#: ssw/templates/ssw/landing.html:207
-msgid ""
-"To enroll or for any general information, please contact us on email, "
-"whatsapp, or use the form here."
-msgstr ""
-"للمزيد من التفاصيل يمكنكم مراسلتنا على البريد الإلكتروني، المراسلة عبر "
-"واتساب، أو تعبئة النموذج التالي."
-
-#: ssw/templates/ssw/landing.html:210
-msgid "We endeavor to answer all enquiries within 2 business days."
-msgstr "نحاول الرد على جميع استفساراتكم خلال يومين عمل"
-
-#: ssw/templates/ssw/legal/contributor.html:17 ssw/templates/ssw/main.html:223
+#: ssw/templates/ssw/legal/contributor.html:5
+#: ssw/templates/ssw/legal/contributor.html:17 ssw/templates/ssw/main.html:221
 #: ssw/templates/ssw/main2.html:240
 msgid "Contributor Agreement"
-msgstr "إتفاقية المساهم"
+msgstr "عقد المساهمين"
 
 #: ssw/templates/ssw/legal/contributor.html:30
 #: ssw/templates/ssw/legal/license.html:30
+#: ssw/templates/ssw/legal/privacy.html:30
+#: ssw/templates/ssw/legal/terms.html:30
 msgid "Last Updated"
 msgstr "آخر تحديث"
 
@@ -385,6 +594,8 @@ msgid ""
 "available by Sowarstock or its affiliates (individually and collectively, "
 "the “Site”)."
 msgstr ""
+"احرص على مطالعة هذه الوثيقة بعناية قبل القيام بإنشاء حسابك كمساهم على "
+"صورستوك."
 
 #: ssw/templates/ssw/legal/contributor.html:37
 msgid ""
@@ -393,7 +604,7 @@ msgid ""
 "including all information, tools and Services available from this Site to "
 "you, the user, conditioned upon your acceptance of all terms, conditions, "
 "policies and notices stated here."
-msgstr ""
+msgstr "قد تكون مهتما بالتحديد بمعرفة هذه البنود من عقد المساهمين."
 
 #: ssw/templates/ssw/legal/contributor.html:38
 msgid ""
@@ -405,24 +616,29 @@ msgid ""
 "Site, including without limitation users who are browsers, vendors, "
 "customers, merchants, and/ or contributors of content."
 msgstr ""
+"واحد - يبقى المصور أو الفنان محتفظا بملكيته لأعماله، ويمنح عملاء صورستوك فقط "
+"حق الاستخدام وفق تفاصيل رخصة الاستخدام (اضغط هنا لمراجعة وثيقة "
+"الاستخدام)اثنين - تمتلك صورستوك الحق في قبول الأعمال وفق المعايير المعتمدة "
+"من قبلها.ثلاثة - يحصل المساهمون على ٦٠ ٪؜ من أرباح أعمالهم التي تعرض حصريا "
+"على صورستوك، أو ٤٠٪؜ من الأرباح للأعمال التي تعرض بشكل غير حصري."
 
 #: ssw/templates/ssw/legal/license.html:5
-#: ssw/templates/ssw/legal/license.html:17 ssw/templates/ssw/main.html:226
+#: ssw/templates/ssw/legal/license.html:17 ssw/templates/ssw/main.html:224
 #: ssw/templates/ssw/main2.html:243
 msgid "License Agreement"
 msgstr "إتفاقية الترخيص"
 
-#: ssw/templates/ssw/legal/license.html:35
-msgid "Dear Sowarstock Customer,"
-msgstr ""
-
 #: ssw/templates/ssw/legal/license.html:36
+msgid "Dear Sowarstock Customer,"
+msgstr "عزيزي زبون صورستوك"
+
+#: ssw/templates/ssw/legal/license.html:37
 msgid ""
 "Please download this document and read it carefully before accessing or "
 "using the Sowarstock website."
-msgstr ""
+msgstr "الرجاء تحميل هذه الوثيقة وقرائتها بتمعن"
 
-#: ssw/templates/ssw/legal/license.html:37
+#: ssw/templates/ssw/legal/license.html:38
 msgid ""
 "This Content License Agreement is entered between you (either an individual "
 "or an entity) and Sowarstock,\n"
@@ -440,49 +656,111 @@ msgid ""
 "                    be bound by its provisions. If you do not agree with all "
 "of the provisions of this Agreement, do not access and/or use the Services."
 msgstr ""
+"تمثل هذه الوثيقة عقد قانوني ملزم بين صورستوك وعملائها، وتحوي تفاصيل رخصة "
+"الاستخدام للأعمال المعروضة على الموقع. تأكد من مراجعة بنود وثيقة الاستخدام "
+"والالتزام بها."
+
+#: ssw/templates/ssw/legal/privacy.html:5
+#: ssw/templates/ssw/legal/privacy.html:17 ssw/templates/ssw/main.html:227
+#: ssw/templates/ssw/main.html:494 ssw/templates/ssw/main2.html:246
+msgid "Privacy Policy"
+msgstr "سياسة الخصوصية"
+
+#: ssw/templates/ssw/legal/privacy.html:35
+msgid ""
+"Please download & read these Privacy Policy carefully before accessing or "
+"using this website,\n"
+"                    software, apps, and/or plug-ins made available by "
+"Sowarstock or its affiliates (individually and collectively, the “Site”)."
+msgstr ""
+"احرص على مراجعة بنود سياسة الخصوصية الخاصة بالموقع. يمثل استخدامك للموقع "
+"موافقة منك على بنود سياسة الخصوصية هذه."
+
+#: ssw/templates/ssw/legal/privacy.html:37
+msgid "BY VISITING OUR SITE, YOU ARE CONSENTING TO OUR PRIVACY POLICY"
+msgstr "من خلال زيارة موقعنا ، أنت توافق على سياسة الخصوصية الخاصة بنا"
+
+#: ssw/templates/ssw/legal/terms.html:5 ssw/templates/ssw/legal/terms.html:17
+#: ssw/templates/ssw/main2.html:249
+msgid "Terms & Conditions"
+msgstr "شروط الإستخدام"
+
+#: ssw/templates/ssw/legal/terms.html:35
+msgid ""
+"Please download and read these Terms and Conditions carefully before "
+"accessing or using this website,\n"
+"                    software, apps, and/or plug-ins made available by "
+"Sowarstock or its affiliates (individually and collectively, the “Site”)."
+msgstr ""
+"احرص على مراجعة وثيقة شروط الاستخدام الخاصة بالموقع. يمثل استخدامك للموقع "
+"موافقة منك على بنود هذه الوثيقة. "
+
+#: ssw/templates/ssw/legal/terms.html:37
+msgid ""
+"This Site is operated by Sowarstock LLC. Throughout the Site, the terms "
+"“we”, “us” and “our” refer to Sowarstock. Sowarstock offers this Site,\n"
+"                    including all information, tools and Services available "
+"from this Site to you, the user, conditioned upon your acceptance of all "
+"terms, conditions,\n"
+"                    policies and notices stated here."
+msgstr " "
+
+#: ssw/templates/ssw/legal/terms.html:40
+msgid ""
+"By visiting our Site and/ or purchasing, subscribing, using or testing "
+"something from us, you engage in our “Services” and agree to be bound by "
+"the\n"
+"                    following terms and conditions of use (“Terms and "
+"Conditions”), including those additional terms and conditions and policies "
+"referenced herein and/or\n"
+"                    available by hyperlink. These Terms and Conditions apply "
+"to all users of the Site, including without limitation users who are "
+"browsers, vendors, customers,\n"
+"                    merchants, and/ or contributors of content."
+msgstr " "
 
 #: ssw/templates/ssw/login.html:5
 msgid "Sign In"
-msgstr ""
+msgstr "تسجيل الدخول"
 
 #: ssw/templates/ssw/login.html:16
 msgid "Login to continue"
-msgstr ""
+msgstr "تسجيل الدخول"
 
 #: ssw/templates/ssw/login.html:18
 msgid "Welcome back, sign in with your existing Stack account credentials"
-msgstr ""
+msgstr "مرحبا بك من جديد. يمكنك تسجيل الدخول بإدخال معلوماتك"
 
-#: ssw/templates/ssw/login.html:24 ssw/templates/ssw/signup.html:41
+#: ssw/templates/ssw/login.html:24 ssw/templates/ssw/signup.html:49
 msgid "Username"
-msgstr ""
+msgstr "إسم المستخدم"
 
-#: ssw/templates/ssw/login.html:27 ssw/templates/ssw/signup.html:47
+#: ssw/templates/ssw/login.html:27 ssw/templates/ssw/signup.html:55
 msgid "Password"
-msgstr ""
+msgstr "كلمة السر"
 
 #: ssw/templates/ssw/login.html:30 ssw/templates/ssw/main2.html:69
 #: ssw/templates/ssw/main3.html:69
 msgid "Login"
-msgstr ""
+msgstr "سجل دخول"
 
 #: ssw/templates/ssw/login.html:35 ssw/templates/ssw/recover_account.html:22
 #: ssw/templates/ssw/reset_password.html:19
 msgid "Dont have an account yet?"
-msgstr ""
+msgstr "ليس عندك حساب؟"
 
 #: ssw/templates/ssw/login.html:36 ssw/templates/ssw/recover_account.html:23
 #: ssw/templates/ssw/reset_password.html:20
 msgid "Create account"
-msgstr ""
+msgstr "أنشئ حساب"
 
 #: ssw/templates/ssw/login.html:38
 msgid "Forgot your username or password?"
-msgstr ""
+msgstr "نسيت إسم المستخدم أو كلمة المرور؟"
 
 #: ssw/templates/ssw/login.html:39
 msgid "Recover account"
-msgstr ""
+msgstr "استعد حسابك"
 
 #: ssw/templates/ssw/main.html:64 ssw/templates/ssw/main2.html:44
 #: ssw/templates/ssw/main3.html:44
@@ -490,7 +768,7 @@ msgid "Hello"
 msgstr "مرحبا"
 
 #: ssw/templates/ssw/main.html:71 ssw/templates/ssw/main2.html:51
-#: ssw/templates/ssw/main3.html:51
+#: ssw/templates/ssw/main3.html:51 ssw/templates/ssw/profile.html:6
 msgid "Profile"
 msgstr "الملف الشخصي"
 
@@ -499,59 +777,54 @@ msgstr "الملف الشخصي"
 msgid "Logout"
 msgstr "تسجيل خروج"
 
-#: ssw/templates/ssw/main.html:156 ssw/templates/ssw/main2.html:149
+#: ssw/templates/ssw/main.html:154 ssw/templates/ssw/main2.html:149
 #: ssw/templates/ssw/main3.html:142
 msgid "Find visual that work for you"
 msgstr "ابحث عن عمل يناسبك"
 
-#: ssw/templates/ssw/main.html:204 ssw/templates/ssw/main2.html:211
+#: ssw/templates/ssw/main.html:202 ssw/templates/ssw/main2.html:211
 #: ssw/templates/ssw/photos_main.html:5 ssw/templates/ssw/photos_main.html:17
 msgid "Photos"
 msgstr "صور"
 
-#: ssw/templates/ssw/main.html:213
+#: ssw/templates/ssw/main.html:211
 msgid "Drawings"
 msgstr "رسوم"
 
-#: ssw/templates/ssw/main.html:216
+#: ssw/templates/ssw/main.html:214
 msgid "Legal"
 msgstr "القوانين"
 
-#: ssw/templates/ssw/main.html:229 ssw/templates/ssw/main.html:490
-#: ssw/templates/ssw/main2.html:246
-msgid "Privacy Policy"
-msgstr "سياسة الخصوصية"
-
-#: ssw/templates/ssw/main.html:232
+#: ssw/templates/ssw/main.html:230
 msgid "Terms and Conditions"
 msgstr "شروط الإستخدام"
 
-#: ssw/templates/ssw/main.html:244
+#: ssw/templates/ssw/main.html:242
 msgid "Contact us"
 msgstr "اتصل بنا"
 
-#: ssw/templates/ssw/main.html:252
+#: ssw/templates/ssw/main.html:250
 msgid "Log in"
 msgstr ""
 
-#: ssw/templates/ssw/main.html:391 ssw/templates/ssw/main.html:444
+#: ssw/templates/ssw/main.html:395 ssw/templates/ssw/main.html:448
 #: ssw/templates/ssw/main3.html:375
 msgid "Blogs"
 msgstr "المقالات"
 
-#: ssw/templates/ssw/main.html:439
+#: ssw/templates/ssw/main.html:443
 msgid "Our Company"
 msgstr "من نحن"
 
-#: ssw/templates/ssw/main.html:449
+#: ssw/templates/ssw/main.html:453
 msgid "Help"
 msgstr "الدعم الفني"
 
-#: ssw/templates/ssw/main.html:454
+#: ssw/templates/ssw/main.html:458
 msgid "Work With Us"
 msgstr "إنضم لنا"
 
-#: ssw/templates/ssw/main.html:491
+#: ssw/templates/ssw/main.html:495
 msgid "Terms"
 msgstr "شروط الإستخدام"
 
@@ -575,10 +848,6 @@ msgstr ""
 msgid "legal"
 msgstr ""
 
-#: ssw/templates/ssw/main2.html:249
-msgid "Terms & Conditions"
-msgstr "شروط الإستخدام"
-
 #: ssw/templates/ssw/main2.html:261
 msgid "about"
 msgstr ""
@@ -591,9 +860,131 @@ msgstr ""
 msgid "Support"
 msgstr ""
 
+#: ssw/templates/ssw/menu/contributor_menu.html:36
+#: ssw/templates/ssw/products_main.html:5
+#: ssw/templates/ssw/products_main.html:17 ssw/templates/ssw/profile.html:68
+msgid "Products"
+msgstr "الأعمال"
+
+#: ssw/templates/ssw/menu/contributor_menu.html:72
+msgid "Reviews"
+msgstr "المراجعات"
+
+#: ssw/templates/ssw/menu/contributor_menu.html:85
+msgid "Earnings"
+msgstr "المكاسب"
+
+#: ssw/templates/ssw/menu/contributor_menu.html:103
+msgid "Account Settings"
+msgstr "اعدادات الحساب"
+
+#: ssw/templates/ssw/menu/contributor_menu.html:121
+msgid "FAQ"
+msgstr "الأسئلة الشائعة"
+
+#: ssw/templates/ssw/menu/contributor_menu.html:139
+msgid "Notices"
+msgstr "الإشعارات"
+
 #: ssw/templates/ssw/photos_main.html:63
 msgid "There are no photos."
-msgstr ""
+msgstr "ليس هناك صور"
+
+#: ssw/templates/ssw/products_main.html:21
+msgid "New Upload"
+msgstr "تحميل جديد"
+
+#: ssw/templates/ssw/products_main.html:29
+msgid "Pending Approval"
+msgstr "قيد التدقيق"
+
+#: ssw/templates/ssw/products_main.html:56
+msgid "There are no pending approval products"
+msgstr "ليس هناك أعمال قيد التدقيق"
+
+#: ssw/templates/ssw/products_main.html:62
+msgid "Approved"
+msgstr "مقبولة"
+
+#: ssw/templates/ssw/products_main.html:89
+msgid "There are no approved products"
+msgstr "ليس هناك أعمال مقبولة"
+
+#: ssw/templates/ssw/products_main.html:95
+msgid "Rejected"
+msgstr "مرفوضة"
+
+#: ssw/templates/ssw/products_main.html:122
+msgid "There are no rejected products"
+msgstr "ليس هناك أعمال مرفوضة"
+
+#: ssw/templates/ssw/products_new.html:6 ssw/templates/ssw/products_new.html:17
+msgid "New Product"
+msgstr "عمل جديد"
+
+#: ssw/templates/ssw/products_new.html:19
+msgid "Allowed file extensions: JPEG, TIFF and EPS only"
+msgstr "صيغ الملفات المسموحة هي: JPEG و TIFF و EPS"
+
+#: ssw/templates/ssw/products_new.html:20
+msgid "All images must be at least 4 MP (megapixels)"
+msgstr "جميع الصور يجب ان لا تقل عن ٤ ميغا بيكسل"
+
+#: ssw/templates/ssw/products_new.html:21
+msgid "All images must be at least 300 dpi"
+msgstr "جميع الصور يجب ان لا تقل دقتها عن 300 dpi"
+
+#: ssw/templates/ssw/products_new.html:22
+msgid "Image size cannot exceed 50 MB, and EPS files cannot exceed 15 MB"
+msgstr "حجم الصور يجب أن لا يتجاوز 50 ميغابايت"
+
+#: ssw/templates/ssw/products_new.html:39
+msgid "Image:"
+msgstr "الصورة"
+
+#: ssw/templates/ssw/products_new.html:50
+msgid "EPS File:"
+msgstr "الملف"
+
+#: ssw/templates/ssw/products_new.html:65
+msgid "comma separated"
+msgstr "مفصولة بفواصل"
+
+#: ssw/templates/ssw/products_new.html:362
+msgid "Save"
+msgstr "حفظ"
+
+#: ssw/templates/ssw/products_new.html:367
+msgid "Cancel"
+msgstr "الغاء"
+
+#: ssw/templates/ssw/profile.html:40
+msgid "Location:"
+msgstr "المكان:"
+
+#: ssw/templates/ssw/profile.html:44
+msgid "Member Since"
+msgstr "عضو منذ"
+
+#: ssw/templates/ssw/profile.html:48
+msgid "Contact:"
+msgstr "التواصل:"
+
+#: ssw/templates/ssw/profile.html:55
+msgid "About Me"
+msgstr "عني"
+
+#: ssw/templates/ssw/profile.html:61
+msgid "You don't have anything here yet."
+msgstr "ليس عندك شيء هنا"
+
+#: ssw/templates/ssw/profile.html:94
+msgid "You don't have any products yet."
+msgstr "ليس عندك أعمال"
+
+#: ssw/templates/ssw/profile.html:98
+msgid "Portfolio URL"
+msgstr "رابط الملف الشخصي"
 
 #: ssw/templates/ssw/recover_account.html:5
 #: ssw/templates/ssw/recover_account.html:20
@@ -606,10 +997,6 @@ msgstr ""
 
 #: ssw/templates/ssw/recover_account.html:15
 msgid "Enter your email address to send you a recovery email."
-msgstr ""
-
-#: ssw/templates/ssw/recover_account.html:19 ssw/templates/ssw/signup.html:44
-msgid "Email Address"
 msgstr ""
 
 #: ssw/templates/ssw/reset_password.html:5
@@ -643,39 +1030,53 @@ msgstr ""
 
 #: ssw/templates/ssw/signup.html:5
 msgid "Sign Up"
-msgstr ""
+msgstr "إنشاء حساب جديد"
 
 #: ssw/templates/ssw/signup.html:18
 msgid "Create a Sowarstock account"
-msgstr ""
+msgstr "إنشاء حساب جديد على صورستوك"
 
 #: ssw/templates/ssw/signup.html:19
 msgid "Become a member of our community, either as a contributor or a client"
 msgstr ""
+"يمكنك الآن الانضمام لمجتمع صورستوك كمساهم بأعمالك (مصوّر، رسّام، أو خطاط) أو "
+"كزبون."
 
-#: ssw/templates/ssw/signup.html:53
+#: ssw/templates/ssw/signup.html:61
 msgid "I'm a Contributor"
-msgstr ""
+msgstr "إنشاء حساب مساهم"
 
-#: ssw/templates/ssw/signup.html:59
+#: ssw/templates/ssw/signup.html:67
 msgid "I'm a Client"
-msgstr ""
+msgstr "إنشاء حساب زبون"
 
-#: ssw/templates/ssw/signup.html:70
-msgid "I have read and agree to the"
-msgstr ""
+#: ssw/templates/ssw/signup.html:75 ssw/templates/ssw/signup.html:85
+msgid "I have read and agreed to the"
+msgstr "قمت بالاطلاع والموافقة على"
 
-#: ssw/templates/ssw/signup.html:70
+#: ssw/templates/ssw/signup.html:75 ssw/templates/ssw/signup.html:85
 msgid "terms and conditions"
-msgstr "شروط الإستخدام"
+msgstr "شروط وقواعد الاستخدام للموقع"
 
-#: ssw/templates/ssw/signup.html:74
+#: ssw/templates/ssw/signup.html:91
 msgid "Create"
-msgstr ""
+msgstr "أنشئ حساب"
 
 #: ssw/templates/ssw/thanks_for_completing_registration.html:5
 msgid "Thanks for Completing Registration"
+msgstr "شكرا لإكمال تسجيل حسابك"
+
+#: ssw/templates/ssw/thanks_for_completing_registration.html:13
+msgid ""
+"Thanks for completing your registration. An admin will verify your "
+"information shortly.\n"
+"                    Once you are verified, you will be able to use all the "
+"features of Sowarstock's website."
 msgstr ""
+"شكرا لك. بهذا تكون قد أتممت خطوات إنشاء حسابك على صورستوك. سيقوم فريق إدارة "
+"الموقع بمراجعة بياناتك وتوثيق حسابك خلال أقل من أسبوع، لتتمكن بعد ذلك من "
+"البدء برفع أعمالك على الموقع. سوف تتلقى رسالة على بريدك الإلكتروني فور "
+"الانتهاء من مراجعة بياناتك من قبل إدارة الموقع."
 
 #: ssw/templates/ssw/thanks_for_joining.html:5
 msgid "Thanks for Joining"
@@ -686,40 +1087,42 @@ msgid ""
 "Thanks for joining Sowarstock's website. Please complete the registration by "
 "verifying your email."
 msgstr ""
+"رائع. الآن بدأت أولى خطوات انضمامك لمجتمع صورستوك. قم الآن بتوثيق بريدك "
+"الإلكتروني عبر الرابط المرسل لك على بريدك."
 
 #: ssw/templates/ssw/vectors_main.html:5 ssw/templates/ssw/vectors_main.html:17
 msgid "Vectors and Paintings"
-msgstr ""
+msgstr "رسوم"
 
 #: ssw/templates/ssw/vectors_main.html:64
 msgid "There are no vectors."
-msgstr ""
+msgstr "ليس هناك رسوم"
 
-#: ssw/views.py:78 ssw/views.py:270
+#: ssw/views.py:81 ssw/views.py:274
 msgid "Thanks for your enquiry, we'll be in touch shortly."
 msgstr ""
 
-#: ssw/views.py:113
+#: ssw/views.py:117
 msgid "username and/or password is incorrect"
 msgstr ""
 
-#: ssw/views.py:134 ssw/views.py:174
+#: ssw/views.py:138 ssw/views.py:178
 msgid "The link you followed is invalid"
 msgstr ""
 
-#: ssw/views.py:149
+#: ssw/views.py:153
 msgid "An email address has been sent to you"
 msgstr ""
 
-#: ssw/views.py:151
+#: ssw/views.py:155
 msgid "This email address does not exist"
 msgstr ""
 
-#: ssw/views.py:164
+#: ssw/views.py:168
 msgid "Your password has been reset"
 msgstr ""
 
-#: ssw/views.py:167
+#: ssw/views.py:171
 msgid ""
 "The Password you've entered is not valid. One or more of the Password rules "
 "has not been met. Please try again."
@@ -1017,7 +1420,7 @@ msgstr ""
 
 #: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1640
 msgid "Email address"
-msgstr ""
+msgstr "بريدك الإلكتروني"
 
 #: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1663
 msgid "File path"
@@ -1087,10 +1490,6 @@ msgstr ""
 
 #: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:2097
 msgid "Time"
-msgstr ""
-
-#: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:2223
-msgid "URL"
 msgstr ""
 
 #: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:2245
@@ -2002,3 +2401,6 @@ msgstr[1] ""
 #: venv/lib/python3.6/site-packages/jsonfield/fields.py:85
 msgid "Enter valid JSON"
 msgstr ""
+
+#~ msgid "Contributor"
+#~ msgstr "مساهم"

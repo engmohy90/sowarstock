@@ -1,7 +1,8 @@
 {% extends "ssw/main.html" %}
 {% load static from staticfiles %}
+{% load i18n %}
 {% block title %}
-Products
+{% trans "Products"%}
 {% endblock %}
 
 {% block content %}
@@ -13,11 +14,11 @@ Products
                     <div class="boxed boxed--lg boxed--border">
                         <div id="account-profile" class="account-tab">
                             <h4>
-                                Products
+                                {% trans "Products"%}
                                 {% if user.type == "contributor" and user.is_verified and not user.suspended %}
-                                    <a class="btn btn--primary btn--icon pull-right" href="/products/new">
+                                    <a class="btn btn--primary btn--icon  {% if LANGUAGE_CODE == 'ar' %} pull-left" {% else %} pull-right" {% endif %}" href="/products/new">
                                         <span class="btn__text">
-                                         <i class="icon-Add-File"></i> New Upload</span>
+                                         <i class="icon-Add-File"></i> {% trans "New Upload"%}</span>
                                     </a>
                                 {% endif %}
                             </h4>
@@ -25,7 +26,7 @@ Products
                                 <ul class="tabs">
                                     <li class="active">
                                         <div class="tab__title">
-                                            <span class="h5">Pending Approval</span>
+                                            <span class="h5">{% trans "Pending Approval"%}</span>
                                         </div>
                                         <div class="tab__content">
                                             {% if pending %}
@@ -52,13 +53,13 @@ Products
                                                   </table>
                                                 </div>
                                             {% else %}
-                                            <b>There are no pending approval products</b>
+                                            <b>{% trans "There are no pending approval products"%}</b>
                                             {% endif %}
                                         </div>
                                     </li>
                                     <li>
                                         <div class="tab__title">
-                                            <span class="h5">Approved</span>
+                                            <span class="h5">{% trans "Approved"%}</span>
                                         </div>
                                         <div class="tab__content">
                                             {% if approved %}
@@ -85,13 +86,13 @@ Products
                                                   </table>
                                                 </div>
                                             {% else %}
-                                                <b>There are no approved products</b>
+                                                <b>{% trans "There are no approved products"%}</b>
                                             {% endif %}
                                         </div>
                                     </li>
                                     <li>
                                         <div class="tab__title">
-                                            <span class="h5">Rejected</span>
+                                            <span class="h5">{% trans "Rejected"%}</span>
                                         </div>
                                         <div class="tab__content">
                                             {% if rejected %}
@@ -118,7 +119,7 @@ Products
                                                   </table>
                                                 </div>
                                             {% else %}
-                                                <b>There are no rejected products</b>
+                                                <b>{% trans "There are no rejected products"%}</b>
                                             {% endif %}
                                         </div>
                                     </li>

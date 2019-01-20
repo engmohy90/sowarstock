@@ -2,7 +2,7 @@
 {% load static from staticfiles %}
 {% load i18n %}
 {% block title %}
-Contributor Agreement
+{% trans "Contributor Agreement"%}
 {% endblock %}
 
 {% block content %}
@@ -33,9 +33,9 @@ Contributor Agreement
             </div>
             <div class="col-md-6">
                 {% get_current_language as LANGUAGE_CODE %}
-                <h4 {% if LANGUAGE_CODE == 'ar' %}style="text-align:right"{% endif %}>{% blocktrans %}Please download and read these Terms and Conditions carefully before accessing or using this website, software, apps, and/or plug-ins made available by Sowarstock or its affiliates (individually and collectively, the “Site”).{% endblocktrans %}</h4>
-                <h4 {% if LANGUAGE_CODE == 'ar' %}style="text-align:right"{% endif %}>{% blocktrans %}This Site is operated by Sowarstock LLC. Throughout the Site, the terms “we”, “us” and “our” refer to Sowarstock. Sowarstock offers this Site, including all information, tools and Services available from this Site to you, the user, conditioned upon your acceptance of all terms, conditions, policies and notices stated here.{% endblocktrans %}</h4>
-                <h4 {% if LANGUAGE_CODE == 'ar' %}style="text-align:right"{% endif %}>{% blocktrans %}By visiting our Site and/ or purchasing, subscribing, using or testing something from us, you engage in our “Services” and agree to be bound by the following terms and conditions of use (“Terms and Conditions”), including those additional terms and conditions and policies referenced herein and/or available by hyperlink. These Terms and Conditions apply to all users of the Site, including without limitation users who are browsers, vendors, customers, merchants, and/ or contributors of content.{% endblocktrans %}</h4>
+                <h4>{% blocktrans %}Please download and read these Terms and Conditions carefully before accessing or using this website, software, apps, and/or plug-ins made available by Sowarstock or its affiliates (individually and collectively, the “Site”).{% endblocktrans %}</h4>
+                <h4>{% blocktrans %}This Site is operated by Sowarstock LLC. Throughout the Site, the terms “we”, “us” and “our” refer to Sowarstock. Sowarstock offers this Site, including all information, tools and Services available from this Site to you, the user, conditioned upon your acceptance of all terms, conditions, policies and notices stated here.{% endblocktrans %}</h4>
+                <h4>{% blocktrans %}By visiting our Site and/ or purchasing, subscribing, using or testing something from us, you engage in our “Services” and agree to be bound by the following terms and conditions of use (“Terms and Conditions”), including those additional terms and conditions and policies referenced herein and/or available by hyperlink. These Terms and Conditions apply to all users of the Site, including without limitation users who are browsers, vendors, customers, merchants, and/ or contributors of content.{% endblocktrans %}</h4>
             </div>
         </div>
         <!--end of row-->

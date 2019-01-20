@@ -1,8 +1,8 @@
 {% extends "ssw/main.html" %}
 {% load static from staticfiles %}
-{% load progress_bar %}
+{% load i18n %}
 {% block title %}
-Profile
+Complete Registration
 {% endblock %}
 
 {% block content %}
@@ -12,34 +12,38 @@ Profile
         <div class="row">
             <div class="col-lg-12">
                 <div class="boxed boxed--lg boxed--border">
-                    <h4>Complete Registration</h4>
+                    <h4>{% trans "Complete Registration"%}</h4>
                     <hr>
                     <form id="complete_registration_form" class="wizard" method="post"
                           action="{% url 'complete_registration' %}">
                         {% csrf_token %}
-                        <h5>Personal Information</h5>
+                        <h5>{% trans "Personal Information"%}</h5>
                         <section style="overflow:scroll">
                             {% if user.email_verified %}
                                 <h5>
-                                    Email Address: {{user.email}}
-                                    <span class="color--success"> verified</span>
+                                    {% trans "Email Address:"%} {{user.email}}
+                                    <span class="color--success"> {% trans "verified"%}</span>
                                 </h5>
                             {% else %}
                                 <h5>
-                                    Email Address: {{user.email}}
-                                    <span class="color--error"> unverified</span>
-                                    <a id="resend_email_button" href="#" class="btn btn--sm btn-primary">Resend Email</a>
+                                    {% trans "Email Address:"%} {{user.email}}
+                                    <span class="color--error"> {% trans "unverified"%}</span>
+                                    <a id="resend_email_button" href="#" class="btn btn--sm btn-primary">{% trans "Resend Email"%}</a>
                                 </h5>
                             {% endif %}
 
                             <div class="row">
                                 <div class="col-md-6">
-                                    {{personal_info_form.first_name.label_tag}}<span class="color--error" style="font-size:large">*</span>
+                                    <div {% if LANGUAGE_CODE == 'ar' %} class="pull-right" {% endif %}>
+                                        {{personal_info_form.first_name.label_tag}}<span class="color--error" style="font-size:large">*</span>
+                                    </div>
                                     {{personal_info_form.first_name}}
                                     {{personal_info_form.first_name.errors}}
                                 </div>
                                 <div class="col-md-6">
-                                    {{personal_info_form.last_name.label_tag}}<span class="color--error" style="font-size:large">*</span>
+                                    <div {% if LANGUAGE_CODE == 'ar' %} class="pull-right" {% endif %}>
+                                        {{personal_info_form.last_name.label_tag}}<span class="color--error" style="font-size:large">*</span>
+                                    </div>
                                     {{personal_info_form.last_name}}
                                     {{personal_info_form.last_name.errors}}
                                 </div>
@@ -47,12 +51,16 @@ Profile
                             <br>
                             <div class="row">
                                 <div class="col-md-6">
-                                    {{personal_info_form.country_code.label_tag}}<span class="color--error" style="font-size:large">*</span>
+                                    <div {% if LANGUAGE_CODE == 'ar' %} class="pull-right" {% endif %}>
+                                        {{personal_info_form.country_code.label_tag}}<span class="color--error" style="font-size:large">*</span>
+                                    </div>
                                     {{personal_info_form.country_code}}
                                     {{personal_info_form.country_code.errors}}
                                 </div>
                                 <div class="col-md-6">
-                                    {{personal_info_form.phone.label_tag}}<span class="color--error" style="font-size:large">*</span>
+                                    <div {% if LANGUAGE_CODE == 'ar' %} class="pull-right" {% endif %}>
+                                        {{personal_info_form.phone.label_tag}}<span class="color--error" style="font-size:large">*</span>
+                                    </div>
                                     {{personal_info_form.phone}}
                                     {{personal_info_form.phone.errors}}
                                 </div>
@@ -60,24 +68,30 @@ Profile
                             <br>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <label for="profile_image">Profile Image:</label>
-                                    <img id="profile_image_loader" class="hidden" style="max-height:1.5em" src="{% static 'ssw/img/ajax-loader.gif' %}">
+                                    <div {% if LANGUAGE_CODE == 'ar' %} class="pull-right" {% endif %}>
+                                        <label for="profile_image">{% trans "Profile Image:"%}</label>
+                                        <img id="profile_image_loader" class="hidden" style="max-height:1.5em" src="{% static 'ssw/img/ajax-loader.gif' %}">
+                                    </div>
                                     <input type="file" accept="image/*" id="profile_image" name="profile_image">
                                     <i style="color:red" id="profile_image_error_msg"></i>
                                     <input type="hidden" id="profile_image_url" name="profile_image_url">
                                 </div>
                                 <div class="col-md-6">
-                                    {{personal_info_form.preferred_language.label_tag}}
+                                    <div {% if LANGUAGE_CODE == 'ar' %} class="pull-right" {% endif %}>
+                                        {{personal_info_form.preferred_language.label_tag}}
+                                    </div>
                                     {{personal_info_form.preferred_language}}
                                     {{personal_info_form.preferred_language.errors}}
                                 </div>
                             </div>
                         </section>
-                        <h5>Address</h5>
+                        <h5>{% trans "Address"%}</h5>
                         <section style="overflow:scroll">
                             <div class="row">
                                 <div class="col-md-12">
-                                    {{address_form.address1.label_tag}}
+                                    <div {% if LANGUAGE_CODE == 'ar' %} class="pull-right" {% endif %}>
+                                        {{address_form.address1.label_tag}}
+                                    </div>
                                     {{address_form.address1}}
                                     {{address_form.address1.errors}}
                                 </div>
@@ -85,7 +99,9 @@ Profile
                             <br>
                             <div class="row">
                                 <div class="col-md-12">
-                                    {{address_form.address2.label_tag}}
+                                    <div {% if LANGUAGE_CODE == 'ar' %} class="pull-right" {% endif %}>
+                                        {{address_form.address2.label_tag}}
+                                    </div>
                                     {{address_form.address2}}
                                     {{address_form.address2.errors}}
                                 </div>
@@ -93,12 +109,16 @@ Profile
                             <br>
                             <div class="row">
                                 <div class="col-md-6">
-                                    {{address_form.city.label_tag}}
+                                    <div {% if LANGUAGE_CODE == 'ar' %} class="pull-right" {% endif %}>
+                                        {{address_form.city.label_tag}}
+                                    </div>
                                     {{address_form.city}}
                                     {{address_form.city.errors}}
                                 </div>
                                 <div class="col-md-6">
-                                    {{address_form.state.label_tag}}
+                                    <div {% if LANGUAGE_CODE == 'ar' %} class="pull-right" {% endif %}>
+                                        {{address_form.state.label_tag}}
+                                    </div>
                                     {{address_form.state}}
                                     {{address_form.state.errors}}
                                 </div>
@@ -106,39 +126,44 @@ Profile
                             <br>
                             <div class="row">
                                 <div class="col-md-6">
-                                    {{address_form.country.label_tag}}<span class="color--error" style="font-size:large">*</span>
+                                    <div {% if LANGUAGE_CODE == 'ar' %} class="pull-right" {% endif %}>
+                                        {{address_form.country.label_tag}}<span class="color--error" style="font-size:large">*</span>
+                                    </div>
                                     {{address_form.country}}
                                     {{address_form.country.errors}}
                                 </div>
                                 <div class="col-md-6">
-                                    {{address_form.zipcode.label_tag}}
+                                    <div {% if LANGUAGE_CODE == 'ar' %} class="pull-right" {% endif %}>
+                                        {{address_form.zipcode.label_tag}}
+                                    </div>
                                     {{address_form.zipcode}}
                                     {{address_form.zipcode.errors}}
                                 </div>
                             </div>
                         </section>
-                        <h5>Photo ID</h5>
+                        <h5>{% trans "Photo ID"%}</h5>
                         <section style="overflow:scroll">
-                            <h5>Please upload a valid government ID (Passport or National ID). These will help us
+                            <h5>{% blocktrans %}Please upload a valid government ID (Passport or National ID). These will help us
                                 verify that you are a real person and will help us make payments to you when you have
-                                any earnings from our site.</h5>
-                            <label for="photo_id">Photo ID:</label> <span class="color--error" style="font-size:large">*</span>
-                            <img id="photo_id_loader" class="hidden" style="max-height:1.5em" src="{% static 'ssw/img/ajax-loader.gif' %}">
+                                any earnings from our site.{% endblocktrans %}</h5>
+                            <div {% if LANGUAGE_CODE == 'ar' %} class="pull-right" {% endif %}>
+                                <label for="photo_id">{% trans "Photo ID:" %}</label> <span class="color--error" style="font-size:large">*</span>
+                                <img id="photo_id_loader" class="hidden" style="max-height:1.5em" src="{% static 'ssw/img/ajax-loader.gif' %}">
+                            </div>
                             <input type="file" id="photo_id" name="photo_id">
                             <input type="hidden" id="photo_id_url" name="photo_id_url">
                         </section>
-                        <h5>Sample Photos</h5>
+                        <h5>{% trans "Sample Photos"%}</h5>
                         <section style="overflow:scroll">
-                            <h5>Help us to get to know you better by showing us a sample of your work by sharing with us
-                                a link to your instagram account, facebook account, personal account, or even a google drive folder.</h5>
+                            <h5>{% blocktrans %}Help us to get to know you better by showing us a sample of your work by sharing with us
+                                a link to your instagram account, facebook account, personal account, or even a google drive folder.{% endblocktrans %}</h5>
                                 <p>
-                                    <label for="sample_portfolio_url">URL</label>
+                                    <label for="sample_portfolio_url">{% trans "URL"%}</label>
                                     <input type="text" id="sample_portfolio_url" name="sample_portfolio_url">
                                 </p>
                         </section>
                     </form>
 
-                    {% progress_bar %}
                 </div>
             </div>
         </div>
@@ -149,10 +174,16 @@ Profile
 {% endblock %}
 
 {% block js %}
-{% progress_bar_media %}
+<script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
 <script>
     $(document).ready(function(){
 
+        {% if LANGUAGE_CODE == 'ar' %}
+            $(".stack-down-open").css("top","2.9em")
+            $('a[href="#next"]').html("التالي")
+            $('a[href="#previous"]').html("السابق")
+            $('a[href="#finish"]').html("ارسال")
+        {% endif %}
 
         $("#resend_email_button").click(function(e){
             e.preventDefault()
@@ -363,56 +394,98 @@ Profile
             var error_msg = $("#error_msg")
 
             if(firstName == ""){
+                var msg = ""
+                {% if LANGUAGE_CODE == 'en' %}
+                    msg = 'Please fill out your first name'
+                {% else %}
+                    msg = 'الرجاء تعبئة الإسم الأول'
+                {% endif %}
                 if(error_msg.length==0){
-                    anchor.parent().after('<br><i id="error_msg" class="color--error">Please fill out your first name</i>')
+                    anchor.parent().after('<br><i id="error_msg" class="color--error">'+msg+'</i>')
                  }else{
-                    error_msg.html("Please fill out your first name")
+                    error_msg.html(msg)
                  }
             }else{
                 if(lastName == ""){
+                    var msg = ""
+                    {% if LANGUAGE_CODE == 'en' %}
+                        msg = 'Please fill out your last name'
+                    {% else %}
+                        msg = 'الرجاء تعبئة إسم العائلة'
+                    {% endif %}
                     if(error_msg.length==0){
-                        anchor.parent().after('<br><i id="error_msg" class="color--error">Please fill out your last name</i>')
+                        anchor.parent().after('<br><i id="error_msg" class="color--error">'+msg+'</i>')
                      }else{
-                        error_msg.html("Please fill out your last name")
+                        error_msg.html(msg)
                      }
                 }else{
                     if(countryCode == ""){
+                        var msg = ""
+                        {% if LANGUAGE_CODE == 'en' %}
+                            msg = 'Please fill out your country code'
+                        {% else %}
+                            msg = 'الرجاء تعبئة رمز البلد'
+                        {% endif %}
                         if(error_msg.length==0){
-                            anchor.parent().after('<br><i id="error_msg" class="color--error">Please fill out your country code</i>')
+                           anchor.parent().after('<br><i id="error_msg" class="color--error">'+msg+'</i>')
                          }else{
-                            error_msg.html("Please fill out your country code")
+                            error_msg.html(msg)
                          }
                     }else{
                         if(phone == ""){
+                            var msg = ""
+                            {% if LANGUAGE_CODE == 'en' %}
+                                msg = 'Please fill out your phone number'
+                            {% else %}
+                                msg = 'الرجاء تعبئة رقم الهاتف'
+                            {% endif %}
                             if(error_msg.length==0){
-                                anchor.parent().after('<br><i id="error_msg" class="color--error">Please fill out your phone number</i>')
+                                anchor.parent().after('<br><i id="error_msg" class="color--error">'+msg+'</i>')
                              }else{
-                                error_msg.html("Please fill out your phone number")
+                                error_msg.html(msg)
                              }
                         }else{
                             if(country == ""){
+                                var msg = ""
+                                {% if LANGUAGE_CODE == 'en' %}
+                                    msg = 'Please choose your country'
+                                {% else %}
+                                    msg = 'الرجاء تعبئة إسم الدولة'
+                                {% endif %}
                                 if(error_msg.length==0){
-                                    anchor.parent().after('<br><i id="error_msg" class="color--error">Please choose your country</i>')
+                                    anchor.parent().after('<br><i id="error_msg" class="color--error">'+msg+'</i>')
                                  }else{
-                                    error_msg.html("Please choose your country")
+                                    error_msg.html(msg)
                                  }
                             }else{
                                 error_msg.html("")
 
                                 if(photo_id == ""){
+                                    var msg = ""
+                                    {% if LANGUAGE_CODE == 'en' %}
+                                        msg = 'Please upload a photo ID'
+                                    {% else %}
+                                        msg = 'الرجاء تحميل صورة هوية'
+                                    {% endif %}
                                     if(error_msg.length==0){
-                                        anchor.parent().after('<br><i id="error_msg" class="color--error">Please upload a photo ID</i>')
+                                       anchor.parent().after('<br><i id="error_msg" class="color--error">'+msg+'</i>')
                                      }else{
-                                        error_msg.html("Please upload a photo ID")
+                                        error_msg.html(msg)
                                      }
                                 }else{
                                     error_msg.html("")
 
                                     if(sample_portfolio_url == ""){
+                                        var msg = ""
+                                        {% if LANGUAGE_CODE == 'en' %}
+                                            msg = 'Please share us a link that contains some of your work'
+                                        {% else %}
+                                            msg = 'الرجاء مشاركتنا برابط يحتوي على بعض أعمالك'
+                                        {% endif %}
                                         if(error_msg.length==0){
-                                            anchor.parent().after('<br><i id="error_msg" class="color--error">Please share us a link that contains some of your work</i>')
+                                            anchor.parent().after('<br><i id="error_msg" class="color--error">'+msg+'</i>')
                                          }else{
-                                            error_msg.html("Please share us a link that contains some of your work")
+                                            error_msg.html(msg)
                                          }
                                     }else{
                                         error_msg.html("")
@@ -420,7 +493,11 @@ Profile
                                         var anchor = $('a[href="#finish"]')
                                         anchor.parent().addClass("disabled")
                                         anchor.attr("href","")
-                                        anchor.html('Submitting' + '<img id="submit_product_loader" style="max-height:1.5em" src="{% static 'ssw/img/ajax-loader.gif' %}">')
+                                        {% if LANGUAGE_CODE == 'ar' %}
+                                            anchor.html('جاري الإرسال' + '<img id="submit_product_loader" style="max-height:1.5em" src="{% static 'ssw/img/ajax-loader.gif' %}">')
+                                        {% else %}
+                                            anchor.html('Submitting' + '<img id="submit_product_loader" style="max-height:1.5em" src="{% static 'ssw/img/ajax-loader.gif' %}">')
+                                        {% endif %}
                                     }
                                 }
                             }

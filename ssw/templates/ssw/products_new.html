@@ -1,8 +1,9 @@
 {% extends "ssw/main.html" %}
 {% load static from staticfiles %}
 {% load progress_bar %}
+{% load i18n %}
 {% block title %}
-New Product
+{% trans "New Product"%}
 {% endblock %}
 
 {% block content %}
@@ -13,28 +14,31 @@ New Product
             <div class="col-lg-12">
                 <div class="boxed boxed--lg boxed--border">
                     <div id="account-profile" class="account-tab">
-                        <h4>New Product</h4>
+                        <h4>{% trans "New Product"%}</h4>
                         <p style="color:red">
-                            Allowed file extensions: JPEG, TIFF and EPS only<br>
-                            All images must be at least 4 MP (megapixels)<br>
-                            All images must be at least 300 dpi<br>
-                            Image size cannot exceed 50 MB, and EPS files cannot exceed 15 MB<br>
-                            For EPS files, you have also to upload an image representing the file and that will
-                            be displayed in the site
+                            {% trans "Allowed file extensions: JPEG, TIFF and EPS only"%}<br>
+                            {% trans "All images must be at least 4 MP (megapixels)"%}<br>
+                            {% trans "All images must be at least 300 dpi"%}<br>
+                            {% trans "Image size cannot exceed 50 MB, and EPS files cannot exceed 15 MB"%}
                         </p>
                         <form method="post" action="">
-
-                                {{form.title.label_tag}}
+                                <div {% if LANGUAGE_CODE == 'ar' %} class="pull-right" {% endif %}>
+                                    {{form.title.label_tag}}
+                                </div>
                                 {{form.title}}
                                 {{form.title.errors}}
                                 <br><br>
-                                {{form.file_type.label_tag}}
+                                <div {% if LANGUAGE_CODE == 'ar' %} class="pull-right" {% endif %}>
+                                    {{form.file_type.label_tag}}
+                                </div>
                                 {{form.file_type}}
                                 {{form.file_type.errors}}
                                 <br>
                                 <div id="image_field_wrapper">
-                                    <label for="image">Image:</label>
-                                    <img id="image_loader" class="hidden" style="max-height:1.5em" src="{% static 'ssw/img/ajax-loader.gif' %}">
+                                    <div {% if LANGUAGE_CODE == 'ar' %} class="pull-right" {% endif %}>
+                                        <label for="image">{% trans "Image:"%}</label>
+                                        <img id="image_loader" class="hidden" style="max-height:1.5em" src="{% static 'ssw/img/ajax-loader.gif' %}">
+                                    </div>
                                     <input type="file" accept="image/*" id="image" name="image">
                                     <input type="hidden" id="image_url" name="image_url">
                                     <i style="color:red" id="image_error"></i>
@@ -42,190 +46,311 @@ New Product
                                 </div>
 
                                 <div id="file_field_wrapper">
-                                    <label for="file">EPS File:</label>
-                                    <img id="file_loader" class="hidden" style="max-height:1.5em" src="{% static 'ssw/img/ajax-loader.gif' %}">
+                                    <div {% if LANGUAGE_CODE == 'ar' %} class="pull-right" {% endif %}>
+                                        <label for="file">{% trans "EPS File:"%}</label>
+                                        <img id="file_loader" class="hidden" style="max-height:1.5em" src="{% static 'ssw/img/ajax-loader.gif' %}">
+                                    </div>
                                     <input type="file" id="file" name="file">
                                     <input type="hidden" id="file_url" name="file_url">
                                     <i style="color:red" id="file_error"></i>
                                     <br><br>
                                 </div>
-                                {{form.description.label_tag}}
+                                <div {% if LANGUAGE_CODE == 'ar' %} class="pull-right" {% endif %}>
+                                    {{form.description.label_tag}}
+                                </div>
                                 {{form.description}}
                                 {{form.description.errors}}
                                 <br><br>
-                                {{form.keywords.label_tag}} (comma separated)
+                                <div {% if LANGUAGE_CODE == 'ar' %} class="pull-right" {% endif %}>
+                                    {{form.keywords.label_tag}} ({% trans "comma separated"%})
+                                </div>
                                 {{form.keywords}}
                                 {{form.keywords.errors}}
                                 <br><br>
-                                {{form.category.label_tag}}
+                                <div {% if LANGUAGE_CODE == 'ar' %} class="pull-right" {% endif %}>
+                                    {{form.category.label_tag}}
+                                </div>
                                 {{form.category}}
                                 {{form.category.errors}}
                                 <br>
                                 <div id="subcategory_field_wrapper">
-                                    {{form.subcategory.label_tag}}
+                                    <div {% if LANGUAGE_CODE == 'ar' %} class="pull-right" {% endif %}>
+                                        {{form.subcategory.label_tag}}
+                                    </div>
                                     {{form.subcategory}}
                                     {{form.subcategory.errors}}
                                     <br><br>
                                 </div>
                                 {{form.adult_content.errors}}
-                                <div id="adult_content_checkbox_wrapper" class="input-checkbox input-checkbox--switch">
-                                    <input type="checkbox" name="adult_content" id="id_adult_content">
-                                    <label for="id_adult_content"></label>
-                                </div>
-                                <span>
-                                    Adult Content
-                                    <div class="modal-instance">
-                                        <a href="#" class="modal-trigger color--primary"><i class="far fa-question-circle"></i></a>
-                                        <div class="modal-container">
-                                            <div class="modal-content">
-                                                <div class="boxed boxed--lg">
-                                                    <h2>Adult Content</h2>
-                                                    <hr class="short">
-                                                    <p class="lead">Content that is not generally thought to be appropriate for viewing by children (such as violence, dangerous fantasy, and hate propaganda)</p>
+                                {% if LANGUAGE_CODE == 'ar' %}
+                                <div class="pull-right">
+                                    <span>
+                                        {% trans "Adult Content"%}
+                                        <div class="modal-instance">
+                                            <a href="#" class="modal-trigger color--primary"><i class="far fa-question-circle"></i></a>
+                                            <div class="modal-container">
+                                                <div class="modal-content">
+                                                    <div class="boxed boxed--lg">
+                                                        <h2>{% trans "Adult Content"%}</h2>
+                                                        <hr class="short">
+                                                        <p class="lead">Content that is not generally thought to be appropriate for viewing by children (such as violence, dangerous fantasy, and hate propaganda)</p>
+                                                    </div>
+                                                    <div class="modal-close modal-close-cross"></div>
                                                 </div>
-                                                <div class="modal-close modal-close-cross"></div>
                                             </div>
-                                        </div>
-                                    </div><!--end of modal instance-->
-                                </span>
+                                        </div><!--end of modal instance-->
+                                    </span>
+                                    <div id="adult_content_checkbox_wrapper" class="input-checkbox input-checkbox--switch">
+                                        <input type="checkbox" name="adult_content" id="id_adult_content">
+                                        <label for="id_adult_content"></label>
+                                    </div>
+                                </div>
+                                {% else %}
+                                    <div id="adult_content_checkbox_wrapper" class="input-checkbox input-checkbox--switch">
+                                        <input type="checkbox" name="adult_content" id="id_adult_content">
+                                        <label for="id_adult_content"></label>
+                                    </div>
+                                    <span>
+                                        {% trans "Adult Content"%}
+                                        <div class="modal-instance">
+                                            <a href="#" class="modal-trigger color--primary"><i class="far fa-question-circle"></i></a>
+                                            <div class="modal-container">
+                                                <div class="modal-content">
+                                                    <div class="boxed boxed--lg">
+                                                        <h2>Adult Content</h2>
+                                                        <hr class="short">
+                                                        <p class="lead">Content that is not generally thought to be appropriate for viewing by children (such as violence, dangerous fantasy, and hate propaganda)</p>
+                                                    </div>
+                                                    <div class="modal-close modal-close-cross"></div>
+                                                </div>
+                                            </div>
+                                        </div><!--end of modal instance-->
+                                    </span>
+                                {% endif %}
                                 <br><br>
                                 {{form.exclusive.errors}}
-                                <div id="exclusive_checkbox_wrapper" class="input-checkbox input-checkbox--switch">
-                                    <input type="checkbox" name="exclusive" id="id_exclusive">
-                                    <label for="id_exclusive"></label>
-                                </div>
-                                <span>
-                                    Exclusive
-                                    <div class="modal-instance">
-                                        <a href="#" class="modal-trigger color--primary"><i class="far fa-question-circle"></i></a>
-                                        <div class="modal-container">
-                                            <div class="modal-content">
-                                                <div class="boxed boxed--lg">
-                                                    <h2>Exclusive</h2>
-                                                    <hr class="short">
-                                                    <p class="lead">Content that you plan to sell or license through Sowarstock ONLY.</p>
-                                                    <p class="lead">For more, please read <a href="{% url 'legal_contributor' %}" target="_blank">The Contributor Agreement</a></p>
+                                {% if LANGUAGE_CODE == 'ar' %}
+                                    <div class="pull-right">
+                                        <span>
+                                            {% trans "Exclusive"%}
+                                            <div class="modal-instance">
+                                                <a href="#" class="modal-trigger color--primary"><i class="far fa-question-circle"></i></a>
+                                                <div class="modal-container">
+                                                    <div class="modal-content">
+                                                        <div class="boxed boxed--lg">
+                                                            <h2>{% trans "Exclusive"%}</h2>
+                                                            <hr class="short">
+                                                            <p class="lead">Content that you plan to sell or license through Sowarstock ONLY.</p>
+                                                            <p class="lead">For more, please read <a href="{% url 'legal_contributor' %}" target="_blank">The Contributor Agreement</a></p>
+                                                        </div>
+                                                        <div class="modal-close modal-close-cross"></div>
+                                                    </div>
                                                 </div>
-                                                <div class="modal-close modal-close-cross"></div>
-                                            </div>
+                                            </div><!--end of modal instance-->
+                                        </span>
+                                        <div id="exclusive_checkbox_wrapper" class="input-checkbox input-checkbox--switch">
+                                            <input type="checkbox" name="exclusive" id="id_exclusive">
+                                            <label for="id_exclusive"></label>
                                         </div>
-                                    </div><!--end of modal instance-->
-                                </span>
+                                    </div>
+                                {% else %}
+                                    <div id="exclusive_checkbox_wrapper" class="input-checkbox input-checkbox--switch">
+                                        <input type="checkbox" name="exclusive" id="id_exclusive">
+                                        <label for="id_exclusive"></label>
+                                    </div>
+                                    <span>
+                                        {% trans "Exclusive"%}
+                                        <div class="modal-instance">
+                                            <a href="#" class="modal-trigger color--primary"><i class="far fa-question-circle"></i></a>
+                                            <div class="modal-container">
+                                                <div class="modal-content">
+                                                    <div class="boxed boxed--lg">
+                                                        <h2>{% trans "Exclusive"%}</h2>
+                                                        <hr class="short">
+                                                        <p class="lead">Content that you plan to sell or license through Sowarstock ONLY.</p>
+                                                        <p class="lead">For more, please read <a href="{% url 'legal_contributor' %}" target="_blank">The Contributor Agreement</a></p>
+                                                    </div>
+                                                    <div class="modal-close modal-close-cross"></div>
+                                                </div>
+                                            </div>
+                                        </div><!--end of modal instance-->
+                                    </span>
+                                {% endif %}
                                 <br><br>
                                 {{form.released.errors}}
-                                <div id="released_checkbox_wrapper" class="input-checkbox input-checkbox--switch">
-                                    <input type="checkbox" name="released" id="id_released">
-                                    <label for="id_released"></label>
-                                </div>
-                                <span>
-                                    Released
-                                    <div class="modal-instance">
-                                        <a href="#" class="modal-trigger color--primary"><i class="far fa-question-circle"></i></a>
-                                        <div class="modal-container">
-                                            <div class="modal-content">
-                                                <div class="boxed boxed--lg">
-                                                    <h2>Released</h2>
-                                                    <hr class="short">
-                                                    <p class="lead">A document stipulating conditions under which the Contributor may lawfully use photographs of another person or property for commercial and other purposes.</p>
-                                                    <p class="lead">For more, please read <a href="{% url 'legal_contributor' %}" target="_blank">The Contributor Agreement</a></p>
+                                {% if LANGUAGE_CODE == 'ar' %}
+                                    <div class="pull-right">
+                                        <span>
+                                            {% trans "Released"%}
+                                            <div class="modal-instance">
+                                                <a href="#" class="modal-trigger color--primary"><i class="far fa-question-circle"></i></a>
+                                                <div class="modal-container">
+                                                    <div class="modal-content">
+                                                        <div class="boxed boxed--lg">
+                                                            <h2>{% trans "Released"%}</h2>
+                                                            <hr class="short">
+                                                            <p class="lead">A document stipulating conditions under which the Contributor may lawfully use photographs of another person or property for commercial and other purposes.</p>
+                                                            <p class="lead">For more, please read <a href="{% url 'legal_contributor' %}" target="_blank">The Contributor Agreement</a></p>
+                                                        </div>
+                                                        <div class="modal-close modal-close-cross"></div>
+                                                    </div>
                                                 </div>
-                                                <div class="modal-close modal-close-cross"></div>
-                                            </div>
+                                            </div><!--end of modal instance-->
+                                        </span>
+                                        <div id="released_checkbox_wrapper" class="input-checkbox input-checkbox--switch">
+                                            <input type="checkbox" name="released" id="id_released">
+                                            <label for="id_released"></label>
                                         </div>
-                                    </div><!--end of modal instance-->
-                                </span>
+                                    </div>
+                                {% else %}
+                                    <div id="released_checkbox_wrapper" class="input-checkbox input-checkbox--switch">
+                                        <input type="checkbox" name="released" id="id_released">
+                                        <label for="id_released"></label>
+                                    </div>
+                                    <span>
+                                        {% trans "Released"%}
+                                        <div class="modal-instance">
+                                            <a href="#" class="modal-trigger color--primary"><i class="far fa-question-circle"></i></a>
+                                            <div class="modal-container">
+                                                <div class="modal-content">
+                                                    <div class="boxed boxed--lg">
+                                                        <h2>{% trans "Released"%}</h2>
+                                                        <hr class="short">
+                                                        <p class="lead">A document stipulating conditions under which the Contributor may lawfully use photographs of another person or property for commercial and other purposes.</p>
+                                                        <p class="lead">For more, please read <a href="{% url 'legal_contributor' %}" target="_blank">The Contributor Agreement</a></p>
+                                                    </div>
+                                                    <div class="modal-close modal-close-cross"></div>
+                                                </div>
+                                            </div>
+                                        </div><!--end of modal instance-->
+                                    </span>
+                                {% endif %}
                                 <br><br>
                                 {{form.editorial.errors}}
-                                <div id="editorial_checkbox_wrapper" class="input-checkbox input-checkbox--switch">
-                                    <input type="checkbox" name="editorial" id="id_editorial">
-                                    <label for="id_editorial"></label>
-                                </div>
-                                <span>
-                                    Editorial
-                                    <div class="modal-instance">
-                                        <a href="#" class="modal-trigger color--primary"><i class="far fa-question-circle"></i></a>
-                                        <div class="modal-container">
-                                            <div class="modal-content">
-                                                <div class="boxed boxed--lg">
-                                                    <h2>Editorial</h2>
-                                                    <hr class="short">
-                                                    <p class="lead">An Editorial image is one that is used:</p>
-                                                    <p class="lead">- In a newspaper or magazine article</p>
-                                                    <p class="lead">- On a blog or website for descriptive purposes</p>
-                                                    <p class="lead">- In a non-commercial presentation</p>
+                                {% if LANGUAGE_CODE == 'ar' %}
+                                    <div class="pull-right">
+                                        <span>
+                                            {% trans "Editorial"%}
+                                            <div class="modal-instance">
+                                                <a href="#" class="modal-trigger color--primary"><i class="far fa-question-circle"></i></a>
+                                                <div class="modal-container">
+                                                    <div class="modal-content">
+                                                        <div class="boxed boxed--lg">
+                                                            <h2>Editorial</h2>
+                                                            <hr class="short">
+                                                            <p class="lead">An Editorial image is one that is used:</p>
+                                                            <p class="lead">- In a newspaper or magazine article</p>
+                                                            <p class="lead">- On a blog or website for descriptive purposes</p>
+                                                            <p class="lead">- In a non-commercial presentation</p>
+                                                        </div>
+                                                        <div class="modal-close modal-close-cross"></div>
+                                                    </div>
                                                 </div>
-                                                <div class="modal-close modal-close-cross"></div>
-                                            </div>
+                                            </div><!--end of modal instance-->
+                                        </span>
+                                        <div id="editorial_checkbox_wrapper" class="input-checkbox input-checkbox--switch">
+                                            <input type="checkbox" name="editorial" id="id_editorial">
+                                            <label for="id_editorial"></label>
                                         </div>
-                                    </div><!--end of modal instance-->
-                                </span>
-                                <br><br>
-                                {{form.price_type.label_tag}}
+                                    </div>
+                                {% else %}
+                                    <div id="editorial_checkbox_wrapper" class="input-checkbox input-checkbox--switch">
+                                        <input type="checkbox" name="editorial" id="id_editorial">
+                                        <label for="id_editorial"></label>
+                                    </div>
+                                    <span>
+                                        {% trans "Editorial"%}
+                                        <div class="modal-instance">
+                                            <a href="#" class="modal-trigger color--primary"><i class="far fa-question-circle"></i></a>
+                                            <div class="modal-container">
+                                                <div class="modal-content">
+                                                    <div class="boxed boxed--lg">
+                                                        <h2>Editorial</h2>
+                                                        <hr class="short">
+                                                        <p class="lead">An Editorial image is one that is used:</p>
+                                                        <p class="lead">- In a newspaper or magazine article</p>
+                                                        <p class="lead">- On a blog or website for descriptive purposes</p>
+                                                        <p class="lead">- In a non-commercial presentation</p>
+                                                    </div>
+                                                    <div class="modal-close modal-close-cross"></div>
+                                                </div>
+                                            </div>
+                                        </div><!--end of modal instance-->
+                                    </span>
+                                {% endif %}
+                                <br><br><br>
+                                <div {% if LANGUAGE_CODE == 'ar' %} class="pull-right" {% endif %}>
+                                    <label for="id_price_type">{% trans "Price type"%}:</label>
+                                </div>
                                 {{form.price_type}}
                                 {{form.price_type.errors}}
                                 <br>
-                                {{form.standard_price.label_tag}}
-                                <div class="modal-instance">
-                                    <a href="#" class="modal-trigger color--primary"><i class="far fa-question-circle"></i></a>
-                                    <div class="modal-container">
-                                        <div class="modal-content">
-                                            <div class="boxed boxed--lg">
-                                                <h2>Pricing</h2>
-                                                <hr class="short">
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <center><h2><i class="fas fa-pencil-alt"></i></h2></center>
-                                                        <h2>STANDARD LICENSE</h2>
-                                                        <p>MINOR USAGE - Unlimited</p>
-                                                        <p>MAJOR USAGE IN RESALE PRODUCT(S) - Up to 10</p>
-                                                        <p>A MAJOR USAGE IN PRODUCT(S) FOR FREE DISTRIBUTION - Up to 1k</p>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <center><h2><i class="fas fa-star"></i></h2></center>
-                                                        <h2>EXTENDED LICENSE</h2>
-                                                        <p>MINOR USAGE - Unlimited</p>
-                                                        <p>MAJOR USAGE IN RESALE PRODUCT(S) - Up to 500</p>
-                                                        <p>A MAJOR USAGE IN PRODUCT(S) FOR FREE DISTRIBUTION - Up to 100k</p>
+                                <div {% if LANGUAGE_CODE == 'ar' %} class="pull-right" {% endif %}>
+                                    {{form.standard_price.label_tag}}
+                                    <div class="modal-instance">
+                                        <a href="#" class="modal-trigger color--primary"><i class="far fa-question-circle"></i></a>
+                                        <div class="modal-container">
+                                            <div class="modal-content">
+                                                <div class="boxed boxed--lg">
+                                                    <h2>Pricing</h2>
+                                                    <hr class="short">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <center><h2><i class="fas fa-pencil-alt"></i></h2></center>
+                                                            <h2>STANDARD LICENSE</h2>
+                                                            <p>MINOR USAGE - Unlimited</p>
+                                                            <p>MAJOR USAGE IN RESALE PRODUCT(S) - Up to 10</p>
+                                                            <p>A MAJOR USAGE IN PRODUCT(S) FOR FREE DISTRIBUTION - Up to 1k</p>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <center><h2><i class="fas fa-star"></i></h2></center>
+                                                            <h2>EXTENDED LICENSE</h2>
+                                                            <p>MINOR USAGE - Unlimited</p>
+                                                            <p>MAJOR USAGE IN RESALE PRODUCT(S) - Up to 500</p>
+                                                            <p>A MAJOR USAGE IN PRODUCT(S) FOR FREE DISTRIBUTION - Up to 100k</p>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                <div class="modal-close modal-close-cross"></div>
                                             </div>
-                                            <div class="modal-close modal-close-cross"></div>
                                         </div>
-                                    </div>
-                                </div><!--end of modal instance-->
+                                    </div><!--end of modal instance-->
+                                </div>
                                 {{form.standard_price}}
                                 {{form.standard_price.errors}}
                                 <i id="standard_price_error" class="color--error"></i>
                                 <br><br>
-                                {{form.extended_price.label_tag}}
-                                <div class="modal-instance">
-                                    <a href="#" class="modal-trigger color--primary"><i class="far fa-question-circle"></i></a>
-                                    <div class="modal-container">
-                                        <div class="modal-content">
-                                            <div class="boxed boxed--lg">
-                                                <h2>Pricing</h2>
-                                                <hr class="short">
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <center><h2><i class="fas fa-pencil-alt"></i></h2></center>
-                                                        <h2>STANDARD LICENSE</h2>
-                                                        <p>MINOR USAGE - Unlimited</p>
-                                                        <p>MAJOR USAGE IN RESALE PRODUCT(S) - Up to 10</p>
-                                                        <p>A MAJOR USAGE IN PRODUCT(S) FOR FREE DISTRIBUTION - Up to 1k</p>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <center><h2><i class="fas fa-star"></i></h2></center>
-                                                        <h2>EXTENDED LICENSE</h2>
-                                                        <p>MINOR USAGE - Unlimited</p>
-                                                        <p>MAJOR USAGE IN RESALE PRODUCT(S) - Up to 500</p>
-                                                        <p>A MAJOR USAGE IN PRODUCT(S) FOR FREE DISTRIBUTION - Up to 100k</p>
+                                <div {% if LANGUAGE_CODE == 'ar' %} class="pull-right" {% endif %}>
+                                    {{form.extended_price.label_tag}}
+                                    <div class="modal-instance">
+                                        <a href="#" class="modal-trigger color--primary"><i class="far fa-question-circle"></i></a>
+                                        <div class="modal-container">
+                                            <div class="modal-content">
+                                                <div class="boxed boxed--lg">
+                                                    <h2>Pricing</h2>
+                                                    <hr class="short">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <center><h2><i class="fas fa-pencil-alt"></i></h2></center>
+                                                            <h2>STANDARD LICENSE</h2>
+                                                            <p>MINOR USAGE - Unlimited</p>
+                                                            <p>MAJOR USAGE IN RESALE PRODUCT(S) - Up to 10</p>
+                                                            <p>A MAJOR USAGE IN PRODUCT(S) FOR FREE DISTRIBUTION - Up to 1k</p>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <center><h2><i class="fas fa-star"></i></h2></center>
+                                                            <h2>EXTENDED LICENSE</h2>
+                                                            <p>MINOR USAGE - Unlimited</p>
+                                                            <p>MAJOR USAGE IN RESALE PRODUCT(S) - Up to 500</p>
+                                                            <p>A MAJOR USAGE IN PRODUCT(S) FOR FREE DISTRIBUTION - Up to 100k</p>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                <div class="modal-close modal-close-cross"></div>
                                             </div>
-                                            <div class="modal-close modal-close-cross"></div>
                                         </div>
-                                    </div>
-                                </div><!--end of modal instance-->
+                                    </div><!--end of modal instance-->
+                                </div>
                                 {{form.extended_price}}
                                 {{form.extended_price.errors}}
                                 <i id="extended_price_error" class="color--error"></i>
@@ -234,15 +359,15 @@ New Product
                             <div class="row">
                                 <div class="col-lg-3 col-md-4">
                                     <button id="submit_product_button" type="submit" class="btn btn--primary type--uppercase">
-                                        <span id="submit_product_text">Save</span>
+                                        <span id="submit_product_text">{% trans "Save"%}</span>
                                         <img id="submit_product_loader" class="hidden" style="max-height:1.5em" src="{% static 'ssw/img/ajax-loader.gif' %}">
                                     </button>
                                 </div>
                                 <div class="col-lg-3 col-md-4">
-                                    <a href="/products" class="btn btn--default type--uppercase">Cancel</a>
+                                    <a href="/products" class="btn btn--default type--uppercase {% if LANGUAGE_CODE == 'ar' %} pull-right {% endif %}">{% trans "Cancel"%}</a>
                                 </div>
                             </div>
-                            <i id="form_error_message" class="color--error"></i>
+                            <i id="form_error_message" class="color--error {% if LANGUAGE_CODE == 'ar' %} pull-right {% endif %}"></i>
                         </form>
 
                         {% progress_bar %}
@@ -261,6 +386,10 @@ New Product
     {% progress_bar_media %}
 <script>
     $( document ).ready(function() {
+
+        {% if LANGUAGE_CODE == 'ar' %}
+            $(".stack-down-open").css("top","2.5em")
+        {% endif %}
 
         $("#id_price_type").change(function(){
             var priceType = $(this).val()
@@ -371,52 +500,98 @@ New Product
                 var image = $("#image_url").val()
                 if(image==""){
                     e.preventDefault()
-                    $("#form_error_message").html("Please upload/repload an image")
+                    var msg = ""
+                    {% if LANGUAGE_CODE == 'en' %}
+                        msg = 'Please upload/repload an image'
+                    {% else %}
+                        msg = 'الرجاء تحميل صورة'
+                    {% endif %}
+                    $("#form_error_message").html(msg)
                     return
                 }
             }else if(fileType=="eps"){
                 var file = $("#file_url").val()
                 if(file==""){
                     e.preventDefault()
-                    $("#form_error_message").html("Please upload/reapload a file")
+                    var msg = ""
+                    {% if LANGUAGE_CODE == 'en' %}
+                        msg = 'Please upload/repload a file'
+                    {% else %}
+                        msg = 'الرجاء تحميل ملف'
+                    {% endif %}
+                    $("#form_error_message").html(msg)
                     return
                 }
             }
 
             if(title == ""){
                 e.preventDefault()
-                $("#form_error_message").html("Please choose a title")
+                var msg = ""
+                {% if LANGUAGE_CODE == 'en' %}
+                    msg = 'Please choose a title'
+                {% else %}
+                    msg = 'الرجاء كتابة عنوان للعمل'
+                {% endif %}
+                $("#form_error_message").html(msg)
                 return
             }
 
             if(description == ""){
                 e.preventDefault()
-                $("#form_error_message").html("Please choose a description")
+                var msg = ""
+                {% if LANGUAGE_CODE == 'en' %}
+                    msg = 'Please choose a description'
+                {% else %}
+                    msg = 'الرجاء كتابة وصف للعمل'
+                {% endif %}
+                $("#form_error_message").html(msg)
                 return
             }
 
              if(keywords == ""){
                 e.preventDefault()
-                $("#form_error_message").html("Please choose some keywords")
+                var msg = ""
+                {% if LANGUAGE_CODE == 'en' %}
+                    msg = 'Please choose some keywords'
+                {% else %}
+                    msg = 'الرجاء اختيار بعض الكلمات الدالة'
+                {% endif %}
+                $("#form_error_message").html(msg)
                 return
             }
 
             if(category == ""){
                 e.preventDefault()
-                $("#form_error_message").html("Please choose a category")
+                var msg = ""
+                {% if LANGUAGE_CODE == 'en' %}
+                    msg = 'Please choose a category'
+                {% else %}
+                    msg = 'الرجاء اختيار فئة رئيسية'
+                {% endif %}
+                $("#form_error_message").html(msg)
                 return
             }
 
             if(category == 1 | category == 2){
                 if(subcategory == ""){
                     e.preventDefault()
-                    $("#form_error_message").html("Please choose a subcategory")
+                    var msg = ""
+                {% if LANGUAGE_CODE == 'en' %}
+                    msg = 'Please choose a subcategory'
+                {% else %}
+                    msg = 'الرجاء اختيار فئة فرعية'
+                {% endif %}
+                $("#form_error_message").html(msg)
                     return
                 }
             }
 
             $(this).prop("disabled",true)
-            $("#submit_product_text").html("Submitting ... ")
+            {% if LANGUAGE_CODE == 'en' %}
+                $("#submit_product_text").html("Submitting ... ")
+            {% else %}
+                $("#submit_product_text").html("جاري الإرسال ...")
+            {% endif %}
             $("#submit_product_loader").removeClass("hidden")
             $("#form_error_message").html("")
             $(this).closest("form").submit()
