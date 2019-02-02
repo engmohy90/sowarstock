@@ -150,7 +150,7 @@ def recover_account(request):
             email_body = loader.render_to_string("ssw/email_recover_account.html", {"user": user})
             send_mail("استرجاع حسابك", "", "Sowarstock", [user.email], False,
                      None, None, None, email_body)
-            messages.success(request, _("An email address has been sent to you"))
+            messages.success(request, _("An email has been sent to you"))
         except:
             messages.error(request, _("This email address does not exist"))
         return HttpResponseRedirect("/recover")
@@ -289,7 +289,7 @@ def add_to_cart(request):
         except:
             cart = models.ShoppingCart.objects.create(owner = user)
             models.ShoppingCartItem.objects.create(product=product, license_type=license, cart=cart)
-        messages.success(request,"item has been added to your cart")
+        messages.success(request,_("item has been added to your cart"))
         return HttpResponseRedirect("/products/public/{}".format(product.public_id))
     return HttpResponseRedirect("/")
 
@@ -351,6 +351,9 @@ def checkout(request):
         "notify_url": "https://www.sowarstock.com" + reverse('paypal-ipn'),
         "return": "https://www.sowarstock.com/thanks-for-payment",
         "cancel_return": "https://www.sowarstock.com/checkout",
+        #"notify_url": "https://cfb3cbbc.ngrok.io" + reverse('paypal-ipn'),
+        #"return": "https://cfb3cbbc.ngrok.io/thanks-for-payment",
+        #"cancel_return": "https://cfb3cbbc.ngrok.io/checkout",
         "custom": "%s:%s" % (user,invoice_id)
     }
 
@@ -707,7 +710,7 @@ def update_personal_info(request):
         personal_info_form = forms.ProfilePersonalInfoForm(request.POST, instance=user)
         if personal_info_form.is_valid():
             personal_info_form.save()
-            messages.success(request, "Personal Information updated successfully")
+            messages.success(request, _("Personal Information updated successfully"))
         else:
             if '__all__' in personal_info_form.errors:
                 messages.error(request, personal_info_form.errors['__all__'])
@@ -725,9 +728,9 @@ def update_address(request):
             address = address_form.save()
             user.address = address
             user.save()
-            messages.success(request, "Address updated successfully")
+            messages.success(request, _("Address updated successfully"))
         else:
-            messages.error(request, "Please Correct the errors.")
+            messages.error(request, _("Please Correct the errors."))
     return HttpResponseRedirect("/account_settings")
 
 
@@ -739,11 +742,11 @@ def update_password(request):
         if password_form.is_valid():
             password = password_form.save()
             update_session_auth_hash(request, password)
-            messages.success(request, "Password updated successfully. Please login with the new password")
+            messages.success(request, _("Password updated successfully. Please login with the new password"))
             models.ActivityLog.objects.create(short_description="user %s updated password" % user,
                                               owner=user)
         else:
-            messages.error(request, "Please Correct the errors")
+            messages.error(request, _("Please Correct the errors"))
     return HttpResponseRedirect("/account_settings")
 
 
@@ -754,7 +757,7 @@ def update_public_info(request):
         public_info_form = forms.ProfilePublicInfoForm(request.POST, instance=user)
         if public_info_form.is_valid():
             public_info_form.save()
-            messages.success(request, "Public Information updated successfully")
+            messages.success(request, _("Public Information updated successfully"))
         else:
             messages.error(request, public_info_form.errors)
     return HttpResponseRedirect("/account_settings")
@@ -768,7 +771,7 @@ def update_photo_id(request):
         if photo_id_form.is_valid():
             photo_id_form.save()
             models.UserRequest.objects.create(owner=user)
-            messages.success(request, "Photo ID updated successfully")
+            messages.success(request, _("Photo ID updated successfully"))
         else:
             messages.error(request, photo_id_form.errors)
     return HttpResponseRedirect("/account_settings")
@@ -783,7 +786,7 @@ def update_payment_method(request):
             payment_method_form.save()
             email_body = loader.render_to_string("ssw/email_update_payment_settings.html", {"user": user})
             send_mail("تحديث إعدادات الدفع", "", "Sowarstock", [user.email], False, None, None, None, email_body)
-            messages.success(request, "Payment method updated successfully")
+            messages.success(request, ـ("Payment method updated successfully"))
         else:
             messages.error(request, payment_method_form.errors)
     return HttpResponseRedirect("/account_settings")
@@ -799,7 +802,7 @@ def update_user_request_delete(request):
             r.owner = user
             r.type = "delete"
             r.save()
-            messages.success(request, "Request sent successfully")
+            messages.success(request, _("Request sent successfully"))
         else:
             messages.error(request, user_request_delete_form.errors)
     return HttpResponseRedirect("/account_settings")
@@ -843,7 +846,7 @@ def product_public_details(request, public_id):
         elif "editorials" in referer:
             back_section = "Editorials"
         else:
-            back_section = product.category
+            back_section = product.category.name
     else:
         referer = "/%s" % product.category.name.lower()
         back_section = product.category
@@ -856,7 +859,7 @@ def product_public_details(request, public_id):
             review.product = product
             review.owner = user
             review.save()
-            messages.success(request, "Comment added successfully")
+            messages.success(request, _("Comment added successfully"))
         else:
             messages.error(request, "There was an error adding your comment")
         return HttpResponseRedirect("/products/public/{}".format(public_id))
@@ -874,7 +877,7 @@ def reviews_main(request):
                                                      "activeDashboardMenu": "reviews",
                                                      "reviews": reviews, **showCorrectMenu(request.user)})
     else:
-        messages.error(request, "You are not authorized to view this page !")
+        messages.error(request, _("You are not authorized to view this page !"))
         return HttpResponseRedirect("/")
 
 
@@ -892,9 +895,9 @@ def faqs_main(request):
                 pfaq = form.save(commit=False)
                 pfaq.owner = user
                 pfaq.save()
-                messages.success(request, "Your question has been submitted successfully")
+                messages.success(request, _("Your question has been submitted successfully"))
             else:
-                messages.error(request, "There was an error submitting your question")
+                messages.error(request, _("There was an error submitting your question"))
             return HttpResponseRedirect("/faqs")
         return render(request, "ssw/faqs_main.html", {"user":getSowarStockUser(request.user), "faqs": faqs, "personal_faqs": personal_faqs,
                                                       "form": form, "activeDashboardMenu": "faqs", **showCorrectMenu(request.user)})
@@ -910,7 +913,7 @@ def collections_main(request):
         return render(request, "ssw/collections_main.html", {"user":getSowarStockUser(request.user), "collections": collections,
                                                   "activeDashboardMenu": "collections", **showCorrectMenu(request.user)})
     else:
-        messages.error(request, "You are not authorized to view this page !")
+        messages.error(request, _("You are not authorized to view this page !"))
         return HttpResponseRedirect("/")
 
 @login_required
@@ -923,13 +926,13 @@ def collections_new(request):
             description = request.POST["description"]
             products = request.POST.getlist("products")
             if title == "" :
-                messages.error(request, "Please choose a title for your collection")
+                messages.error(request, _("Please choose a title for your collection"))
                 return HttpResponseRedirect("/collections/new")
             if description == "":
-                messages.error(request, "Please choose a description for your collection")
+                messages.error(request, _("Please choose a description for your collection"))
                 return HttpResponseRedirect("/collections/new")
             if not products:
-                messages.error(request, "Please select at least one product")
+                messages.error(request, _("Please select at least one product"))
                 return HttpResponseRedirect("/collections/new")
             contributor = get_object_or_404(models.Contributor, pk=request.user.pk)
             collection = models.Collection.objects.create(title=title, description=description, owner=contributor)
@@ -937,12 +940,12 @@ def collections_new(request):
                 p = get_object_or_404(models.Product, pk = product)
                 collection.products.add(p)
             collection.save()
-            messages.success(request, "Collection created successfully")
+            messages.success(request, _("Collection created successfully"))
             return HttpResponseRedirect("/collections")
         return render(request, "ssw/collections_new.html", {"user":getSowarStockUser(request.user), "products": products,
                                                       "activeDashboardMenu": "collections", **showCorrectMenu(request.user)})
     else:
-        messages.error(request, "You are not authorized to view this page !")
+        messages.error(request, _("You are not authorized to view this page !"))
         return HttpResponseRedirect("/")
 
 @login_required
@@ -956,13 +959,13 @@ def collections_edit(request,pk):
             description = request.POST["description"]
             products_pks = request.POST.getlist("products")
             if title == "":
-                messages.error(request, "Please choose a title for your collection")
+                messages.error(request, _("Please choose a title for your collection"))
                 return HttpResponseRedirect("/collections/{}/edit".format(collection.pk))
             if description == "":
-                messages.error(request, "Please choose a description for your collection")
+                messages.error(request, _("Please choose a description for your collection"))
                 return HttpResponseRedirect("/collections/{}/edit".format(collection.pk))
             if not products_pks:
-                messages.error(request, "Please select at least one product")
+                messages.error(request, _("Please select at least one product"))
                 return HttpResponseRedirect("/collections/{}/edit".format(collection.pk))
             collection.title = title
             collection.description = description
@@ -971,24 +974,24 @@ def collections_edit(request,pk):
                 p = get_object_or_404(models.Product, pk=product)
                 collection.products.add(p)
             collection.save()
-            messages.success(request, "Collection updated successfully")
+            messages.success(request, _("Collection updated successfully"))
             return HttpResponseRedirect("/collections")
         return render(request, "ssw/collections_new.html", {"user": getSowarStockUser(request.user), "products": products, "collection": collection,
                                                             "activeDashboardMenu": "collections", **showCorrectMenu(request.user)})
     else:
-        messages.error(request, "You are not authorized to view this page !")
+        messages.error(request, _("You are not authorized to view this page !"))
         return HttpResponseRedirect("/")
 
 @login_required
 def collections_delete(request, pk):
     collection = get_object_or_404(models.Collection, pk=pk)
     user = getSowarStockUser(request.user)
-    if user.type == "contributor" and collection.owner == user:
+    if user.type == "contributor" and collection.owner.pk == user.pk:
         collection.delete()
-        messages.success(request,"Collection deleted")
+        messages.success(request,_("Collection deleted"))
         return HttpResponseRedirect("/collections")
     else:
-        messages.error(request, "You are not authorized to view this page !")
+        messages.error(request, _("You are not authorized to view this page !"))
         return HttpResponseRedirect("/")
 
 

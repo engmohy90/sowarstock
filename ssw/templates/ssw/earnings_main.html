@@ -1,9 +1,9 @@
 {% extends "ssw/main.html" %}
 {% load static from staticfiles %}
 {% load my_tags %}
-
+{% load i18n %}
 {% block title %}
-Earnings
+{% trans "Earnings"%}
 {% endblock %}
 
 {% block content %}
@@ -13,30 +13,36 @@ Earnings
         <div class="row">
             <div class="col-lg-12">
                 <div class="boxed boxed--lg boxed--border">
-                    <h4>Earnings</h4>
+                    <h4>{% trans "Earnings"%}</h4>
                     <hr>
                     {% if earnings %}
                         <div class="custom-scroll table-responsive">
                             <table id="earningsTable" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Order Item</th>
-                                        <th>Amount</th>
-                                        <th>Date</th>
-                                        <th>Paid</th>
+                                        <th>{% trans "Order Item"%}</th>
+                                        <th>{% trans "Amount"%}</th>
+                                        <th>{% trans "Date"%}</th>
+                                        <th>{% trans "Paid"%}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {% for earning in earnings %}
                                         <tr>
                                             <td>{{ earning.order_item }}</a></td>
-                                            <td>$ {{ earning.amount }}</td>
+                                            <td>
+                                                {% if LANGUAGE_CODE == 'ar' %}
+                                                    {{ earning.amount }} $
+                                                {% else %}
+                                                    $ {{ earning.amount }}
+                                                {% endif %}
+                                            </td>
                                             <td>{{ earning.created_at }}</td>
                                             <td>
                                                 {% if earning.payment %}
-                                                    Yes
+                                                    {% trans "Yes"%}
                                                 {% else %}
-                                                    No
+                                                    {% trans "No"%}
                                                 {% endif %}
                                             </td>
                                         </tr>
@@ -45,18 +51,27 @@ Earnings
                             </table>
                         </div>
                     {% endif %}
-                    <h4>Earnings Total: <span class="pull-right color--success">${{earnings_total}}</span></h4>
+                    <h4>
+                        {% trans "Earnings Total"%}:
+                        <span class="{% if LANGUAGE_CODE == 'en' %} pull-right {% endif %} color--success">
+                            {% if LANGUAGE_CODE == 'en' %}
+                                ${{earnings_total}}
+                            {% else %}
+                                {{earnings_total}}$
+                            {% endif %}
+                        </span>
+                    </h4>
                     <hr>
 
-                    <h4>Payments</h4>
+                    <h4>{% trans "Payments"%}</h4>
                     <hr>
                     {% if payments %}
                         <div class="custom-scroll table-responsive">
                             <table id="paymentsTable" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Amount</th>
-                                        <th>Date</th>
+                                        <th>{% trans "Amount"%}</th>
+                                        <th>{% trans "Date"%}</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -66,7 +81,7 @@ Earnings
                                             <td>$ {{ payment.amount }}</a></td>
                                             <td>{{ payment.created_at }}</td>
                                             <td>
-                                                <a href="{{payment.receipt.url}}">View Payment</a>
+                                                <a href="{{payment.receipt.url}}">{% trans "View Payment"%}</a>
                                             </td>
                                         </tr>
                                     {% endfor %}
@@ -74,9 +89,27 @@ Earnings
                             </table>
                         </div>
                     {% endif %}
-                    <h4>Payments Total: <span class="pull-right color--success">${{payments_total}}</span></h4>
+                    <h4>
+                        {% trans "Payments Total"%}:
+                        <span class="{% if LANGUAGE_CODE == 'en' %} pull-right {% endif %} color--success">
+                            {% if LANGUAGE_CODE == 'en' %}
+                                ${{payments_total}}
+                            {% else %}
+                                {{payments_total}}$
+                            {% endif %}
+                        </span>
+                    </h4>
                     <hr>
-                    <h4>Balance: <span class="pull-right color--success">${{earnings_total|sub:payments_total}}</span></h4>
+                    <h4>
+                        {% trans "Balance"%}:
+                        <span class="{% if LANGUAGE_CODE == 'en' %} pull-right {% endif %} color--success">
+                            {% if LANGUAGE_CODE == 'en' %}
+                                ${{earnings_total|sub:payments_total}}
+                            {% else %}
+                                {{earnings_total|sub:payments_total}}$
+                            {% endif %}
+                        </span>
+                    </h4>
                 </div>
             </div>
         </div>

@@ -37,7 +37,7 @@ $(document).ready(function(){
     $("#recover_button").click(function(){
         $(this).prop("disabled",true)
         {% if LANGUAGE_CODE == 'ar' %}
-            $(this).html("... جاري الإرسال")
+            $(this).html(" ... جاري الإرسال")
         {% else %}
             $(this).html("Submitting ... ")
         {% endif %}

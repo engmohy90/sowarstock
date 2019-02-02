@@ -43,10 +43,10 @@ class Address(models.Model):
 
 
 class SowarStockUser(User):
-    USER_TYPES = (("contributor", "Contributor"),("client", "Client"),
-                  ("admin", "Admin"),("image_reviewer", "Image Reviewer"),
-                  ("financial_admin", "Financial Admin"), ("customer_rep", "Customer Representative"))
-    LANGUAGES = (("en", "English"),("ar", "Arabic"))
+    USER_TYPES = (("contributor", _("Contributor")),("client", _("Client")),
+                  ("admin", _("Admin")),("image_reviewer", _("Image Reviewer")),
+                  ("financial_admin", _("Financial Admin")), ("customer_rep", _("Customer Representative")))
+    LANGUAGES = (("en", _("English")),("ar", _("Arabic")))
     FORGOT_PASSWORD_STATUSES = (("none", "None"),("not_used", "Not Used"), ("used", "Used"))
     type = models.CharField(max_length=255, choices=USER_TYPES)
     country_code = models.CharField(max_length=255, null=True, blank=True)
@@ -96,9 +96,9 @@ class SowarStockUser(User):
 
 
 class Contributor(SowarStockUser):
-    ACCOUNT_STATUS = (("unverified", "Unverified"), ("verified", "Verified"))
-    PAYMENT_METHODS = (("direct_bank_deposit", "Direct Bank Deposit"), ("western_union", "Western Union"),
-                       ("paypal", "Paypal"))
+    ACCOUNT_STATUS = (("unverified", _("Unverified")), ("verified", _("Verified")))
+    PAYMENT_METHODS = (("direct_bank_deposit", _("Direct Bank Deposit")), ("western_union", _("Western Union")),
+                       ("paypal", _("Paypal")))
     status = models.CharField(max_length=255, choices=ACCOUNT_STATUS, default="unverified")
     completed_registration = models.BooleanField(default=False)
     photo_id = models.FileField(upload_to='photo_id/', null=True, blank=True)
@@ -359,7 +359,7 @@ class ShoppingCart(models.Model):
 
 
 class ShoppingCartItem(models.Model):
-    LICENSE_OPTIONS = (("standard", "Standard"), ("extended", "Extended"))
+    LICENSE_OPTIONS = (("standard", _("Standard")), ("extended", _("Extended")))
     STATUS_OPTIONS = (("in_cart", "In Cart"), ("removed", "Removed"), ("purchased", "Purchased"))
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
     license_type = models.CharField(max_length=255, choices=LICENSE_OPTIONS)

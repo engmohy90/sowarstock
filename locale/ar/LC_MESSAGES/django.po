@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-20 16:54+0300\n"
+"POT-Creation-Date: 2019-02-01 06:39+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,18 +19,22 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: sowarstock/settings.py:132
+#: sowarstock/settings.py:132 ssw/models.py:49
 msgid "English"
-msgstr ""
+msgstr "اللغة الانجليزية"
 
-#: sowarstock/settings.py:133
+#: sowarstock/settings.py:133 ssw/models.py:49
 msgid "Arabic"
-msgstr ""
+msgstr "اللغة العربية"
 
 #: ssw/forms.py:18 ssw/templates/ssw/recover_account.html:19
-#: ssw/templates/ssw/signup.html:52
+#: ssw/templates/ssw/signup.html:57
 msgid "Email Address"
 msgstr "بريدك الإلكتروني"
+
+#: ssw/forms.py:28
+msgid "This email address is already registered."
+msgstr "هناك حساب مسجل بهذا البريد الالكتروني"
 
 #: ssw/forms.py:38
 msgid "Country Code"
@@ -44,117 +48,243 @@ msgstr "رقم الهاتف"
 msgid "Preferred Language"
 msgstr "اللغة المفضلة"
 
-#: ssw/forms.py:55
-msgid "Address 1"
-msgstr "العنوان ١"
+#: ssw/forms.py:49
+msgid "Display name"
+msgstr "اسم العرض"
 
-#: ssw/forms.py:56
-msgid "Address 2"
-msgstr "العنوان ٢"
+#: ssw/forms.py:50
+msgid "Job title"
+msgstr "المسمى الوظيفي"
 
-#: ssw/forms.py:57
-msgid "City"
-msgstr "المدينة"
-
-#: ssw/forms.py:58
-msgid "State"
-msgstr "المحافظة"
-
-#: ssw/forms.py:59
-msgid "Country"
-msgstr "البلد"
-
-#: ssw/forms.py:60
-msgid "Zip Code"
-msgstr "الرمز البريدي"
-
-#: ssw/forms.py:76
-msgid "IBAN"
-msgstr ""
-
-#: ssw/forms.py:94
-msgid "Default"
-msgstr "الأسعار الافتراضية"
-
-#: ssw/forms.py:94
-msgid "Custom"
-msgstr "تخصيص أسعار أخرى"
-
-#: ssw/forms.py:102
-msgid "Title"
-msgstr "العنوان"
-
-#: ssw/forms.py:103
-msgid "File Type"
-msgstr "نوع الملف"
-
-#: ssw/forms.py:104
+#: ssw/forms.py:51 ssw/forms.py:117 ssw/templates/ssw/collections_new.html:29
 msgid "Description"
 msgstr "الوصف"
 
-#: ssw/forms.py:105
+#: ssw/forms.py:52
+msgid "Portfolio url"
+msgstr "رابط الملف الشخصي"
+
+#: ssw/forms.py:61
+msgid "Address 1"
+msgstr "العنوان ١"
+
+#: ssw/forms.py:62
+msgid "Address 2"
+msgstr "العنوان ٢"
+
+#: ssw/forms.py:63
+msgid "City"
+msgstr "المدينة"
+
+#: ssw/forms.py:64
+msgid "State"
+msgstr "المحافظة"
+
+#: ssw/forms.py:65
+msgid "Country"
+msgstr "البلد"
+
+#: ssw/forms.py:66
+msgid "Zip Code"
+msgstr "الرمز البريدي"
+
+#: ssw/forms.py:82
+msgid "Preferred payment method"
+msgstr "طريقة الدفع المفضلة"
+
+#: ssw/forms.py:83
+msgid "Bank owner name"
+msgstr "اسم صاحب الحساب البنكي"
+
+#: ssw/forms.py:84
+msgid "IBAN"
+msgstr "رقم الآيبان"
+
+#: ssw/forms.py:85
+msgid "Bank name"
+msgstr "اسم البنك"
+
+#: ssw/forms.py:86
+msgid "Bank country"
+msgstr "بلد البنك"
+
+#: ssw/forms.py:87
+msgid "Western union account"
+msgstr "رقم حساب وسترن يونيون (Western Union)"
+
+#: ssw/forms.py:88
+msgid "Residency country"
+msgstr "بلد الإقامة"
+
+#: ssw/forms.py:89
+msgid "Paypal account"
+msgstr "حساب البيبال (Paypal)"
+
+#: ssw/forms.py:107
+msgid "Default"
+msgstr "الأسعار الافتراضية"
+
+#: ssw/forms.py:107
+msgid "Custom"
+msgstr "تخصيص أسعار أخرى"
+
+#: ssw/forms.py:115 ssw/templates/ssw/collections_main.html:31
+#: ssw/templates/ssw/collections_new.html:22
+#: ssw/templates/ssw/products_main.html:40
+#: ssw/templates/ssw/products_main.html:73
+#: ssw/templates/ssw/products_main.html:106
+msgid "Title"
+msgstr "العنوان"
+
+#: ssw/forms.py:116
+msgid "File Type"
+msgstr "نوع الملف"
+
+#: ssw/forms.py:118
 msgid "Keywords"
 msgstr "الكلمات الدالة"
 
-#: ssw/forms.py:106
+#: ssw/forms.py:119 ssw/templates/ssw/photos_main.html:30
 msgid "Category"
 msgstr "الفئة الرئيسية"
 
-#: ssw/forms.py:107
+#: ssw/forms.py:120
 msgid "Subcategory"
 msgstr "الفئة الفرعية"
 
-#: ssw/forms.py:108 ssw/templates/ssw/products_new.html:88
+#: ssw/forms.py:121 ssw/templates/ssw/products_new.html:88
+#: ssw/templates/ssw/products_new.html:94
 #: ssw/templates/ssw/products_new.html:114
+#: ssw/templates/ssw/products_new.html:120
 msgid "Adult Content"
 msgstr "محتوى للبالغين"
 
-#: ssw/forms.py:109 ssw/templates/ssw/products_new.html:135
+#: ssw/forms.py:122 ssw/templates/ssw/products_new.html:135
+#: ssw/templates/ssw/products_new.html:141
 #: ssw/templates/ssw/products_new.html:162
+#: ssw/templates/ssw/products_new.html:168
 msgid "Exclusive"
 msgstr "حصري"
 
-#: ssw/forms.py:110 ssw/templates/ssw/products_new.html:184
+#: ssw/forms.py:123 ssw/templates/ssw/products_new.html:184
+#: ssw/templates/ssw/products_new.html:190
 #: ssw/templates/ssw/products_new.html:211
+#: ssw/templates/ssw/products_new.html:217
 msgid "Released"
 msgstr "محتوى مصدور"
 
-#: ssw/forms.py:111 ssw/templates/ssw/products_new.html:233
+#: ssw/forms.py:124 ssw/templates/ssw/products_new.html:233
+#: ssw/templates/ssw/products_new.html:239
 #: ssw/templates/ssw/products_new.html:262
+#: ssw/templates/ssw/products_new.html:268
 msgid "Editorial"
 msgstr "محتوى توثيقي"
 
-#: ssw/forms.py:112 ssw/templates/ssw/products_new.html:283
+#: ssw/forms.py:125 ssw/templates/ssw/products_new.html:283
 msgid "Price type"
 msgstr "نوع السعر"
 
-#: ssw/forms.py:113
+#: ssw/forms.py:126
 msgid "Standard Price ($)"
 msgstr "سعر أساسي ($)"
 
-#: ssw/forms.py:114
+#: ssw/forms.py:127
 msgid "Extended Price ($)"
 msgstr "سعر اضافي ($)"
 
-#: ssw/forms.py:148
+#: ssw/forms.py:149 ssw/templates/ssw/reviews_main.html:25
+msgid "Comment"
+msgstr "التعليق"
+
+#: ssw/forms.py:164
 msgid "Have a Question ?"
 msgstr "لديك سؤال ؟"
 
-#: ssw/forms.py:160
+#: ssw/forms.py:176
 msgid "Message"
 msgstr "الرسالة"
 
-#: ssw/forms.py:161
+#: ssw/forms.py:177 ssw/templates/ssw/product_public_details.html:67
+#: ssw/templates/ssw/product_public_details.html:69
 msgid "Type"
-msgstr ""
+msgstr "نوع"
 
-#: ssw/forms.py:212
+#: ssw/forms.py:228
 msgid "Reason for Deleting"
 msgstr "سبب الحذف"
+
+#: ssw/gadmin/views.py:377
+msgid "Your account has been verified"
+msgstr "تم توثيق حسابك"
+
+#: ssw/gadmin/views.py:762
+msgid "You got paid ${}"
+msgstr "تم الدفع لك مبلغ ${}"
+
+#: ssw/models.py:46
+msgid "Contributor"
+msgstr "مساهم"
+
+#: ssw/models.py:46
+msgid "Client"
+msgstr "زبون"
+
+#: ssw/models.py:47
+msgid "Admin"
+msgstr "مشرف"
+
+#: ssw/models.py:47
+msgid "Image Reviewer"
+msgstr "مراجع صور"
+
+#: ssw/models.py:48
+msgid "Financial Admin"
+msgstr "المشرف المالي"
+
+#: ssw/models.py:48
+msgid "Customer Representative"
+msgstr "مندوب العملاء"
 
 #: ssw/models.py:91
 msgid "Profile Image has to be square"
 msgstr ""
+
+#: ssw/models.py:99 ssw/templates/ssw/account_settings.html:27
+#: ssw/templates/ssw/account_settings_client.html:29
+msgid "Unverified"
+msgstr "غير موثق"
+
+#: ssw/models.py:99 ssw/templates/ssw/account_settings.html:25
+#: ssw/templates/ssw/account_settings.html:110
+#: ssw/templates/ssw/account_settings_client.html:27
+msgid "Verified"
+msgstr "موثق"
+
+#: ssw/models.py:100
+msgid "Direct Bank Deposit"
+msgstr "ايداع مباشر"
+
+#: ssw/models.py:100
+msgid "Western Union"
+msgstr " حساب وسترن يونيون (Western Union)"
+
+#: ssw/models.py:101
+msgid "Paypal"
+msgstr "حساب البيبال (Paypal)"
+
+#: ssw/models.py:362 ssw/templates/ssw/product_public_details.html:105
+#: ssw/templates/ssw/shopping_cart_main.html:38
+msgid "Standard"
+msgstr "أساسية"
+
+#: ssw/models.py:362 ssw/templates/ssw/product_public_details.html:106
+#: ssw/templates/ssw/shopping_cart_main.html:39
+msgid "Extended"
+msgstr "اضافية"
+
+#: ssw/signals.py:53
+msgid "You earned ${} from your product {}"
+msgstr "لقد ربحت مبلغ {} $ من عملك {}"
 
 #: ssw/templates/ssw/about.html:5 ssw/templates/ssw/about2.html:5
 #: ssw/templates/ssw/main.html:239 ssw/templates/ssw/main.html:385
@@ -196,6 +326,143 @@ msgstr ""
 msgid "Our Mission"
 msgstr ""
 
+#: ssw/templates/ssw/account_settings.html:5
+#: ssw/templates/ssw/account_settings_client.html:5
+#: ssw/templates/ssw/menu/client_menu.html:38
+#: ssw/templates/ssw/menu/contributor_menu.html:103
+msgid "Account Settings"
+msgstr "اعدادات الحساب"
+
+#: ssw/templates/ssw/account_settings.html:34
+#: ssw/templates/ssw/account_settings.html:61
+#: ssw/templates/ssw/account_settings_client.html:37
+#: ssw/templates/ssw/account_settings_client.html:53
+#: ssw/templates/ssw/complete_registration.html:20
+msgid "Personal Information"
+msgstr "المعلومات الشخصية"
+
+#: ssw/templates/ssw/account_settings.html:37
+#: ssw/templates/ssw/account_settings.html:93
+#: ssw/templates/ssw/account_settings_client.html:40
+#: ssw/templates/ssw/account_settings_client.html:77
+#: ssw/templates/ssw/complete_registration.html:88
+msgid "Address"
+msgstr "العنوان"
+
+#: ssw/templates/ssw/account_settings.html:40
+#: ssw/templates/ssw/account_settings.html:103
+#: ssw/templates/ssw/account_settings.html:105
+#: ssw/templates/ssw/complete_registration.html:144
+msgid "Photo ID"
+msgstr "صورة الهوية"
+
+#: ssw/templates/ssw/account_settings.html:43
+#: ssw/templates/ssw/account_settings.html:130
+msgid "Public Information"
+msgstr "المعلومات العامة"
+
+#: ssw/templates/ssw/account_settings.html:46
+#: ssw/templates/ssw/account_settings.html:140
+#: ssw/templates/ssw/account_settings_client.html:44
+#: ssw/templates/ssw/account_settings_client.html:87
+#: ssw/templates/ssw/login.html:27 ssw/templates/ssw/signup.html:60
+msgid "Password"
+msgstr "كلمة السر"
+
+#: ssw/templates/ssw/account_settings.html:49
+#: ssw/templates/ssw/account_settings.html:150
+msgid "Payment Settings"
+msgstr "اعدادات الدفع"
+
+#: ssw/templates/ssw/account_settings.html:52
+#: ssw/templates/ssw/account_settings.html:223
+msgid "Delete Account"
+msgstr "حذف الحساب"
+
+#: ssw/templates/ssw/account_settings.html:63
+msgid "Email"
+msgstr "البريد الالكتروني"
+
+#: ssw/templates/ssw/account_settings.html:65
+#: ssw/templates/ssw/complete_registration.html:25
+msgid "verified"
+msgstr "موثق"
+
+#: ssw/templates/ssw/account_settings.html:67
+#: ssw/templates/ssw/complete_registration.html:30
+msgid "unverified"
+msgstr "غير موثق"
+
+#: ssw/templates/ssw/account_settings.html:71
+#: ssw/templates/ssw/account_settings_client.html:55
+msgid "Profile Image"
+msgstr "صورة الملف الشخصي"
+
+#: ssw/templates/ssw/account_settings.html:83
+#: ssw/templates/ssw/account_settings_client.html:67
+#, fuzzy
+#| msgid "Profile Image:"
+msgid "Delete Profile Image"
+msgstr "صورة الملف الشخصي"
+
+#: ssw/templates/ssw/account_settings.html:88
+#: ssw/templates/ssw/account_settings_client.html:72
+msgid "Save Profile"
+msgstr "حفظ الملف الشخصي"
+
+#: ssw/templates/ssw/account_settings.html:98
+#: ssw/templates/ssw/account_settings_client.html:82
+msgid "Save Address"
+msgstr "حفظ العنوان"
+
+#: ssw/templates/ssw/account_settings.html:105
+msgid "View"
+msgstr "الاطلاع"
+
+#: ssw/templates/ssw/account_settings.html:107
+msgid "Status"
+msgstr "الحالة"
+
+#: ssw/templates/ssw/account_settings.html:114
+msgid "Under Process"
+msgstr "تحت الإجراء"
+
+#: ssw/templates/ssw/account_settings.html:124
+msgid "Save Photo ID"
+msgstr "صورة الهوية"
+
+#: ssw/templates/ssw/account_settings.html:135
+#: ssw/templates/ssw/account_settings.html:218
+#: ssw/templates/ssw/collections_new.html:51
+#: ssw/templates/ssw/products_new.html:362
+msgid "Save"
+msgstr "حفظ"
+
+#: ssw/templates/ssw/account_settings.html:145
+#: ssw/templates/ssw/account_settings_client.html:92
+msgid "Save Password"
+msgstr "حفظ كلمة السر"
+
+#: ssw/templates/ssw/account_settings.html:151
+msgid ""
+"Choose your preferred payment method to get paid when you have new earnings."
+msgstr ""
+"الرجاء اختيار طريقة الدفع المفضلة لديك حتى نقوم بالدفع اليك في حالة لديك "
+"أرباح"
+
+#: ssw/templates/ssw/account_settings.html:224
+msgid ""
+"Please use this form to send us a request if you no longer wish to have an "
+"account with Sowarstock."
+msgstr ""
+"يمكنك استعمال هذا النموذج لارسال طلب في حالة عدم رغبتك في مواصلة حسابك مع "
+"صورستوك"
+
+#: ssw/templates/ssw/account_settings.html:230
+#: ssw/templates/ssw/product_public_details.html:178
+msgid "Submit"
+msgstr "ارسال"
+
 #: ssw/templates/ssw/calligraphy_main.html:5
 #: ssw/templates/ssw/calligraphy_main.html:17 ssw/templates/ssw/main.html:205
 #: ssw/templates/ssw/main2.html:217
@@ -206,20 +473,20 @@ msgstr "مخطوطات"
 #: ssw/templates/ssw/calligraphy_main.html:43
 #: ssw/templates/ssw/editorials_main.html:33
 #: ssw/templates/ssw/editorials_main.html:43
-#: ssw/templates/ssw/photos_main.html:33 ssw/templates/ssw/photos_main.html:43
+#: ssw/templates/ssw/photos_main.html:34 ssw/templates/ssw/photos_main.html:47
 #: ssw/templates/ssw/profile_products.html:26
 #: ssw/templates/ssw/search_results.html:34
 #: ssw/templates/ssw/search_results.html:44
 #: ssw/templates/ssw/vectors_main.html:34
 #: ssw/templates/ssw/vectors_main.html:44
 msgid "All Categories"
-msgstr ""
+msgstr "جميع الفئات"
 
 #: ssw/templates/ssw/calligraphy_main.html:37
 #: ssw/templates/ssw/calligraphy_main.html:39
 #: ssw/templates/ssw/editorials_main.html:37
 #: ssw/templates/ssw/editorials_main.html:39
-#: ssw/templates/ssw/photos_main.html:37 ssw/templates/ssw/photos_main.html:39
+#: ssw/templates/ssw/photos_main.html:43
 #: ssw/templates/ssw/search_results.html:38
 #: ssw/templates/ssw/search_results.html:40
 #: ssw/templates/ssw/vectors_main.html:38
@@ -231,23 +498,51 @@ msgstr "الفئة الرئيسية"
 msgid "There are no calligraphy."
 msgstr "ليس هناك خطوط"
 
+#: ssw/templates/ssw/checkout.html:5 ssw/templates/ssw/checkout.html:13
+msgid "Checkout"
+msgstr "الدفع"
+
+#: ssw/templates/ssw/checkout.html:45
+msgid "Revise Cart"
+msgstr "مراجعة العربة"
+
+#: ssw/templates/ssw/checkout.html:73 ssw/templates/ssw/order_details.html:82
+#: ssw/templates/ssw/orders.html:24
+#: ssw/templates/ssw/shopping_cart_main.html:92
+msgid "Total"
+msgstr "المجموع"
+
 #: ssw/templates/ssw/collections_main.html:6
 #: ssw/templates/ssw/collections_main.html:17
 #: ssw/templates/ssw/menu/contributor_menu.html:54
 msgid "Collections"
 msgstr "المجموعات"
 
+#: ssw/templates/ssw/collections_main.html:21
+#: ssw/templates/ssw/collections_new.html:6
+#: ssw/templates/ssw/collections_new.html:16
+msgid "New Collection"
+msgstr "مجموعة جديدة"
+
+#: ssw/templates/ssw/collections_main.html:32
+#: ssw/templates/ssw/menu/contributor_menu.html:36
+#: ssw/templates/ssw/products_main.html:5
+#: ssw/templates/ssw/products_main.html:17 ssw/templates/ssw/profile.html:68
+msgid "Products"
+msgstr "الأعمال"
+
 #: ssw/templates/ssw/collections_main.html:59
 msgid "You don't have any collections"
 msgstr "ليس لديك مجموعات"
 
+#: ssw/templates/ssw/collections_new.html:54
+#: ssw/templates/ssw/products_new.html:367
+msgid "Cancel"
+msgstr "الغاء"
+
 #: ssw/templates/ssw/complete_registration.html:15
 msgid "Complete Registration"
 msgstr "إتمام عملية إنشاء حسابك الجديد"
-
-#: ssw/templates/ssw/complete_registration.html:20
-msgid "Personal Information"
-msgstr "المعلومات الشخصية"
 
 #: ssw/templates/ssw/complete_registration.html:24
 #: ssw/templates/ssw/complete_registration.html:29
@@ -256,14 +551,6 @@ msgstr "المعلومات الشخصية"
 msgid "Email Address:"
 msgstr "بريدك الإلكتروني"
 
-#: ssw/templates/ssw/complete_registration.html:25
-msgid "verified"
-msgstr "موثق"
-
-#: ssw/templates/ssw/complete_registration.html:30
-msgid "unverified"
-msgstr "غير موثق"
-
 #: ssw/templates/ssw/complete_registration.html:31
 msgid "Resend Email"
 msgstr "إعادة إرسال البريد الالكتروني"
@@ -271,14 +558,6 @@ msgstr "إعادة إرسال البريد الالكتروني"
 #: ssw/templates/ssw/complete_registration.html:72
 msgid "Profile Image:"
 msgstr "صورة الملف الشخصي"
-
-#: ssw/templates/ssw/complete_registration.html:88
-msgid "Address"
-msgstr "العنوان"
-
-#: ssw/templates/ssw/complete_registration.html:144
-msgid "Photo ID"
-msgstr "صورة الهوية"
 
 #: ssw/templates/ssw/complete_registration.html:146
 msgid ""
@@ -350,9 +629,9 @@ msgstr "الإسم"
 msgid "Message:"
 msgstr "الرسالة"
 
-#: ssw/templates/ssw/contact.html:62
+#: ssw/templates/ssw/contact.html:62 ssw/templates/ssw/faqs_main.html:43
 msgid "Send"
-msgstr ""
+msgstr "ارسال"
 
 #: ssw/templates/ssw/contact2.html:22
 msgid "Let’s get in touch"
@@ -390,6 +669,60 @@ msgstr "نحاول الرد على جميع استفساراتكم خلال يو
 msgid "Send Enquiry"
 msgstr "أرسل"
 
+#: ssw/templates/ssw/earnings_main.html:6
+#: ssw/templates/ssw/earnings_main.html:16
+#: ssw/templates/ssw/menu/contributor_menu.html:85
+msgid "Earnings"
+msgstr "المكاسب"
+
+#: ssw/templates/ssw/earnings_main.html:23
+msgid "Order Item"
+msgstr "العمل"
+
+#: ssw/templates/ssw/earnings_main.html:24
+#: ssw/templates/ssw/earnings_main.html:73
+msgid "Amount"
+msgstr "المبلغ"
+
+#: ssw/templates/ssw/earnings_main.html:25
+#: ssw/templates/ssw/earnings_main.html:74
+msgid "Date"
+msgstr "التاريخ"
+
+#: ssw/templates/ssw/earnings_main.html:26
+msgid "Paid"
+msgstr "دفع لك؟"
+
+#: ssw/templates/ssw/earnings_main.html:43
+#: venv/lib/python3.6/site-packages/django/forms/widgets.py:700
+msgid "Yes"
+msgstr "نعم"
+
+#: ssw/templates/ssw/earnings_main.html:45
+#: venv/lib/python3.6/site-packages/django/forms/widgets.py:701
+msgid "No"
+msgstr "لا"
+
+#: ssw/templates/ssw/earnings_main.html:55
+msgid "Earnings Total"
+msgstr "مجموع المكاسب"
+
+#: ssw/templates/ssw/earnings_main.html:66
+msgid "Payments"
+msgstr "المدفوعات"
+
+#: ssw/templates/ssw/earnings_main.html:84
+msgid "View Payment"
+msgstr "اضغط هنا للاطلاع"
+
+#: ssw/templates/ssw/earnings_main.html:93
+msgid "Payments Total"
+msgstr "مجموع المدفوعات"
+
+#: ssw/templates/ssw/earnings_main.html:104
+msgid "Balance"
+msgstr "الاجمالي"
+
 #: ssw/templates/ssw/editorials_main.html:5
 #: ssw/templates/ssw/editorials_main.html:17 ssw/templates/ssw/main.html:208
 msgid "Editorials"
@@ -410,6 +743,18 @@ msgstr "أكمل الآن خطوات إنشاء حسابك الجديد كمسا
 #: ssw/templates/ssw/email_verification_success.html:15
 msgid "clicking here."
 msgstr "اضغط هنا"
+
+#: ssw/templates/ssw/faqs_main.html:6 ssw/templates/ssw/faqs_main.html:16
+msgid "FAQs"
+msgstr "الاسئلة الشائعة"
+
+#: ssw/templates/ssw/faqs_main.html:34
+msgid "There are no general FAQs."
+msgstr "ليس هناك اسئلة شائعة"
+
+#: ssw/templates/ssw/faqs_main.html:61
+msgid "There is no reply yet."
+msgstr "ليس هناك رد بعد"
 
 #: ssw/templates/ssw/landing.html:5 ssw/templates/ssw/landing2.html:5
 #: ssw/templates/ssw/main.html:493
@@ -584,6 +929,8 @@ msgstr "آخر تحديث"
 
 #: ssw/templates/ssw/legal/contributor.html:31
 #: ssw/templates/ssw/legal/license.html:31
+#: ssw/templates/ssw/order_details.html:46
+#: ssw/templates/ssw/order_details.html:48
 msgid "Download"
 msgstr "تحميل"
 
@@ -731,13 +1078,9 @@ msgstr "تسجيل الدخول"
 msgid "Welcome back, sign in with your existing Stack account credentials"
 msgstr "مرحبا بك من جديد. يمكنك تسجيل الدخول بإدخال معلوماتك"
 
-#: ssw/templates/ssw/login.html:24 ssw/templates/ssw/signup.html:49
+#: ssw/templates/ssw/login.html:24 ssw/templates/ssw/signup.html:54
 msgid "Username"
 msgstr "إسم المستخدم"
-
-#: ssw/templates/ssw/login.html:27 ssw/templates/ssw/signup.html:55
-msgid "Password"
-msgstr "كلمة السر"
 
 #: ssw/templates/ssw/login.html:30 ssw/templates/ssw/main2.html:69
 #: ssw/templates/ssw/main3.html:69
@@ -860,61 +1203,186 @@ msgstr ""
 msgid "Support"
 msgstr ""
 
-#: ssw/templates/ssw/menu/contributor_menu.html:36
-#: ssw/templates/ssw/products_main.html:5
-#: ssw/templates/ssw/products_main.html:17 ssw/templates/ssw/profile.html:68
-msgid "Products"
-msgstr "الأعمال"
+#: ssw/templates/ssw/menu/client_menu.html:20
+#: ssw/templates/ssw/order_details.html:20
+#: ssw/templates/ssw/order_details.html:22 ssw/templates/ssw/orders.html:5
+#: ssw/templates/ssw/orders.html:15
+msgid "Orders"
+msgstr "الطلبات"
+
+#: ssw/templates/ssw/menu/client_menu.html:56
+#: ssw/templates/ssw/notifications_main.html:5
+msgid "Notifications"
+msgstr "الاشعارات"
 
 #: ssw/templates/ssw/menu/contributor_menu.html:72
+#: ssw/templates/ssw/reviews_main.html:5 ssw/templates/ssw/reviews_main.html:15
 msgid "Reviews"
 msgstr "المراجعات"
-
-#: ssw/templates/ssw/menu/contributor_menu.html:85
-msgid "Earnings"
-msgstr "المكاسب"
-
-#: ssw/templates/ssw/menu/contributor_menu.html:103
-msgid "Account Settings"
-msgstr "اعدادات الحساب"
 
 #: ssw/templates/ssw/menu/contributor_menu.html:121
 msgid "FAQ"
 msgstr "الأسئلة الشائعة"
 
 #: ssw/templates/ssw/menu/contributor_menu.html:139
+#: ssw/templates/ssw/notifications_main.html:15
 msgid "Notices"
 msgstr "الإشعارات"
 
-#: ssw/templates/ssw/photos_main.html:63
+#: ssw/templates/ssw/notifications_main.html:21
+#: ssw/templates/ssw/reviews_main.html:33
+msgid "NEW"
+msgstr "جديد"
+
+#: ssw/templates/ssw/notifications_main.html:41
+#: ssw/templates/ssw/notifications_main.html:43
+msgid "ago"
+msgstr "منذ"
+
+#: ssw/templates/ssw/notifications_main.html:49
+msgid "You don't have any notifications."
+msgstr "ليس لديك اشعارات"
+
+#: ssw/templates/ssw/order_details.html:6
+#: ssw/templates/ssw/order_details.html:16
+#: venv/lib/python3.6/site-packages/django/forms/formsets.py:371
+#: venv/lib/python3.6/site-packages/django/forms/formsets.py:373
+msgid "Order"
+msgstr "طلب"
+
+#: ssw/templates/ssw/order_details.html:32
+#: ssw/templates/ssw/products_main.html:39
+#: ssw/templates/ssw/products_main.html:72
+#: ssw/templates/ssw/products_main.html:105
+msgid "Thumbnail"
+msgstr "الصورة"
+
+#: ssw/templates/ssw/order_details.html:33
+msgid "Product Name"
+msgstr "اسم العمل"
+
+#: ssw/templates/ssw/order_details.html:34
+msgid "Price"
+msgstr "السعر"
+
+#: ssw/templates/ssw/order_details.html:35
+#: venv/lib/python3.6/site-packages/django/db/models/fields/files.py:221
+msgid "File"
+msgstr "الملف"
+
+#: ssw/templates/ssw/order_details.html:65
+msgid "Order Subtotal"
+msgstr "مجموع الطلب"
+
+#: ssw/templates/ssw/order_details.html:73
+msgid "Fees"
+msgstr "رسوم أخرى"
+
+#: ssw/templates/ssw/orders.html:22
+msgid "Order No"
+msgstr "رقم الطلب"
+
+#: ssw/templates/ssw/orders.html:23
+msgid "Items in order"
+msgstr "عدد الصور في الطلب"
+
+#: ssw/templates/ssw/orders.html:39
+msgid "You don't have any orders"
+msgstr "ليس لديك أي طلبات"
+
+#: ssw/templates/ssw/photos_main.html:67
 msgid "There are no photos."
 msgstr "ليس هناك صور"
+
+#: ssw/templates/ssw/product_public_details.html:5
+msgid "Product"
+msgstr "عمل"
+
+#: ssw/templates/ssw/product_public_details.html:55
+msgid "If you are interested in this product, please"
+msgstr "اذا انت مهتم بهذا العمل ، الرجاء"
+
+#: ssw/templates/ssw/product_public_details.html:55
+msgid "login"
+msgstr "تسجيل الدخول"
+
+#: ssw/templates/ssw/product_public_details.html:55
+#: venv/lib/python3.6/site-packages/django/utils/text.py:237
+msgid "or"
+msgstr "أو"
+
+#: ssw/templates/ssw/product_public_details.html:55
+msgid "create an account"
+msgstr "أنشاء حساب جديد"
+
+#: ssw/templates/ssw/product_public_details.html:55
+msgid "in order to purchase it."
+msgstr "حتى تتمكن من شراءه"
+
+#: ssw/templates/ssw/product_public_details.html:67
+#: ssw/templates/ssw/product_public_details.html:69
+#: ssw/templates/ssw/shopping_cart_main.html:34
+msgid "License"
+msgstr "الرخصة"
+
+#: ssw/templates/ssw/product_public_details.html:110
+msgid "Add To Cart"
+msgstr "اضف الى العربة"
+
+#: ssw/templates/ssw/product_public_details.html:114
+msgid ""
+"If you are interested in this product, please verify your email address in "
+"order to purchase it."
+msgstr ""
+"اذا انت مهتم بهذا العمل، الرجاء توثيق البريد الالكتروني حتى تتمكن من شراءه"
+
+#: ssw/templates/ssw/product_public_details.html:125
+msgid "DESCRIPTION"
+msgstr "الوصف"
+
+#: ssw/templates/ssw/product_public_details.html:133
+msgid "REVIEWS"
+msgstr "المراجعات"
+
+#: ssw/templates/ssw/product_public_details.html:160
+msgid "There are no reviews"
+msgstr "ليس هناك مراجعات لهذا العمل"
+
+#: ssw/templates/ssw/product_public_details.html:167
+msgid "Add your review"
+msgstr "اضف مراجعتك (تعليقك) على هذا العمل"
 
 #: ssw/templates/ssw/products_main.html:21
 msgid "New Upload"
 msgstr "تحميل جديد"
 
-#: ssw/templates/ssw/products_main.html:29
+#: ssw/templates/ssw/products_main.html:30
 msgid "Pending Approval"
 msgstr "قيد التدقيق"
 
-#: ssw/templates/ssw/products_main.html:56
+#: ssw/templates/ssw/products_main.html:38
+#: ssw/templates/ssw/products_main.html:71
+#: ssw/templates/ssw/products_main.html:104
+msgid "Photo Id"
+msgstr "رقم العمل"
+
+#: ssw/templates/ssw/products_main.html:57
 msgid "There are no pending approval products"
 msgstr "ليس هناك أعمال قيد التدقيق"
 
-#: ssw/templates/ssw/products_main.html:62
+#: ssw/templates/ssw/products_main.html:63
 msgid "Approved"
 msgstr "مقبولة"
 
-#: ssw/templates/ssw/products_main.html:89
+#: ssw/templates/ssw/products_main.html:90
 msgid "There are no approved products"
 msgstr "ليس هناك أعمال مقبولة"
 
-#: ssw/templates/ssw/products_main.html:95
+#: ssw/templates/ssw/products_main.html:96
 msgid "Rejected"
 msgstr "مرفوضة"
 
-#: ssw/templates/ssw/products_main.html:122
+#: ssw/templates/ssw/products_main.html:123
 msgid "There are no rejected products"
 msgstr "ليس هناك أعمال مرفوضة"
 
@@ -950,13 +1418,61 @@ msgstr "الملف"
 msgid "comma separated"
 msgstr "مفصولة بفواصل"
 
-#: ssw/templates/ssw/products_new.html:362
-msgid "Save"
-msgstr "حفظ"
+#: ssw/templates/ssw/products_new.html:96
+#: ssw/templates/ssw/products_new.html:122
+msgid ""
+"Content that is not generally thought to be appropriate for viewing by "
+"children (such as violence, dangerous fantasy, and hate propaganda)"
+msgstr ""
+"محتوى يعتبر غير مناسب للمشاهدة من قبل الأطفال لاحتوائه على عنف أو أشياء خطرة "
+"أو أشياء تحرض على الكراهية"
 
-#: ssw/templates/ssw/products_new.html:367
-msgid "Cancel"
-msgstr "الغاء"
+#: ssw/templates/ssw/products_new.html:143
+#: ssw/templates/ssw/products_new.html:170
+msgid "Content that you plan to sell or license through Sowarstock ONLY."
+msgstr "محتوى تنوي عرضه وبيعه فقط خلال موقع صورستوك"
+
+#: ssw/templates/ssw/products_new.html:144
+#: ssw/templates/ssw/products_new.html:171
+#: ssw/templates/ssw/products_new.html:193
+#: ssw/templates/ssw/products_new.html:220
+msgid "For more, please read"
+msgstr "للمزيد الرجاء الاطلاع على"
+
+#: ssw/templates/ssw/products_new.html:144
+#: ssw/templates/ssw/products_new.html:171
+#: ssw/templates/ssw/products_new.html:193
+#: ssw/templates/ssw/products_new.html:220
+msgid "The Contributor Agreement"
+msgstr "عقد المساهمين"
+
+#: ssw/templates/ssw/products_new.html:192
+#: ssw/templates/ssw/products_new.html:219
+msgid ""
+"A document stipulating conditions under which the Contributor may lawfully "
+"use photographs of another person or property for commercial and other "
+"purposes."
+msgstr ""
+
+#: ssw/templates/ssw/products_new.html:241
+#: ssw/templates/ssw/products_new.html:270
+msgid "An Editorial image is one that is used:"
+msgstr "صورة توثيقية هي صورة:"
+
+#: ssw/templates/ssw/products_new.html:242
+#: ssw/templates/ssw/products_new.html:271
+msgid "In a newspaper or magazine article"
+msgstr "تستعمل في جريدة أو مقال في مجلة"
+
+#: ssw/templates/ssw/products_new.html:243
+#: ssw/templates/ssw/products_new.html:272
+msgid "On a blog or website for descriptive purposes"
+msgstr "تستعمل في مقالات في مواقع انترنت"
+
+#: ssw/templates/ssw/products_new.html:244
+#: ssw/templates/ssw/products_new.html:273
+msgid "In a non-commercial presentation"
+msgstr "تستعمل لأغراض غير تجارية"
 
 #: ssw/templates/ssw/profile.html:40
 msgid "Location:"
@@ -989,24 +1505,38 @@ msgstr "رابط الملف الشخصي"
 #: ssw/templates/ssw/recover_account.html:5
 #: ssw/templates/ssw/recover_account.html:20
 msgid "Recover Account"
-msgstr ""
+msgstr "استعد حسابك"
 
 #: ssw/templates/ssw/recover_account.html:13
 msgid "Recover your account"
-msgstr ""
+msgstr "استعد حسابك"
 
 #: ssw/templates/ssw/recover_account.html:15
 msgid "Enter your email address to send you a recovery email."
 msgstr ""
+"الرجاء ادخال البريد الالكتروني حتى يتم ارسال لكم بريد يحتوي على معلومات "
+"استرجاع الحساب"
 
 #: ssw/templates/ssw/reset_password.html:5
 #: ssw/templates/ssw/reset_password.html:17
 msgid "Reset Password"
-msgstr ""
+msgstr "اعادة كلمة المرور"
 
 #: ssw/templates/ssw/reset_password.html:13
 msgid "Reset your password"
-msgstr ""
+msgstr "اعادة كلمة المرور"
+
+#: ssw/templates/ssw/reviews_main.html:24
+msgid "Name"
+msgstr "اسم العمل"
+
+#: ssw/templates/ssw/reviews_main.html:38
+msgid "by"
+msgstr "بواسطة"
+
+#: ssw/templates/ssw/reviews_main.html:45
+msgid "You don't have any reviews."
+msgstr "ليس هناك مراجعات لأعمالك."
 
 #: ssw/templates/ssw/search_results.html:5
 msgid "Search Results"
@@ -1028,6 +1558,26 @@ msgstr ""
 msgid "Try Another Search"
 msgstr ""
 
+#: ssw/templates/ssw/shopping_cart_main.html:5
+msgid "Shopping Cart"
+msgstr "عربة التسوق"
+
+#: ssw/templates/ssw/shopping_cart_main.html:13
+msgid "Cart Overview"
+msgstr "نظرة عامة على العربة"
+
+#: ssw/templates/ssw/shopping_cart_main.html:62
+msgid "Update Cart"
+msgstr "تحديث العربة"
+
+#: ssw/templates/ssw/shopping_cart_main.html:104
+msgid "Proceed"
+msgstr "التالي"
+
+#: ssw/templates/ssw/shopping_cart_main.html:109
+msgid "There are no items in your cart."
+msgstr "عربة التسوق فارغة"
+
 #: ssw/templates/ssw/signup.html:5
 msgid "Sign Up"
 msgstr "إنشاء حساب جديد"
@@ -1042,23 +1592,23 @@ msgstr ""
 "يمكنك الآن الانضمام لمجتمع صورستوك كمساهم بأعمالك (مصوّر، رسّام، أو خطاط) أو "
 "كزبون."
 
-#: ssw/templates/ssw/signup.html:61
+#: ssw/templates/ssw/signup.html:66
 msgid "I'm a Contributor"
 msgstr "إنشاء حساب مساهم"
 
-#: ssw/templates/ssw/signup.html:67
+#: ssw/templates/ssw/signup.html:72
 msgid "I'm a Client"
 msgstr "إنشاء حساب زبون"
 
-#: ssw/templates/ssw/signup.html:75 ssw/templates/ssw/signup.html:85
+#: ssw/templates/ssw/signup.html:80 ssw/templates/ssw/signup.html:90
 msgid "I have read and agreed to the"
 msgstr "قمت بالاطلاع والموافقة على"
 
-#: ssw/templates/ssw/signup.html:75 ssw/templates/ssw/signup.html:85
+#: ssw/templates/ssw/signup.html:80 ssw/templates/ssw/signup.html:90
 msgid "terms and conditions"
 msgstr "شروط وقواعد الاستخدام للموقع"
 
-#: ssw/templates/ssw/signup.html:91
+#: ssw/templates/ssw/signup.html:96
 msgid "Create"
 msgstr "أنشئ حساب"
 
@@ -1100,33 +1650,110 @@ msgstr "ليس هناك رسوم"
 
 #: ssw/views.py:81 ssw/views.py:274
 msgid "Thanks for your enquiry, we'll be in touch shortly."
-msgstr ""
+msgstr "شكرا على سؤالك/اقتراحك. سنكون على تواصل معك قريبا"
 
 #: ssw/views.py:117
 msgid "username and/or password is incorrect"
-msgstr ""
+msgstr "اسم المستخدم و/أو كلمة المرور غير صحيحين"
 
 #: ssw/views.py:138 ssw/views.py:178
 msgid "The link you followed is invalid"
-msgstr ""
+msgstr "عفوا هذا الرابط غير صحيح"
 
 #: ssw/views.py:153
-msgid "An email address has been sent to you"
-msgstr ""
+msgid "An email has been sent to you"
+msgstr "تم ارسال لك بريد الكتروني"
 
 #: ssw/views.py:155
 msgid "This email address does not exist"
-msgstr ""
+msgstr "هذا البريد الالكتروني غير موجود"
 
 #: ssw/views.py:168
 msgid "Your password has been reset"
-msgstr ""
+msgstr "تم اعادة كلمة المرور لحسابك"
 
 #: ssw/views.py:171
 msgid ""
 "The Password you've entered is not valid. One or more of the Password rules "
 "has not been met. Please try again."
+msgstr "كلمة المرور المدخلة لاتطابق الشروط. الرجاء المحاولة مرة أخرى"
+
+#: ssw/views.py:292
+msgid "item has been added to your cart"
+msgstr "تم اضافة العمل الى عربتك"
+
+#: ssw/views.py:713
+msgid "Personal Information updated successfully"
+msgstr "تم تحديث معلوماتك الشخصية"
+
+#: ssw/views.py:731
+msgid "Address updated successfully"
+msgstr "تم تحديث العنوان"
+
+#: ssw/views.py:733
+msgid "Please Correct the errors."
+msgstr "الرجاء اصلاح الاخطاء"
+
+#: ssw/views.py:745
+msgid "Password updated successfully. Please login with the new password"
+msgstr "تم تحديث كلمة المرور. الرجاء تسجيل الدخول بكلمة المرور الجديدة"
+
+#: ssw/views.py:749
+msgid "Please Correct the errors"
+msgstr "الرجاء اصلاح الاخطاء"
+
+#: ssw/views.py:760
+msgid "Public Information updated successfully"
+msgstr "تم تحديث معلوماتك العامة"
+
+#: ssw/views.py:774
+msgid "Photo ID updated successfully"
+msgstr "تم تحديث صورة الهوية"
+
+#: ssw/views.py:805
+msgid "Request sent successfully"
+msgstr "تم ارسال طلبك"
+
+#: ssw/views.py:862
+msgid "Comment added successfully"
+msgstr "تم اضافة تعليقك"
+
+#: ssw/views.py:880 ssw/views.py:916 ssw/views.py:948 ssw/views.py:982
+#: ssw/views.py:994
+msgid "You are not authorized to view this page !"
+msgstr "ليس لديك صلاحية للاطلاع على هذه الصفحة"
+
+#: ssw/views.py:898
+msgid "Your question has been submitted successfully"
+msgstr "تم ارسال سؤالك"
+
+#: ssw/views.py:900
+msgid "There was an error submitting your question"
 msgstr ""
+
+#: ssw/views.py:929 ssw/views.py:962
+msgid "Please choose a title for your collection"
+msgstr "الرجاء اختيار عنوان لمجموعتك"
+
+#: ssw/views.py:932 ssw/views.py:965
+msgid "Please choose a description for your collection"
+msgstr "الرجاء اختيار وصف لمجموعتك"
+
+#: ssw/views.py:935 ssw/views.py:968
+msgid "Please select at least one product"
+msgstr "الرجاء اختيار عمل واحد على الأقل"
+
+#: ssw/views.py:943
+msgid "Collection created successfully"
+msgstr ""
+
+#: ssw/views.py:977
+msgid "Collection updated successfully"
+msgstr "تم تحديث المجموعة"
+
+#: ssw/views.py:991
+msgid "Collection deleted"
+msgstr "تم حذف المجموعة"
 
 #: venv/lib/python3.6/site-packages/django/contrib/messages/apps.py:7
 msgid "Messages"
@@ -1501,10 +2128,6 @@ msgstr ""
 msgid "'%(value)s' is not a valid UUID."
 msgstr ""
 
-#: venv/lib/python3.6/site-packages/django/db/models/fields/files.py:221
-msgid "File"
-msgstr ""
-
 #: venv/lib/python3.6/site-packages/django/db/models/fields/files.py:360
 msgid "Image"
 msgstr ""
@@ -1652,11 +2275,6 @@ msgid_plural "Please submit %d or more forms."
 msgstr[0] ""
 msgstr[1] ""
 
-#: venv/lib/python3.6/site-packages/django/forms/formsets.py:371
-#: venv/lib/python3.6/site-packages/django/forms/formsets.py:373
-msgid "Order"
-msgstr ""
-
 #: venv/lib/python3.6/site-packages/django/forms/formsets.py:375
 msgid "Delete"
 msgstr ""
@@ -1716,14 +2334,6 @@ msgstr ""
 
 #: venv/lib/python3.6/site-packages/django/forms/widgets.py:699
 msgid "Unknown"
-msgstr ""
-
-#: venv/lib/python3.6/site-packages/django/forms/widgets.py:700
-msgid "Yes"
-msgstr ""
-
-#: venv/lib/python3.6/site-packages/django/forms/widgets.py:701
-msgid "No"
 msgstr ""
 
 #: venv/lib/python3.6/site-packages/django/template/defaultfilters.py:788
@@ -2069,10 +2679,6 @@ msgctxt "String to return when truncating text"
 msgid "%(truncated_text)s..."
 msgstr ""
 
-#: venv/lib/python3.6/site-packages/django/utils/text.py:237
-msgid "or"
-msgstr ""
-
 #. Translators: This string is used as a separator between list elements
 #: venv/lib/python3.6/site-packages/django/utils/text.py:256
 #: venv/lib/python3.6/site-packages/django/utils/timesince.py:83
@@ -2402,5 +3008,8 @@ msgstr[1] ""
 msgid "Enter valid JSON"
 msgstr ""
 
-#~ msgid "Contributor"
-#~ msgstr "مساهم"
+#~ msgid "STANDARD"
+#~ msgstr "رخصة أساسية"
+
+#~ msgid "EXTENDED"
+#~ msgstr "رخصة اضافية"

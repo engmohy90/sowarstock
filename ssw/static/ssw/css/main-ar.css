@@ -76,6 +76,22 @@ footer a.type--fine-print:not(:first-child) {
     text-align: start;
 }
 
-.tabs-container{
-    float: right;
+.breadcrumbs{
+    float:right;
+}
+
+.accordion__title, .accordion__content{
+    text-align:right;
+}
+
+.accordion__content{
+    padding-right: 2em;
+}
+
+td{
+    text-align: right;
+}
+
+li{
+    text-align: right;
 }

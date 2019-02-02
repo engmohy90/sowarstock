@@ -1,8 +1,8 @@
 {% extends "ssw/main.html" %}
 {% load static from staticfiles %}
-
+{% load i18n %}
 {% block title %}
-Account Settings
+{% trans "Account Settings"%}
 {% endblock %}
 
 {% block content %}
@@ -24,24 +24,24 @@ Account Settings
                                     <span>{{user.get_type_display|title}}</span>
                                     {% if user.type == "client" %}
                                         {% if user.is_verified %}
-                                            <span class="label label-success">Verified</span>
+                                            <span class="label label-success">{% trans "Verified"%}</span>
                                         {% else %}
-                                            <span class="label label-danger">Unverified</span>
+                                            <span class="label label-danger">{% trans "Unverified"%}</span>
                                         {% endif %}
                                     {% endif %}
                                 </div>
                                 <hr>
                                 <div class="text-block">
                                     <ul class="menu-vertical">
-                                        <li>
-                                            <a href="#" data-toggle-class=".account-tab:not(.hidden);hidden|#account-personal;hidden">Personal Information</a>
+                                        <li {% if LANGUAGE_CODE == 'ar' %} style="text-align:right" {% endif %}>
+                                            <a href="#" data-toggle-class=".account-tab:not(.hidden);hidden|#account-personal;hidden">{% trans "Personal Information"%}</a>
                                         </li>
-                                        <li>
-                                            <a href="#" data-toggle-class=".account-tab:not(.hidden);hidden|#account-address;hidden">Address</a>
+                                        <li {% if LANGUAGE_CODE == 'ar' %} style="text-align:right" {% endif %}>
+                                            <a href="#" data-toggle-class=".account-tab:not(.hidden);hidden|#account-address;hidden">{% trans "Address"%}</a>
                                         </li>
                                         </li>
-                                        <li>
-                                            <a href="#" data-toggle-class=".account-tab:not(.hidden);hidden|#account-password;hidden">Password</a>
+                                        <li {% if LANGUAGE_CODE == 'ar' %} style="text-align:right" {% endif %}>
+                                            <a href="#" data-toggle-class=".account-tab:not(.hidden);hidden|#account-password;hidden">{% trans "Password"%}</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -50,9 +50,9 @@ Account Settings
                         <div class="col-lg-8">
                             <div class="boxed boxed--lg boxed--border">
                                 <div id="account-personal" class="account-tab">
-                                    <h4>Personal Information</h4>
+                                    <h4>{% trans "Personal Information"%}</h4>
                                     <p>
-                                        <label for="profile_image">{% if user.profile_image_url %}Change {% endif %}Profile Image:</label>
+                                        <label for="profile_image">{% if user.profile_image_url %}Change {% endif %}{% trans "Profile Image"%}:</label>
                                         <img id="image_loader" class="hidden" style="max-height:1.5em" src="{% static 'ssw/img/ajax-loader.gif' %}">
                                         <input type="file" accept="image/*" id="profile_image" name="profile_image">
                                         <i style="color:red" id="profile_image_error_msg"></i>
@@ -64,43 +64,32 @@ Account Settings
                                                     <input type="checkbox" name="profile_image-clear" id="profile_image-clear">
                                                     <label for="profile_image-clear"></label>
                                                 </div>
-                                                <span> Delete Profile Image </span>
+                                                <span> {% trans "Delete Profile Image"%} </span>
                                             {% endif %}
                                             <input type="hidden" id="avatar-url" name="avatar-url">
                                             {{ personal_info_form.as_p }}
                                             <div class="col-lg-3 col-md-4">
-                                                <button type="submit" id="save_personal_info_button" class="btn btn--primary type--uppercase">Save Profile</button>
+                                                <button type="submit" id="save_personal_info_button" class="btn btn--primary type--uppercase">{% trans "Save Profile"%}</button>
                                             </div>
                                     </form>
                                 </div>
                                 <div id="account-address" class="hidden account-tab">
-                                    <h4>Address</h4>
+                                    <h4>{% trans "Address"%}</h4>
                                     <form method="post" action="{% url 'update_address' %}">
                                         {% csrf_token %}
                                             {{ address_form.as_p }}
                                             <div class="col-lg-3 col-md-4">
-                                                <button type="submit" class="btn btn--primary type--uppercase">Save Address</button>
+                                                <button type="submit" class="btn btn--primary type--uppercase">{% trans "Save Address"%}</button>
                                             </div>
                                     </form>
                                 </div>
                                 <div id="account-password" class="hidden account-tab">
-                                    <h4>Password</h4>
+                                    <h4>{% trans "Password"%}</h4>
                                     <form Method="post" action="{% url 'update_password' %}">
                                         {% csrf_token %}
                                         {{ password_form.as_p }}
                                         <div class="col-lg-3 col-md-4">
-                                            <button type="submit" class="btn btn--primary type--uppercase">Save Password</button>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div id="account-billing" class="hidden account-tab">
-                                    <h4>Payment Method</h4>
-                                    <p>Enter the email associated with your Paypal account so we can pay you when you have new earnings.</p>
-                                    <form Method="post" action="{% url 'update_payment_method' %}">
-                                        {% csrf_token %}
-                                        {{ payment_method_form.as_p }}
-                                        <div class="col-lg-3 col-md-4">
-                                            <button type="submit" class="btn btn--primary type--uppercase">Save</button>
+                                            <button type="submit" class="btn btn--primary type--uppercase">{% trans "Save Password"%}</button>
                                         </div>
                                     </form>
                                 </div>

@@ -25,7 +25,7 @@ class SignupForm(UserCreationForm):
         email = self.cleaned_data.get('email')
         models.SowarStockUser.objects.filter(email=email).count()
         if email and models.SowarStockUser.objects.filter(email=email).count() > 0:
-            raise forms.ValidationError(u'This email address is already registered.')
+            raise forms.ValidationError(_('This email address is already registered.'))
         return email
 
 
@@ -45,6 +45,12 @@ class ProfilePublicInfoForm(ModelForm):
     class Meta:
         model = models.Contributor
         fields = ["display_name", "job_title", "description", "portfolio_url"]
+        labels = {
+            'display_name': _('Display name'),
+            'job_title': _('Job title'),
+            'description': _('Description'),
+            'portfolio_url': _('Portfolio url')
+        }
 
 
 class AddressForm(ModelForm):
@@ -73,7 +79,14 @@ class PaymentMethodForm(ModelForm):
         fields = ["preferred_payment_method", "bank_owner_name", "iban", "bank_name", "bank_country",
                   "western_union_account", "residency_country", "paypal_account"]
         labels = {
-            'iban': _('IBAN')
+            'preferred_payment_method': _('Preferred payment method'),
+            'bank_owner_name': _('Bank owner name'),
+            'iban': _('IBAN'),
+            'bank_name': _('Bank name'),
+            'bank_country': _('Bank country'),
+            'western_union_account': _('Western union account'),
+            'residency_country': _('Residency country'),
+            'paypal_account': _('Paypal account')
         }
 
 
@@ -132,6 +145,9 @@ class ReviewForm(ModelForm):
     class Meta:
         model = models.Review
         fields = ["comment"]
+        labels = {
+            'comment': _('Comment')
+        }
 
 
 class FaqForm(ModelForm):

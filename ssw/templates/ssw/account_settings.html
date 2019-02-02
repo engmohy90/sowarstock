@@ -1,8 +1,8 @@
 {% extends "ssw/main.html" %}
 {% load static from staticfiles %}
-
+{% load i18n %}
 {% block title %}
-Account Settings
+{% trans "Account Settings"%}
 {% endblock %}
 
 {% block content %}
@@ -22,34 +22,34 @@ Account Settings
                                     <span class="h5">{{user.first_name}} {{user.last_name}}</span>
                                     <span>{{user.get_type_display|title}}</span>
                                     {% if user.is_verified %}
-                                        <span class="label label-success">Verified</span>
+                                        <span class="label label-success">{% trans "Verified"%}</span>
                                     {% else %}
-                                        <span class="label label-danger">Unverified</span>
+                                        <span class="label label-danger">{% trans "Unverified"%}</span>
                                     {% endif %}
                                 </div>
                                 <hr>
                                 <div class="text-block">
                                     <ul class="menu-vertical">
                                         <li>
-                                            <a href="#" data-toggle-class=".account-tab:not(.hidden);hidden|#account-personal;hidden">Personal Information</a>
+                                            <a href="#" data-toggle-class=".account-tab:not(.hidden);hidden|#account-personal;hidden">{% trans "Personal Information"%}</a>
                                         </li>
                                         <li>
-                                            <a href="#" data-toggle-class=".account-tab:not(.hidden);hidden|#account-address;hidden">Address</a>
+                                            <a href="#" data-toggle-class=".account-tab:not(.hidden);hidden|#account-address;hidden">{% trans "Address"%}</a>
                                         </li>
                                         <li>
-                                            <a href="#" data-toggle-class=".account-tab:not(.hidden);hidden|#account-id;hidden">Photo ID</a>
+                                            <a href="#" data-toggle-class=".account-tab:not(.hidden);hidden|#account-id;hidden">{% trans "Photo ID"%}</a>
                                         </li>
                                         <li>
-                                            <a href="#" data-toggle-class=".account-tab:not(.hidden);hidden|#account-public;hidden">Public Information</a>
+                                            <a href="#" data-toggle-class=".account-tab:not(.hidden);hidden|#account-public;hidden">{% trans "Public Information"%}</a>
                                         </li>
                                         <li>
-                                            <a href="#" data-toggle-class=".account-tab:not(.hidden);hidden|#account-password;hidden">Password</a>
+                                            <a href="#" data-toggle-class=".account-tab:not(.hidden);hidden|#account-password;hidden">{% trans "Password"%}</a>
                                         </li>
                                         <li>
-                                            <a href="#" data-toggle-class=".account-tab:not(.hidden);hidden|#account-billing;hidden">Payment Settings</a>
+                                            <a href="#" data-toggle-class=".account-tab:not(.hidden);hidden|#account-billing;hidden">{% trans "Payment Settings"%}</a>
                                         </li>
                                         <li>
-                                            <a href="#" data-toggle-class=".account-tab:not(.hidden);hidden|#delete-account;hidden">Delete Account</a>
+                                            <a href="#" data-toggle-class=".account-tab:not(.hidden);hidden|#delete-account;hidden">{% trans "Delete Account"%}</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -58,17 +58,17 @@ Account Settings
                         <div class="col-lg-8">
                             <div class="boxed boxed--lg boxed--border">
                                 <div id="account-personal" class="account-tab">
-                                    <h4>Personal Information</h4>
+                                    <h4>{% trans "Personal Information"%}</h4>
                                     <h5>
-                                        Email: {{user.email}}
+                                        {% trans "Email"%}: {{user.email}}
                                         {% if user.email_verified %}
-                                            <span class="color--success"> verified</span>
+                                            <span class="color--success"> {% trans "verified"%}</span>
                                         {% else %}
-                                            <span class="color--error"> unverified</span>
+                                            <span class="color--error"> {% trans "unverified"%}</span>
                                         {% endif %}
                                     </h5>
                                     <p>
-                                        <label for="profile_image">{% if user.profile_image_url %}Change {% endif %}Profile Image:</label>
+                                        <label for="profile_image">{% if user.profile_image_url %}Change {% endif %}{% trans "Profile Image"%}:</label>
                                         <img id="image_loader" class="hidden" style="max-height:1.5em" src="{% static 'ssw/img/ajax-loader.gif' %}">
                                         <input type="file" accept="image/*" id="profile_image" name="profile_image">
                                         <i style="color:red" id="profile_image_error_msg"></i>
@@ -80,38 +80,40 @@ Account Settings
                                                     <input type="checkbox" name="profile_image-clear" id="profile_image-clear">
                                                     <label for="profile_image-clear"></label>
                                                 </div>
-                                                <span> Delete Profile Image </span>
+                                                <span> {% trans "Delete Profile Image"%} </span>
                                             {% endif %}
                                             <input type="hidden" id="avatar-url" name="avatar-url">
                                             {{ personal_info_form.as_p }}
                                             <div class="col-lg-3 col-md-4">
-                                                <button type="submit" id="save_personal_info_button" class="btn btn--primary type--uppercase">Save Profile</button>
+                                                <button type="submit" id="save_personal_info_button" class="btn btn--primary type--uppercase">{% trans "Save Profile"%}</button>
                                             </div>
                                     </form>
                                 </div>
                                 <div id="account-address" class="hidden account-tab">
-                                    <h4>Address</h4>
+                                    <h4>{% trans "Address"%}</h4>
                                     <form method="post" action="{% url 'update_address' %}">
                                         {% csrf_token %}
                                             {{ address_form.as_p }}
                                             <div class="col-lg-3 col-md-4">
-                                                <button type="submit" class="btn btn--primary type--uppercase">Save Address</button>
+                                                <button type="submit" class="btn btn--primary type--uppercase">{% trans "Save Address"%}</button>
                                             </div>
                                     </form>
                                 </div>
                                 <div id="account-id" class="hidden account-tab">
-                                    <h4>Photo ID</h4>
+                                    <h4>{% trans "Photo ID"%}</h4>
                                     {% if user.photo_id_url %}
-                                        <p>Photo ID: <a href="{{user.photo_id_url}}">View</a></p>
+                                        <p>{% trans "Photo ID"%}: <a href="{{user.photo_id_url}}">{% trans "View"%}</a></p>
                                         <p>
-                                            <b>Status:  </b>
+                                            <b>{% trans "Status"%}:  </b>
                                             {% if user.photo_id_verified %}
                                                     <span class="label label-success" style="top:auto;right:auto; margin-left:1em">
+                                                        {% trans "Verified"%}
+                                                    </span>
                                             {% else %}
                                                     <span class="label label-danger" style="top:auto;right:auto; margin-left:1em">
+                                                        {% trans "Under Process"%}
+                                                    </span>
                                             {% endif %}
-                                                {{user.photo_id_verified|yesno:"Verified,Under Process"}}
-                                                </span>
 
                                         </p>
                                     {% else %}
@@ -119,97 +121,113 @@ Account Settings
                                             {% csrf_token %}
                                                 {{ photo_id_form.as_p }}
                                                 <div class="col-lg-3 col-md-4">
-                                                    <button type="submit" class="btn btn--primary type--uppercase">Save Photo ID</button>
+                                                    <button type="submit" class="btn btn--primary type--uppercase">{% trans "Save Photo ID"%}</button>
                                                 </div>
                                         </form>
                                     {% endif %}
                                 </div>
                                 <div id="account-public" class="hidden account-tab">
-                                    <h4>Public Information</h4>
+                                    <h4>{% trans "Public Information"%}</h4>
                                     <form Method="post" action="{% url 'update_public_info' %}">
                                         {% csrf_token %}
                                         {{ public_info_form.as_p }}
                                         <div class="col-lg-3 col-md-4">
-                                            <button type="submit" class="btn btn--primary type--uppercase">Save</button>
+                                            <button type="submit" class="btn btn--primary type--uppercase">{% trans "Save"%}</button>
                                         </div>
                                     </form>
                                 </div>
                                 <div id="account-password" class="hidden account-tab">
-                                    <h4>Password</h4>
+                                    <h4>{% trans "Password"%}</h4>
                                     <form Method="post" action="{% url 'update_password' %}">
                                         {% csrf_token %}
                                         {{ password_form.as_p }}
                                         <div class="col-lg-3 col-md-4">
-                                            <button type="submit" class="btn btn--primary type--uppercase">Save Password</button>
+                                            <button type="submit" class="btn btn--primary type--uppercase">{% trans "Save Password"%}</button>
                                         </div>
                                     </form>
                                 </div>
                                 <div id="account-billing" class="hidden account-tab">
-                                    <h4>Payment Settings</h4>
-                                    <p>Choose your preferred payment method to get paid when you have new earnings.</p>
+                                    <h4>{% trans "Payment Settings"%}</h4>
+                                    <p>{% trans "Choose your preferred payment method to get paid when you have new earnings."%}</p>
                                     <form method="post" action="{% url 'update_payment_method' %}">
                                         {% csrf_token %}
                                         {{payment_method_form.preferred_payment_method.errors}}
-                                        {{payment_method_form.preferred_payment_method.label_tag}}
-                                        {{payment_method_form.preferred_payment_method}}
+                                        <p>
+                                            {{payment_method_form.preferred_payment_method.label_tag}}
+                                            {{payment_method_form.preferred_payment_method}}
+                                        </p>
                                         <br>
                                         <div id="bank_owner_name_field_wrapper" class="hidden">
                                             {{payment_method_form.bank_owner_name.errors}}
-                                            {{payment_method_form.bank_owner_name.label_tag}}
-                                            {{payment_method_form.bank_owner_name}}
-                                            <br><br>
+                                            <p>
+                                                {{payment_method_form.bank_owner_name.label_tag}}
+                                                {{payment_method_form.bank_owner_name}}
+                                            </p>
+                                            <br>
                                         </div>
                                         <div id="bank_name_field_wrapper" class="hidden">
                                             {{payment_method_form.bank_name.errors}}
-                                            {{payment_method_form.bank_name.label_tag}}
-                                            {{payment_method_form.bank_name}}
-                                            <br><br>
+                                            <p>
+                                                {{payment_method_form.bank_name.label_tag}}
+                                                {{payment_method_form.bank_name}}
+                                            </p>
+                                            <br>
                                         </div>
                                         <div id="iban_field_wrapper" class="hidden">
                                             {{payment_method_form.iban.errors}}
-                                            {{payment_method_form.iban.label_tag}}
-                                            {{payment_method_form.iban}}
-                                            <br><br>
+                                            <p>
+                                                {{payment_method_form.iban.label_tag}}
+                                                {{payment_method_form.iban}}
+                                            </p>
+                                            <br>
                                         </div>
                                         <div id="bank_country_field_wrapper" class="hidden">
                                             {{payment_method_form.bank_country.errors}}
-                                            {{payment_method_form.bank_country.label_tag}}
-                                            {{payment_method_form.bank_country}}
-                                            <br><br>
+                                            <p>
+                                                {{payment_method_form.bank_country.label_tag}}
+                                                {{payment_method_form.bank_country}}
+                                            </p>
+                                            <br>
                                         </div>
                                         <div id="western_union_field_wrapper" class="hidden">
                                             {{payment_method_form.western_union_account.errors}}
-                                            {{payment_method_form.western_union_account.label_tag}}
-                                            {{payment_method_form.western_union_account}}
-                                            <br><br>
+                                            <p>
+                                                {{payment_method_form.western_union_account.label_tag}}
+                                                {{payment_method_form.western_union_account}}
+                                            </p>
+                                            <br>
                                         </div>
                                         <div id="residency_country_field_wrapper" class="hidden">
                                             {{payment_method_form.residency_country.errors}}
-                                            {{payment_method_form.residency_country.label_tag}}
-                                            {{payment_method_form.residency_country}}
-                                            <br><br>
+                                            <p>
+                                                {{payment_method_form.residency_country.label_tag}}
+                                                {{payment_method_form.residency_country}}
+                                            </p>
+                                            <br>
                                         </div>
                                         <div id="paypal_field_wrapper" class="hidden">
                                             {{payment_method_form.paypal_account.errors}}
-                                            {{payment_method_form.paypal_account.label_tag}}
-                                            {{payment_method_form.paypal_account}}
-                                            <br><br>
+                                            <p>
+                                                {{payment_method_form.paypal_account.label_tag}}
+                                                {{payment_method_form.paypal_account}}
+                                            </p>
+                                            <br>
                                         </div>
                                         <div class="col-lg-3 col-md-4">
                                             <button id="payment_settings_button"
-                                                    type="submit" class="btn btn--primary type--uppercase">Save</button>
+                                                    type="submit" class="btn btn--primary type--uppercase">{% trans "Save"%}</button>
                                         </div>
                                     </form>
                                 </div>
                                 <div id="delete-account" class="hidden account-tab">
-                                    <h4>Delete Account</h4>
-                                    <p>Please use this form to send us a request if you no longer wish to have an account with Sowarstock.</p>
+                                    <h4>{% trans "Delete Account"%}</h4>
+                                    <p>{% trans "Please use this form to send us a request if you no longer wish to have an account with Sowarstock."%}</p>
                                     <form method="post" action="{% url 'update_user_request_delete' %}">
                                         {% csrf_token %}
-                                        {{user_request_delete_form}}
+                                        {{user_request_delete_form.as_p}}
                                         <br>
                                         <div class="col-lg-3 col-md-4">
-                                            <button type="submit" class="btn btn--primary type--uppercase">Submit</button>
+                                            <button type="submit" class="btn btn--primary type--uppercase">{% trans "Submit"%}</button>
                                         </div>
                                     </form>
                                 </div>

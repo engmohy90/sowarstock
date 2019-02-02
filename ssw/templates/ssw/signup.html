@@ -35,13 +35,18 @@
                                         {{form.password1.label_tag}}
                                     </div>
                                     {{form.password1}}
-                                    {{form.password1.errors}}
+                                    <div {% if LANGUAGE_CODE == 'ar' %} style="text-align:right" {% endif %}>
+                                        {{form.password1.errors}}
+                                    </div>
+
 
                                     <div {% if LANGUAGE_CODE == 'ar' %} class="pull-right" {% endif %}>
                                         {{form.password2.label_tag}}
                                     </div>
                                     {{form.password2}}
-                                    {{form.password2.errors}}
+                                    <div {% if LANGUAGE_CODE == 'ar' %} style="text-align:right" {% endif %}>
+                                        {{form.password2.errors}}
+                                    </div>
                                     <br><br>
                                     <div class="row">
                                         <!--
@@ -115,7 +120,13 @@
 
             if(userType==null){
                 e.preventDefault()
-                $("#user_type_error_message").html("you have to choose a user type")
+                var msg = ""
+                {% if LANGUAGE_CODE == 'en' %}
+                    msg = 'you have to choose a user type'
+                {% else %}
+                    msg = 'الرجاء اختيار نوع الحساب'
+                {% endif %}
+                $("#user_type_error_message").html(msg)
             }else{
                 $("#user_type_error_message").html("")
             }
@@ -125,7 +136,12 @@
                 $("#terms_error_message").html("")
             }else{
                 e.preventDefault()
-                $("#terms_error_message").html("you have to agree to the terms and conditions")
+                {% if LANGUAGE_CODE == 'en' %}
+                    msg = 'you have to agree to the terms and conditions'
+                {% else %}
+                    msg = 'لابد من الموافقة على الشروط والأحكام'
+                {% endif %}
+                $("#terms_error_message").html(msg)
             }
 
         })

@@ -2,6 +2,7 @@ from django.core.mail import send_mail
 from paypal.standard.models import ST_PP_COMPLETED
 from paypal.standard.ipn.signals import valid_ipn_received
 from django.shortcuts import get_object_or_404
+from django.utils.translation import gettext_lazy as _
 from django.template import loader
 from notifications.signals import notify
 import random
@@ -49,7 +50,7 @@ def show_me_the_money(sender, **kwargs):
             # send email to contributor
             admin = models.SowarStockUser.objects.get(type="admin")
             notify.send(admin, recipient=earning.contributor, level="success",
-                        verb='You earned ${} from your product {}'.format(earning.amount,
+                        verb=_('You earned ${} from your product {}').format(earning.amount,
                                                                           earning.order_item.product.public_id))
             email_body = loader.render_to_string("ssw/email_new_earning.html", {"earning": earning})
             send_mail("مكسب جديد", "", "Sowarstock", [earning.contributor.email], False,

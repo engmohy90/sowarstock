@@ -1,9 +1,8 @@
 {% extends "ssw/main.html" %}
 {% load static from staticfiles %}
-{% load thumbnail %}
-
+{% load i18n %}
 {% block title %}
-Orders
+{% trans "Orders"%}
 {% endblock %}
 
 {% block content %}
@@ -13,16 +12,16 @@ Orders
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="boxed boxed--lg boxed--border">
-                                <h4>Orders</h4>
+                                <h4>{% trans "Orders"%}</h4>
                                 <hr>
                                 {% if orders %}
                                     <div class="custom-scroll table-responsive">
                                         <table id="ordersTable" class="table table-bordered table-hover">
                                             <thead>
                                                 <tr>
-                                                    <th>Order No</th>
-                                                    <th>Items in order</th>
-                                                    <th>Total</th>
+                                                    <th>{% trans "Order No"%}</th>
+                                                    <th>{% trans "Items in order"%}</th>
+                                                    <th>{% trans "Total"%}</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -37,7 +36,7 @@ Orders
                                         </table>
                                     </div>
                                 {% else %}
-                                    You don't have any orders
+                                    {% trans "You don't have any orders"%}
                                 {% endif %}
                             </div>
                         </div>

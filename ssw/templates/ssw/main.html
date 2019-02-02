@@ -1,5 +1,6 @@
 {% load static from staticfiles %}
 {% load notifications_tags %}
+{% load my_tags %}
 {% load i18n %}
 
 <!doctype html>
@@ -56,55 +57,169 @@
                         <div class="col-lg-6">
                         </div>
                     {% endif %}
-                    <div class="col-lg-6">
-                    </div>
                     <div class="col-lg-6 text-right text-left-xs text-left-sm">
                         <div class="bar__module">
                             <ul class="menu-horizontal">
-                                {% if user.is_authenticated %}
-                                <li class="dropdown">
-                                    <span class="dropdown__trigger">{% trans "Hello"%}, {{ user }}</span>
-                                    <div class="dropdown__container">
-                                        <div class="container">
-                                            <div class="row">
-                                                <div class="dropdown__content col-lg-2 col-md-4">
-                                                    <ul class="menu-vertical">
-                                                        <li>
-                                                            <a href="/profile">{% trans "Profile"%}</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="/logout">{% trans "Logout"%}</a>
-                                                            <!--end dropdown container-->
-                                                        </li>
-                                                    </ul>
+                                {% if LANGUAGE_CODE == "en" %}
+                                    {% if user.is_authenticated %}
+                                    <li class="dropdown">
+                                        <span class="dropdown__trigger">{% trans "Hello"%}, {{ user }}</span>
+                                        <div class="dropdown__container">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="dropdown__content col-lg-2 col-md-4">
+                                                        <ul class="menu-vertical">
+                                                            <li>
+                                                                <a href="/profile">{% trans "Profile"%}</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="/logout">{% trans "Logout"%}</a>
+                                                                <!--end dropdown container-->
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <!--end dropdown content-->
                                                 </div>
-                                                <!--end dropdown content-->
+                                                <!--end row-->
                                             </div>
-                                            <!--end row-->
                                         </div>
-                                    </div>
-                                    <!--end dropdown container-->
-                                </li>
-                                {% endif %}
+                                        <!--end dropdown container-->
+                                    </li>
+                                    {% endif %}
 
-                                <li>
-                                    <a href="#" data-notification-link="search-box">
-                                        <i class="stack-search"></i>
-                                    </a>
-                                </li>
-                                {% if user.type == "client" %}
                                     <li>
-                                        <a href="{%url 'shopping_cart_main' %}">
-                                            <span class="fa-stack has-badge" id="shopping_cart_icon">
-                                              <i class="fa fa-circle fa-stack-2x"></i>
-                                              <i class="fas fa-shopping-cart fa-stack-1x fa-inverse"></i>
-                                            </span>
+                                        <a href="#" data-notification-link="search-box">
+                                            <i class="stack-search"></i>
                                         </a>
                                     </li>
+                                    {% if user.type == "client" %}
+                                        <li>
+                                            <a href="{%url 'shopping_cart_main' %}">
+                                                <span class="fa-stack has-badge" id="shopping_cart_icon">
+                                                  <i class="fa fa-circle fa-stack-2x"></i>
+                                                  <i class="fas fa-shopping-cart fa-stack-1x fa-inverse"></i>
+                                                </span>
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                    <li class="dropdown dropdown--absolute">
+                                        {% get_current_language as LANGUAGE_CODE %}
+                                        {% get_available_languages as LANGUAGES %}
+                                        {% get_language_info_list for LANGUAGES as languages %}
+                                        <span class="dropdown__trigger">
+                                            {% if LANGUAGE_CODE == "en" %}
+                                                <img alt="Image" class="flag" src="{% static 'ssw/img/flag-1.png' %}">
+                                            {% elif LANGUAGE_CODE == "ar" %}
+                                                <img alt="Image" class="flag" src="{% static 'ssw/img/flag-3.png' %}">
+                                            {% endif %}
+                                        </span>
+                                        <div class="dropdown__container" style="left: -1056.19px;">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-lg-1 dropdown__content" style="left: 1056.19px;">
+                                                        <ul class="menu-vertical text-left">
+                                                            <li>
+                                                                <form action="{% url 'set_language' %}" method="post">
+                                                                    {% csrf_token %}
+                                                                    <input name="next" type="hidden" value='{{ request.path|from_to:"ar,en" }}'>
+                                                                    <input name="language" type="hidden" value="{{languages.0.code}}">
+                                                                    <button style="cursor:pointer;border-width:0; margin-top:0">{{ languages.0.name_local }}</button>
+                                                                </form>
+                                                            </li>
+                                                            <li>
+                                                                 <form action="{% url 'set_language' %}" method="post">
+                                                                    {% csrf_token %}
+                                                                    <input name="next" type="hidden" value='{{ request.path|from_to:"en,ar" }}'>
+                                                                    <input name="language" type="hidden" value="{{languages.1.code}}">
+                                                                    <button style="cursor:pointer;border-width:0; margin-top:0">{{ languages.1.name_local }}</button>
+                                                                </form>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                {% else %}
+                                    <li class="dropdown dropdown--absolute">
+                                        {% get_current_language as LANGUAGE_CODE %}
+                                        {% get_available_languages as LANGUAGES %}
+                                        {% get_language_info_list for LANGUAGES as languages %}
+                                        <span class="dropdown__trigger">
+                                            {% if LANGUAGE_CODE == "en" %}
+                                                <img alt="Image" class="flag" src="{% static 'ssw/img/flag-1.png' %}">
+                                            {% elif LANGUAGE_CODE == "ar" %}
+                                                <img alt="Image" class="flag" src="{% static 'ssw/img/flag-3.png' %}">
+                                            {% endif %}
+                                        </span>
+                                        <div class="dropdown__container" style="left: -1056.19px;">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-lg-1 dropdown__content" style="left: 1056.19px;">
+                                                        <ul class="menu-vertical text-left">
+                                                            <li>
+                                                                <form action="{% url 'set_language' %}" method="post">
+                                                                    {% csrf_token %}
+                                                                    <input name="next" type="hidden" value='{{ request.path|from_to:"ar,en" }}'>
+                                                                    <input name="language" type="hidden" value="{{languages.0.code}}">
+                                                                    <button style="cursor:pointer;border-width:0; margin-top:0">{{ languages.0.name_local }}</button>
+                                                                </form>
+                                                            </li>
+                                                            <li>
+                                                                 <form action="{% url 'set_language' %}" method="post">
+                                                                    {% csrf_token %}
+                                                                    <input name="next" type="hidden" value='{{ request.path|from_to:"en,ar" }}'>
+                                                                    <input name="language" type="hidden" value="{{languages.1.code}}">
+                                                                    <button style="cursor:pointer;border-width:0; margin-top:0">{{ languages.1.name_local }}</button>
+                                                                </form>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    {% if user.type == "client" %}
+                                        <li>
+                                            <a href="{%url 'shopping_cart_main' %}">
+                                                <span class="fa-stack has-badge" id="shopping_cart_icon">
+                                                  <i class="fa fa-circle fa-stack-2x"></i>
+                                                  <i class="fas fa-shopping-cart fa-stack-1x fa-inverse"></i>
+                                                </span>
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                    <li>
+                                        <a href="#" data-notification-link="search-box">
+                                            <i class="stack-search"></i>
+                                        </a>
+                                    </li>
+                                    {% if user.is_authenticated %}
+                                    <li class="dropdown">
+                                        <span class="dropdown__trigger">{% trans "Hello"%}, {{ user }}</span>
+                                        <div class="dropdown__container">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="dropdown__content col-lg-2 col-md-4">
+                                                        <ul class="menu-vertical">
+                                                            <li>
+                                                                <a href="/profile">{% trans "Profile"%}</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="/logout">{% trans "Logout"%}</a>
+                                                                <!--end dropdown container-->
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <!--end dropdown content-->
+                                                </div>
+                                                <!--end row-->
+                                            </div>
+                                        </div>
+                                        <!--end dropdown container-->
+                                    </li>
+                                    {% endif %}
                                 {% endif %}
-                                <!--
-                                Language options here
-                                -->
                             </ul>
                         </div>
                     </div>

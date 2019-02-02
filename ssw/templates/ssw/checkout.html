@@ -1,7 +1,8 @@
 {% extends "ssw/main.html" %}
 {% load static from staticfiles %}
+{% load i18n %}
 {% block title %}
-Checkout
+{% trans "Checkout"%}
 {% endblock %}
 
 {% block content %}
@@ -9,7 +10,7 @@ Checkout
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>Checkout</h1>
+                <h1>{% trans "Checkout"%}</h1>
                 <hr>
             </div>
         </div>
@@ -25,11 +26,13 @@ Checkout
                 <div class="product">
                     <span class="label">{{item.license_type}}</span>
                     <img src="{{ item.product.watermark.url}}">
-                    <div>
-                        <h5>{{item.product.title}}</h5>
-                    </div>
-                    <div>
-                        <span class="h4 inline-block">${{item.price}}</span>
+                    <div {% if LANGUAGE_CODE == 'ar' %} class="pull-right" {% endif %}>
+                        <div>
+                            <h5>{{item.product.title}}</h5>
+                        </div>
+                        <div>
+                            <span class="h4 inline-block {% if LANGUAGE_CODE == 'ar' %} pull-right {% endif %}">${{item.price}}</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -39,7 +42,7 @@ Checkout
         <!--end of row-->
         <div class="row justify-content-end">
             <div class="col-lg-2 text-right text-center-xs">
-                <a href="{% url 'shopping_cart_main' %}" class="btn">Revise Cart</a>
+                <a href="{% url 'shopping_cart_main' %}" class="btn">{% trans "Revise Cart"%}</a>
             </div>
         </div>
         <!--end of row-->
@@ -67,9 +70,9 @@ Checkout
                     -->
                     <div class="row">
                         <div class="col-6">
-                            <span class="h5">Total:</span>
+                            <span class="h5 {% if LANGUAGE_CODE == 'ar' %} text-right {% endif %}">{% trans "Total"%}:</span>
                         </div>
-                        <div class="col-6 text-right">
+                        <div class="col-6 {% if LANGUAGE_CODE == 'ar' %} text-left {% else %} text-right {% endif %}">
                             <span class="h5">${{cart.total}}</span>
                         </div>
                     </div>
@@ -79,7 +82,7 @@ Checkout
         <!--end of row-->
 
         <div class="row justify-content-end">
-            <div class="col-lg-2 col-md-3 text-right text-center-xs">
+            <div class="col-lg-2 col-md-3 {% if LANGUAGE_CODE == 'ar' %} text-left {% else %} text-right {% endif %} text-center-xs">
                 {{ form.render }}
             </div>
         </div>

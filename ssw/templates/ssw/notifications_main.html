@@ -1,8 +1,8 @@
 {% extends "ssw/main.html" %}
 {% load static from staticfiles %}
-
+{% load i18n %}
 {% block title %}
-Notifications
+{% trans "Notifications"%}
 {% endblock %}
 
 {% block content %}
@@ -12,16 +12,16 @@ Notifications
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="boxed boxed--lg boxed--border">
-                                <h4>Notices</h4>
+                                <h4>{% trans "Notices"%}</h4>
                                 <hr>
                                 {% if notifications %}
                                     {% for notification in notifications %}
                                         <p>
                                             {% if notification.unread %}
-                                                <span class="color--success new_notification">NEW</span>
+                                                <span class="color--success new_notification">{% trans "NEW"%}</span>
                                             {% endif %}
                                             {% if not notification.deleted %}
-                                                <a data-tooltip="Delete Notice" href="{% url 'notifications_delete' notification.pk %}" class="color--error pull-right"><i class="fas fa-trash-alt"></i></a>
+                                                <a data-tooltip="{% if LANGUAGE_CODE == 'ar' %} حذف {% else %} Delete Notice{% endif %}" href="{% url 'notifications_delete' notification.pk %}" class="color--error {% if LANGUAGE_CODE == 'ar' %} pull-left {% else %} pull-right{% endif %}"><i class="fas fa-trash-alt"></i></a>
                                             {% endif %}
                                             {% if notification.level == "info" %}
                                                 <i class="fas fa-info-circle color--primary"></i>
@@ -33,13 +33,20 @@ Notifications
                                                 <i class="fas fa-minus-circle color--error"></i>
                                             {% endif %}
 
-                                                {{notification.verb|title}}
+                                                {% trans notification.verb %}
                                         </p>
-                                        <p><i class="far fa-clock"></i> {{notification.timesince}} ago</p>
+                                        <p>
+                                            <i class="far fa-clock"></i>
+                                            {% if LANGUAGE_CODE == 'ar' %}
+                                                {% trans "ago"%} {{notification.timesince}}
+                                            {% else %}
+                                                {{notification.timesince}} {% trans "ago"%}
+                                            {% endif %}
+                                        </p>
                                         <hr>
                                     {% endfor %}
                                 {% else %}
-                                    You don't have any notifications.
+                                <p>{% trans "You don't have any notifications."%}</p>
                                 {% endif %}
 
                             </div>

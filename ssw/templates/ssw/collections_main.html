@@ -16,9 +16,9 @@
                                 <h4>
                                     {% trans "Collections"%}
                                     {% if user.type == "contributor" and user.is_verified and not user.suspended %}
-                                        <a class="btn btn--primary btn--icon btn--sm pull-right" href="{% url 'collections_new' %}">
+                                        <a class="btn btn--primary btn--icon btn--sm {% if LANGUAGE_CODE == 'ar' %} pull-left" {% else %} pull-right" {% endif %}" href="{% url 'collections_new' %}">
                                         <span class="btn__text">
-                                        <i class="fa fa-plus"></i> New Collection</span>
+                                        <i class="fa fa-plus"></i> {% trans "New Collection"%}</span>
                                     </a>
                                     {% endif %}
                                 </h4>
@@ -28,8 +28,8 @@
                                         <table id="approvedProductsTable" class="table table-bordered table-hover">
                                             <thead>
                                                 <tr>
-                                                    <th>Title</th>
-                                                    <th>Products</th>
+                                                    <th>{% trans "Title"%}</th>
+                                                    <th>{% trans "Products"%}</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>

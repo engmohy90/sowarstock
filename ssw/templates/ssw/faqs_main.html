@@ -1,9 +1,9 @@
 {% extends "ssw/main.html" %}
 {% load static from staticfiles %}
-{% load thumbnail %}
+{% load i18n %}
 
 {% block title %}
-FAQs
+{% trans "FAQs"%}
 {% endblock %}
 
 {% block content %}
@@ -13,7 +13,7 @@ FAQs
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="boxed boxed--lg boxed--border">
-                                <h4>FAQs</h4>
+                                <h4>{% trans "FAQs"%}</h4>
                                 <hr>
                                 <div class="row">
                                     <div class="col-lg-6">
@@ -31,7 +31,7 @@ FAQs
                                                 {% endfor %}
                                             </ul>
                                         {% else %}
-                                            There are no general FAQs.
+                                        <p>{% trans "There are no general FAQs."%}</p>
                                         {% endif %}
                                     </div>
                                     <div class="col-lg-6">
@@ -40,7 +40,7 @@ FAQs
                                             {{form.as_p}}
                                             <div class="row">
                                                 <div class="col-lg-6">
-                                                    <button type="submit" class="btn sowar_stock_color type--uppercase">Send</button>
+                                                    <button type="submit" class="btn sowar_stock_color type--uppercase">{% trans "Send"%}</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -58,7 +58,7 @@ FAQs
                                                 {% if faq.answer %}
                                                     {{faq.answer}}
                                                 {% else %}
-                                                    There is no reply yet.
+                                                    {% trans "There is no reply yet."%}
                                                 {% endif %}
                                             </div>
                                         </li>

@@ -374,7 +374,7 @@ def requests_approve(request, pk):
             r.owner.photo_id_verified = True
             r.owner.save()
             notify.send(request.user, recipient=r.owner, level="success",
-                        verb='Your account has been verified')
+                        verb=_('Your account has been verified'))
             email_body = loader.render_to_string("ssw/email_account_verified.html", {"user": r.owner})
             send_mail("تهانينا. تم توثيق حسابك. ابدأ الآن", "", "Sowarstock", [r.owner.email], False,
                       None, None, None, email_body)
@@ -759,7 +759,7 @@ def payment_new(request, pk):
                 send_mail("عملية دفع جديدة لك", "", "Sowarstock", [payment.contributor.email], False,
                           None, None, None, email_body)
                 notify.send(request.user, recipient=payment.contributor, level="success",
-                            verb='You got paid ${}'.format(payment.amount))
+                            verb=_('You got paid ${}').format(payment.amount))
                 return HttpResponseRedirect("/fadmin/earnings")
         return render(request, "ssw/admin/payment_new.html", {"user": user, "earning": earning,
                                                                 "form": form,

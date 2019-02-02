@@ -27,14 +27,18 @@
             <div class="masonry">
                 <div class="masonry-filter-container text-center d-flex flex-wrap justify-content-center align-items-center">
                     {% if LANGUAGE_CODE == 'ar' %}
+                        <span style="margin-left:2em">{% trans "Category"%}:</span>
                         <div class="masonry-filter-holder">
                             <div class="masonry__filters" data-filter-all-text="All Categories">
                                 <ul>
                                     <li class="active" data-masonry-filter="*">{% trans "All Categories"%}</li>
+                                    {% for subcategory in subcategories %}
+                                        <li class="enable-{{subcategory.get_simple_name}}">{{subcategory}}</li>
+                                    {% endfor %}
                                 </ul>
                             </div>
                         </div>
-                        <span>{% trans "Category:"%}</span>
+
                     {% else %}
                         <span>{% trans "Category:"%}</span>
                         <div class="masonry-filter-holder">
@@ -81,11 +85,20 @@
             });
         {% endfor %}
 
-        $("#mygallery").justifiedGallery({
-            rowHeight : 220,
-            lastRow : 'nojustify',
-            margins : 8
-        });
+        {% if LANGUAGE_CODE == 'en' %}
+            $("#mygallery").justifiedGallery({
+                rowHeight : 220,
+                lastRow : 'nojustify',
+                margins : 8
+            });
+        {% else %}
+            $("#mygallery").justifiedGallery({
+                rowHeight : 220,
+                lastRow : 'right',
+                margins : 8
+            });
+        {% endif %}
+
     })
 </script>
 {% endblock %}
